@@ -1,0 +1,490 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette drawn from the Chhau heartland: red laterite earth,
+     marigold garlands, night-sky performances, ivory mask clay. */
+  --color-laterite-50: #fdf5f3;
+  --color-laterite-100: #fbe7e2;
+  --color-laterite-200: #f8d3ca;
+  --color-laterite-300: #f2b3a4;
+  --color-laterite-400: #e88770;
+  --color-laterite-500: #da6147;
+  --color-laterite-600: #c64729;
+  --color-laterite-700: #a63920;
+  --color-laterite-800: #89321e;
+  --color-laterite-900: #722e1f;
+  --color-laterite-950: #3d150c;
+
+  --color-marigold-50: #fffbeb;
+  --color-marigold-100: #fef3c7;
+  --color-marigold-200: #fde58a;
+  --color-marigold-300: #fbd24e;
+  --color-marigold-400: #fabe25;
+  --color-marigold-500: #f49d0c;
+  --color-marigold-600: #d87607;
+  --color-marigold-700: #b3530a;
+  --color-marigold-800: #91400f;
+  --color-marigold-900: #773510;
+  --color-marigold-950: #441a04;
+
+  --color-midnight-50: #f3f5fb;
+  --color-midnight-100: #e3e8f6;
+  --color-midnight-200: #ced8ef;
+  --color-midnight-300: #acbee4;
+  --color-midnight-400: #859cd5;
+  --color-midnight-500: #687ec9;
+  --color-midnight-600: #5566bb;
+  --color-midnight-700: #4a56ab;
+  --color-midnight-800: #41488c;
+  --color-midnight-900: #383f70;
+  --color-midnight-950: #14162b;
+
+  --color-ivory: #faf6ef;
+}
+
+@theme inline {
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* The eBook reader keeps its own type pairing: Proza Libre for UI,
+     Cormorant Garamond for the book page itself (see .heritage-text). */
+  --font-reader: var(--font-proza-libre), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ivory);
+  color: var(--color-midnight-950);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-marigold-200);
+  color: var(--color-laterite-950);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ===================================================================
+   Interactive eBook reader — heritage page styles
+   =================================================================== */
+
+.page-enter {
+  animation: pageFlipEnter 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.page-exit {
+  animation: pageFlipExit 0.6s ease-in;
+}
+
+.page-enter-minimal {
+  animation: pageEnterMinimal 0.34s ease-out;
+}
+
+.paper-slide-enter {
+  animation: paperSlideEnter 0.52s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sheet-glide-enter {
+  animation: sheetGlideEnter 0.56s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.chapter-fade-enter {
+  animation: chapterFadeEnter 0.42s ease-out;
+}
+
+.chapter-slide-enter {
+  animation: chapterSlideEnter 0.48s ease-out;
+}
+
+.spread-open-enter {
+  animation: spreadOpenEnter 0.58s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.spread-close-enter {
+  animation: spreadCloseEnter 0.48s ease-out;
+}
+
+.paper-lift-enter {
+  animation: paperLiftEnter 0.5s ease-out;
+}
+
+.paper-settle-enter {
+  animation: paperSettleEnter 0.42s ease-out;
+}
+
+.heritage-paper {
+  background: linear-gradient(135deg, #fff8db 0%, #fff0c4 52%, #fed7aa 100%);
+  box-shadow:
+    inset 0 1px 3px rgba(42, 22, 9, 0.14),
+    0 24px 80px rgba(0, 0, 0, 0.38);
+  color: #2a1609;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+/* Subtle paper grain over the heritage page surface */
+.heritage-paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(rgba(64, 38, 16, 0.6) 0.6px, transparent 1px),
+    radial-gradient(rgba(64, 38, 16, 0.35) 0.4px, transparent 1px);
+  background-size: 5px 5px, 9px 9px;
+  background-position: 0 0, 2px 3px;
+}
+
+.heritage-text {
+  font-family: var(--font-cormorant-garamond), Georgia, "Times New Roman", serif;
+  letter-spacing: 0;
+}
+
+/* Drop cap on the first true paragraph of each content page. The reader
+   marks it with .first-paragraph (skipping captions, headings, lists). */
+.book-prose > p.first-paragraph::first-letter {
+  font-family: var(--font-cormorant-garamond), Georgia, serif;
+  font-size: 4.3em;
+  font-weight: 700;
+  float: left;
+  line-height: 0.82;
+  margin: 0.06em 0.1em -0.06em 0;
+  color: #7e261e;
+  font-style: normal;
+  text-shadow: 0 2px 3px rgba(126, 38, 30, 0.14);
+}
+
+.chapter-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  font-family: var(--font-proza-libre), Arial, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: #7e261e;
+  opacity: 0.78;
+  margin-bottom: 1em;
+  text-shadow: none;
+}
+.chapter-eyebrow::before,
+.chapter-eyebrow::after {
+  content: "";
+  width: 1.6em;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.fleuron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2em;
+  margin: 2.4em auto;
+  width: 100%;
+  max-width: 28em;
+  color: #8a6a3d;
+}
+.fleuron-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    currentColor 30%,
+    currentColor 70%,
+    transparent
+  );
+  opacity: 0.45;
+}
+.fleuron-glyph {
+  font-family: Georgia, serif;
+  font-size: 1.15em;
+  letter-spacing: 0.35em;
+  opacity: 0.7;
+  user-select: none;
+}
+
+.section-cover {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 72vh;
+  padding: 4em 1.5em;
+  text-align: center;
+}
+.section-cover-frame {
+  position: absolute;
+  inset: 1.4rem;
+  border: 1px solid rgba(126, 38, 30, 0.22);
+  border-radius: 4px;
+  pointer-events: none;
+}
+.section-cover-frame::before,
+.section-cover-frame::after,
+.section-cover-frame > span::before,
+.section-cover-frame > span::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 2px solid #7e261e;
+  opacity: 0.55;
+}
+.section-cover-frame::before {
+  top: -3px;
+  left: -3px;
+  border-right: none;
+  border-bottom: none;
+}
+.section-cover-frame::after {
+  top: -3px;
+  right: -3px;
+  border-left: none;
+  border-bottom: none;
+}
+.section-cover-frame > span::before {
+  bottom: -3px;
+  left: -3px;
+  border-right: none;
+  border-top: none;
+}
+.section-cover-frame > span::after {
+  bottom: -3px;
+  right: -3px;
+  border-left: none;
+  border-top: none;
+}
+.section-cover-fleuron {
+  font-family: Georgia, serif;
+  color: #7e261e;
+  opacity: 0.55;
+  font-size: 1.7em;
+  letter-spacing: 0.4em;
+  margin-top: 1.4em;
+  user-select: none;
+}
+
+.library-entry {
+  position: relative;
+  padding-left: 2.6em;
+  margin: 1.1em 0;
+  scroll-margin-top: 2rem;
+}
+.library-entry::before {
+  content: attr(data-cite-number);
+  position: absolute;
+  left: 0;
+  top: -0.05em;
+  font-family: var(--font-cormorant-garamond), Georgia, serif;
+  font-weight: 700;
+  font-size: 1.55em;
+  color: #7e261e;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(155, 47, 34, 0.18);
+  z-index: 100;
+  pointer-events: none;
+}
+.reading-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7e261e 0%, #c84a30 100%);
+  width: var(--progress, 0%);
+  transition: width 0.32s ease;
+  box-shadow: 0 0 8px rgba(200, 74, 48, 0.6);
+}
+
+.sidebar-part-label {
+  font-family: var(--font-proza-libre), Arial, sans-serif;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  margin: 1.1em 0 0.4em 0;
+  padding: 0 0.85rem;
+  color: rgba(239, 231, 208, 0.55);
+}
+.sidebar-part-label:first-child {
+  margin-top: 0;
+}
+
+.music-volume-slider {
+  width: 100%;
+  accent-color: #c84a30;
+}
+
+.cite-flash {
+  animation: citeFlash 1.8s ease-out;
+  border-radius: 4px;
+}
+
+@keyframes pageFlipEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageEnterMinimal {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes paperSlideEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes sheetGlideEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chapterFadeEnter {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes chapterSlideEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spreadOpenEnter {
+  0% {
+    opacity: 0;
+    transform: scaleX(0.96);
+    transform-origin: left center;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+@keyframes spreadCloseEnter {
+  0% {
+    opacity: 0;
+    transform: scaleX(1.04);
+    transform-origin: right center;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+    transform-origin: right center;
+  }
+}
+
+@keyframes paperLiftEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes paperSettleEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes citeFlash {
+  0% {
+    background-color: rgba(255, 220, 100, 0.85);
+    box-shadow: 0 0 0 6px rgba(255, 220, 100, 0.55);
+  }
+  60% {
+    background-color: rgba(255, 220, 100, 0.4);
+    box-shadow: 0 0 0 3px rgba(255, 220, 100, 0.25);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes pageFlipExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .page-exit,
+  .page-enter-minimal,
+  .paper-slide-enter,
+  .sheet-glide-enter,
+  .chapter-fade-enter,
+  .chapter-slide-enter,
+  .spread-open-enter,
+  .spread-close-enter,
+  .paper-lift-enter,
+  .paper-settle-enter,
+  .cite-flash {
+    animation: none;
+  }
+}
