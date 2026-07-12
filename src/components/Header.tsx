@@ -2,41 +2,54 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const links = [
   { href: "/", label: "Home" },
   { href: "/ebook", label: "eBook" },
-  { href: "/experience", label: "3D Gallery" },
+  { href: "/experience", label: "3D Studies" },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-laterite-900/10 bg-ivory/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-laterite-900/10 bg-ivory/95 backdrop-blur-xl">
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4"
+        className="mx-auto flex min-h-[4.25rem] max-w-6xl items-center justify-between px-6"
       >
         <Link
           href="/"
-          className="font-display text-xl font-bold tracking-tight text-laterite-800"
+          className="font-display text-xl font-semibold tracking-tight text-ink"
         >
           Preserve<span className="text-marigold-600">Chhau</span>
         </Link>
 
-        <ul className="hidden items-center gap-8 sm:flex">
+        <ul className="hidden items-center gap-7 sm:flex">
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
-                className={`text-sm font-medium transition-colors hover:text-laterite-700 ${
+                className={`rounded-sm py-2 text-sm font-semibold transition-colors hover:text-laterite-700 ${
                   isActive(link.href)
                     ? "text-laterite-700 underline decoration-marigold-400 decoration-2 underline-offset-8"
                     : "text-midnight-900"
@@ -50,11 +63,12 @@ export function Header() {
 
         <button
           type="button"
-          className="rounded p-2 text-midnight-900 hover:bg-laterite-100 sm:hidden"
+          className="grid h-11 w-11 place-items-center rounded-lg text-ink hover:bg-laterite-100 sm:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((value) => !value)}
+          ref={menuButtonRef}
         >
           <svg
             width="22"
@@ -78,7 +92,7 @@ export function Header() {
       {open && (
         <ul
           id="mobile-menu"
-          className="border-t border-laterite-900/10 px-6 pb-4 sm:hidden"
+          className="border-t border-laterite-900/10 bg-ivory px-6 pb-4 sm:hidden"
         >
           {links.map((link) => (
             <li key={link.href}>
@@ -86,7 +100,7 @@ export function Header() {
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
-                className={`block py-3 text-sm font-medium ${
+                className={`block rounded-sm py-3 text-sm font-semibold ${
                   isActive(link.href) ? "text-laterite-700" : "text-midnight-900"
                 }`}
               >

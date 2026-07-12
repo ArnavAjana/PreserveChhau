@@ -5,22 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Map of Chhau — an interactive 3D atlas of Chhau dance, from its heritage roots in eastern India to international stages, academies, archives and diaspora communities."
+      content="An accessible, self-contained regional map of Mayurbhanj, Seraikella, and Purulia Chhau."
     />
-    <title>Map of Chhau · Interactive Atlas</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preconnect" href="https://upload.wikimedia.org" crossorigin />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
-    <link rel="dns-prefetch" href="https://en.wikipedia.org" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <script type="module" crossorigin src="./assets/index-CgPPRwBJ.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CagmbF0I.css">
+    <title>The Chhau Region</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./map.js"></script>
   </head>
   <body>
-    <div id="root"></div>
+    <main class="atlas">
+      <header class="atlas__header">
+        <p class="eyebrow">Three neighbouring traditions</p>
+        <h1>The Chhau region</h1>
+        <p>
+          Select a place to compare its location and one defining performance
+          choice. The connecting lines show exchange, not a single point of
+          origin.
+        </p>
+      </header>
+
+      <div class="atlas__layout">
+        <section class="regional-map" aria-label="Regional Chhau map">
+          <svg aria-hidden="true" class="regional-map__drawing" viewBox="0 0 800 620">
+            <path class="land land--west" d="M80 116C139 57 285 48 358 115c51 47 42 135-18 183-76 61-199 50-260-27-39-49-42-111 0-155Z" />
+            <path class="land land--north" d="M349 77c91-50 245-21 307 57 50 62 19 142-57 173-98 41-235 9-278-71-31-58-19-127 28-159Z" />
+            <path class="land land--south" d="M327 283c80-65 243-65 333 11 75 63 74 165 4 237-84 86-252 88-346 9-72-61-66-196 9-257Z" />
+            <path class="connection" d="M292 247 488 173 548 405 292 247" />
+            <circle class="connection-node" cx="292" cy="247" r="7" />
+            <circle class="connection-node" cx="488" cy="173" r="7" />
+            <circle class="connection-node" cx="548" cy="405" r="7" />
+            <text class="state-label" x="120" y="125">Jharkhand</text>
+            <text class="state-label" x="515" y="100">West Bengal</text>
+            <text class="state-label" x="385" y="530">Odisha</text>
+          </svg>
+
+          <button
+            class="marker marker--seraikella"
+            data-place="seraikella"
+            type="button"
+          >
+            <span class="marker__dot" aria-hidden="true"></span>
+            <span class="marker__label">Seraikella</span>
+          </button>
+          <button
+            class="marker marker--purulia"
+            data-place="purulia"
+            type="button"
+          >
+            <span class="marker__dot" aria-hidden="true"></span>
+            <span class="marker__label">Purulia</span>
+          </button>
+          <button
+            class="marker marker--mayurbhanj is-active"
+            data-place="mayurbhanj"
+            type="button"
+          >
+            <span class="marker__dot" aria-hidden="true"></span>
+            <span class="marker__label">Mayurbhanj</span>
+          </button>
+
+          <p class="regional-map__note">Schematic regional view · not to scale</p>
+        </section>
+
+        <aside class="place-card" aria-live="polite" aria-atomic="true">
+          <p class="place-card__state" id="place-state">Odisha</p>
+          <h2 id="place-name">Mayurbhanj Chhau</h2>
+          <p class="place-card__signal" id="place-signal">
+            Unmasked · centred around Baripada
+          </p>
+          <p class="place-card__description" id="place-description">
+            The tradition at the centre of this eBook. Stance, torso, travel,
+            rhythm, focus, and group design carry the performance while the face
+            remains visible.
+          </p>
+          <dl class="place-card__facts">
+            <div>
+              <dt>Watch first</dt>
+              <dd id="place-watch">How the whole body organises direction and weight.</dd>
+            </div>
+            <div>
+              <dt>Remember</dt>
+              <dd id="place-note">Unmasked does not mean driven mainly by facial acting.</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+
+      <nav class="place-tabs" aria-label="Choose a Chhau tradition">
+        <button class="place-tab is-active" data-place="mayurbhanj" type="button">
+          <span>Odisha</span>Mayurbhanj
+        </button>
+        <button class="place-tab" data-place="seraikella" type="button">
+          <span>Jharkhand</span>Seraikella
+        </button>
+        <button class="place-tab" data-place="purulia" type="button">
+          <span>West Bengal</span>Purulia
+        </button>
+      </nav>
+
+      <footer>
+        This map is an orientation tool. It does not claim that state borders
+        contain the full history or movement of each tradition.
+      </footer>
+    </main>
   </body>
 </html>

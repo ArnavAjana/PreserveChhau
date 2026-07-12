@@ -1,18 +1,18 @@
-# Dependencies
-/node_modules
+# Dependencies and generated output
+node_modules/
+.next/
+out/
+build/
+dist/
+coverage/
+.turbo/
+.vercel/
 
-# Next.js
-/.next
-/out
-next-env.d.ts
+# Environment files
+.env*
+!.env.example
 
-# Production
-/build
-
-# Environment
-.env*.local
-.env
-
-# Misc
+# Editor and build noise
 .DS_Store
+*.log
 *.tsbuildinfo

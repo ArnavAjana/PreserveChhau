@@ -1,13 +1,22 @@
 {
-  "name": "chau-web",
+  "name": "preserve-chhau",
   "version": "1.0.0",
   "description": "PreserveChhau — a modern platform celebrating Chhau dance through an interactive digital experience.",
   "private": true,
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "packageManager": "npm@11.9.0",
   "scripts": {
-    "dev": "NODE_OPTIONS='--disable-warning=DEP0205' next dev",
-    "build": "NODE_OPTIONS='--disable-warning=DEP0205' next build",
-    "start": "NODE_OPTIONS='--disable-warning=DEP0205' next start",
-    "lint": "eslint ."
+    "build:book": "node scripts/build-book-pages.mjs",
+    "predev": "npm run build:book",
+    "dev": "next dev",
+    "prebuild": "npm run build:book",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit --incremental false",
+    "verify": "npm run build:book && npm run typecheck && npm run lint"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
