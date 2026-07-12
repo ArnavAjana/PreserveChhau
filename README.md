@@ -1,185 +1,129 @@
-<p align="center">
-<a href="https://preactjs.com" target="_blank">
-
-![Preact](https://raw.githubusercontent.com/preactjs/preact/8b0bcc927995c188eca83cba30fbc83491cc0b2f/logo.svg?sanitize=true 'Preact')
-
+<a href="https://github.com/styled-components/polished">
+  <img alt="polished" src="https://raw.githubusercontent.com/styled-components/brand/master/polished.png" height="150px" />
 </a>
-</p>
-<p align="center">Fast <b>3kB</b> alternative to React with the same modern API.</p>
+<br />
 
-**All the power of Virtual DOM components, without the overhead:**
+A lightweight toolset for writing styles in JavaScript. ✨
 
-- Familiar React API & patterns: ES6 Class, hooks, and Functional Components
-- Extensive React compatibility via a simple [preact/compat] alias
-- Everything you need: JSX, <abbr title="Virtual DOM">VDOM</abbr>, [DevTools], <abbr title="Hot Module Replacement">HMR</abbr>, <abbr title="Server-Side Rendering">SSR</abbr>.
-- Highly optimized diff algorithm and seamless hydration from Server Side Rendering
-- Supports all modern browsers and IE11
-- Transparent asynchronous rendering with a pluggable scheduler
+![Node CI Test](https://github.com/styled-components/polished/workflows/Node%20CI%20Test/badge.svg?branch=main)
+[![codecov](https://codecov.io/gh/styled-components/polished/branch/main/graph/badge.svg)](https://codecov.io/gh/styled-components/polished)
+[![Github All Releases](https://img.shields.io/npm/dm/polished.svg)](https://npmcharts.com/compare/polished)
 
-### 💁 More information at the [Preact Website ➞](https://preactjs.com)
-
-<table border="0">
-<tbody>
-<tr>
-<td>
-
-[![npm](https://img.shields.io/npm/v/preact.svg)](https://www.npmjs.com/package/preact)
-[![Preact Slack Community](https://img.shields.io/badge/Slack%20Community-preact.slack.com-blue)](https://chat.preactjs.com)
-[![OpenCollective Backers](https://opencollective.com/preact/backers/badge.svg)](#backers)
-[![OpenCollective Sponsors](https://opencollective.com/preact/sponsors/badge.svg)](#sponsors)
-
-[![coveralls](https://img.shields.io/coveralls/preactjs/preact/main.svg)](https://coveralls.io/github/preactjs/preact)
-[![gzip size](https://img.badgesize.io/https://unpkg.com/preact/dist/preact.min.js?compression=gzip&label=gzip)](https://unpkg.com/preact/dist/preact.min.js)
-[![brotli size](https://img.badgesize.io/https://unpkg.com/preact/dist/preact.min.js?compression=brotli&label=brotli)](https://unpkg.com/preact/dist/preact.min.js)
-
-</td>
-</tr>
-</tbody>
-</table>
-
-You can find some awesome libraries in the [awesome-preact list](https://github.com/preactjs/awesome-preact) :sunglasses:
-
----
-
-## Getting Started
-
-> 💁 _**Note:** You [don't need ES2015 to use Preact](https://github.com/developit/preact-in-es3)... but give it a try!_
-
-#### Tutorial: Building UI with Preact
-
-With Preact, you create user interfaces by assembling trees of components and elements. Components are functions or classes that return a description of what their tree should output. These descriptions are typically written in [JSX](https://facebook.github.io/jsx/) (shown underneath), or [HTM](https://github.com/developit/htm) which leverages standard JavaScript Tagged Templates. Both syntaxes can express trees of elements with "props" (similar to HTML attributes) and children.
-
-To get started using Preact, first look at the render() function. This function accepts a tree description and creates the structure described. Next, it appends this structure to a parent DOM element provided as the second argument. Future calls to render() will reuse the existing tree and update it in-place in the DOM. Internally, render() will calculate the difference from previous outputted structures in an attempt to perform as few DOM operations as possible.
-
-```js
-import { h, render } from 'preact';
-// Tells babel to use h for JSX. It's better to configure this globally.
-// See https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#usage
-// In tsconfig you can specify this with the jsxFactory
-/** @jsx h */
-
-// create our tree and append it to document.body:
-render(
-	<main>
-		<h1>Hello</h1>
-	</main>,
-	document.body
-);
-
-// update the tree in-place:
-render(
-	<main>
-		<h1>Hello World!</h1>
-	</main>,
-	document.body
-);
-// ^ this second invocation of render(...) will use a single DOM call to update the text of the <h1>
+```sh
+npm install --save polished
+# or if you're using yarn
+yarn add polished
 ```
 
-Hooray! render() has taken our structure and output a User Interface! This approach demonstrates a simple case, but would be difficult to use as an application grows in complexity. Each change would be forced to calculate the difference between the current and updated structure for the entire application. Components can help here – by dividing the User Interface into nested Components each can calculate their difference from their mounted point. Here's an example:
+Want to write styles in JavaScript, but also want Sass-style helper functions and mixins? Need a consistent color palette throughout your app? `✨ polished` is for you!
 
-```js
-import { render, h } from 'preact';
-import { useState } from 'preact/hooks';
+- **Make your app look great without stress**
+- **Cross framework compatible**: No matter if you're using [`styled-components`](https://github.com/styled-components/styled-components), emotion, jss, aphrodite, radium, or plain inline styles, as long as you're writing your styles in JavaScript you can use polished!
+- **Switching from a pre-processor to styles in JS made easy**
 
-/** @jsx h */
+## Docs
 
-const App = () => {
-	const [input, setInput] = useState('');
+**See the full documentation at [polished.js.org](http://polished.js.org/docs)!**
 
-	return (
-		<div>
-			<p>Do you agree to the statement: "Preact is awesome"?</p>
-			<input value={input} onInput={e => setInput(e.target.value)} />
-		</div>
-	);
-};
+## Usage
 
-render(<App />, document.body);
+`✨ polished` modules are meant to be used as stand-alone imports. You should avoid importing the entire library directly:
+
+`import { clearFix, animation } from 'polished'`
+~`import * as polished from 'polished`~
+~`import polished from 'polished'`~
+
+When `✨ polished` modules are imported properly, tree shaking in [webpack](https://webpack.js.org/guides/tree-shaking/) and [Rollup](https://github.com/rollup/rollup#tree-shaking) can be leveraged to reduce your bundle size.
+
+## Browser Support
+All Evergreen Browsers + IE11
+
+As of v3.6.X we support `>0.5%, not dead, ie >= 11, not op_mini all` for all our builds.
+
+## Flow Type Definitions
+
+`✨ polished` has first-class [Flow](https://flow.org/) support with zero configuration to assist you in finding type errors while using our modules.
+
+### Ignore ✨ polished source
+
+Flow frequently updates and it is possible that the version you are running may cause you to run into errors coming from the `polished` package in your `node_modules` directory. You can add the following lines to your `.flowconfig` to ignore `polished` in those cases:
+
+```bash
+[ignore]
+.*/node_modules/polished/.*
 ```
 
----
+## TypeScript Definitions
 
-## Sponsors
+`✨ polished` has [TypeScript](https://www.typescriptlang.org/) definitions to allow the library to be used in any TypeScript project. You will need to set `moduleResolution` to `node` in your `tsconfig.json` in order to use `✨ polished` with TypeScript.
 
-Become a sponsor and get your logo on our README on GitHub with a link to your site. [[Become a sponsor](https://opencollective.com/preact#sponsor)]
+### Babel plugin
 
-<a href="https://opencollective.com/preact/sponsor/0/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/0/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/1/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/1/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/2/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/2/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/3/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/3/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/4/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/4/avatar.svg"></a>
-<a href="https://snyk.co/preact" target="_blank"><img src="https://res.cloudinary.com/snyk/image/upload/snyk-marketingui/brand-logos/wordmark-logo-color.svg" width="192" height="64"></a>
-<a href="https://opencollective.com/preact/sponsor/5/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/5/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/6/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/6/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/7/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/7/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/8/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/8/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/9/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/9/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/10/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/10/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/11/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/11/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/12/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/12/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/13/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/13/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/14/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/14/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/15/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/15/avatar.svg"></a>
-<a href="https://github.com/guardian" target="_blank"> &nbsp; &nbsp; &nbsp; <img src="https://github.com/guardian.png" width="64" height="64"> &nbsp; &nbsp; &nbsp; </a>
-<a href="https://opencollective.com/preact/sponsor/16/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/16/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/17/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/17/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/18/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/18/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/19/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/19/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/20/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/20/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/21/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/21/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/22/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/22/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/23/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/23/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/24/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/24/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/25/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/25/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/26/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/26/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/27/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/27/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/28/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/28/avatar.svg"></a>
-<a href="https://opencollective.com/preact/sponsor/29/website" target="_blank"><img src="https://opencollective.com/preact/sponsor/29/avatar.svg"></a>
+You can optionally also use [`babel-plugin-polished`](https://github.com/styled-components/babel-plugin-polished) to compile the static function calls out and remove the (already tiny) runtime performance impact of using `✨ polished`.
+
+### Object Spread Properties
+
+In the documentation you will see examples using [object spread properties](https://github.com/tc39/proposal-object-rest-spread) (`{ ...other }`). To enable this syntax in your project add the [`transform-object-rest-spread` plugin](https://www.npmjs.com/package/babel-plugin-transform-object-rest-spread) (or the [`stage-3` preset](https://babeljs.io/docs/plugins/preset-stage-3/) to enable all stage three features) to your Babel configuration.
+
+## Why?
+
+When writing styles in JavaScript, many people need Sass-style helper functions to be productive. `✨ polished` brings them to you in a nice, lightweight package tailor-made for styles in JavaScript.
+
+The main difference with Sass is that it's written in a functional style and all color functions are curried. This means you can compose them together into your own reusable helpers with a `compose` function of your choice:
+
+```JS
+import { compose } from 'ramda' // Replace with any compose() function of your choice
+import { lighten, desaturate } from 'polished'
+
+// Create tone() helper
+const tone = compose(lighten(0.1), desaturate(0.1))
+```
+
+### Why not `package-xyz`?
+
+First of all, we didn't find another library that had everything we needed, and we don't care about installing a dozen packages separately.
+
+Specifically most other packages that provide color functions do so in an object-oriented style, often with a fluent API that's very different from the Sass-style helpers. This means people that aren't very familiar with JavaScript might shy away from using them.
+
+`✨ polished` was made as a standard library for everybody, no matter if they know JS inside out or not.
+
+## Compatibility
+
+✨ polished is **compatible with any library that accepts styles as JS objects**. This includes, but is by far not limited to, `styled-components`, radium, aphrodite, glamor, glamorous, jss and many more!
+
+No matter if you're using [inline styles or CSS-in-JS](http://mxstbr.blog/2016/11/inline-styles-vs-css-in-js/), polished is for you.
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/styled-components/polished/graphs/contributors"><img src="https://opencollective.com/polished/contributors.svg?width=890&button=false" /></a>
+
 
 ## Backers
 
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/preact#backer)]
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/polished#backer)]
 
-<a href="https://opencollective.com/preact/backer/0/website" target="_blank"><img src="https://opencollective.com/preact/backer/0/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/1/website" target="_blank"><img src="https://opencollective.com/preact/backer/1/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/2/website" target="_blank"><img src="https://opencollective.com/preact/backer/2/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/3/website" target="_blank"><img src="https://opencollective.com/preact/backer/3/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/4/website" target="_blank"><img src="https://opencollective.com/preact/backer/4/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/5/website" target="_blank"><img src="https://opencollective.com/preact/backer/5/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/6/website" target="_blank"><img src="https://opencollective.com/preact/backer/6/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/7/website" target="_blank"><img src="https://opencollective.com/preact/backer/7/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/8/website" target="_blank"><img src="https://opencollective.com/preact/backer/8/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/9/website" target="_blank"><img src="https://opencollective.com/preact/backer/9/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/10/website" target="_blank"><img src="https://opencollective.com/preact/backer/10/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/11/website" target="_blank"><img src="https://opencollective.com/preact/backer/11/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/12/website" target="_blank"><img src="https://opencollective.com/preact/backer/12/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/13/website" target="_blank"><img src="https://opencollective.com/preact/backer/13/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/14/website" target="_blank"><img src="https://opencollective.com/preact/backer/14/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/15/website" target="_blank"><img src="https://opencollective.com/preact/backer/15/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/16/website" target="_blank"><img src="https://opencollective.com/preact/backer/16/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/17/website" target="_blank"><img src="https://opencollective.com/preact/backer/17/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/18/website" target="_blank"><img src="https://opencollective.com/preact/backer/18/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/19/website" target="_blank"><img src="https://opencollective.com/preact/backer/19/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/20/website" target="_blank"><img src="https://opencollective.com/preact/backer/20/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/21/website" target="_blank"><img src="https://opencollective.com/preact/backer/21/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/22/website" target="_blank"><img src="https://opencollective.com/preact/backer/22/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/23/website" target="_blank"><img src="https://opencollective.com/preact/backer/23/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/24/website" target="_blank"><img src="https://opencollective.com/preact/backer/24/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/25/website" target="_blank"><img src="https://opencollective.com/preact/backer/25/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/26/website" target="_blank"><img src="https://opencollective.com/preact/backer/26/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/27/website" target="_blank"><img src="https://opencollective.com/preact/backer/27/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/28/website" target="_blank"><img src="https://opencollective.com/preact/backer/28/avatar.svg"></a>
-<a href="https://opencollective.com/preact/backer/29/website" target="_blank"><img src="https://opencollective.com/preact/backer/29/avatar.svg"></a>
+<a href="https://opencollective.com/polished#backers" target="_blank"><img src="https://opencollective.com/polished/backers.svg?width=890"></a>
 
----
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/polished#sponsor)]
+
+<a href="https://opencollective.com/polished/sponsor/0/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/1/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/2/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/3/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/4/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/5/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/6/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/7/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/8/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/polished/sponsor/9/website" target="_blank"><img src="https://opencollective.com/polished/sponsor/9/avatar.svg"></a>
+
 
 ## License
 
-MIT
+Copyright © 2016-2021 Brian Hough, Maximilian Stoiber, & Nik Graf. Licensed under the MIT License, see [LICENSE.md](LICENSE.md) for more information!
 
-[![Preact](https://i.imgur.com/YqCHvEW.gif)](https://preactjs.com)
-
-[preact/compat]: https://github.com/preactjs/preact/tree/main/compat
-[hyperscript]: https://github.com/dominictarr/hyperscript
-[DevTools]: https://github.com/preactjs/preact-devtools
+<img src="https://static.scarf.sh/a.png?x-pxid=121e67af-0b5f-4132-a6e7-6ae63ebeedac" />
