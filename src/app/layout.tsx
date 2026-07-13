@@ -1,54 +1,26 @@
 import type { Metadata } from "next";
-import {
-  Cormorant_Garamond,
-  Fraunces,
-  Inter,
-  Proza_Libre,
-} from "next/font/google";
 import "./globals.css";
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-fraunces",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const cormorantGaramond = Cormorant_Garamond({
-  subsets: ["latin"],
-  variable: "--font-cormorant-garamond",
-  weight: ["400", "500", "600", "700"],
-});
-
-const prozaLibre = Proza_Libre({
-  subsets: ["latin"],
-  variable: "--font-proza-libre",
-  weight: ["400", "500", "600", "700"],
-});
 
 export const metadata: Metadata = {
   title: {
-    default: "PreserveChhau — The Living Tradition of Chhau Dance",
+    default: "PreserveChhau — Arnav Ajana’s Interactive Chhau eBook",
     template: "%s · PreserveChhau",
   },
   description:
-    "An interactive digital experience celebrating Chhau, the masked martial dance of eastern India — its history, styles, music, and mask-making craft.",
+    "IB student Arnav Ajana’s Mayurbhanj-centred journey into the three Chhau traditions, told through a source-linked interactive eBook.",
   keywords: [
     "Chhau",
     "Chhau dance",
     "Purulia",
     "Seraikella",
     "Mayurbhanj",
-    "Indian classical dance",
+    "eastern Indian dance",
     "intangible cultural heritage",
   ],
   openGraph: {
-    title: "PreserveChhau — The Living Tradition of Chhau Dance",
+    title: "PreserveChhau — Arnav Ajana’s Interactive Chhau eBook",
     description:
-      "Explore the history, masks, music, and stories of Chhau through an interactive eBook and 3D experiences.",
+      "How one student’s performance became a habit, a set of questions, and a Mayurbhanj-centred interactive eBook about Chhau.",
     type: "website",
     siteName: "PreserveChhau",
   },
@@ -58,10 +30,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${fraunces.variable} ${inter.variable} ${cormorantGaramond.variable} ${prozaLibre.variable}`}
-    >
+    <html lang="en">
       <body className="flex min-h-screen flex-col">
         <a
           href="#main-content"

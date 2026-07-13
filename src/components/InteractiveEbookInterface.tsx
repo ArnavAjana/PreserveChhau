@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { getImageProps } from "next/image";
 import Link from "next/link";
 import {
   createContext,
@@ -12,82 +11,107 @@ import {
   useRef,
   useState,
   type ReactNode,
+  type RefObject,
 } from "react";
 import { bookPages, type BookPage } from "@/content/book-pages";
+import { AboutAuthorPhoto } from "@/components/AboutAuthorPhoto";
 import { PageAudioPlayer } from "@/components/PageAudioPlayer";
 import { PageEmbed } from "@/components/PageEmbed";
-import { PageMediaGallery } from "@/components/PageMediaGallery";
-import { PageVideo } from "@/components/PageVideo";
 import { SandboxGuide } from "@/components/SandboxGuide";
 
 type CitationContextValue = {
   onCiteClick: (citationNumber: number) => void;
 };
 
+type IconProps = {
+  className?: string;
+};
+
+type TocPage = {
+  index: number;
+  page: BookPage;
+};
+
+type TocGroup = {
+  id: string;
+  label: string;
+  pages: TocPage[];
+};
+
+type NavigateOptions = {
+  focusHeading?: boolean;
+  replace?: boolean;
+};
+
+type ModelOption = {
+  label: string;
+  modelUrl: string;
+  modelScale?: number;
+};
+
 const CitationContext = createContext<CitationContextValue | null>(null);
 
-function useCitationOnClick(): (n: number) => void {
-  const ctx = useContext(CitationContext);
-  return ctx?.onCiteClick ?? (() => {});
-}
-
 const LIBRARY_PAGE_ID = "library";
-const SANDBOX_ANCHOR_PATTERN =
-  /^>\s+\*\*(Sandbox|3D sandbox|Video|Audio|Image gallery|Image|Caption|Listen|Watch)\b/i;
+const STUDY_ANCHOR_PATTERN = /^>\s+\*\*(Sandbox|3D sandbox)\b/i;
 const LIBRARY_ENTRY_PATTERN = /^\*\*\[(\d+)\]\*\*\s*/;
+const THEME_AUDIO_URL = "/audio/main-theme-ebook.mp3";
+const THEME_START_VOLUME = 0.28;
 
-const MAYURBHANJ_IDS = new Set<string>([
-  "entering-mayurbhanj-chhau",
-  "mayurbhanj-patrons",
-  "mayurbhanj-traditions",
-  "mayurbhanj-movement-techniques",
-  "mayurbhanj-evolution-and-pioneers",
-  "mayurbhanj-performance-lab",
-]);
-const SERAIKELLA_IDS = new Set<string>([
-  "entering-seraikella-chhau",
-  "seraikella-patrons",
-  "seraikella-traditions",
-  "seraikella-movement-techniques",
-  "seraikella-evolution-and-pioneers",
-  "seraikella-performance-lab",
-]);
-const PURULIA_IDS = new Set<string>([
-  "entering-purulia-chhau",
-  "purulia-patrons",
-  "purulia-traditions",
-  "purulia-movement-techniques",
-  "purulia-evolution-and-pioneers",
-  "purulia-performance-lab",
-]);
-const WORLD_IDS = new Set<string>([
-  "what-is-chhau",
-  "origins-etymology-and-historical-layers",
-  "the-chhau-body",
-  "movement-vocabulary-and-formations",
-  "storytelling-and-archetypes",
-  "expressions",
-  "music-rhythm-and-instruments",
-  "costumes-and-colour",
-  "masks",
-  "props",
-  "performance-space-training-and-community",
-]);
 const REFERENCE_IDS = new Set<string>([
-  "glossary",
-  "index-of-people-places-and-institutions",
+  "glossary-place-people",
+  "glossary-movement",
+  "glossary-music-performance",
+  "timeline",
+  "questions-still-open",
   "library",
+  "credits-review-status",
 ]);
+
+const MODEL_LABELS: Record<string, string> = {
+  "asar-akhada-diorama.glb": "Performance arena and training-ground study",
+  "chhau-three-styles-lineup.glb": "Three-tradition comparison",
+  "costume-comparison.glb": "Regional costume comparison",
+  "group-formation-pack.glb": "Group pathways and formations",
+  "instrument-pack.glb": "Region-labelled instrument study",
+  "mask-comparison.glb": "Seraikella and Purulia mask comparison",
+  "mayurbhanj-chamka.glb": "Mayurbhanj rhythm-and-movement study",
+  "mayurbhanj-core.glb": "Mayurbhanj foundational movement study",
+  "mayurbhanj-jumps.glb": "Mayurbhanj aerial movement key poses",
+  "mayurbhanj-repertoire.glb": "Mayurbhanj repertoire study",
+  "mayurbhanj-topkas.glb": "Practitioner-selected Mayurbhanj topkas",
+  "mayurbhanj-uflis.glb": "Practitioner-selected Mayurbhanj uflis",
+  "prop-pack.glb": "Region-labelled performance props",
+  "purulia-durga.glb": "Purulia Durga study",
+  "purulia-ganesha.glb": "Purulia Ganesha study",
+  "purulia-lion-vahana.glb": "Purulia lion-vahana study",
+  "purulia-mahishasura.glb": "Purulia Mahishasura study",
+  "purulia-mask-layers.glb": "Maker-led Purulia mask construction study",
+  "purulia-masked-core.glb": "Purulia masked movement study",
+  "purulia-technique.glb": "Purulia movement-grammar study",
+  "seraikella-expression.glb": "Seraikella mask-and-body expression study",
+  "seraikella-ratri.glb": "Seraikella Ratri study",
+  "seraikella-second-exemplar.glb": "Second Seraikella repertoire study",
+};
+
+function useCitationOnClick(): (citationNumber: number) => void {
+  const context = useContext(CitationContext);
+  return context?.onCiteClick ?? (() => {});
+}
 
 function getChapterEyebrow(page: BookPage): string | null {
   if (page.title.includes(" — ")) {
     return page.title.split(" — ")[0];
   }
-  if (MAYURBHANJ_IDS.has(page.id)) return "Mayurbhanj";
-  if (SERAIKELLA_IDS.has(page.id)) return "Seraikella";
-  if (PURULIA_IDS.has(page.id)) return "Purulia";
-  if (WORLD_IDS.has(page.id)) return "The World of Chhau";
-  if (REFERENCE_IDS.has(page.id)) return "Reference";
+
+  const pageIndex = bookPages.findIndex((candidate) => candidate.id === page.id);
+  for (let index = pageIndex - 1; index >= 0; index -= 1) {
+    const section = bookPages[index];
+    if (section.pageType !== "section") continue;
+    return section.title.includes(" — ")
+      ? section.title.split(" — ")[0]
+      : section.title;
+  }
+
   return null;
 }
 
@@ -98,63 +122,75 @@ function getChapterTitle(page: BookPage): string {
   return page.title;
 }
 
-// Return a Part label to render above the *first* chapter of each section
-// in the sidebar. Returns null otherwise.
-function getSidebarPartLabel(page: BookPage, index: number): string | null {
-  if (index === 0) return "Front matter";
-  const prev = bookPages[index - 1];
-  if (page.pageType === "section") return null; // section pages already carry their own label
-  // Look back: find the most recent section page; if it's exactly the
-  // previous page, emit its label group.
-  if (prev && prev.pageType === "section") {
-    const t = prev.title;
-    if (t.includes(" — ")) return t.split(" — ").slice(1).join(" — ");
-    return t;
-  }
-  return null;
-}
+function getTocGroups(): TocGroup[] {
+  const groups: TocGroup[] = [];
+  let currentGroup: TocGroup = {
+    id: "opening",
+    label: "Opening",
+    pages: [],
+  };
 
-type ViewerLayout = "hero" | "side-right" | "side-left" | "stacked";
-
-type ViewerPlacement = {
-  layout: ViewerLayout;
-  anchorBlockIndex: number | null;
-};
-
-function decideViewerPlacement(
-  page: BookPage,
-  modelCount: number,
-): ViewerPlacement {
-  const body = page.body;
-  const blocks = body.split(/\n{2,}/);
-  const anchorIndex = blocks.findIndex((b) => {
-    const t = b.trim();
-    return SANDBOX_ANCHOR_PATTERN.test(t);
+  bookPages.forEach((page, index) => {
+    if (page.pageType === "section") {
+      if (currentGroup.pages.length > 0) groups.push(currentGroup);
+      currentGroup = {
+        id: page.id,
+        label: getChapterTitle(page),
+        pages: [],
+      };
+    }
+    currentGroup.pages.push({ index, page });
   });
 
-  const wordCount = body.trim().split(/\s+/).filter(Boolean).length;
-
-  let layout: ViewerLayout;
-  if (wordCount < 220) {
-    layout = "hero";
-  } else if (modelCount > 1 && wordCount < 600) {
-    layout = "stacked";
-  } else if (page.pageNumber % 2 === 0) {
-    layout = "side-right";
-  } else {
-    layout = "side-left";
-  }
-
-  return {
-    layout,
-    anchorBlockIndex: anchorIndex >= 0 ? anchorIndex : null,
-  };
+  if (currentGroup.pages.length > 0) groups.push(currentGroup);
+  return groups;
 }
 
-const ChauModelViewer = dynamic(
+const TOC_GROUPS = getTocGroups();
+
+function getCurrentGroupLabel(pageIndex: number): string {
+  return (
+    TOC_GROUPS.find((group) =>
+      group.pages.some((entry) => entry.index === pageIndex),
+    )?.label ?? "Opening"
+  );
+}
+
+function getPageIndexFromHash(): number {
+  if (typeof window === "undefined") return -1;
+  const id = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+  if (!id) return -1;
+  return bookPages.findIndex((page) => page.id === id);
+}
+
+function formatModelLabel(filename: string): string {
+  const knownLabel = MODEL_LABELS[filename];
+  if (knownLabel) return knownLabel;
+  const words = filename
+    .replace(/\.glb$/i, "")
+    .split("-")
+    .filter(Boolean)
+    .join(" ");
+  return words.charAt(0).toUpperCase() + words.slice(1);
+}
+
+function getStudyPrompt(body: string): string | null {
+  const block = body
+    .split(/\n{2,}/)
+    .map((candidate) => candidate.trim())
+    .find((candidate) => STUDY_ANCHOR_PATTERN.test(candidate));
+
+  if (!block) return null;
+  return block
+    .replace(/^>\s+\*\*(?:Sandbox|3D sandbox):?\*\*\s*/i, "")
+    .replace(/^>\s?/gm, "")
+    .trim();
+}
+
+const ChhauModelViewer = dynamic(
   () =>
-    import("@/components/ChauModelViewer").then(
-      (module) => module.ChauModelViewer,
+    import("@/components/ChhauModelViewer").then(
+      (module) => module.ChhauModelViewer,
     ),
   {
     loading: () => <ViewerLoading />,
@@ -162,71 +198,92 @@ const ChauModelViewer = dynamic(
   },
 );
 
-type IconProps = {
-  className?: string;
-};
-
-type BookContentProps = {
-  currentChapter: number;
-  modelOptions: Array<{
-    label: string;
-    modelUrl: string;
-    modelScale?: number;
-  }>;
-  page: BookPage;
-  selectedModelIndex: number;
-  setSelectedModelIndex: (index: number) => void;
-  setCurrentChapter: (chapter: number) => void;
-  viewer?: ReactNode;
-};
-
-const pageAnimationClasses: Record<BookPage["animationStyle"], string> = {
-  "page-turn-soft": "page-enter",
-  "page-turn-minimal": "page-enter-minimal",
-  "paper-slide": "paper-slide-enter",
-  "sheet-glide": "sheet-glide-enter",
-  "chapter-fade": "chapter-fade-enter",
-  "chapter-slide": "chapter-slide-enter",
-  "spread-open": "spread-open-enter",
-  "spread-close": "spread-close-enter",
-  "paper-lift": "paper-lift-enter",
-  "paper-settle": "paper-settle-enter",
-};
-
-const hasAnyViewer = bookPages.some(
-  (page) => page.modelUrl || page.modelOptions?.length || page.showFallbackScene,
-);
-
-const THEME_AUDIO_URL = "/audio/main-theme-ebook.mp3";
-const THEME_START_VOLUME = 0.28;
-
 export function InteractiveEbookInterface() {
-  const [viewMode, setViewMode] = useState<"text" | "3d">("text");
   const [currentChapter, setCurrentChapter] = useState(0);
   const [selectedModelIndexes, setSelectedModelIndexes] = useState<
     Record<string, number>
   >({});
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [tocOpen, setTocOpen] = useState(false);
+  const [tocQuery, setTocQuery] = useState("");
   const [pendingCitation, setPendingCitation] = useState<number | null>(null);
   const [themePlaying, setThemePlaying] = useState(false);
   const [themeVolume, setThemeVolume] = useState(THEME_START_VOLUME);
-  const desktopPageScrollRef = useRef<HTMLDivElement>(null);
-  const mobilePageScrollRef = useRef<HTMLDivElement>(null);
-  const chapterButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
   const themeAudioRef = useRef<HTMLAudioElement>(null);
+  const pageHeadingRef = useRef<HTMLHeadingElement>(null);
+  const tocDialogRef = useRef<HTMLDivElement>(null);
+  const tocSearchRef = useRef<HTMLInputElement>(null);
+  const tocTriggerRef = useRef<HTMLButtonElement>(null);
+  const shouldFocusHeadingRef = useRef(false);
+
+  const currentPage = bookPages[currentChapter] ?? bookPages[0];
+  const currentGroupLabel = getCurrentGroupLabel(currentChapter);
 
   const libraryPageIndex = useMemo(
-    () => bookPages.findIndex((p) => p.id === LIBRARY_PAGE_ID),
+    () => bookPages.findIndex((page) => page.id === LIBRARY_PAGE_ID),
     [],
+  );
+
+  const modelOptions = useMemo<ModelOption[]>(
+    () =>
+      currentPage.modelOptions?.length
+        ? currentPage.modelOptions
+        : currentPage.modelUrl
+          ? [
+              {
+                label: "3D study",
+                modelScale: currentPage.modelScale,
+                modelUrl: currentPage.modelUrl,
+              },
+            ]
+          : [],
+    [currentPage],
+  );
+
+  const selectedModelIndex = Math.min(
+    selectedModelIndexes[currentPage.id] ?? 0,
+    Math.max(modelOptions.length - 1, 0),
+  );
+  const selectedModel = modelOptions[selectedModelIndex];
+  const shouldShowViewer = Boolean(selectedModel);
+
+  const navigateTo = useCallback(
+    (requestedIndex: number, options: NavigateOptions = {}) => {
+      const index = Math.min(
+        bookPages.length - 1,
+        Math.max(0, requestedIndex),
+      );
+      const { focusHeading = true, replace = false } = options;
+      const nextHash = `#${encodeURIComponent(bookPages[index].id)}`;
+
+      shouldFocusHeadingRef.current = focusHeading;
+      setCurrentChapter(index);
+      if (index !== libraryPageIndex) setPendingCitation(null);
+
+      if (typeof window !== "undefined" && window.location.hash !== nextHash) {
+        const method = replace ? "replaceState" : "pushState";
+        window.history[method](null, "", nextHash);
+      }
+
+      if (index === currentChapter) {
+        window.scrollTo({ top: 0, behavior: "auto" });
+        if (focusHeading) {
+          window.requestAnimationFrame(() =>
+            pageHeadingRef.current?.focus({ preventScroll: true }),
+          );
+        }
+      }
+    },
+    [currentChapter, libraryPageIndex],
   );
 
   const handleCitationClick = useCallback(
     (citationNumber: number) => {
       if (libraryPageIndex < 0) return;
-      setCurrentChapter(libraryPageIndex);
+      navigateTo(libraryPageIndex, { focusHeading: false });
       setPendingCitation(citationNumber);
     },
-    [libraryPageIndex],
+    [libraryPageIndex, navigateTo],
   );
 
   const citationContextValue = useMemo<CitationContextValue>(
@@ -235,56 +292,114 @@ export function InteractiveEbookInterface() {
   );
 
   useEffect(() => {
-    if (pendingCitation === null) return;
-    if (currentChapter !== libraryPageIndex) return;
+    function syncFromLocation() {
+      const index = getPageIndexFromHash();
+      if (index < 0) return;
+      shouldFocusHeadingRef.current = false;
+      setCurrentChapter(index);
+      setPendingCitation(null);
+    }
 
-    const id = `cite-${pendingCitation}`;
-    let attempts = 0;
+    syncFromLocation();
+    window.addEventListener("hashchange", syncFromLocation);
+    window.addEventListener("popstate", syncFromLocation);
+    return () => {
+      window.removeEventListener("hashchange", syncFromLocation);
+      window.removeEventListener("popstate", syncFromLocation);
+    };
+  }, []);
 
-    function tryScroll() {
-      const target = document.getElementById(id);
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "center" });
-        target.classList.add("cite-flash");
-        window.setTimeout(() => {
-          target.classList.remove("cite-flash");
-        }, 1800);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+    document.title = `${getChapterTitle(currentPage)} · Chhau by Arnav Ajana`;
+
+    if (shouldFocusHeadingRef.current) {
+      window.requestAnimationFrame(() => {
+        pageHeadingRef.current?.focus({ preventScroll: true });
+        shouldFocusHeadingRef.current = false;
+      });
+    }
+  }, [currentChapter, currentPage]);
+
+  useEffect(() => {
+    if (pendingCitation === null || currentChapter !== libraryPageIndex) return;
+
+    const target = document.getElementById(`cite-${pendingCitation}`);
+    if (!target) {
+      const frame = window.requestAnimationFrame(() =>
+        setPendingCitation(null),
+      );
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    target.setAttribute("tabindex", "-1");
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    target.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "center",
+    });
+    target.focus({ preventScroll: true });
+    target.classList.add("cite-flash");
+    const timeout = window.setTimeout(
+      () => {
+        target.classList.remove("cite-flash");
         setPendingCitation(null);
+      },
+      1500,
+    );
+    return () => {
+      window.clearTimeout(timeout);
+      target.classList.remove("cite-flash");
+    };
+  }, [pendingCitation, currentChapter, libraryPageIndex]);
+
+  useEffect(() => {
+    if (themeAudioRef.current) themeAudioRef.current.volume = themeVolume;
+  }, [themeVolume]);
+
+  useEffect(() => {
+    if (!tocOpen) return;
+
+    const fallbackTrigger = tocTriggerRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.requestAnimationFrame(() => tocSearchRef.current?.focus());
+
+    function handleDialogKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setTocOpen(false);
         return;
       }
-      attempts += 1;
-      if (attempts < 20) {
-        window.setTimeout(tryScroll, 60);
-      } else {
-        setPendingCitation(null);
+      if (event.key !== "Tab" || !tocDialogRef.current) return;
+
+      const focusable = Array.from(
+        tocDialogRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     }
 
-    window.setTimeout(tryScroll, 80);
-  }, [pendingCitation, currentChapter, libraryPageIndex]);
-  const currentPage = bookPages[currentChapter] ?? bookPages[0];
-  const modelOptions = useMemo(
-    () =>
-      currentPage.modelOptions?.length
-        ? currentPage.modelOptions
-        : currentPage.modelUrl
-          ? [
-              {
-                label: "3D model",
-                modelScale: currentPage.modelScale,
-                modelUrl: currentPage.modelUrl,
-              },
-            ]
-          : [],
-    [currentPage],
-  );
-  const selectedModelIndex = Math.min(
-    selectedModelIndexes[currentPage.id] ?? 0,
-    Math.max(modelOptions.length - 1, 0),
-  );
-  const selectedModel = modelOptions[selectedModelIndex];
-  const shouldShowViewer = Boolean(selectedModel || currentPage.showFallbackScene);
-  const effectiveViewMode = shouldShowViewer ? viewMode : "text";
+    document.addEventListener("keydown", handleDialogKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleDialogKeyDown);
+      document.body.style.overflow = previousOverflow;
+      fallbackTrigger?.focus();
+    };
+  }, [tocOpen]);
 
   function setSelectedModelIndex(index: number) {
     setSelectedModelIndexes((previousIndexes) => ({
@@ -293,94 +408,18 @@ export function InteractiveEbookInterface() {
     }));
   }
 
-  useEffect(() => {
-    desktopPageScrollRef.current?.scrollTo({ top: 0 });
-    mobilePageScrollRef.current?.scrollTo({ top: 0 });
-  }, [currentChapter]);
-
-  useEffect(() => {
-    if (!sidebarOpen) {
-      return;
-    }
-
-    chapterButtonRefs.current[currentChapter]?.scrollIntoView({
-      block: "nearest",
-    });
-  }, [currentChapter, sidebarOpen]);
-
-  useEffect(() => {
-    if (themeAudioRef.current) {
-      themeAudioRef.current.volume = themeVolume;
-    }
-  }, [themeVolume]);
-
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      // Leave browser/system shortcuts (Alt+Arrow history nav, etc.) alone.
-      if (event.metaKey || event.ctrlKey || event.altKey) {
-        return;
-      }
-
-      const target = event.target as HTMLElement | null;
-      const targetTagName = target?.tagName;
-
-      if (
-        targetTagName &&
-        ["INPUT", "TEXTAREA", "SELECT"].includes(targetTagName)
-      ) {
-        return;
-      }
-
-      if (event.key === "Escape") {
-        setSidebarOpen(false);
-        return;
-      }
-
-      if (event.key === "ArrowRight") {
-        setCurrentChapter((chapter) =>
-          Math.min(chapter + 1, bookPages.length - 1),
-        );
-        return;
-      }
-
-      if (event.key === "ArrowLeft") {
-        setCurrentChapter((chapter) => Math.max(chapter - 1, 0));
-      }
-    }
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  function goToNextChapter() {
-    if (currentChapter < bookPages.length - 1) {
-      setCurrentChapter(currentChapter + 1);
-    }
-  }
-
-  function goToPreviousChapter() {
-    if (currentChapter > 0) {
-      setCurrentChapter(currentChapter - 1);
-    }
-  }
-
   async function toggleThemeMusic() {
     const audio = themeAudioRef.current;
     if (!audio) return;
 
     if (themePlaying) {
       audio.pause();
-      setThemePlaying(false);
       return;
     }
 
     try {
       audio.volume = themeVolume;
       await audio.play();
-      setThemePlaying(true);
     } catch {
       setThemePlaying(false);
     }
@@ -389,309 +428,258 @@ export function InteractiveEbookInterface() {
   const viewer = useMemo(
     () =>
       shouldShowViewer ? (
-        <ChauModelViewer
-          className={`rounded-sm ${currentPage.modelFrameStyle}`}
+        <ChhauModelViewer
           modelScale={selectedModel?.modelScale ?? currentPage.modelScale}
           modelUrl={selectedModel?.modelUrl ?? currentPage.modelUrl}
-          showFallbackScene={currentPage.showFallbackScene}
         />
       ) : null,
     [currentPage, selectedModel, shouldShowViewer],
   );
 
-  const readingProgress = useMemo(() => {
-    const denominator = Math.max(bookPages.length - 1, 1);
-    const pct = (currentChapter / denominator) * 100;
-    return Math.min(100, Math.max(0, pct));
-  }, [currentChapter]);
+  const filteredGroups = useMemo(() => {
+    const query = tocQuery.trim().toLocaleLowerCase();
+    if (!query) return TOC_GROUPS;
+
+    return TOC_GROUPS.map((group) => ({
+      ...group,
+      pages: group.pages.filter(({ page }) =>
+        `${group.label} ${page.title}`.toLocaleLowerCase().includes(query),
+      ),
+    })).filter((group) => group.pages.length > 0);
+  }, [tocQuery]);
+
+  const progress = Math.round(
+    ((currentChapter + 1) / Math.max(bookPages.length, 1)) * 100,
+  );
 
   return (
     <CitationContext.Provider value={citationContextValue}>
-    <div className="min-h-screen overflow-hidden bg-[linear-gradient(180deg,#050606_0%,#10201f_46%,#190b09_100%)] font-reader text-yellow-50">
-      <audio
-        loop
-        onPause={() => setThemePlaying(false)}
-        onPlay={() => setThemePlaying(true)}
-        preload="auto"
-        ref={themeAudioRef}
-        src={THEME_AUDIO_URL}
-      />
-      <div aria-hidden="true" className="reading-progress">
-        <div
-          className="reading-progress-fill"
-          style={{ ["--progress" as string]: `${readingProgress}%` }}
+      <div className="reader-shell min-h-screen">
+        <audio
+          loop
+          onPause={() => setThemePlaying(false)}
+          onPlay={() => setThemePlaying(true)}
+          preload="metadata"
+          ref={themeAudioRef}
+          src={THEME_AUDIO_URL}
         />
-      </div>
-      {sidebarOpen ? (
-        <button
-          aria-label="Close chapter navigation"
-          className="fixed inset-0 z-30 bg-black/30 backdrop-blur-[1px] md:hidden"
-          onClick={() => setSidebarOpen(false)}
-          type="button"
-        />
-      ) : null}
 
-      <aside
-        aria-label="Chapter navigation"
-        className="fixed left-0 top-0 z-40 h-full w-[min(20rem,calc(100vw-1.5rem))] transition-transform duration-300 ease-out"
-        onMouseLeave={() => setSidebarOpen(false)}
-        style={{
-          transform: sidebarOpen ? "translateX(0)" : "translateX(-100%)",
-        }}
-      >
-        <div className="flex h-full min-h-0 flex-col border-r border-teal-900/40 bg-[#050807]/95 p-5 shadow-2xl backdrop-blur-xl">
-          <div className="mb-4 flex shrink-0 items-center justify-between gap-3">
-            <div>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.18em] text-[#efe7d0]">
-                Chapters
-              </h3>
-              <p className="mt-1 text-xs text-[#efe7d0]/45">
-                {bookPages.length} pages
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <Link
-                aria-label="Back to PreserveChhau home"
-                className="grid h-9 w-9 place-items-center rounded-sm border border-teal-700/45 bg-teal-900/45 text-[#efe7d0] transition hover:bg-teal-800/65"
-                href="/"
+        <p aria-live="polite" className="sr-only">
+          {pendingCitation !== null
+            ? `Opening source ${pendingCitation}`
+            : `${getChapterTitle(currentPage)}, page ${currentChapter + 1} of ${bookPages.length}`}
+        </p>
+
+        {tocOpen ? (
+          <div className="reader-toc-layer fixed inset-0 z-[120] flex" role="presentation">
+            <button
+              aria-label="Close contents"
+              className="absolute inset-0 bg-ink/55 backdrop-blur-[2px]"
+              onClick={() => setTocOpen(false)}
+              tabIndex={-1}
+              type="button"
+            />
+            <div
+              aria-labelledby="contents-title"
+              aria-modal="true"
+              className="reader-toc-panel relative z-10 flex w-[min(28rem,calc(100vw-1rem))] flex-col"
+              ref={tocDialogRef}
+              role="dialog"
+            >
+              <div className="flex items-start justify-between gap-4 border-b border-ivory/10 px-5 pb-4 pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-6">
+                <div>
+                  <p className="reader-kicker text-marigold-300">The eBook</p>
+                  <h2 className="mt-1 text-xl font-semibold text-ivory" id="contents-title">
+                    Contents
+                  </h2>
+                  <p className="mt-1 text-sm text-ivory/60">
+                    {bookPages.length} pages across twelve chapters
+                  </p>
+                </div>
+                <button
+                  aria-label="Close contents"
+                  className="reader-icon-button reader-icon-button-dark"
+                  onClick={() => setTocOpen(false)}
+                  type="button"
+                >
+                  <CloseIcon className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="border-b border-ivory/10 p-4 sm:px-6">
+                <label className="reader-search-field">
+                  <SearchIcon className="h-4 w-4 shrink-0" />
+                  <span className="sr-only">Search the contents</span>
+                  <input
+                    autoComplete="off"
+                    onChange={(event) => setTocQuery(event.target.value)}
+                    placeholder="Search page titles"
+                    ref={tocSearchRef}
+                    type="search"
+                    value={tocQuery}
+                  />
+                </label>
+              </div>
+
+              <nav
+                aria-label="eBook contents"
+                className="min-h-0 flex-1 overflow-y-auto px-3 py-3 sm:px-4"
               >
-                <HomeIcon className="h-4 w-4" />
-              </Link>
+                {filteredGroups.length > 0 ? (
+                  filteredGroups.map((group) => {
+                    const containsCurrentPage = group.pages.some(
+                      ({ index }) => index === currentChapter,
+                    );
+                    return (
+                      <details
+                        className="reader-toc-group"
+                        key={group.id}
+                        open={Boolean(tocQuery) || containsCurrentPage}
+                      >
+                        <summary>
+                          <span>{group.label}</span>
+                          <span>{group.pages.length}</span>
+                        </summary>
+                        <div className="space-y-1 pb-2">
+                          {group.pages.map(({ index, page }) => (
+                            <button
+                              aria-current={
+                                index === currentChapter ? "page" : undefined
+                              }
+                              className={`reader-toc-link ${
+                                index === currentChapter ? "is-current" : ""
+                              }`}
+                              key={page.id}
+                              onClick={() => {
+                                navigateTo(index);
+                                setTocOpen(false);
+                                setTocQuery("");
+                              }}
+                              type="button"
+                            >
+                              <span className="reader-toc-number">
+                                {String(index + 1).padStart(2, "0")}
+                              </span>
+                              <span>{getChapterTitle(page)}</span>
+                            </button>
+                          ))}
+                        </div>
+                      </details>
+                    );
+                  })
+                ) : (
+                  <p className="px-3 py-8 text-center text-sm text-ivory/65">
+                    No page title matches “{tocQuery}”.
+                  </p>
+                )}
+              </nav>
+
+              <div className="border-t border-ivory/10 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+                <ThemeMusicControls
+                  isPlaying={themePlaying}
+                  onToggle={toggleThemeMusic}
+                  onVolumeChange={setThemeVolume}
+                  volume={themeVolume}
+                />
+                <Link
+                  className="mt-3 flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ivory/15 px-4 text-sm font-semibold text-ivory transition hover:border-marigold-300/60 hover:text-marigold-200"
+                  href="/"
+                >
+                  <HomeIcon className="h-4 w-4" />
+                  Return to project home
+                </Link>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        <div
+          className="reader-background"
+          inert={tocOpen ? true : undefined}
+        >
+          <header className="reader-top-rail">
+            <div className="reader-rail-inner mx-auto flex min-h-[4.25rem] max-w-[1120px] items-center gap-3 px-4 sm:px-6">
               <button
-                aria-label="Close chapter navigation"
-                className="grid h-9 w-9 place-items-center rounded-sm border border-teal-700/45 bg-teal-900/45 text-[#efe7d0] transition hover:bg-teal-800/65"
-                onClick={() => setSidebarOpen(false)}
+                aria-expanded={tocOpen}
+                aria-haspopup="dialog"
+                className="reader-rail-button"
+                onClick={() => setTocOpen(true)}
+                ref={tocTriggerRef}
                 type="button"
               >
-                <CloseIcon className="h-4 w-4" />
+                <MenuIcon className="h-4 w-4" />
+                <span>Contents</span>
               </button>
+
+              <Link
+                aria-label="PreserveChhau home"
+                className="hidden shrink-0 text-sm font-bold tracking-tight text-ink sm:block"
+                href="/"
+              >
+                Preserve<span className="text-laterite-700">Chhau</span>
+              </Link>
+
+              <div className="min-w-0 flex-1 text-center">
+                <p className="reader-kicker truncate text-laterite-700">
+                  {currentGroupLabel}
+                </p>
+                <p className="mt-0.5 hidden truncate text-sm font-medium text-ink/75 md:block">
+                  {getChapterTitle(currentPage)}
+                </p>
+              </div>
+
+              <button
+                aria-label={themePlaying ? "Pause theme music" : "Play theme music"}
+                className="reader-rail-button"
+                onClick={toggleThemeMusic}
+                type="button"
+              >
+                {themePlaying ? (
+                  <PauseIcon className="h-4 w-4" />
+                ) : (
+                  <MusicIcon className="h-4 w-4" />
+                )}
+                <span className="hidden lg:inline">Theme</span>
+              </button>
+
+              <span className="shrink-0 text-xs font-semibold tabular-nums text-ink/70">
+                {currentChapter + 1}/{bookPages.length}
+              </span>
             </div>
-          </div>
-
-          <ThemeMusicControls
-            isPlaying={themePlaying}
-            onToggle={toggleThemeMusic}
-            onVolumeChange={setThemeVolume}
-            volume={themeVolume}
-          />
-
-          <div className="-mr-2 min-h-0 flex-1 overflow-y-auto pr-2">
-            <nav className="pb-4">
-              {bookPages.map((chapter, index) => {
-                const partLabel = getSidebarPartLabel(chapter, index);
-                return (
-                  <div key={chapter.id}>
-                    {partLabel ? (
-                      <div className="sidebar-part-label">{partLabel}</div>
-                    ) : null}
-                    <button
-                      aria-current={
-                        index === currentChapter ? "page" : undefined
-                      }
-                      className={`mb-1 flex w-full items-start gap-2.5 rounded-sm px-3 py-2 text-left transition ${
-                        index === currentChapter
-                          ? "bg-teal-700 text-[#fff8df]"
-                          : "text-[#efe7d0]/65 hover:bg-teal-700/20 hover:text-[#fff8df]"
-                      }`}
-                      onClick={() => {
-                        setCurrentChapter(index);
-                        setSidebarOpen(false);
-                      }}
-                      ref={(element) => {
-                        chapterButtonRefs.current[index] = element;
-                      }}
-                      type="button"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className={`mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full ${
-                          index === currentChapter
-                            ? "bg-[#fff8df]"
-                            : chapter.pageType === "section"
-                              ? "bg-[#c84a30]/70"
-                              : "bg-[#efe7d0]/30"
-                        }`}
-                      />
-                      <span className="block flex-1">
-                        <span className="block font-mono text-[10px] opacity-60">
-                          Page {chapter.pageNumber + 1}
-                        </span>
-                        <span className="block text-sm leading-snug">
-                          {getNavTitle(chapter.title)}
-                        </span>
-                      </span>
-                    </button>
-                  </div>
-                );
-              })}
-            </nav>
-          </div>
-
-          <div className="shrink-0 space-y-2 border-t border-teal-900/40 pt-4">
-            <button
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-sm border border-teal-700/45 bg-teal-900/45 px-3 text-sm font-semibold text-[#efe7d0] transition hover:bg-teal-800/65 disabled:cursor-not-allowed disabled:opacity-30"
-              disabled={currentChapter === 0}
-              onClick={goToPreviousChapter}
-              type="button"
+            <div
+              aria-label={`Reading progress: ${progress}%`}
+              aria-valuemax={100}
+              aria-valuemin={0}
+              aria-valuenow={progress}
+              className="reader-progress"
+              role="progressbar"
             >
-              <ChevronLeftIcon className="h-4 w-4" />
-              Previous
-            </button>
-            <button
-              className="flex h-11 w-full items-center justify-center gap-2 rounded-sm border border-[#7e261e] bg-[#9b2f22] px-3 text-sm font-semibold text-[#fff8df] transition hover:bg-[#84271d] disabled:cursor-not-allowed disabled:opacity-30"
-              disabled={currentChapter === bookPages.length - 1}
-              onClick={goToNextChapter}
-              type="button"
-            >
-              Next
-              <ChevronRightIcon className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </aside>
+              <span style={{ width: `${progress}%` }} />
+            </div>
+          </header>
 
-      <button
-        aria-label="Open chapter navigation"
-        className="fixed left-0 top-0 z-50 hidden h-full w-3 cursor-pointer md:block"
-        onClick={() => setSidebarOpen(true)}
-        onFocus={() => setSidebarOpen(true)}
-        onMouseEnter={() => setSidebarOpen(true)}
-        type="button"
-      />
-      {!sidebarOpen ? (
-        <div className="fixed left-3 top-3 z-50 flex gap-2">
-          <button
-            aria-expanded={sidebarOpen}
-            aria-label="Open chapter navigation"
-            className="grid h-11 w-11 place-items-center rounded-sm border border-teal-700/45 bg-[#050807]/90 text-[#efe7d0] shadow-2xl backdrop-blur transition hover:bg-teal-900/80"
-            onClick={() => setSidebarOpen(true)}
-            type="button"
-          >
-            <MenuIcon className="h-5 w-5" />
-          </button>
-          <Link
-            aria-label="Back to PreserveChhau home"
-            className="grid h-11 w-11 place-items-center rounded-sm border border-teal-700/45 bg-[#050807]/90 text-[#efe7d0] shadow-2xl backdrop-blur transition hover:bg-teal-900/80"
-            href="/"
-          >
-            <HomeIcon className="h-5 w-5" />
-          </Link>
-          <button
-            aria-label={themePlaying ? "Pause theme music" : "Play theme music"}
-            className="grid h-11 w-11 place-items-center rounded-sm border border-teal-700/45 bg-[#050807]/90 text-[#efe7d0] shadow-2xl backdrop-blur transition hover:bg-teal-900/80"
-            onClick={toggleThemeMusic}
-            type="button"
-          >
-            {themePlaying ? (
-              <PauseIcon className="h-5 w-5" />
-            ) : (
-              <MusicIcon className="h-5 w-5" />
-            )}
-          </button>
-        </div>
-      ) : null}
-
-      <main
-        className="relative flex min-h-screen w-full flex-col overflow-hidden"
-        id="main-content"
-      >
-        <div className="hidden min-h-screen p-3 md:block">
-          <div
-            className="relative h-[calc(100vh-1.5rem)] overflow-y-auto scroll-smooth"
-            ref={desktopPageScrollRef}
-          >
+          <main className="reader-main" id="main-content">
             <BookContent
               currentChapter={currentChapter}
+              headingRef={pageHeadingRef}
               modelOptions={modelOptions}
+              onNavigate={navigateTo}
               page={currentPage}
               selectedModelIndex={selectedModelIndex}
               setSelectedModelIndex={setSelectedModelIndex}
-              setCurrentChapter={setCurrentChapter}
               viewer={viewer}
             />
-
-            <button
-              aria-label="Previous chapter"
-              className="absolute bottom-0 left-0 top-0 z-10 w-20 transition hover:bg-white/5 disabled:pointer-events-none"
-              disabled={currentChapter === 0}
-              onClick={goToPreviousChapter}
-              type="button"
-            />
-            <button
-              aria-label="Next chapter"
-              className="absolute bottom-0 right-0 top-0 z-10 w-20 transition hover:bg-white/5 disabled:pointer-events-none"
-              disabled={currentChapter === bookPages.length - 1}
-              onClick={goToNextChapter}
-              type="button"
-            />
-          </div>
+          </main>
         </div>
-
-        <div className="flex min-h-screen flex-col md:hidden">
-          <div className="flex shrink-0 justify-center gap-2 bg-black/45 p-4 pl-16">
-            <button
-              aria-label="View text"
-              className={`grid h-10 w-10 place-items-center rounded-sm transition ${
-                effectiveViewMode === "text"
-                  ? "bg-teal-700 text-[#fff8df]"
-                  : "border border-teal-700/45 bg-teal-900/45 text-[#efe7d0] hover:bg-teal-800/65"
-              }`}
-              onClick={() => setViewMode("text")}
-              type="button"
-            >
-              <BookOpenIcon className="h-5 w-5" />
-            </button>
-            {hasAnyViewer ? (
-              <button
-                aria-label="View 3D"
-                className={`grid h-10 w-10 place-items-center rounded-sm transition ${
-                  effectiveViewMode === "3d"
-                    ? "bg-teal-700 text-[#fff8df]"
-                    : "border border-teal-700/45 bg-teal-900/45 text-[#efe7d0] hover:bg-teal-800/65 disabled:cursor-not-allowed disabled:opacity-35"
-                }`}
-                disabled={!shouldShowViewer}
-                onClick={() => setViewMode("3d")}
-                type="button"
-              >
-                <CubeIcon className="h-5 w-5" />
-              </button>
-            ) : null}
-          </div>
-
-          {effectiveViewMode === "text" ? (
-            <div
-              className="min-h-0 flex-1 overflow-y-auto scroll-smooth p-4"
-              ref={mobilePageScrollRef}
-            >
-              <BookContent
-                currentChapter={currentChapter}
-                modelOptions={modelOptions}
-                page={currentPage}
-                selectedModelIndex={selectedModelIndex}
-                setSelectedModelIndex={setSelectedModelIndex}
-                setCurrentChapter={setCurrentChapter}
-              />
-            </div>
-          ) : null}
-
-          {effectiveViewMode === "3d" ? (
-            <div className="min-h-0 flex-1 overflow-hidden p-4">
-              <div className="h-full overflow-hidden rounded-sm border border-yellow-900/30 shadow-2xl">
-                {viewer}
-              </div>
-            </div>
-          ) : null}
-        </div>
-      </main>
-    </div>
+      </div>
     </CitationContext.Provider>
   );
 }
 
 function ViewerLoading() {
   return (
-    <div className="grid h-full min-h-[320px] w-full place-items-center rounded-sm border border-yellow-900/30 bg-[#1a1410] text-sm font-medium text-[#efe7d0]/75">
-      Loading 3D
+    <div className="grid h-full min-h-80 w-full place-items-center rounded-xl bg-ink text-sm font-medium text-ivory/75">
+      Loading the 3D study…
     </div>
   );
 }
@@ -708,19 +696,15 @@ function ThemeMusicControls({
   volume: number;
 }) {
   return (
-    <div className="mb-4 shrink-0 rounded-sm border border-teal-900/45 bg-black/20 p-3">
+    <div className="rounded-xl bg-ivory/[0.06] p-3">
       <div className="flex items-center justify-between gap-3">
-        <div className="min-w-0">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#efe7d0]/45">
-            Theme music
-          </p>
-          <p className="truncate text-xs font-semibold text-[#efe7d0]">
-            Main Theme eBook
-          </p>
+        <div>
+          <p className="reader-kicker text-marigold-200">Optional listening</p>
+          <p className="mt-1 text-sm font-medium text-ivory">eBook theme</p>
         </div>
         <button
           aria-label={isPlaying ? "Pause theme music" : "Play theme music"}
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-sm border border-teal-700/45 bg-teal-900/45 text-[#efe7d0] transition hover:bg-teal-800/65"
+          className="reader-icon-button reader-icon-button-dark"
           onClick={onToggle}
           type="button"
         >
@@ -731,7 +715,7 @@ function ThemeMusicControls({
           )}
         </button>
       </div>
-      <label className="mt-3 flex items-center gap-2 text-[#efe7d0]/70">
+      <label className="mt-3 flex items-center gap-2 text-ivory/70">
         <VolumeIcon className="h-4 w-4 shrink-0" />
         <span className="sr-only">Theme music volume</span>
         <input
@@ -751,55 +735,37 @@ function ThemeMusicControls({
 
 function BookContent({
   currentChapter,
+  headingRef,
   modelOptions,
+  onNavigate,
   page,
   selectedModelIndex,
   setSelectedModelIndex,
-  setCurrentChapter,
   viewer,
-}: BookContentProps) {
-  const [isFlipping, setIsFlipping] = useState(false);
-  const chapter = page;
-  const enterAnimationClass =
-    pageAnimationClasses[chapter.animationStyle] ?? "page-enter";
-
-  function goToNextChapter() {
-    if (currentChapter < bookPages.length - 1) {
-      setIsFlipping(true);
-      window.setTimeout(() => {
-        setCurrentChapter(currentChapter + 1);
-        setIsFlipping(false);
-      }, 360);
-    }
-  }
-
-  function goToPreviousChapter() {
-    if (currentChapter > 0) {
-      setIsFlipping(true);
-      window.setTimeout(() => {
-        setCurrentChapter(currentChapter - 1);
-        setIsFlipping(false);
-      }, 360);
-    }
-  }
+}: {
+  currentChapter: number;
+  headingRef: RefObject<HTMLHeadingElement | null>;
+  modelOptions: ModelOption[];
+  onNavigate: (index: number, options?: NavigateOptions) => void;
+  page: BookPage;
+  selectedModelIndex: number;
+  setSelectedModelIndex: (index: number) => void;
+  viewer?: ReactNode;
+}) {
+  const previousPage = bookPages[currentChapter - 1];
+  const nextPage = bookPages[currentChapter + 1];
 
   return (
-    <article
-      className="heritage-paper relative min-h-full rounded-sm"
-      style={{ background: chapter.backgroundStyle }}
-    >
-      <div
-        className={`relative min-h-full p-6 transition duration-300 sm:p-8 md:p-10 ${
-          isFlipping ? "page-exit" : enterAnimationClass
-        }`}
-      >
-        {chapter.coverImageUrl ? (
-          <CoverPage page={chapter} />
-        ) : chapter.pageType === "section" ? (
-          <SectionPage page={chapter} />
+    <article className="heritage-paper reader-page page-enter-minimal" key={page.id}>
+      <div className="reader-page-inner">
+        {page.pageType === "cover" ? (
+          <CoverPage headingRef={headingRef} />
+        ) : page.pageType === "section" ? (
+          <SectionPage headingRef={headingRef} page={page} />
         ) : (
           <ContentPageBody
-            chapter={chapter}
+            chapter={page}
+            headingRef={headingRef}
             modelOptions={modelOptions}
             selectedModelIndex={selectedModelIndex}
             setSelectedModelIndex={setSelectedModelIndex}
@@ -807,158 +773,225 @@ function BookContent({
           />
         )}
 
-        <div className="mt-10 flex items-center justify-between gap-3">
-          <button
-            className="h-11 rounded-sm border border-yellow-900/30 px-4 text-sm font-semibold text-[#2a1609] disabled:cursor-not-allowed disabled:opacity-40"
-            disabled={currentChapter === 0}
-            onClick={goToPreviousChapter}
-            type="button"
-          >
-            Previous
-          </button>
-          <span className="font-reader text-xs font-semibold uppercase tracking-[0.16em] text-[#2a1609]/55">
-            Page {currentChapter + 1} of {bookPages.length}
-          </span>
-          <button
-            className="h-11 rounded-sm bg-orange-800 px-4 text-sm font-semibold text-yellow-50 disabled:cursor-not-allowed disabled:opacity-40"
-            disabled={currentChapter === bookPages.length - 1}
-            onClick={goToNextChapter}
-            type="button"
-          >
-            Next
-          </button>
-        </div>
+        <nav aria-label="Page navigation" className="reader-page-navigation">
+          {previousPage ? (
+            <button
+              className="reader-adjacent-link reader-adjacent-previous"
+              onClick={() => onNavigate(currentChapter - 1)}
+              type="button"
+            >
+              <ChevronLeftIcon className="h-5 w-5 shrink-0" />
+              <span>
+                <span className="reader-adjacent-label">Previous</span>
+                <span className="reader-adjacent-title">
+                  {getChapterTitle(previousPage)}
+                </span>
+              </span>
+            </button>
+          ) : (
+            <span />
+          )}
+
+          {nextPage ? (
+            <button
+              className="reader-adjacent-link reader-adjacent-next"
+              onClick={() => onNavigate(currentChapter + 1)}
+              type="button"
+            >
+              <span>
+                <span className="reader-adjacent-label">Next</span>
+                <span className="reader-adjacent-title">
+                  {getChapterTitle(nextPage)}
+                </span>
+              </span>
+              <ChevronRightIcon className="h-5 w-5 shrink-0" />
+            </button>
+          ) : (
+            <span />
+          )}
+        </nav>
       </div>
     </article>
   );
 }
 
-type ContentPageBodyProps = {
-  chapter: BookPage;
-  modelOptions: BookContentProps["modelOptions"];
-  selectedModelIndex: number;
-  setSelectedModelIndex: (index: number) => void;
-  viewer?: ReactNode;
-};
+function CoverPage({
+  headingRef,
+}: {
+  headingRef: RefObject<HTMLHeadingElement | null>;
+}) {
+  return (
+    <section className="reader-cover" aria-labelledby="book-cover-title">
+      <div aria-hidden="true" className="reader-cover-lines">
+        <span />
+        <span />
+        <span />
+      </div>
+      <div className="relative z-10 mx-auto max-w-3xl text-center">
+        <p className="reader-kicker text-marigold-700">An interactive eBook</p>
+        <h1
+          className="reader-cover-title"
+          id="book-cover-title"
+          ref={headingRef}
+          tabIndex={-1}
+        >
+          Chhau
+        </h1>
+        <p className="reader-cover-deck">
+          One performance. Many questions. A student’s journey into Mayurbhanj
+          Chhau and its wider family.
+        </p>
+        <div className="mx-auto mt-10 h-px w-20 bg-laterite-700/35" />
+        <p className="mt-8 text-sm font-semibold tracking-[0.14em] text-ink/65 uppercase">
+          Researched and written by
+        </p>
+        <p className="mt-2 text-2xl font-semibold text-laterite-800">
+          Arnav Ajana
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function SectionPage({
+  headingRef,
+  page,
+}: {
+  headingRef: RefObject<HTMLHeadingElement | null>;
+  page: BookPage;
+}) {
+  const eyebrow = page.title.includes(" — ")
+    ? page.title.split(" — ")[0]
+    : "Part";
+
+  return (
+    <section className="section-cover">
+      <div className="relative z-10 max-w-3xl">
+        <p className="reader-kicker text-laterite-700">{eyebrow}</p>
+        <h1
+          className="section-cover-title"
+          ref={headingRef}
+          tabIndex={-1}
+        >
+          {getChapterTitle(page)}
+        </h1>
+        <div aria-hidden="true" className="mx-auto mt-8 flex w-28 gap-2">
+          <span className="h-1 flex-1 rounded-full bg-laterite-700" />
+          <span className="h-1 flex-1 rounded-full bg-marigold-500" />
+          <span className="h-1 flex-1 rounded-full bg-ink" />
+        </div>
+        {page.body.trim() ? (
+          <div className="mt-8 [&_.book-prose]:text-center">
+            <MarkdownContent page={page} />
+          </div>
+        ) : null}
+      </div>
+    </section>
+  );
+}
 
 function ContentPageBody({
   chapter,
+  headingRef,
   modelOptions,
   selectedModelIndex,
   setSelectedModelIndex,
   viewer,
-}: ContentPageBodyProps) {
-  const placement = useMemo(
-    () => decideViewerPlacement(chapter, modelOptions.length),
-    [chapter, modelOptions.length],
+}: {
+  chapter: BookPage;
+  headingRef: RefObject<HTMLHeadingElement | null>;
+  modelOptions: ModelOption[];
+  selectedModelIndex: number;
+  setSelectedModelIndex: (index: number) => void;
+  viewer?: ReactNode;
+}) {
+  const blocks = chapter.body.split(/\n{2,}/);
+  const anchorBlockIndex = blocks.findIndex((block) =>
+    STUDY_ANCHOR_PATTERN.test(block.trim()),
   );
+  const hasStudyAnchor = anchorBlockIndex >= 0;
+  const studyPrompt = getStudyPrompt(chapter.body);
+  const hasPlannedStudy = Boolean(chapter.plannedModels?.length || hasStudyAnchor);
 
   const viewerBlock = viewer ? (
-    <div className="space-y-3">
+    <div className="reader-study-breakout space-y-3">
       <ModelChoiceTabs
-        align="start"
         modelOptions={modelOptions}
         selectedModelIndex={selectedModelIndex}
         setSelectedModelIndex={setSelectedModelIndex}
       />
       <div
-        className="relative z-10 overflow-hidden rounded-sm shadow-lg ring-1 ring-black/5"
+        className="relative overflow-hidden rounded-xl bg-ink shadow-sm ring-1 ring-ink/10"
         style={{
-          background: chapter.modelViewerBackground,
-          height: chapter.modelViewerHeight,
-          minHeight: 360,
+          height: "clamp(18.75rem, 58svh, 45rem)",
         }}
       >
         {viewer}
       </div>
-      <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-[#2a1609]/55">
-        Drag to rotate · scroll to zoom · open the toolbar to switch modes
+      <p className="reader-media-caption">
+        Drag to rotate · use +/− to zoom · fullscreen enables pinch and pan
       </p>
     </div>
   ) : null;
 
-  const showHero =
-    viewerBlock && placement.layout === "hero" && placement.anchorBlockIndex === null;
-  const showStacked =
-    viewerBlock && placement.layout === "stacked" && placement.anchorBlockIndex === null;
-  const sideClass =
-    placement.layout === "side-left"
-      ? "md:float-left md:mr-6 md:w-[46%]"
-      : "md:float-right md:ml-6 md:w-[46%]";
-  const useSideFloat =
-    viewerBlock &&
-    (placement.layout === "side-right" || placement.layout === "side-left") &&
-    placement.anchorBlockIndex === null;
+  const plannedStudy = !viewer && hasPlannedStudy ? (
+    <PlannedStudyCard
+      filenames={chapter.plannedModels ?? []}
+      prompt={studyPrompt}
+    />
+  ) : null;
 
-  const inlineViewerNode =
-    viewerBlock && placement.anchorBlockIndex !== null ? (
-      <div className="rounded-sm">{viewerBlock}</div>
-    ) : null;
+  const studyNode = viewerBlock ?? plannedStudy;
 
   return (
     <>
-      {showHero ? (
-        <div className="mb-6 mx-auto max-w-3xl">{viewerBlock}</div>
+      <header className="reader-prose mb-8">
+        {getChapterEyebrow(chapter) ? (
+          <p className="reader-kicker text-laterite-700">
+            {getChapterEyebrow(chapter)}
+          </p>
+        ) : null}
+        <h1
+          className="reader-content-title"
+          ref={headingRef}
+          tabIndex={-1}
+        >
+          {getChapterTitle(chapter)}
+        </h1>
+      </header>
+
+      {!hasStudyAnchor && studyNode ? (
+        <div className="reader-study-breakout mb-8">{studyNode}</div>
       ) : null}
 
-      {(() => {
-        const eyebrow = getChapterEyebrow(chapter);
-        const title = getChapterTitle(chapter);
-        return (
-          <header className="mb-6">
-            {eyebrow ? (
-              <div className="chapter-eyebrow">{eyebrow}</div>
-            ) : null}
-            <h1
-              className="chapter-title heritage-text text-3xl font-bold leading-[1.08] text-[#2a1609] sm:text-5xl"
-              style={{
-                color: chapter.textStyle.headingColor,
-                fontStyle: chapter.textStyle.fontStyle,
-              }}
-            >
-              {title}
-            </h1>
-          </header>
-        );
-      })()}
-
-      {showStacked ? (
-        <div className="mb-6">{viewerBlock}</div>
-      ) : null}
-
-      {useSideFloat ? (
-        <div className={`relative z-10 mb-6 ${sideClass}`}>{viewerBlock}</div>
-      ) : null}
-
-      {chapter.body.trim().length > 0 ? (
+      {chapter.body.trim() ? (
         <MarkdownContent
-          anchorBlockIndex={inlineViewerNode ? placement.anchorBlockIndex : null}
+          anchorBlockIndex={hasStudyAnchor ? anchorBlockIndex : null}
+          leadNode={chapter.id === "about-me" ? <AboutAuthorPhoto /> : null}
           page={chapter}
-          viewerNode={inlineViewerNode}
+          studyNode={studyNode}
         />
       ) : null}
 
-      <div className="clear-both" />
-
-      {chapter.interactive === "sandbox-guide" ? <SandboxGuide /> : null}
+      {chapter.interactive === "sandbox-guide" ? (
+        <div className="reader-media-breakout">
+          <SandboxGuide />
+        </div>
+      ) : null}
 
       {chapter.embedUrl ? (
-        <PageEmbed
-          caption={chapter.embedCaption}
-          height={chapter.embedHeight}
-          src={chapter.embedUrl}
-          title={chapter.embedTitle ?? chapter.title}
-        />
+        <div className="reader-media-breakout">
+          <PageEmbed
+            caption={chapter.embedCaption}
+            height={chapter.embedHeight}
+            src={chapter.embedUrl}
+            title={chapter.embedTitle ?? chapter.title}
+          />
+        </div>
       ) : null}
-
-      {chapter.videoUrl ? (
-        <PageVideo caption={chapter.videoCaption} src={chapter.videoUrl} />
-      ) : null}
-
-      {chapter.gallery?.length ? <PageMediaGallery images={chapter.gallery} /> : null}
 
       {chapter.audioTracks?.length ? (
-        <div className="mt-6 space-y-4">
+        <div className="reader-prose mt-8 space-y-4">
           {chapter.audioTracks.map((track) => (
             <PageAudioPlayer
               caption={track.caption}
@@ -970,37 +1003,72 @@ function ContentPageBody({
           ))}
         </div>
       ) : null}
-
-      <PageAudio page={chapter} />
     </>
   );
 }
 
+function PlannedStudyCard({
+  filenames,
+  prompt,
+}: {
+  filenames: string[];
+  prompt: string | null;
+}) {
+  return (
+    <aside className="planned-study-card" aria-label="3D study in preparation">
+      <div className="flex items-start gap-4">
+        <span aria-hidden="true" className="planned-study-icon">
+          <CubeIcon className="h-5 w-5" />
+        </span>
+        <div className="min-w-0 flex-1">
+          <p className="reader-kicker text-laterite-700">
+            3D study in preparation
+          </p>
+          <h2 className="mt-2 text-lg font-semibold text-ink">
+            What this interactive study will help you notice
+          </h2>
+          {prompt ? <p className="mt-3 text-sm leading-7 text-ink/75">{prompt}</p> : null}
+
+          {filenames.length > 0 ? (
+            <ul className="mt-4 flex flex-wrap gap-2" aria-label="Planned studies">
+              {filenames.map((filename) => (
+                <li className="planned-study-chip" key={filename}>
+                  {formatModelLabel(filename)}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+
+          <p className="mt-4 border-t border-laterite-900/10 pt-4 text-xs leading-6 text-ink/60">
+            This will be published only after its movement, regional details,
+            credits, permissions, and learning notes have been reviewed.
+          </p>
+        </div>
+      </div>
+    </aside>
+  );
+}
+
 function ModelChoiceTabs({
-  align = "end",
   modelOptions,
   selectedModelIndex,
   setSelectedModelIndex,
 }: {
-  align?: "start" | "end";
-  modelOptions: BookContentProps["modelOptions"];
+  modelOptions: ModelOption[];
   selectedModelIndex: number;
   setSelectedModelIndex: (index: number) => void;
 }) {
-  if (modelOptions.length <= 1) {
-    return null;
-  }
-
-  const alignClass = align === "start" ? "justify-start" : "md:justify-end";
+  if (modelOptions.length <= 1) return null;
 
   return (
-    <div className={`relative z-20 flex flex-wrap gap-2 ${alignClass}`}>
+    <div aria-label="Choose a 3D study" className="flex flex-wrap gap-2" role="group">
       {modelOptions.map((option, index) => (
         <button
-          className={`rounded-sm border px-3 py-1.5 font-reader text-xs font-semibold transition ${
+          aria-pressed={selectedModelIndex === index}
+          className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
             selectedModelIndex === index
-              ? "border-[#7e261e] bg-[#9b2f22] text-[#fff8df]"
-              : "border-[#8a6a3d]/35 bg-[#fff8df]/55 text-[#2a1609] hover:bg-[#fff8df]/85"
+              ? "border-laterite-700 bg-laterite-700 text-ivory"
+              : "border-laterite-900/15 bg-white text-ink hover:border-laterite-500"
           }`}
           key={option.modelUrl}
           onClick={() => setSelectedModelIndex(index)}
@@ -1013,131 +1081,71 @@ function ModelChoiceTabs({
   );
 }
 
-function SectionPage({ page }: { page: BookPage }) {
-  const eyebrow = page.title.includes(" — ")
-    ? page.title.split(" — ")[0]
-    : null;
-  const display = page.title.includes(" — ")
-    ? page.title.split(" — ").slice(1).join(" — ")
-    : page.title;
-
-  return (
-    <div className="section-cover">
-      <div aria-hidden="true" className="section-cover-frame">
-        <span />
-      </div>
-      <div className="relative z-10 max-w-2xl">
-        {eyebrow ? (
-          <div className="chapter-eyebrow justify-center">{eyebrow}</div>
-        ) : null}
-        <h1
-          className="heritage-text chapter-title text-4xl font-bold leading-[1.05] sm:text-6xl"
-          style={{
-            color: page.textStyle.headingColor,
-            fontStyle: page.textStyle.fontStyle,
-          }}
-        >
-          {display}
-        </h1>
-        <div className="section-cover-fleuron">❦</div>
-      </div>
-    </div>
-  );
-}
-
-type MarkdownContentProps = {
-  page: BookPage;
-  viewerNode?: ReactNode;
-  anchorBlockIndex?: number | null;
-};
-
 function MarkdownContent({
-  page,
-  viewerNode,
   anchorBlockIndex,
-}: MarkdownContentProps) {
+  leadNode,
+  page,
+  studyNode,
+}: {
+  anchorBlockIndex?: number | null;
+  leadNode?: ReactNode;
+  page: BookPage;
+  studyNode?: ReactNode;
+}) {
   const blocks = page.body.split(/\n{2,}/);
-  const nodes: ReactNode[] = [];
+  const className = [
+    "reader-prose heritage-text space-y-5",
+    REFERENCE_IDS.has(page.id) ? null : "book-prose",
+    leadNode ? "about-author-prose" : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-  // First paragraph (non-blockquote, non-heading, non-list) gets drop cap.
-  let firstParagraphIndex = -1;
-  for (let i = 0; i < blocks.length; i++) {
-    const t = blocks[i].trim();
-    if (t.length === 0) continue;
-    if (t.startsWith("###") || t.startsWith(">") || t.startsWith("- ")) continue;
-    firstParagraphIndex = i;
-    break;
+  const renderBlocks = (entries: string[], startIndex = 0) =>
+    entries
+      .map((block, index) =>
+        renderMarkdownBlock(block, `${page.id}-${startIndex + index}`),
+      )
+      .filter(Boolean);
+
+  if (
+    studyNode &&
+    anchorBlockIndex !== null &&
+    anchorBlockIndex !== undefined &&
+    anchorBlockIndex >= 0
+  ) {
+    const before = renderBlocks(blocks.slice(0, anchorBlockIndex));
+    const after = renderBlocks(
+      blocks.slice(anchorBlockIndex + 1),
+      anchorBlockIndex + 1,
+    );
+
+    return (
+      <>
+        {before.length > 0 ? <div className={className}>{before}</div> : null}
+        <div className="reader-study-breakout my-8" key={`${page.id}-study`}>
+          {studyNode}
+        </div>
+        {after.length > 0 ? <div className={className}>{after}</div> : null}
+      </>
+    );
   }
 
-  blocks.forEach((block, index) => {
-    if (
-      viewerNode &&
-      anchorBlockIndex !== null &&
-      anchorBlockIndex !== undefined &&
-      index === anchorBlockIndex
-    ) {
-      nodes.push(
-        <div className="my-6" key={`${page.id}-viewer-anchor`}>
-          {viewerNode}
-        </div>,
-      );
-    }
-    const trimmed = block.trim();
-    // Render a fleuron BEFORE every ### subheading (except the very first
-    // block, where it would float above with no preceding content).
-    if (index > 0 && trimmed.startsWith("### ")) {
-      nodes.push(
-        <Fleuron key={`${page.id}-fleuron-${index}`} />,
-      );
-    }
-    const rendered = renderMarkdownBlock(
-      block,
-      `${page.id}-${index}`,
-      page,
-      index === firstParagraphIndex,
-    );
-    if (rendered) {
-      nodes.push(rendered);
-    }
-  });
-
-  const isReferencePage = REFERENCE_IDS.has(page.id);
-  const className = isReferencePage
-    ? "heritage-text space-y-4"
-    : "book-prose heritage-text space-y-4";
-
-  return <div className={className}>{nodes}</div>;
-}
-
-function Fleuron() {
   return (
-    <div aria-hidden="true" className="fleuron">
-      <span className="fleuron-line" />
-      <span className="fleuron-glyph">❦</span>
-      <span className="fleuron-line" />
+    <div className={className}>
+      {leadNode}
+      {renderBlocks(blocks)}
     </div>
   );
 }
 
-function renderMarkdownBlock(
-  block: string,
-  key: string,
-  page: BookPage,
-  isFirstParagraph: boolean,
-) {
+function renderMarkdownBlock(block: string, key: string) {
   const trimmedBlock = block.trim();
-
-  if (trimmedBlock.length === 0) {
-    return null;
-  }
+  if (!trimmedBlock) return null;
 
   if (trimmedBlock.startsWith("### ")) {
     return (
-      <h2
-        className="mt-8 text-xl font-semibold leading-tight sm:text-2xl"
-        key={key}
-        style={{ color: page.textStyle.headingColor }}
-      >
+      <h2 className="reader-subheading" key={key}>
         {renderInlineMarkdown(trimmedBlock.slice(4))}
       </h2>
     );
@@ -1145,10 +1153,7 @@ function renderMarkdownBlock(
 
   if (trimmedBlock.startsWith("> ")) {
     return (
-      <blockquote
-        className="my-6 rounded-r-sm border-l-[3px] border-[#7e261e]/50 bg-[#fff4d6]/40 px-5 py-3 text-sm italic leading-7 text-[#4d2d18] shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] sm:text-base"
-        key={key}
-      >
+      <blockquote className="reader-callout" key={key}>
         {renderInlineMarkdown(trimmedBlock.replace(/^>\s?/gm, ""))}
       </blockquote>
     );
@@ -1157,13 +1162,9 @@ function renderMarkdownBlock(
   const listItems = trimmedBlock.split("\n");
   if (listItems.every((line) => line.startsWith("- "))) {
     return (
-      <ul
-        className="ml-5 list-disc space-y-2 text-sm leading-7 sm:text-base sm:leading-8"
-        key={key}
-        style={{ color: page.textStyle.bodyTextColor }}
-      >
-        {listItems.map((line) => (
-          <li key={line}>{renderInlineMarkdown(line.slice(2))}</li>
+      <ul className="reader-list" key={key}>
+        {listItems.map((line, index) => (
+          <li key={`${line}-${index}`}>{renderInlineMarkdown(line.slice(2))}</li>
         ))}
       </ul>
     );
@@ -1171,18 +1172,14 @@ function renderMarkdownBlock(
 
   const libraryEntryMatch = trimmedBlock.match(LIBRARY_ENTRY_PATTERN);
   if (libraryEntryMatch) {
-    const num = libraryEntryMatch[1];
+    const citationNumber = libraryEntryMatch[1];
     const rest = trimmedBlock.replace(LIBRARY_ENTRY_PATTERN, "");
     return (
       <p
-        className="library-entry text-sm leading-7 text-[#2a1609] sm:text-base sm:leading-8"
-        data-cite-number={num}
-        id={`cite-${num}`}
+        className="library-entry"
+        data-cite-number={citationNumber}
+        id={`cite-${citationNumber}`}
         key={key}
-        style={{
-          color: page.textStyle.bodyTextColor,
-          lineHeight: page.textStyle.lineHeight,
-        }}
       >
         {renderInlineMarkdown(rest)}
       </p>
@@ -1190,22 +1187,16 @@ function renderMarkdownBlock(
   }
 
   return (
-    <p
-      className={`whitespace-pre-wrap text-sm leading-7 text-[#2a1609] sm:text-base sm:leading-8 ${isFirstParagraph ? "first-paragraph" : ""}`}
-      key={key}
-      style={{
-        color: page.textStyle.bodyTextColor,
-        fontStyle: page.textStyle.fontStyle,
-        lineHeight: page.textStyle.lineHeight,
-      }}
-    >
+    <p className="whitespace-pre-wrap" key={key}>
       {renderInlineMarkdown(trimmedBlock)}
     </p>
   );
 }
 
 function renderInlineMarkdown(text: string): ReactNode[] {
-  const pieces = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|(?:\[\d+\])+)/g);
+  const pieces = text.split(
+    /(\*\*[^*]+\*\*|\*[^*]+\*|(?:\[\d+\])+|https?:\/\/[^\s]+)/g,
+  );
 
   return pieces.map((piece, index) => {
     if (piece.startsWith("**") && piece.endsWith("**")) {
@@ -1217,14 +1208,26 @@ function renderInlineMarkdown(text: string): ReactNode[] {
     }
 
     if (/^(\[\d+\])+$/.test(piece)) {
-      const numbers = Array.from(piece.matchAll(/\[(\d+)\]/g)).map((m) =>
-        Number.parseInt(m[1], 10),
+      const numbers = Array.from(piece.matchAll(/\[(\d+)\]/g)).map((match) =>
+        Number.parseInt(match[1], 10),
       );
+      return <CitationGroup key={`${piece}-${index}`} numbers={numbers} />;
+    }
+
+    if (/^https?:\/\//.test(piece)) {
+      const [url, terminalPunctuation] = splitUrlTerminalPunctuation(piece);
       return (
-        <CitationGroup
-          key={`${piece}-${index}`}
-          numbers={numbers}
-        />
+        <span key={`${piece}-${index}`}>
+          <a
+            className="break-words font-medium text-laterite-700 underline decoration-laterite-300 underline-offset-4 transition-colors hover:text-laterite-900"
+            href={url}
+            rel="noreferrer"
+            target="_blank"
+          >
+            {url}
+          </a>
+          {terminalPunctuation}
+        </span>
       );
     }
 
@@ -1232,94 +1235,47 @@ function renderInlineMarkdown(text: string): ReactNode[] {
   });
 }
 
+function splitUrlTerminalPunctuation(url: string): [string, string] {
+  let end = url.length;
+
+  while (end > 0 && /[.,;:!?]/.test(url[end - 1])) end -= 1;
+
+  const trimUnmatchedCloser = (open: string, close: string) => {
+    const candidate = url.slice(0, end);
+    const openCount = candidate.split(open).length - 1;
+    const closeCount = candidate.split(close).length - 1;
+    if (candidate.endsWith(close) && closeCount > openCount) end -= 1;
+  };
+
+  trimUnmatchedCloser("(", ")");
+  trimUnmatchedCloser("[", "]");
+
+  return [url.slice(0, end), url.slice(end)];
+}
+
 function CitationGroup({ numbers }: { numbers: number[] }) {
   const onCiteClick = useCitationOnClick();
 
   return (
-    <sup className="ml-0.5 inline-flex gap-0.5 text-[0.62em] font-semibold tracking-tight">
-      {numbers.map((n, i) => (
+    <sup className="ml-1 inline-flex gap-1 text-[0.68em] font-semibold">
+      {numbers.map((number, index) => (
         <button
-          aria-label={`Jump to source ${n}`}
-          className="inline-flex h-[1.6em] items-center rounded-[3px] border border-[#7e261e]/40 bg-[#fff8df]/85 px-1 leading-none text-[#7e261e] no-underline transition hover:bg-[#9b2f22] hover:text-[#fff8df]"
-          key={`${n}-${i}`}
-          onClick={() => onCiteClick(n)}
+          aria-label={`Jump to source ${number}`}
+          className="citation-button"
+          key={`${number}-${index}`}
+          onClick={() => onCiteClick(number)}
           type="button"
         >
-          {n}
+          {number}
         </button>
       ))}
     </sup>
   );
 }
 
-function CoverPage({ page }: { page: BookPage }) {
-  if (!page.coverImageUrl) {
-    return null;
-  }
-
-  // A single <picture> with a media-query source, so each device downloads
-  // only its own cover art (two CSS-hidden <Image priority> elements would
-  // fetch both crops on every visit).
-  const alt = page.coverImageAlt ?? page.title;
-  const common = { alt, fill: true as const, sizes: "100vw", priority: true };
-  const { props: desktopProps } = getImageProps({
-    ...common,
-    src: page.coverImageLargeUrl ?? page.coverImageUrl,
-  });
-  const {
-    props: { alt: mobileAlt, ...mobileProps },
-  } = getImageProps({ ...common, src: page.coverImageUrl });
-
-  return (
-    <div className="relative min-h-[calc(100vh-13rem)] overflow-hidden rounded-sm bg-black md:min-h-[calc(100vh-11rem)]">
-      <picture>
-        <source media="(min-width: 768px)" srcSet={desktopProps.srcSet} />
-        <img {...mobileProps} alt={mobileAlt} className="object-contain" />
-      </picture>
-      <div className="absolute bottom-4 left-1/2 z-20 w-[min(28rem,calc(100%-2rem))] -translate-x-1/2">
-        <PageAudio className="w-full" page={page} tone="dark" />
-      </div>
-    </div>
-  );
-}
-
-function PageAudio({
-  className = "mt-6 w-full",
-  page,
-  tone = "paper",
-}: {
-  className?: string;
-  page: BookPage;
-  tone?: "paper" | "dark";
-}) {
-  if (!page.audioUrl) {
-    return null;
-  }
-
-  return (
-    <PageAudioPlayer
-      className={className}
-      loop={page.audioLoop}
-      src={page.audioUrl}
-      tone={tone}
-    />
-  );
-}
-
-function getNavTitle(title: string) {
-  const [, ...rest] = title.split(": ");
-
-  return rest.length > 0 ? rest.join(": ") : title;
-}
-
 function HomeIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
       <path
         d="m3 11 9-8 9 8M5 9.5V21h5v-6h4v6h5V9.5"
         stroke="currentColor"
@@ -1333,17 +1289,11 @@ function HomeIcon({ className }: IconProps) {
 
 function MenuIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
       <path
         d="M4 7h16M4 12h16M4 17h16"
         stroke="currentColor"
         strokeLinecap="round"
-        strokeLinejoin="round"
         strokeWidth="2"
       />
     </svg>
@@ -1352,43 +1302,40 @@ function MenuIcon({ className }: IconProps) {
 
 function CloseIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
       <path
         d="m6 6 12 12M18 6 6 18"
         stroke="currentColor"
         strokeLinecap="round"
-        strokeLinejoin="round"
         strokeWidth="2"
       />
     </svg>
   );
 }
 
+function SearchIcon({ className }: IconProps) {
+  return (
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
+      <path d="m16.5 16.5 4 4" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
+    </svg>
+  );
+}
+
 function MusicIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
       <path
-        d="M9 18V5l11-2v13"
+        d="M9 18V5l11-2v13M9 9l11-2"
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
       />
       <path
-        d="M9 18a3 3 0 1 1-2-2.83M20 16a3 3 0 1 1-2-2.83M9 9l11-2"
+        d="M9 18a3 3 0 1 1-2-2.83M20 16a3 3 0 1 1-2-2.83"
         stroke="currentColor"
         strokeLinecap="round"
-        strokeLinejoin="round"
         strokeWidth="2"
       />
     </svg>
@@ -1397,118 +1344,42 @@ function MusicIcon({ className }: IconProps) {
 
 function PauseIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M10 5v14M14 5v14"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="2"
-      />
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
+      <path d="M9 5v14M15 5v14" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
     </svg>
   );
 }
 
 function VolumeIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M4 9v6h4l5 4V5L8 9H4Z"
-        stroke="currentColor"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-      <path
-        d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="2"
-      />
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" />
+      <path d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
     </svg>
   );
 }
 
 function ChevronLeftIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="m15 18-6-6 6-6"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
+      <path d="m15 18-6-6 6-6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
     </svg>
   );
 }
 
 function ChevronRightIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="m9 18 6-6-6-6"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function BookOpenIcon({ className }: IconProps) {
-  return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="M12 6.5v13M12 6.5A2.5 2.5 0 0 0 9.5 4H3v14h6.5a2.5 2.5 0 0 1 2.5 2.5m0-14A2.5 2.5 0 0 1 14.5 4H21v14h-6.5a2.5 2.5 0 0 0-2.5 2.5"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
+      <path d="m9 18 6-6-6-6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
     </svg>
   );
 }
 
 function CubeIcon({ className }: IconProps) {
   return (
-    <svg
-      aria-hidden="true"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-    >
-      <path
-        d="m12 2 8 4.5v9L12 20l-8-4.5v-9L12 2Zm0 0v9m8-4.5-8 4.5m-8-4.5 8 4.5m0 9v-9"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
+    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
+      <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" />
+      <path d="m4.5 7.5 7.5 4 7.5-4M12 11.5V21" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" />
     </svg>
   );
 }

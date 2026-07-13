@@ -1,0 +1,93 @@
+:root {
+  color-scheme: dark;
+
+  /* Warm ink surfaces — flat, no gradients */
+  --bg: #0b0a09;
+  --panel: #121110;
+  --panel-2: #1a1815;
+  --line: rgba(232, 222, 206, 0.12);
+  --line-strong: rgba(232, 222, 206, 0.2);
+
+  /* Parchment text ramp */
+  --text: #ece5d8;
+  --text-dim: #a39a8b;
+  --text-faint: #918777;
+
+  /* One deliberate accent (terracotta) */
+  --accent: #c2542f;
+  --accent-soft: rgba(194, 84, 47, 0.16);
+
+  /* Type system */
+  --serif: Georgia, 'Times New Roman', serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  min-height: 100%;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid #f0b14a;
+  outline-offset: 3px;
+}
+
+/* Restrained, neutral scrollbars */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(232, 222, 206, 0.1);
+  border-radius: 0;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(232, 222, 206, 0.2);
+  background-clip: padding-box;
+}
+
+/* Honor reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

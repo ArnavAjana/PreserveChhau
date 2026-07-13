@@ -10,10 +10,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Static assets, including the prebuilt Map of Chhau globe bundle
+    // Static assets are delivered as-is and are not part of the authored app tree.
     "public/**",
-    // Source material (raw assets, the standalone globe app's own tree)
-    "Chau_Web_Assets/**",
   ]),
 ]);
 

@@ -2,8 +2,11 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center">
-      <p className="font-display text-6xl font-bold text-laterite-200">404</p>
+    <main
+      className="mx-auto flex min-h-[70dvh] max-w-3xl flex-col items-center justify-center px-6 py-20 text-center"
+      id="main-content"
+    >
+      <p className="font-display text-6xl font-bold text-laterite-700">404</p>
       <h1 className="mt-4 font-display text-3xl font-bold text-laterite-900">
         This page has left the stage
       </h1>
@@ -17,6 +20,6 @@ export default function NotFound() {
       >
         Return home
       </Link>
-    </div>
+    </main>
   );
 }

@@ -22,7 +22,7 @@ function formatTime(seconds: number): string {
 /**
  * The eBook's shared audio player — used for drum patterns, musical
  * phrases, and theme audio on any page. Pages opt in through the
- * `audioTracks` (or legacy `audioUrl`) fields in book-pages.ts.
+ * `audioTracks` field in book-pages.ts.
  */
 export function PageAudioPlayer({
   src,
@@ -69,7 +69,7 @@ export function PageAudioPlayer({
   const frame = onDark
     ? "border-yellow-100/20 bg-black/55 text-[#fff8df] backdrop-blur"
     : "border-[#8a6a3d]/35 bg-[#fff8df]/75 text-[#2a1609]";
-  const subtle = onDark ? "text-[#fff8df]/65" : "text-[#2a1609]/60";
+  const subtle = onDark ? "text-[#fff8df]/80" : "text-[#2a1609]/75";
 
   return (
     <figure className={`rounded-sm border p-4 shadow-sm ${frame} ${className}`}>
@@ -94,10 +94,10 @@ export function PageAudioPlayer({
         </p>
       ) : null}
 
-      <div className="flex items-center gap-3">
+      <div className="page-audio-controls flex items-center gap-3">
         <button
           aria-label={playing ? "Pause audio" : "Play audio"}
-          className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[#7e261e] bg-[#9b2f22] text-[#fff8df] transition hover:bg-[#84271d]"
+          className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-[#7e261e] bg-[#9b2f22] text-[#fff8df] transition hover:bg-[#84271d]"
           onClick={togglePlay}
           type="button"
         >
