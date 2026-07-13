@@ -1,5 +1,7 @@
 "use client";
 
+import type { CSSProperties } from "react";
+
 /**
  * Embedded interactive page — used for self-contained experiences served
  * from public/, like the local, schematic Map of Chhau. Pages opt in through
@@ -16,23 +18,29 @@ export function PageEmbed({
   caption?: string;
   height?: string;
 }) {
+  const preferredHeight = height.replace(/vh\b/g, "svh");
+  const frameStyle = {
+    "--page-embed-height": preferredHeight,
+  } as CSSProperties;
+
   return (
-    <figure className="my-10">
+    <figure className="page-embed my-10">
       <div
-        className="overflow-hidden rounded-2xl border border-[#7e3b2d]/20 bg-[#f2e8d4] shadow-[0_18px_50px_rgba(45,24,15,0.12)]"
-        style={{ height, minHeight: 420 }}
+        className="page-embed-frame overflow-hidden rounded-2xl border border-[#7e3b2d]/20 bg-[#f2e8d4] shadow-[0_18px_50px_rgba(45,24,15,0.12)]"
+        style={frameStyle}
       >
         <iframe
           allowFullScreen
-          className="h-full w-full border-0"
+          className="block h-full w-full border-0"
           loading="lazy"
+          scrolling="no"
           src={src}
           title={title}
         />
       </div>
       <figcaption className="mt-3 flex flex-wrap items-baseline justify-between gap-3 px-1">
         {caption ? (
-          <span className="max-w-2xl text-xs leading-relaxed text-[#402820]/65">
+          <span className="max-w-2xl text-xs leading-relaxed text-[#402820]/75">
             {caption}
           </span>
         ) : (

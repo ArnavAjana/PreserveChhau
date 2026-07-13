@@ -16,11 +16,18 @@ export function PageVideo({
 }) {
   return (
     <figure className="my-8">
-      <div className="overflow-hidden rounded-sm border border-[#8a6a3d]/35 bg-black shadow-lg">
-        <video className="max-h-[60vh] w-full" controls poster={poster} preload="metadata" src={src} />
+      <div className="aspect-video overflow-hidden rounded-sm border border-[#8a6a3d]/35 bg-black shadow-lg">
+        <video
+          className="h-full w-full object-contain"
+          controls
+          playsInline
+          poster={poster}
+          preload="metadata"
+          src={src}
+        />
       </div>
       {caption ? (
-        <figcaption className="mt-2 text-xs leading-relaxed text-[#2a1609]/60 italic">
+        <figcaption className="mt-2 text-xs leading-relaxed text-[#2a1609]/75 italic">
           {caption}
         </figcaption>
       ) : null}

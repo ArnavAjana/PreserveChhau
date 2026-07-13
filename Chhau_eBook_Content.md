@@ -94,16 +94,18 @@ There is also a cultural form of care. Masks, costumes, music, stories, and ritu
 
 Curiosity is welcome here. Confidence should grow more slowly.
 
-<!-- BOOK_PAGE {"id":"map-of-chhau","pageType":"content","title":"A Map of the Chhau Family","plannedModels":["chhau-three-styles-lineup.glb"],"embedUrl":"/map-of-chhau/index.html","embedTitle":"Map of Chhau — interactive regional map","embedCaption":"Compare Baripada in Mayurbhanj, Seraikella, and the Purulia region. Their closeness helps explain exchange; their local histories help explain difference.","embedHeight":"72vh"} -->
+<!-- BOOK_PAGE {"id":"map-of-chhau","pageType":"content","title":"Three Heartlands, Then the World","plannedModels":["chhau-three-styles-lineup.glb"],"embedUrl":"/map-of-chhau/index.html","embedTitle":"Arnav’s Map of Chhau — interactive 48-node world globe","embedCaption":"Begin with Baripada in Mayurbhanj, Seraikela, and the Purulia region: the three eastern-Indian heartlands that anchor this atlas. Wider nodes are working research leads for stages, archives, institutions, and communities; they remain source-review pending and do not all indicate a resident Chhau tradition.","embedHeight":"clamp(30rem, 72svh, 48rem)"} -->
 Chhau lives within a connected cultural belt in eastern India, across the modern borders of Odisha, Jharkhand, and West Bengal.
 
 **Mayurbhanj Chhau** is centred in Mayurbhanj district in northern Odisha, with Baripada as an important institutional and festival centre. **Seraikella Chhau** is centred in Seraikella in present-day Jharkhand. **Purulia Chhau** is carried by troupes, musicians, and mask-making networks across Purulia district in West Bengal. [1][2][7][11][12]
 
 The three centres are close enough for people, instruments, stories, and artistic ideas to have travelled between them. Yet each place developed its own performance choices. Geography made connection possible. Local history made difference possible.
 
-> **Look:** Select each marker and notice the neighbouring states. Then look past those borders for a moment and read the region as one connected landscape.
+The restored globe contains 48 working nodes, but they do not all make the same kind of claim. Begin with the eastern-Indian heartlands. Then zoom out to explore possible connections through Indian institutions, archives, stages, festivals, and communities elsewhere. Those wider markers are research leads, not a declaration that every place has its own resident Chhau tradition. Each requires source review before publication.
 
-This map is the first tool in the book because the word *Chhau* can otherwise make three traditions sound as if they came from one stage. They did not. They grew in neighbouring places and continued to meet, separate, and change.
+> **Look:** Locate Baripada, Seraikela, and the Purulia cluster before following any arc across the world. Read the heartlands as orientation; read the wider arcs as questions to investigate, not proof by themselves.
+
+This atlas is the first tool in the book because the word *Chhau* can otherwise make three traditions sound as if they came from one stage. They did not. They grew in neighbouring places and continued to meet, separate, and change. The world view comes second: it shows where my research can continue without shifting attention away from the communities at the tradition’s centre.
 
 <!-- BOOK_PAGE {"id":"first-look","pageType":"content","title":"Before We Name the Movement","plannedModels":["chhau-three-styles-lineup.glb"]} -->
 Before learning a single technical word, take one slow look at the three traditions.
@@ -1265,7 +1267,8 @@ Every numbered citation in the book points here. This is a working shelf, not a 
 
 **[6]** Behuria, Rabindra Kumar. “Chhau Dance of Mayurbhanj.” *Orissa Review*, September–October 2006, pp. 48–50. https://magazines.odisha.gov.in/orissareview/sept-oct2006/engpdf/48-50.pdf
 
-**[7]** Government of Odisha, Mayurbhanj District. “Culture & Heritage” and “History.” https://mayurbhanj.odisha.gov.in/en/tourism/culture-Heritage and https://mayurbhanj.odisha.gov.in/en/about-district/history. Used for local geographic, cultural, Bhanja-dynasty, and 1949 merger orientation. Its word-origin account is treated as a local theory, not settled etymology.
+**[7]** Government of Odisha, Mayurbhanj District. “Culture & Heritage” and “History.” https://mayurbhanj.odisha.gov.in/en/tourism/culture-Heritage and https://mayurbhanj.odisha.gov.in/en/about-district/history
+Used for local geographic, cultural, Bhanja-dynasty, and 1949 merger orientation. Its word-origin account is treated as a local theory, not settled etymology.
 
 **[8]** Chatterjee, Deepsikha. “Masks and Costumes of Purulia Chhau.” *Asian Theatre Journal* 36, no. 1, 2019, pp. 221–238. https://muse.jhu.edu/article/719429
 
@@ -1273,9 +1276,11 @@ Every numbered citation in the book points here. This is a working shelf, not a 
 
 **[10]** Kumar, Nayak, and Swain. “Ritual, Performance and Spirituality: Cultures of Chaitra Parva and Purulia Chhau.” *The Oriental Anthropologist* 24, no. 2, 2024, pp. 359–384. Used only for its documented Purulia context, not as a description of Mayurbhanj ritual.
 
-**[11]** Government of Jharkhand, District Seraikela Kharsawan. “Culture & Heritage” and “History.” https://seraikela.nic.in/culture-heritage/ and https://seraikela.nic.in/history/. Used for regional location and local cultural orientation; contested origin accounts remain qualified.
+**[11]** Government of Jharkhand, District Seraikela Kharsawan. “Culture & Heritage” and “History.” https://seraikela.nic.in/culture-heritage/ and https://seraikela.nic.in/history/
+Used for regional location and local cultural orientation; contested origin accounts remain qualified.
 
-**[12]** Government of West Bengal, Purulia District. “Folk & Culture” and “History.” https://purulia.gov.in/folk-culture/ and https://purulia.gov.in/history/. Used for district location, Charida, and local performance context. Dated terminology and confident origin claims on the portal are not repeated without corroboration.
+**[12]** Government of West Bengal, Purulia District. “Folk & Culture” and “History.” https://purulia.gov.in/folk-culture/ and https://purulia.gov.in/history/
+Used for district location, Charida, and local performance context. Dated terminology and confident origin claims on the portal are not repeated without corroboration.
 
 **[13]** NHS. Physical-activity guidance for children and young people; Johns Hopkins Medicine. “Common Dance Injuries and Prevention Tips.” Used for gradual progression, supervision, and landing-safety boundaries. https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-children-and-young-people/ and https://www.hopkinsmedicine.org/health/conditions-and-diseases/sports-injuries/common-dance-injuries-and-prevention-tips
 

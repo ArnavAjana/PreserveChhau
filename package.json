@@ -9,14 +9,17 @@
   "packageManager": "npm@11.9.0",
   "scripts": {
     "build:book": "node scripts/build-book-pages.mjs",
-    "predev": "npm run build:book",
+    "build:map": "vite build --config map-of-chhau/vite.config.mjs",
+    "build:content": "npm run build:book && npm run build:map",
+    "predev": "npm run build:content",
     "dev": "next dev",
-    "prebuild": "npm run build:book",
+    "prebuild": "npm run build:content",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit --incremental false",
-    "verify": "npm run build:book && npm run typecheck && npm run lint"
+    "verify:release": "node scripts/check-release.mjs",
+    "verify": "npm run build:content && npm run typecheck && npm run lint && npm run verify:release"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -24,16 +27,19 @@
     "next": "^16.2.6",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-globe.gl": "^2.38.0",
     "three": "^0.184.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
+    "@vitejs/plugin-react": "^6.0.2",
     "@types/node": "^20.19.43",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.6",
     "tailwindcss": "^4.3.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^8.0.16"
   }
 }

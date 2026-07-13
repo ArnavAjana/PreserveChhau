@@ -14,6 +14,7 @@ type ModelStudy = {
 };
 
 type ReleaseGroup = {
+  id: string;
   eyebrow: string;
   title: string;
   description: string;
@@ -22,6 +23,7 @@ type ReleaseGroup = {
 
 const releaseGroups: ReleaseGroup[] = [
   {
+    id: "essential-comparison-set",
     eyebrow: "First release · 9 studies",
     title: "The essential comparison set",
     description:
@@ -84,6 +86,7 @@ const releaseGroups: ReleaseGroup[] = [
     ],
   },
   {
+    id: "movement-making-performance-space",
     eyebrow: "Second release · 10 studies",
     title: "Movement, making, and performance space",
     description:
@@ -151,6 +154,7 @@ const releaseGroups: ReleaseGroup[] = [
     ],
   },
   {
+    id: "reference-work-in-progress",
     eyebrow: "Later depth · 4 studies",
     title: "Studies that need more reference work",
     description:
@@ -219,7 +223,7 @@ export default function ExperiencePage() {
 
       <div className="mt-16 space-y-20">
         {releaseGroups.map((group) => (
-          <section aria-labelledby={`${group.title}-heading`} key={group.title}>
+          <section aria-labelledby={`${group.id}-heading`} key={group.id}>
             <div className="grid gap-5 lg:grid-cols-[0.8fr_1.6fr] lg:gap-12">
               <div>
                 <p className="text-xs font-bold tracking-[0.18em] text-marigold-700 uppercase">
@@ -227,7 +231,7 @@ export default function ExperiencePage() {
                 </p>
                 <h2
                   className="mt-3 font-display text-3xl font-bold text-laterite-900"
-                  id={`${group.title}-heading`}
+                  id={`${group.id}-heading`}
                 >
                   {group.title}
                 </h2>
@@ -253,7 +257,7 @@ export default function ExperiencePage() {
                         <p className="mt-2 text-sm leading-6 text-midnight-800">
                           {study.purpose}
                         </p>
-                        <code className="mt-3 block break-all text-[11px] text-midnight-700/75">
+                        <code className="mt-3 block break-all text-[11px] text-midnight-700">
                           {study.file}
                         </code>
                       </div>

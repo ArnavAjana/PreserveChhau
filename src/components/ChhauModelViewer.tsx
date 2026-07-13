@@ -5,9 +5,11 @@ import {
   Suspense,
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
+  type Ref,
   type ReactNode,
 } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
@@ -293,13 +295,13 @@ function LoadedModel({
     const currentAction = currentActionRef.current;
     if (!currentAction) return;
     currentAction.paused = !isPlaying;
-  }, [isPlaying]);
+  }, [activeClip, isPlaying]);
 
   useEffect(() => {
     const currentAction = currentActionRef.current;
     if (!currentAction) return;
     currentAction.timeScale = speed;
-  }, [speed]);
+  }, [activeClip, speed]);
 
   useEffect(() => {
     const currentAction = currentActionRef.current;
@@ -309,7 +311,7 @@ function LoadedModel({
       loop ? THREE.LoopRepeat : THREE.LoopOnce,
       loop ? Infinity : 1,
     );
-  }, [loop]);
+  }, [activeClip, loop]);
 
   useEffect(() => {
     const currentAction = currentActionRef.current;
@@ -354,19 +356,33 @@ function LoadedModel({
 function RotatingGroup({
   autoRotate,
   children,
+  resetNonce,
 }: {
   autoRotate: boolean;
   children: ReactNode;
+  resetNonce: number;
 }) {
   const ref = useRef<Group>(null);
+  useEffect(() => {
+    ref.current?.rotation.set(0, 0, 0);
+  }, [resetNonce]);
   useFrame((_, delta) => {
     if (autoRotate && ref.current) ref.current.rotation.y += delta * 0.35;
   });
   return <group ref={ref}>{children}</group>;
 }
 
-function ControlsPreview({ autoRotate }: { autoRotate: boolean }) {
+function ControlsPreview({
+  autoRotate,
+  resetNonce,
+}: {
+  autoRotate: boolean;
+  resetNonce: number;
+}) {
   const ref = useRef<Group>(null);
+  useEffect(() => {
+    ref.current?.rotation.set(0, 0, 0);
+  }, [resetNonce]);
   useFrame((_, delta) => {
     if (autoRotate && ref.current) ref.current.rotation.y += delta * 0.28;
   });
@@ -507,25 +523,36 @@ function backgroundCss(mode: BackgroundMode) {
 
 function IconButton({
   active = false,
+  ariaControls,
+  ariaExpanded,
   ariaLabel,
+  buttonRef,
   children,
   onClick,
+  pressed,
 }: {
   active?: boolean;
+  ariaControls?: string;
+  ariaExpanded?: boolean;
   ariaLabel: string;
+  buttonRef?: Ref<HTMLButtonElement>;
   children: ReactNode;
   onClick: () => void;
+  pressed?: boolean;
 }) {
   return (
     <button
+      aria-controls={ariaControls}
+      aria-expanded={ariaExpanded}
       aria-label={ariaLabel}
-      aria-pressed={active || undefined}
-      className={`grid h-11 min-w-11 place-items-center rounded-xl border px-3 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0b34a] ${
+      aria-pressed={pressed}
+      className={`grid h-9 min-w-9 shrink-0 place-items-center rounded-xl border px-2 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0b34a] sm:h-11 sm:min-w-11 sm:px-3 sm:text-sm ${
         active
           ? "border-[#d68a45] bg-[#9f402b] text-white"
           : "border-white/15 bg-[#111513]/80 text-[#efe7d0] hover:bg-[#29302d]"
       }`}
       onClick={onClick}
+      ref={buttonRef}
       type="button"
     >
       {children}
@@ -565,12 +592,21 @@ function ViewerToolbar({
   onZoom: (direction: "in" | "out") => void;
 }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const settingsId = useId();
+  const settingsButtonRef = useRef<HTMLButtonElement>(null);
+  const settingsPanelRef = useRef<HTMLDivElement>(null);
   const settingsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!settingsOpen) return;
+    settingsPanelRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setSettingsOpen(false);
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setSettingsOpen(false);
+        settingsButtonRef.current?.focus();
+      }
     }
     function handlePointerDown(event: PointerEvent) {
       if (
@@ -589,12 +625,13 @@ function ViewerToolbar({
   }, [settingsOpen]);
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-20 p-3">
-      <div className="pointer-events-auto ml-auto flex w-fit flex-wrap items-center gap-2">
+    <div className="pointer-events-none absolute inset-0 z-20 p-2 sm:p-3">
+      <div className="pointer-events-auto ml-auto flex w-fit max-w-full flex-wrap items-center justify-end gap-1.5 sm:gap-2">
         <IconButton
           active={autoRotate}
           ariaLabel={autoRotate ? "Stop automatic rotation" : "Start automatic rotation"}
           onClick={onRotateToggle}
+          pressed={autoRotate}
         >
           Rotate
         </IconButton>
@@ -610,7 +647,10 @@ function ViewerToolbar({
         <div className="relative" ref={settingsRef}>
           <IconButton
             active={settingsOpen}
-            ariaLabel="Open viewer options"
+            ariaControls={settingsId}
+            ariaExpanded={settingsOpen}
+            ariaLabel={settingsOpen ? "Close viewer options" : "Open viewer options"}
+            buttonRef={settingsButtonRef}
             onClick={() => setSettingsOpen((value) => !value)}
           >
             View
@@ -618,7 +658,9 @@ function ViewerToolbar({
           {settingsOpen ? (
             <div
               aria-label="3D viewer options"
-              className="absolute right-0 top-13 w-[min(21rem,calc(100vw-2rem))] rounded-2xl border border-white/15 bg-[#111513]/95 p-4 text-[#efe7d0] shadow-2xl backdrop-blur-xl"
+              className="absolute right-0 top-[2.75rem] max-h-[min(70vh,24rem)] w-[min(21rem,calc(100vw-1rem))] overflow-y-auto rounded-2xl border border-white/15 bg-[#111513]/95 p-3 text-[#efe7d0] shadow-2xl backdrop-blur-xl sm:top-[3.25rem] sm:w-[min(21rem,calc(100vw-2rem))] sm:p-4"
+              id={settingsId}
+              ref={settingsPanelRef}
               role="dialog"
             >
               <OptionGroup
@@ -665,8 +707,10 @@ function ViewerToolbar({
           ) : null}
         </div>
         <IconButton
+          active={isFullscreen}
           ariaLabel={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
           onClick={onToggleFullscreen}
+          pressed={isFullscreen}
         >
           {isFullscreen ? "Close" : "Full"}
         </IconButton>
@@ -739,18 +783,19 @@ function AnimationControls({
 }) {
   if (clips.length === 0) {
     return (
-      <div className="absolute bottom-3 left-3 z-20 rounded-full border border-white/12 bg-[#111513]/80 px-3 py-2 text-xs font-semibold text-[#efe7d0]/70 backdrop-blur">
+      <div className="absolute bottom-2 left-2 z-20 rounded-full border border-white/12 bg-[#111513]/80 px-3 py-2 text-xs font-semibold text-[#efe7d0]/70 backdrop-blur sm:bottom-3 sm:left-3">
         Static study
       </div>
     );
   }
 
   return (
-    <div className="absolute inset-x-3 bottom-3 z-20 rounded-2xl border border-white/15 bg-[#111513]/92 p-3 text-[#efe7d0] shadow-xl backdrop-blur-xl">
-      <div className="flex flex-wrap items-center gap-2">
+    <div className="absolute inset-x-2 bottom-2 z-20 rounded-2xl border border-white/15 bg-[#111513]/92 p-2 text-[#efe7d0] shadow-xl backdrop-blur-xl sm:inset-x-3 sm:bottom-3 sm:p-3">
+      <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
         <button
           aria-label={isPlaying ? "Pause animation" : "Play animation"}
-          className="h-11 rounded-xl bg-[#9f402b] px-4 text-sm font-bold text-white transition hover:bg-[#b24a32]"
+          aria-pressed={isPlaying}
+          className="h-9 shrink-0 rounded-xl bg-[#9f402b] px-3 text-xs font-bold text-white transition hover:bg-[#b24a32] sm:h-11 sm:px-4 sm:text-sm"
           onClick={() => onPlayChange(!isPlaying)}
           type="button"
         >
@@ -759,7 +804,7 @@ function AnimationControls({
         <label className="min-w-0 flex-1 sm:max-w-64">
           <span className="sr-only">Animation clip</span>
           <select
-            className="h-11 w-full rounded-xl border border-white/15 bg-white/8 px-3 text-sm text-[#efe7d0]"
+            className="h-9 w-full min-w-0 rounded-xl border border-white/15 bg-white/8 px-2 text-xs text-[#efe7d0] sm:h-11 sm:px-3 sm:text-sm"
             onChange={(event) => onClipChange(event.target.value)}
             value={activeClip}
           >
@@ -770,8 +815,8 @@ function AnimationControls({
             ))}
           </select>
         </label>
-        <label className="flex h-11 items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-3 text-xs font-semibold">
-          Speed
+        <label className="flex h-9 shrink-0 items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-2 text-xs font-semibold sm:h-11 sm:gap-2 sm:px-3">
+          <span className="hidden sm:inline">Speed</span>
           <select
             aria-label="Animation speed"
             className="bg-transparent text-sm font-bold"
@@ -785,7 +830,7 @@ function AnimationControls({
         </label>
         <button
           aria-pressed={loop}
-          className={`h-11 rounded-xl border px-3 text-xs font-bold ${
+          className={`h-9 shrink-0 rounded-xl border px-2 text-xs font-bold sm:h-11 sm:px-3 ${
             loop
               ? "border-[#d68a45] bg-[#9f402b] text-white"
               : "border-white/15 bg-white/5"
@@ -796,8 +841,8 @@ function AnimationControls({
           Loop
         </button>
       </div>
-      <div className="mt-2 flex items-center gap-3">
-        <span className="w-10 text-right font-mono text-[11px] tabular-nums text-[#efe7d0]/65">
+      <div className="mt-1.5 flex items-center gap-2 sm:mt-2 sm:gap-3">
+        <span className="w-8 text-right font-mono text-[10px] tabular-nums text-[#efe7d0]/65 sm:w-10 sm:text-[11px]">
           {formatTime(playback.currentTime)}
         </span>
         <input
@@ -810,7 +855,7 @@ function AnimationControls({
           type="range"
           value={Math.min(playback.currentTime, playback.duration || 0)}
         />
-        <span className="w-10 font-mono text-[11px] tabular-nums text-[#efe7d0]/65">
+        <span className="w-8 font-mono text-[10px] tabular-nums text-[#efe7d0]/65 sm:w-10 sm:text-[11px]">
           {formatTime(playback.duration)}
         </span>
       </div>
@@ -850,6 +895,15 @@ export function ChhauModelViewer({
   const [speed, setSpeed] = useState(1);
   const [statusMessage, setStatusMessage] = useState("");
   const [zoomCommand, setZoomCommand] = useState<ZoomCommand | null>(null);
+  const [useCompactRendering, setUseCompactRendering] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 640px), (max-height: 600px)");
+    const updateRenderingMode = () => setUseCompactRendering(media.matches);
+    updateRenderingMode();
+    media.addEventListener("change", updateRenderingMode);
+    return () => media.removeEventListener("change", updateRenderingMode);
+  }, []);
 
   const handleClipsChange = useCallback((nextClips: string[]) => {
     setIsPlaying(false);
@@ -899,10 +953,17 @@ export function ChhauModelViewer({
 
   function changeCameraView(view: CameraView) {
     setCameraView(view);
-    setCameraCommand({ nonce: Date.now(), view });
+    setCameraCommand((previous) => ({
+      nonce: (previous?.nonce ?? 0) + 1,
+      view,
+    }));
   }
 
-  const shellClassName = `relative h-full min-h-[420px] w-full overflow-hidden rounded-2xl border border-white/10 ${className}`;
+  const shellClassName = `relative h-full w-full overflow-hidden border border-white/10 ${
+    isFullscreen
+      ? "min-h-0 rounded-none"
+      : "min-h-[360px] rounded-2xl sm:min-h-[420px] [@media(max-height:600px)]:min-h-[300px]"
+  } ${className}`;
   const isAnimating = isPlaying || autoRotate;
 
   const commonScene = (
@@ -919,7 +980,7 @@ export function ChhauModelViewer({
         far={6}
         opacity={background === "paper" ? 0.24 : 0.42}
         position={[0, -1.48, 0]}
-        resolution={512}
+        resolution={useCompactRendering ? 128 : 512}
         scale={7}
       />
       <OrbitControls
@@ -949,7 +1010,12 @@ export function ChhauModelViewer({
       onReset={() => setResetNonce((value) => value + 1)}
       onRotateToggle={() => setAutoRotate((value) => !value)}
       onToggleFullscreen={toggleFullscreen}
-      onZoom={(direction) => setZoomCommand({ direction, nonce: Date.now() })}
+      onZoom={(direction) =>
+        setZoomCommand((previous) => ({
+          direction,
+          nonce: (previous?.nonce ?? 0) + 1,
+        }))
+      }
     />
   );
 
@@ -961,11 +1027,15 @@ export function ChhauModelViewer({
       loop={loop}
       onClipChange={(clip) => {
         setActiveClip(clip);
-        setIsPlaying(false);
       }}
       onLoopChange={setLoop}
       onPlayChange={setIsPlaying}
-      onSeek={(time) => setSeekCommand({ nonce: Date.now(), time })}
+      onSeek={(time) =>
+        setSeekCommand((previous) => ({
+          nonce: (previous?.nonce ?? 0) + 1,
+          time,
+        }))
+      }
       onSpeedChange={setSpeed}
       playback={playback}
       speed={speed}
@@ -974,7 +1044,11 @@ export function ChhauModelViewer({
 
   if (!normalizedModelUrl && !showFallbackScene) {
     return (
-      <div className={`grid place-items-center bg-[#151817] p-6 text-center ${shellClassName}`}>
+      <div
+        aria-label={`${modelLabel} 3D viewer`}
+        className={`grid place-items-center bg-[#151817] p-6 text-center ${shellClassName}`}
+        role="region"
+      >
         <div>
           <p className="text-sm font-bold text-[#efe7d0]">3D study not yet available</p>
           <p className="mt-2 max-w-sm text-xs leading-5 text-[#efe7d0]/55">
@@ -987,9 +1061,10 @@ export function ChhauModelViewer({
 
   return (
     <div
-      aria-label={`Interactive ${modelLabel}`}
+      aria-label={`${modelLabel} interactive 3D viewer`}
       className={shellClassName}
       ref={containerRef}
+      role="region"
       style={{ background: backgroundCss(background) }}
     >
       <p className="sr-only" aria-live="polite">{statusMessage}</p>
@@ -1005,15 +1080,18 @@ export function ChhauModelViewer({
           <Suspense fallback={<ViewerStatus>Preparing 3D study…</ViewerStatus>}>
             <Canvas
               camera={{ fov: 38, position: [0, 0.7, 4] }}
-              dpr={[1, 1.5]}
+              dpr={useCompactRendering ? 1 : [1, 1.5]}
               frameloop={isAnimating ? "always" : "demand"}
-              gl={{ alpha: true, antialias: true }}
+              gl={{ alpha: true, antialias: !useCompactRendering }}
               shadows
-              style={{ background: "transparent" }}
+              style={{
+                background: "transparent",
+                touchAction: isFullscreen ? "none" : "pan-y",
+              }}
             >
               <Bounds clip fit margin={1.25} observe>
                 <Center>
-                  <RotatingGroup autoRotate={autoRotate}>
+                  <RotatingGroup autoRotate={autoRotate} resetNonce={resetNonce}>
                     <LoadedModel
                       activeClip={activeClip}
                       appearance={appearance}
@@ -1036,15 +1114,18 @@ export function ChhauModelViewer({
       ) : (
         <Canvas
           camera={{ fov: 38, position: [0, 0.5, 4.6] }}
-          dpr={[1, 1.5]}
+          dpr={useCompactRendering ? 1 : [1, 1.5]}
           frameloop={autoRotate ? "always" : "demand"}
-          gl={{ alpha: true, antialias: true }}
+          gl={{ alpha: true, antialias: !useCompactRendering }}
           shadows
-          style={{ background: "transparent" }}
+          style={{
+            background: "transparent",
+            touchAction: isFullscreen ? "none" : "pan-y",
+          }}
         >
           <Bounds clip fit margin={1.35} observe>
             <Center>
-              <ControlsPreview autoRotate={autoRotate} />
+              <ControlsPreview autoRotate={autoRotate} resetNonce={resetNonce} />
             </Center>
           </Bounds>
           {commonScene}

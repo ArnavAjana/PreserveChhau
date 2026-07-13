@@ -14,6 +14,7 @@ import {
   type RefObject,
 } from "react";
 import { bookPages, type BookPage } from "@/content/book-pages";
+import { AboutAuthorPhoto } from "@/components/AboutAuthorPhoto";
 import { PageAudioPlayer } from "@/components/PageAudioPlayer";
 import { PageEmbed } from "@/components/PageEmbed";
 import { PageMediaGallery } from "@/components/PageMediaGallery";
@@ -259,6 +260,7 @@ export function InteractiveEbookInterface() {
 
       shouldFocusHeadingRef.current = focusHeading;
       setCurrentChapter(index);
+      if (index !== libraryPageIndex) setPendingCitation(null);
 
       if (typeof window !== "undefined" && window.location.hash !== nextHash) {
         const method = replace ? "replaceState" : "pushState";
@@ -274,7 +276,7 @@ export function InteractiveEbookInterface() {
         }
       }
     },
-    [currentChapter],
+    [currentChapter, libraryPageIndex],
   );
 
   const handleCitationClick = useCallback(
@@ -297,6 +299,7 @@ export function InteractiveEbookInterface() {
       if (index < 0) return;
       shouldFocusHeadingRef.current = false;
       setCurrentChapter(index);
+      setPendingCitation(null);
     }
 
     syncFromLocation();
@@ -324,10 +327,21 @@ export function InteractiveEbookInterface() {
     if (pendingCitation === null || currentChapter !== libraryPageIndex) return;
 
     const target = document.getElementById(`cite-${pendingCitation}`);
-    if (!target) return;
+    if (!target) {
+      const frame = window.requestAnimationFrame(() =>
+        setPendingCitation(null),
+      );
+      return () => window.cancelAnimationFrame(frame);
+    }
 
     target.setAttribute("tabindex", "-1");
-    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    target.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "center",
+    });
     target.focus({ preventScroll: true });
     target.classList.add("cite-flash");
     const timeout = window.setTimeout(
@@ -337,7 +351,10 @@ export function InteractiveEbookInterface() {
       },
       1500,
     );
-    return () => window.clearTimeout(timeout);
+    return () => {
+      window.clearTimeout(timeout);
+      target.classList.remove("cite-flash");
+    };
   }, [pendingCitation, currentChapter, libraryPageIndex]);
 
   useEffect(() => {
@@ -347,7 +364,6 @@ export function InteractiveEbookInterface() {
   useEffect(() => {
     if (!tocOpen) return;
 
-    const previouslyFocused = document.activeElement as HTMLElement | null;
     const fallbackTrigger = tocTriggerRef.current;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -383,7 +399,7 @@ export function InteractiveEbookInterface() {
     return () => {
       document.removeEventListener("keydown", handleDialogKeyDown);
       document.body.style.overflow = previousOverflow;
-      (previouslyFocused ?? fallbackTrigger)?.focus();
+      fallbackTrigger?.focus();
     };
   }, [tocOpen]);
 
@@ -437,7 +453,7 @@ export function InteractiveEbookInterface() {
   }, [tocQuery]);
 
   const progress = Math.round(
-    (currentChapter / Math.max(bookPages.length - 1, 1)) * 100,
+    ((currentChapter + 1) / Math.max(bookPages.length, 1)) * 100,
   );
 
   return (
@@ -459,7 +475,7 @@ export function InteractiveEbookInterface() {
         </p>
 
         {tocOpen ? (
-          <div className="fixed inset-0 z-[120] flex" role="presentation">
+          <div className="reader-toc-layer fixed inset-0 z-[120] flex" role="presentation">
             <button
               aria-label="Close contents"
               className="absolute inset-0 bg-ink/55 backdrop-blur-[2px]"
@@ -470,7 +486,7 @@ export function InteractiveEbookInterface() {
             <div
               aria-labelledby="contents-title"
               aria-modal="true"
-              className="reader-toc-panel relative z-10 flex h-full w-[min(28rem,calc(100vw-1rem))] flex-col"
+              className="reader-toc-panel relative z-10 flex w-[min(28rem,calc(100vw-1rem))] flex-col"
               ref={tocDialogRef}
               role="dialog"
             >
@@ -562,7 +578,7 @@ export function InteractiveEbookInterface() {
                 )}
               </nav>
 
-              <div className="border-t border-ivory/10 p-4 sm:px-6 sm:pb-[max(1.5rem,env(safe-area-inset-bottom))]">
+              <div className="border-t border-ivory/10 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-[max(1.5rem,env(safe-area-inset-bottom))]">
                 <ThemeMusicControls
                   isPlaying={themePlaying}
                   onToggle={toggleThemeMusic}
@@ -581,79 +597,84 @@ export function InteractiveEbookInterface() {
           </div>
         ) : null}
 
-        <header className="reader-top-rail">
-          <div className="mx-auto flex min-h-[4.25rem] max-w-[1120px] items-center gap-3 px-4 sm:px-6">
-            <button
-              aria-expanded={tocOpen}
-              aria-haspopup="dialog"
-              className="reader-rail-button"
-              onClick={() => setTocOpen(true)}
-              ref={tocTriggerRef}
-              type="button"
-            >
-              <MenuIcon className="h-4 w-4" />
-              <span>Contents</span>
-            </button>
+        <div
+          className="reader-background"
+          inert={tocOpen ? true : undefined}
+        >
+          <header className="reader-top-rail">
+            <div className="reader-rail-inner mx-auto flex min-h-[4.25rem] max-w-[1120px] items-center gap-3 px-4 sm:px-6">
+              <button
+                aria-expanded={tocOpen}
+                aria-haspopup="dialog"
+                className="reader-rail-button"
+                onClick={() => setTocOpen(true)}
+                ref={tocTriggerRef}
+                type="button"
+              >
+                <MenuIcon className="h-4 w-4" />
+                <span>Contents</span>
+              </button>
 
-            <Link
-              aria-label="PreserveChhau home"
-              className="hidden shrink-0 text-sm font-bold tracking-tight text-ink sm:block"
-              href="/"
-            >
-              Preserve<span className="text-laterite-700">Chhau</span>
-            </Link>
+              <Link
+                aria-label="PreserveChhau home"
+                className="hidden shrink-0 text-sm font-bold tracking-tight text-ink sm:block"
+                href="/"
+              >
+                Preserve<span className="text-laterite-700">Chhau</span>
+              </Link>
 
-            <div className="min-w-0 flex-1 text-center">
-              <p className="reader-kicker truncate text-laterite-700">
-                {currentGroupLabel}
-              </p>
-              <p className="mt-0.5 hidden truncate text-sm font-medium text-ink/75 md:block">
-                {getChapterTitle(currentPage)}
-              </p>
+              <div className="min-w-0 flex-1 text-center">
+                <p className="reader-kicker truncate text-laterite-700">
+                  {currentGroupLabel}
+                </p>
+                <p className="mt-0.5 hidden truncate text-sm font-medium text-ink/75 md:block">
+                  {getChapterTitle(currentPage)}
+                </p>
+              </div>
+
+              <button
+                aria-label={themePlaying ? "Pause theme music" : "Play theme music"}
+                className="reader-rail-button"
+                onClick={toggleThemeMusic}
+                type="button"
+              >
+                {themePlaying ? (
+                  <PauseIcon className="h-4 w-4" />
+                ) : (
+                  <MusicIcon className="h-4 w-4" />
+                )}
+                <span className="hidden lg:inline">Theme</span>
+              </button>
+
+              <span className="shrink-0 text-xs font-semibold tabular-nums text-ink/70">
+                {currentChapter + 1}/{bookPages.length}
+              </span>
             </div>
-
-            <button
-              aria-label={themePlaying ? "Pause theme music" : "Play theme music"}
-              className="reader-rail-button"
-              onClick={toggleThemeMusic}
-              type="button"
+            <div
+              aria-label={`Reading progress: ${progress}%`}
+              aria-valuemax={100}
+              aria-valuemin={0}
+              aria-valuenow={progress}
+              className="reader-progress"
+              role="progressbar"
             >
-              {themePlaying ? (
-                <PauseIcon className="h-4 w-4" />
-              ) : (
-                <MusicIcon className="h-4 w-4" />
-              )}
-              <span className="hidden lg:inline">Theme</span>
-            </button>
+              <span style={{ width: `${progress}%` }} />
+            </div>
+          </header>
 
-            <span className="shrink-0 text-xs font-semibold tabular-nums text-ink/60">
-              {currentChapter + 1}/{bookPages.length}
-            </span>
-          </div>
-          <div
-            aria-label={`Reading progress: ${progress}%`}
-            aria-valuemax={100}
-            aria-valuemin={0}
-            aria-valuenow={progress}
-            className="reader-progress"
-            role="progressbar"
-          >
-            <span style={{ width: `${progress}%` }} />
-          </div>
-        </header>
-
-        <main className="reader-main" id="main-content">
-          <BookContent
-            currentChapter={currentChapter}
-            headingRef={pageHeadingRef}
-            modelOptions={modelOptions}
-            onNavigate={navigateTo}
-            page={currentPage}
-            selectedModelIndex={selectedModelIndex}
-            setSelectedModelIndex={setSelectedModelIndex}
-            viewer={viewer}
-          />
-        </main>
+          <main className="reader-main" id="main-content">
+            <BookContent
+              currentChapter={currentChapter}
+              headingRef={pageHeadingRef}
+              modelOptions={modelOptions}
+              onNavigate={navigateTo}
+              page={currentPage}
+              selectedModelIndex={selectedModelIndex}
+              setSelectedModelIndex={setSelectedModelIndex}
+              viewer={viewer}
+            />
+          </main>
+        </div>
       </div>
     </CitationContext.Provider>
   );
@@ -941,12 +962,13 @@ function ContentPageBody({
       </header>
 
       {!hasStudyAnchor && studyNode ? (
-        <div className="reader-prose mb-8">{studyNode}</div>
+        <div className="reader-study-breakout mb-8">{studyNode}</div>
       ) : null}
 
       {chapter.body.trim() ? (
         <MarkdownContent
           anchorBlockIndex={hasStudyAnchor ? anchorBlockIndex : null}
+          leadNode={chapter.id === "about-me" ? <AboutAuthorPhoto /> : null}
           page={chapter}
           studyNode={studyNode}
         />
@@ -1078,40 +1100,60 @@ function ModelChoiceTabs({
 
 function MarkdownContent({
   anchorBlockIndex,
+  leadNode,
   page,
   studyNode,
 }: {
   anchorBlockIndex?: number | null;
+  leadNode?: ReactNode;
   page: BookPage;
   studyNode?: ReactNode;
 }) {
   const blocks = page.body.split(/\n{2,}/);
-  const nodes: ReactNode[] = [];
+  const className = [
+    "reader-prose heritage-text space-y-5",
+    REFERENCE_IDS.has(page.id) ? null : "book-prose",
+    leadNode ? "about-author-prose" : null,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-  blocks.forEach((block, index) => {
-    if (
-      studyNode &&
-      anchorBlockIndex !== null &&
-      anchorBlockIndex !== undefined &&
-      index === anchorBlockIndex
-    ) {
-      nodes.push(
-        <div className="my-8" key={`${page.id}-study`}>
+  const renderBlocks = (entries: string[], startIndex = 0) =>
+    entries
+      .map((block, index) =>
+        renderMarkdownBlock(block, `${page.id}-${startIndex + index}`),
+      )
+      .filter(Boolean);
+
+  if (
+    studyNode &&
+    anchorBlockIndex !== null &&
+    anchorBlockIndex !== undefined &&
+    anchorBlockIndex >= 0
+  ) {
+    const before = renderBlocks(blocks.slice(0, anchorBlockIndex));
+    const after = renderBlocks(
+      blocks.slice(anchorBlockIndex + 1),
+      anchorBlockIndex + 1,
+    );
+
+    return (
+      <>
+        {before.length > 0 ? <div className={className}>{before}</div> : null}
+        <div className="reader-study-breakout my-8" key={`${page.id}-study`}>
           {studyNode}
-        </div>,
-      );
-      return;
-    }
+        </div>
+        {after.length > 0 ? <div className={className}>{after}</div> : null}
+      </>
+    );
+  }
 
-    const rendered = renderMarkdownBlock(block, `${page.id}-${index}`);
-    if (rendered) nodes.push(rendered);
-  });
-
-  const className = REFERENCE_IDS.has(page.id)
-    ? "reader-prose heritage-text space-y-5"
-    : "reader-prose book-prose heritage-text space-y-5";
-
-  return <div className={className}>{nodes}</div>;
+  return (
+    <div className={className}>
+      {leadNode}
+      {renderBlocks(blocks)}
+    </div>
+  );
 }
 
 function renderMarkdownBlock(block: string, key: string) {
@@ -1190,21 +1232,42 @@ function renderInlineMarkdown(text: string): ReactNode[] {
     }
 
     if (/^https?:\/\//.test(piece)) {
+      const [url, terminalPunctuation] = splitUrlTerminalPunctuation(piece);
       return (
-        <a
-          className="break-words font-medium text-laterite-700 underline decoration-laterite-300 underline-offset-4 transition-colors hover:text-laterite-900"
-          href={piece}
-          key={`${piece}-${index}`}
-          rel="noreferrer"
-          target="_blank"
-        >
-          {piece}
-        </a>
+        <span key={`${piece}-${index}`}>
+          <a
+            className="break-words font-medium text-laterite-700 underline decoration-laterite-300 underline-offset-4 transition-colors hover:text-laterite-900"
+            href={url}
+            rel="noreferrer"
+            target="_blank"
+          >
+            {url}
+          </a>
+          {terminalPunctuation}
+        </span>
       );
     }
 
     return <span key={`${piece}-${index}`}>{piece}</span>;
   });
+}
+
+function splitUrlTerminalPunctuation(url: string): [string, string] {
+  let end = url.length;
+
+  while (end > 0 && /[.,;:!?]/.test(url[end - 1])) end -= 1;
+
+  const trimUnmatchedCloser = (open: string, close: string) => {
+    const candidate = url.slice(0, end);
+    const openCount = candidate.split(open).length - 1;
+    const closeCount = candidate.split(close).length - 1;
+    if (candidate.endsWith(close) && closeCount > openCount) end -= 1;
+  };
+
+  trimUnmatchedCloser("(", ")");
+  trimUnmatchedCloser("[", "]");
+
+  return [url.slice(0, end), url.slice(end)];
 }
 
 function CitationGroup({ numbers }: { numbers: number[] }) {
