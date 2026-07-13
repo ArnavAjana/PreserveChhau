@@ -17,8 +17,6 @@ import { bookPages, type BookPage } from "@/content/book-pages";
 import { AboutAuthorPhoto } from "@/components/AboutAuthorPhoto";
 import { PageAudioPlayer } from "@/components/PageAudioPlayer";
 import { PageEmbed } from "@/components/PageEmbed";
-import { PageMediaGallery } from "@/components/PageMediaGallery";
-import { PageVideo } from "@/components/PageVideo";
 import { SandboxGuide } from "@/components/SandboxGuide";
 
 type CitationContextValue = {
@@ -247,7 +245,7 @@ export function InteractiveEbookInterface() {
     Math.max(modelOptions.length - 1, 0),
   );
   const selectedModel = modelOptions[selectedModelIndex];
-  const shouldShowViewer = Boolean(selectedModel || currentPage.showFallbackScene);
+  const shouldShowViewer = Boolean(selectedModel);
 
   const navigateTo = useCallback(
     (requestedIndex: number, options: NavigateOptions = {}) => {
@@ -431,10 +429,8 @@ export function InteractiveEbookInterface() {
     () =>
       shouldShowViewer ? (
         <ChhauModelViewer
-          className={currentPage.modelFrameStyle}
           modelScale={selectedModel?.modelScale ?? currentPage.modelScale}
           modelUrl={selectedModel?.modelUrl ?? currentPage.modelUrl}
-          showFallbackScene={currentPage.showFallbackScene}
         />
       ) : null,
     [currentPage, selectedModel, shouldShowViewer],
@@ -884,6 +880,11 @@ function SectionPage({
           <span className="h-1 flex-1 rounded-full bg-marigold-500" />
           <span className="h-1 flex-1 rounded-full bg-ink" />
         </div>
+        {page.body.trim() ? (
+          <div className="mt-8 [&_.book-prose]:text-center">
+            <MarkdownContent page={page} />
+          </div>
+        ) : null}
       </div>
     </section>
   );
@@ -922,9 +923,7 @@ function ContentPageBody({
       <div
         className="relative overflow-hidden rounded-xl bg-ink shadow-sm ring-1 ring-ink/10"
         style={{
-          height: chapter.modelViewerHeight,
-          minHeight: 360,
-          maxHeight: 720,
+          height: "clamp(18.75rem, 58svh, 45rem)",
         }}
       >
         {viewer}
@@ -991,18 +990,6 @@ function ContentPageBody({
         </div>
       ) : null}
 
-      {chapter.videoUrl ? (
-        <div className="reader-media-breakout">
-          <PageVideo caption={chapter.videoCaption} src={chapter.videoUrl} />
-        </div>
-      ) : null}
-
-      {chapter.gallery?.length ? (
-        <div className="reader-media-breakout">
-          <PageMediaGallery images={chapter.gallery} />
-        </div>
-      ) : null}
-
       {chapter.audioTracks?.length ? (
         <div className="reader-prose mt-8 space-y-4">
           {chapter.audioTracks.map((track) => (
@@ -1016,10 +1003,6 @@ function ContentPageBody({
           ))}
         </div>
       ) : null}
-
-      <div className="reader-prose">
-        <PageAudio page={chapter} />
-      </div>
     </>
   );
 }
@@ -1287,21 +1270,6 @@ function CitationGroup({ numbers }: { numbers: number[] }) {
         </button>
       ))}
     </sup>
-  );
-}
-
-function PageAudio({
-  page,
-}: {
-  page: BookPage;
-}) {
-  if (!page.audioUrl) return null;
-  return (
-    <PageAudioPlayer
-      className="mt-8 w-full"
-      loop={page.audioLoop}
-      src={page.audioUrl}
-    />
   );
 }
 

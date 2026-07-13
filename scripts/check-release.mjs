@@ -27,21 +27,30 @@ function requirePath(path) {
   "Chhau_eBook_Content.md",
   "src/content/book-pages.ts",
   "map-of-chhau/src/ChhauGlobe.jsx",
+  "map-of-chhau/public/data/countries.geojson",
+  "map-of-chhau/public/images/night-sky.png",
   "public/map-of-chhau/index.html",
   "public/map-of-chhau/data/countries.geojson",
   "public/map-of-chhau/images/night-sky.png",
+  "public/audio/dholki-1.mp3",
   "public/audio/main-theme-ebook.mp3",
+  "public/images/arnav-ajana-about.jpg",
+  "public/draco/gltf/draco_decoder.js",
+  "public/draco/gltf/draco_decoder.wasm",
+  "public/draco/gltf/draco_wasm_wrapper.js",
+  "public/basis/basis_transcoder.js",
+  "public/basis/basis_transcoder.wasm",
 ].forEach(requirePath);
 
-const mapIndex = await readFile(
-  resolve(publicRoot, "map-of-chhau/index.html"),
-  "utf8",
-);
-if (!mapIndex.includes('src="./assets/')) {
-  failures.push("Generated globe must use a relative JavaScript asset URL.");
-}
-if (!mapIndex.includes('href="./assets/')) {
-  failures.push("Generated globe must use a relative stylesheet asset URL.");
+const mapIndexPath = resolve(publicRoot, "map-of-chhau/index.html");
+if (existsSync(mapIndexPath)) {
+  const mapIndex = await readFile(mapIndexPath, "utf8");
+  if (!mapIndex.includes('src="./assets/')) {
+    failures.push("Generated globe must use a relative JavaScript asset URL.");
+  }
+  if (!mapIndex.includes('href="./assets/')) {
+    failures.push("Generated globe must use a relative stylesheet asset URL.");
+  }
 }
 
 const mapBundleFiles = await listFiles(resolve(publicRoot, "map-of-chhau/assets"));
@@ -58,6 +67,14 @@ if (existsSync(legacyPublicPath)) {
   const legacyPublicFiles = await listFiles(legacyPublicPath);
   if (legacyPublicFiles.length > 0) {
     failures.push("Unreviewed legacy models must not be shipped from public/.");
+  }
+}
+
+const legacyArchivePath = resolve(root, "archive/legacy-models");
+if (existsSync(legacyArchivePath)) {
+  const legacyArchiveFiles = await listFiles(legacyArchivePath);
+  if (legacyArchiveFiles.length > 0) {
+    failures.push("Unreviewed legacy models must not be restored to this repository.");
   }
 }
 

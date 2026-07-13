@@ -1,5 +1,3 @@
-import { rmSync } from "node:fs";
-import { resolve } from "node:path";
 import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
@@ -11,26 +9,12 @@ const outputRoot = fileURLToPath(
 
 export default defineConfig({
   base: "./",
-  plugins: [
-    react(),
-    {
-      name: "clear-generated-map-bundle",
-      buildStart() {
-        rmSync(resolve(outputRoot, "assets"), {
-          force: true,
-          recursive: true,
-        });
-        rmSync(resolve(outputRoot, "index.html"), {
-          force: true,
-        });
-      },
-    },
-  ],
-  publicDir: false,
+  plugins: [react()],
+  publicDir: "public",
   root: mapRoot,
   build: {
     chunkSizeWarningLimit: 2200,
-    emptyOutDir: false,
+    emptyOutDir: true,
     outDir: outputRoot,
     sourcemap: false,
   },

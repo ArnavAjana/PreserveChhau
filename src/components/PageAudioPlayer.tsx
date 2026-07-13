@@ -22,7 +22,7 @@ function formatTime(seconds: number): string {
 /**
  * The eBook's shared audio player — used for drum patterns, musical
  * phrases, and theme audio on any page. Pages opt in through the
- * `audioTracks` (or legacy `audioUrl`) fields in book-pages.ts.
+ * `audioTracks` field in book-pages.ts.
  */
 export function PageAudioPlayer({
   src,

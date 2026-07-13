@@ -4,8 +4,6 @@ import { bookPages } from "@/content/book-pages";
 const partDescriptions: Record<string, string> = {
   "How I Found Chhau":
     "The performance, the habit, and the questions that led me to build this book.",
-  Foreword:
-    "The performance, the habit, and the questions that led me to build this book.",
   "Three Traditions, One Family":
     "Meet Mayurbhanj, Seraikella, and Purulia without flattening their differences.",
   "Many Roots, No Single Beginning":
@@ -33,8 +31,6 @@ const partDescriptions: Record<string, string> = {
   "Words, Timeline, and Library":
     "Use plain-language terms, a qualified timeline, open questions, and the source shelf.",
   "I Am Still Learning":
-    "End where this project began: with curiosity, humility, and more to learn.",
-  "Keep Looking. Keep Listening.":
     "End where this project began: with curiosity, humility, and more to learn.",
 };
 

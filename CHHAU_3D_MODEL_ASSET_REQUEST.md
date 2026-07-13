@@ -98,4 +98,4 @@ Before a model appears in the eBook, a current practitioner should confirm:
 - repertoire sequence and character identity
 - whether the model is an authentic demonstration, a schematic study, or a clearly labelled reconstruction
 
-The existing 17 generic prototype GLBs are not reliable reference models: their filenames do not identify lineage, costume, character, pose, performer, or source, none contains animation clips, and together they occupy roughly 510 MB. They remain unbound and outside the release plan. Remove or archive them only after confirming that no original source work is needed from those unique files.
+The 17 generic prototype GLBs from the original upload were removed from the current repository: their filenames did not identify lineage, costume, character, pose, performer, or source, none contained animation clips, and together they occupied roughly 510 MB. Do not restore them as reference material. Only reviewed, credited, optimised packages that meet this brief belong in the release repository.

@@ -23,10 +23,9 @@ before public release.
 - `/experience` — the complete 23-model production roadmap, grouped by release
   priority and written for human review rather than as a raw file list
 - `map-of-chhau/` — the maintainable React/Vite source for Arnav’s interactive
-  globe, kept separate from the generated deployment bundle
-- `public/map-of-chhau/` — the generated globe plus local country GeoJSON and
-  starfield assets; its three eastern-Indian heartlands are the anchors, while
-  wider nodes are explicitly labelled as research leads pending source review
+  globe, including its local country geometry and starfield source assets
+- `public/map-of-chhau/` — an ignored deployment bundle regenerated from that
+  source before development, verification, and production builds
 - `src/components/ChhauModelViewer.tsx` — the reusable GLB study sandbox with
   skeleton-safe animation, clip selection, pause/scrub, playback speed, camera,
   appearance, lighting, zoom, reset, and fullscreen controls
@@ -82,8 +81,6 @@ The generator validates the manuscript and rebuilds all 76 runtime pages. Page
 metadata can opt into:
 
 - `audioTracks` — shared audio player
-- `gallery` — media gallery
-- `videoUrl` and `videoCaption` — video study
 - `embedUrl`, `embedTitle`, and `embedCaption` — local interactive embed
 - `interactive: "sandbox-guide"` — the guided 3D controls preview
 - `plannedModels` — reviewed model filenames that remain visible as preparation
@@ -92,21 +89,22 @@ metadata can opt into:
 ## Interactive globe workflow
 
 `map-of-chhau/` is the standalone, maintainable source application for the
-world globe. Edit its React components, styles, or node dataset there; do not
-hand-edit the generated hashed files in `public/map-of-chhau/assets/`.
+world globe. Edit its React components, styles, node dataset, or `public/`
+source assets there; never hand-edit the ignored deployment output in
+`public/map-of-chhau/`.
 
 ```bash
 npm run build:map
 ```
 
-Vite writes a deployable `index.html` and hashed CSS/JavaScript assets to
-`public/map-of-chhau/`, where Next.js can serve them inside the eBook iframe or
-as a full-screen page. The country geometry and starfield used by the globe are
-local files at `public/map-of-chhau/data/countries.geojson` and
-`public/map-of-chhau/images/night-sky.png`, so the core globe does not depend on
-a remote map tile or background service. Optional reference thumbnails may be
-requested from Wikimedia/Wikipedia after a node is selected; the text card and
-globe remain usable when those images are unavailable.
+Vite copies `map-of-chhau/public/data/countries.geojson` and
+`map-of-chhau/public/images/night-sky.png` beside a deployable `index.html` and
+hashed CSS/JavaScript bundle in `public/map-of-chhau/`. Next.js serves that
+generated output inside the eBook iframe or as a full-screen page. The core
+globe therefore does not depend on a remote map tile or background service.
+Optional reference thumbnails may be requested from Wikimedia/Wikipedia after
+a node is selected; the text card and globe remain usable when those images are
+unavailable.
 
 To refresh both authored outputs in their required order, run:
 
@@ -135,11 +133,10 @@ The viewer supports Draco-compressed geometry and KTX2 textures through local
 files in `public/draco/` and `public/basis/`; it does not fetch decoders from a
 third-party CDN.
 
-`archive/legacy-models/` contains 17 unique, uncredited prototype GLBs from the
-original upload. They are not used or shipped by the application and are not
-part of the release plan. They remain in the repository only to avoid
-destroying potentially useful source work without a deliberate archival
-decision.
+The original upload’s 17 uncredited prototype GLBs were removed from the
+current repository. They occupied roughly 510 MB, contained no animation clips,
+and lacked the lineage, performer, maker, source, permission, and review records
+required for this project.
 
 ## Project structure
 
@@ -151,12 +148,12 @@ src/app/                          Next.js routes and global styles
 src/components/                   reader, media, map embed, and 3D UI
 src/content/book-pages.ts         generated runtime content
 map-of-chhau/                     maintainable React/Vite globe source
+map-of-chhau/public/              local globe source assets copied by Vite
 public/audio/                     web audio used by the reader
-public/map-of-chhau/              generated globe and stable local resources
+public/map-of-chhau/              ignored, generated globe deployment output
 public/draco/                     local Draco decoder
 public/basis/                     local KTX2 transcoder
 public/models/chhau-approved/     reviewed release models
-archive/legacy-models/            unbound, uncredited legacy prototypes
 ```
 
 ## Stack
@@ -168,8 +165,6 @@ archive/legacy-models/            unbound, uncredited legacy prototypes
 - Vite and react-globe.gl for the standalone atlas
 - npm with a committed lockfile for reproducible installs
 
-The repository intentionally does not commit `node_modules`, Next.js build
-output, exploded package contents, or duplicate map/audio/source bundles. The
-compiled atlas in `public/map-of-chhau/` is the deliberate exception: it is a
-versioned public asset, regenerated from `map-of-chhau/` with `npm run
-build:map`.
+The repository intentionally does not commit dependencies, framework output,
+compiled globe bundles, raw production masters, unreviewed models, or duplicate
+assets. All runtime outputs are reproducible from the maintained source.
