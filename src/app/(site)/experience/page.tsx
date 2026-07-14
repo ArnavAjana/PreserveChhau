@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "3D Study Roadmap",
   description:
-    "The practitioner-reviewed 3D studies planned for the PreserveChhau interactive eBook.",
+    "Planned 3D studies for the PreserveChhau interactive eBook, all awaiting named practitioner, maker, and rights review.",
 };
 
 type ModelStudy = {
@@ -33,55 +33,55 @@ const releaseGroups: ReleaseGroup[] = [
         name: "Three-style line-up",
         file: "chhau-three-styles-lineup.glb",
         purpose:
-          "Accurately labelled Mayurbhanj, Seraikella, and Purulia figures in neutral comparison poses.",
+          "A proposed neutral comparison of Mayurbhanj, Seraikella, and Purulia figures; regional labels and forms remain pending practitioner review.",
       },
       {
         name: "Mayurbhanj foundations",
         file: "mayurbhanj-core.glb",
         purpose:
-          "One validated rig with chauk, dharan, and chali studies.",
+          "One proposed rig for chauk, dharan, and chali studies, pending a named Mayurbhanj practitioner’s review.",
       },
       {
         name: "Mayurbhanj topkas",
         file: "mayurbhanj-topkas.glb",
         purpose:
-          "A practitioner-confirmed set of named topkas on the same rig.",
+          "A candidate set of named topkas on the same rig; selection, spelling, and motion are not yet practitioner-confirmed.",
       },
       {
         name: "Seraikella mask and body",
         file: "seraikella-expression.glb",
         purpose:
-          "One fixed, maker-referenced mask read through changes in the body.",
+          "A planned study of one fixed mask read through the body, pending Seraikella practitioner and mask-maker reference approval.",
       },
       {
         name: "Purulia masked figure",
         file: "purulia-masked-core.glb",
         purpose:
-          "One maker-credited character with complete headgear, costume, and cloth motion.",
+          "A proposed character study whose headgear, costume, cloth motion, maker credit, and permissions remain to be confirmed.",
       },
       {
         name: "Durga",
         file: "purulia-durga.glb",
         purpose:
-          "A troupe-specific Durga address and short movement phrase.",
+          "A planned troupe-specific Durga address and phrase, pending selection and review with that troupe.",
       },
       {
         name: "Mahishasura",
         file: "purulia-mahishasura.glb",
         purpose:
-          "A compatible entrance, confrontation, and controlled fall for the Durga study.",
+          "A proposed paired entrance, confrontation, and fall, pending troupe, movement, and safety review.",
       },
       {
         name: "Mask comparison",
         file: "mask-comparison.glb",
         purpose:
-          "Credited Seraikella and Purulia masks from front, side, and back; Mayurbhanj labelled unmasked.",
+          "A planned view of Seraikella and Purulia masks beside an unmasked Mayurbhanj figure; maker permissions and regional review are pending.",
       },
       {
         name: "Instrument collection",
         file: "instrument-pack.glb",
         purpose:
-          "Region-labelled drums, smaller percussion, and reed instruments as separate meshes.",
+          "Proposed region-labelled drums, smaller percussion, and reed instruments, pending musician review of every label and form.",
       },
     ],
   },
@@ -96,60 +96,61 @@ const releaseGroups: ReleaseGroup[] = [
         name: "Mayurbhanj uflis",
         file: "mayurbhanj-uflis.glb",
         purpose:
-          "Practitioner-selected examples drawn from daily life, nature, and spatial phrasing.",
+          "Candidate Mayurbhanj examples drawn from source-specific lists; practitioner selection and review are still pending.",
       },
       {
         name: "Mayurbhanj chamka",
         file: "mayurbhanj-chamka.glb",
-        purpose: "Chest and shoulder accents shown against a visible beat marker.",
+        purpose:
+          "A proposed chest-and-shoulder accent study with a beat marker, pending practitioner and musician review.",
       },
       {
         name: "Mayurbhanj repertoire",
         file: "mayurbhanj-repertoire.glb",
         purpose:
-          "One short, authentic excerpt with exact piece-specific costume and props.",
+          "One candidate excerpt to be chosen with a practitioner; piece-specific movement, costume, props, and permissions remain pending.",
       },
       {
         name: "Seraikella Ratri",
         file: "seraikella-ratri.glb",
         purpose:
-          "A verified passage from Ratri with the mask and costume used for that version.",
+          "A candidate passage from Ratri whose version, movement, mask, costume, and permissions still require verification.",
       },
       {
         name: "Purulia technique",
         file: "purulia-technique.glb",
         purpose:
-          "Validated chal, pirkiti, chhok, and one ulfa with a controlled landing.",
+          "Proposed chal, pirkiti, chhok, and ulfa studies; terminology, motion, and landing remain pending Purulia practitioner review.",
       },
       {
         name: "Purulia Ganesha",
         file: "purulia-ganesha.glb",
         purpose:
-          "An exact mask and costume paired with a grounded invocation entry.",
+          "A planned invocation study whose exact mask, costume, entry, maker credit, and permissions remain to be approved.",
       },
       {
         name: "Purulia mask layers",
         file: "purulia-mask-layers.glb",
         purpose:
-          "An exploded educational view of one Charida maker’s documented process.",
+          "A proposed exploded view of one named Charida maker’s process, to be developed only with that maker’s participation and permission.",
       },
       {
         name: "Costume comparison",
         file: "costume-comparison.glb",
         purpose:
-          "Three turntable figures with verified, piece- or troupe-specific dress.",
+          "Three proposed turntable figures; every piece- or troupe-specific dress detail remains pending review and permission.",
       },
       {
         name: "Performance props",
         file: "prop-pack.glb",
         purpose:
-          "Reference-based sword, shield, trident, bow, damaru, and flute—not generic fantasy objects.",
+          "Proposed source-based props—not generic fantasy objects—pending piece-specific practitioner and maker review.",
       },
       {
         name: "Arena and akhara",
         file: "asar-akhada-diorama.glb",
         purpose:
-          "Documented performance layouts with musicians, entry paths, and spectators.",
+          "Proposed source-based performance layouts with musicians, entry paths, and spectators, pending local review.",
       },
     ],
   },
@@ -164,25 +165,25 @@ const releaseGroups: ReleaseGroup[] = [
         name: "Mayurbhanj jumps",
         file: "mayurbhanj-jumps.glb",
         purpose:
-          "One guru-selected dumka and one dian with preparation, landing, and slow motion.",
+          "A future dumka and dian study only after a guru selects the examples and a qualified specialist reviews their representation.",
       },
       {
         name: "Second Seraikella exemplar",
         file: "seraikella-second-exemplar.glb",
         purpose:
-          "Ardhanarishvara or Mayura, chosen with a consultant and built from piece-specific references.",
+          "Ardhanarishvara or Mayura, to be chosen with a consultant and built only after piece-specific references are approved.",
       },
       {
         name: "Purulia lion vahana",
         file: "purulia-lion-vahana.glb",
         purpose:
-          "A documented two-person lion costume with a synchronised walk.",
+          "A proposed two-person lion-costume study, pending troupe-specific costume, movement, and permission records.",
       },
       {
         name: "Group formations",
         file: "group-formation-pack.glb",
         purpose:
-          "Schematic transitions between line, circle, opposing groups, and a central character.",
+          "Proposed schematic transitions whose relationship to any named repertoire remains pending practitioner review.",
       },
     ],
   },
@@ -196,13 +197,13 @@ export default function ExperiencePage() {
           3D study roadmap
         </p>
         <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-laterite-900 sm:text-6xl">
-          Twenty-three models—only when the references are ready
+          Twenty-three planned models—none yet approved
         </h1>
         <p className="mt-6 text-lg leading-8 text-midnight-800">
-          The sandbox itself is built. The cultural models are deliberately not
-          filled with generic dancers. Each study must name its regional style,
-          reference performer, practitioner reviewer, maker where relevant, and
-          permission status before it appears beside the book.
+          The sandbox itself is built, but these entries are specifications—not
+          finished or approved models. Each study must name its
+          regional style, reference performer, practitioner reviewer, maker where
+          relevant, and permission status before it appears beside the book.
         </p>
       </div>
 
@@ -217,7 +218,7 @@ export default function ExperiencePage() {
         </p>
         <p className="text-sm leading-6 text-midnight-800">
           <strong className="block text-2xl text-laterite-900">4</strong>
-          advanced studies held for stronger review
+          advanced studies held until qualified review is arranged
         </p>
       </div>
 
@@ -276,10 +277,10 @@ export default function ExperiencePage() {
         </p>
         <p className="mt-3 max-w-3xl text-base leading-7 text-midnight-800">
           Include a sidecar record naming the lineage, movement or character,
-          modeller, reference performer, practitioner reviewer, maker or troupe,
-          source material, permission, licence, and required credit line. The
-          repository’s asset brief contains the full technical and approval
-          checklist.
+          modeller, reference performer, proposed practitioner reviewer, maker
+          or troupe, source material, permission, licence, required credit line,
+          and current approval status. The repository’s asset brief contains the
+          full technical and approval checklist.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link

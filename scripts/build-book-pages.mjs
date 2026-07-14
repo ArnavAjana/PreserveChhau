@@ -33,6 +33,11 @@ function parsePages(source) {
     if (!["cover", "section", "content"].includes(metadata.pageType)) {
       throw new Error(`Unsupported pageType on ${metadata.id}.`);
     }
+    if ("audioTracks" in metadata) {
+      throw new Error(
+        `audioTracks is disabled on ${metadata.id}; restore audio only with an approved rights record and reviewed player implementation.`,
+      );
+    }
 
     return { ...metadata, body };
   });
@@ -71,7 +76,7 @@ function buildPage(page) {
     body: ${JSON.stringify(page.body)},
     modelUrl: ${JSON.stringify(modelUrl)},
     modelScale: ${page.modelScale ?? 1},
-${optionalLine("modelOptions", page.modelOptions)}${optionalLine("plannedModels", page.plannedModels)}${optionalLine("interactive", page.interactive)}${optionalLine("audioTracks", page.audioTracks)}${optionalLine("embedUrl", page.embedUrl)}${optionalLine("embedTitle", page.embedTitle)}${optionalLine("embedCaption", page.embedCaption)}${optionalLine("embedHeight", page.embedHeight)}  }`;
+${optionalLine("modelOptions", page.modelOptions)}${optionalLine("plannedModels", page.plannedModels)}${optionalLine("interactive", page.interactive)}${optionalLine("embedUrl", page.embedUrl)}${optionalLine("embedTitle", page.embedTitle)}${optionalLine("embedCaption", page.embedCaption)}${optionalLine("embedHeight", page.embedHeight)}  }`;
 }
 
 function generateTypeScript(pages) {
@@ -90,13 +95,6 @@ export type BookPageModelOption = {
   modelScale?: number;
 };
 
-export type BookPageAudioTrack = {
-  src: string;
-  title: string;
-  caption?: string;
-  loop?: boolean;
-};
-
 export type BookPageInteractive = "sandbox-guide";
 
 export type BookPage = {
@@ -110,7 +108,6 @@ export type BookPage = {
   /** Approved asset filenames planned for this page, not loaded until modelUrl is set. */
   plannedModels?: string[];
   interactive?: BookPageInteractive;
-  audioTracks?: BookPageAudioTrack[];
   embedUrl?: string | null;
   embedTitle?: string;
   embedCaption?: string;

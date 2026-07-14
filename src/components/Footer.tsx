@@ -9,8 +9,8 @@ export function Footer() {
             Preserve<span className="text-marigold-400">Chhau</span>
           </p>
           <p className="mt-3 max-w-xs text-sm leading-relaxed">
-            A student’s attempt to make the first encounter with Chhau clearer,
-            more connected, and properly credited.
+            A student’s attempt to make the first encounter with Chhau clearer
+            and more connected while working toward complete credit.
           </p>
         </div>
 
@@ -44,10 +44,11 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-ivory/10 px-6 py-5 text-center text-xs text-ivory/45">
-        Project concept, initial research corpus, personal narrative, and
-        creative direction by Arnav Ajana. Drafting and technical implementation
-        were AI-assisted under his direction. Practitioners and communities
-        remain the authorities on their own traditions.
+        Project concept, research assembly, personal narrative, and creative
+        direction by Arnav Ajana. Rights in the assembled sources remain with
+        their authors and publishers. Drafting and technical implementation were
+        AI-assisted under his direction. Practitioners and communities remain
+        the authorities on their own traditions.
       </div>
     </footer>
   );
