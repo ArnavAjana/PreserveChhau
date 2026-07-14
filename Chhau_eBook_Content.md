@@ -3,7 +3,8 @@
 **Project lead and student author:** Arnav Ajana
 **Primary audience:** ages 8–14, with a teacher and parent layer
 **Editorial centre:** Mayurbhanj Chhau, understood within the three-style Chhau family
-**Status:** complete working manuscript developed through an AI-assisted process under Arnav’s direction; final authorial review, practitioner consultation, permissions, and model approval remain required
+**Status:** working manuscript developed through an AI-assisted process under Arnav’s direction; final authorial review, practitioner consultation, permissions, model approval, and pediatric movement/safety review remain required
+**Movement-guidance status:** unvalidated draft. The ages 8–14 activities and Chhau-specific safety boundaries have not been reviewed by a pediatric movement/safety professional or validated by a Chhau practitioner. They are not medical advice or a safety certification.
 
 The one-line `BOOK_PAGE` comments are production metadata. The readable copy beneath each marker is the canonical text used to generate `src/content/book-pages.ts`.
 
@@ -46,7 +47,7 @@ I cannot preserve Chhau by myself, and this book cannot replace a dancer, teache
 
 That felt like a useful place for me to begin.
 
-<!-- BOOK_PAGE {"id":"how-to-use-this-book","pageType":"content","title":"How to Use This Interactive eBook","interactive":"sandbox-guide","audioTracks":[{"src":"/audio/dholki-1.mp3","title":"Interface listening demonstration","caption":"This placeholder demonstrates the audio controls and lets you practise separating a steady pulse from a sharper accent. It is not a labelled recording of a Chhau ensemble."}]} -->
+<!-- BOOK_PAGE {"id":"how-to-use-this-book","pageType":"content","title":"How to Use This Interactive eBook","interactive":"sandbox-guide"} -->
 You can read this book from beginning to end, but you do not have to.
 
 Think of it as a set of connected rooms. The first chapters establish the shared ground: the three traditions, the layered history, and the relationship between body, music, story, and place. The journey then moves into Mayurbhanj Chhau in greater detail, while carefully placed comparison windows keep Seraikella and Purulia visible. The final pages provide terms, people, places, open questions, and sources you may want to return to.
@@ -57,12 +58,12 @@ Four prompts appear throughout the book:
 
 - **Look** asks you to study a visual detail.
 - **Listen** points to a rhythm, instrument, cue, or change in tempo.
-- **Try safely** offers a simple exploration that does not claim to teach formal Chhau.
+- **Activity draft** marks a simple observation or exploration that does not claim to teach formal Chhau. Any physical prompt requires adult judgment and remains pending specialist review.
 - **Think** asks you to compare evidence or question an easy explanation.
 
 The 3D sandboxes are study tools. Drag to rotate a model, zoom in, and change the lighting or shading when a costume detail is difficult to see. When several models appear together, use the labels to compare them. Do not treat a frozen pose as the whole movement. Every model captures a moment before or after another moment.
 
-> **Try safely:** Rotate a figure to the side before reading its caption. A pose that looks broad from the front may reveal a very different distribution of weight from the side.
+> **Activity draft — not yet specialist-validated:** Rotate a figure to the side before reading its caption. A pose that looks broad from the front may reveal a very different distribution of weight from the side.
 
 Numbered citations lead to the Library. They are there so you can check where a claim comes from and continue beyond this book. A citation is not decoration; it is an open door.
 
@@ -71,13 +72,13 @@ Most importantly, pause. Watch a complete performance when one is linked. Listen
 The book will guide your attention. It cannot replace the experience of learning from a practitioner.
 
 <!-- BOOK_PAGE {"id":"promise-to-the-reader","pageType":"content","title":"A Promise to the Reader"} -->
-This book makes two promises: one about knowledge and one about safety.
+This book makes one promise about knowledge and sets one provisional boundary around movement.
 
 The first is that I will not pretend Chhau is simpler than it is. When sources disagree, I will mark the disagreement. When a term changes between regions or teachers, I will not choose one version and silently call it universal. Documented history, community memory, scholarly interpretation, and my own explanation are not the same kind of evidence. I will try to keep those boundaries visible.
 
-The second promise is that this eBook will not treat watching as equivalent to training.
+The movement boundary is that this eBook will not treat watching as equivalent to training. The restrictions below are conservative editorial choices, not a validated safety protocol. General child-activity and dance-injury sources informed them, but those sources are not Chhau-specific. A pediatric movement/safety professional and a current Chhau practitioner must review the age range, every physical prompt, and every Chhau-specific warning before classroom or self-guided use. [13]
 
-Chhau demands strength, stamina, coordination, and repeated correction. Its low stances, leaps, turns, falls, masked movement, acrobatics, and weapon-based phrases can cause injury when copied without preparation. A 3D model can help you examine a line. It cannot see whether your knee is twisting, whether your landing is safe, or whether you are breathing properly. [13]
+Chhau demands strength, stamina, coordination, and repeated correction. Its low stances, leaps, turns, falls, masked movement, acrobatics, and weapon-based phrases should not be copied from this eBook. A 3D model can help you examine a line. It cannot assess an individual body, environment, fatigue level, or injury history. [13]
 
 Please follow these limits:
 
@@ -86,26 +87,28 @@ Please follow these limits:
 - Use a clear, non-slip space and begin with gentle movement.
 - Stop if you feel pain, dizziness, numbness, or unusual shortness of breath.
 - Do not wear a performance mask while training alone. Masks can restrict vision, change balance, trap heat, and make other dancers or objects harder to see.
-- Treat “Try safely” prompts as observations or low-risk explorations unless a teacher is present.
+- Treat every “Activity draft” prompt as provisional. An adult who knows the child and setting must decide whether even a low-motion prompt is appropriate; the label does not guarantee safety.
 
-> **Safety note:** If a page describes how a movement works, that description is meant to improve understanding—not to certify the reader to perform it.
+> **Provisional boundary — not a validated safety protocol:** If a page describes how a movement works, that description is meant to improve understanding—not to certify the reader to perform it.
 
 There is also a cultural form of care. Masks, costumes, music, stories, and ritual practices are not interchangeable props. They come from particular communities and carry particular meanings. Credit the tradition accurately. Credit artists when their work is shown. Ask permission before reproducing someone’s performance, image, recording, or design. [14]
 
 Curiosity is welcome here. Confidence should grow more slowly.
 
-<!-- BOOK_PAGE {"id":"map-of-chhau","pageType":"content","title":"Three Heartlands, Then the World","plannedModels":["chhau-three-styles-lineup.glb"],"embedUrl":"/map-of-chhau/index.html","embedTitle":"Arnav’s Map of Chhau — interactive 48-node world globe","embedCaption":"Begin with Baripada in Mayurbhanj, Seraikela, and the Purulia region: the three eastern-Indian heartlands that anchor this atlas. Wider nodes are working research leads for stages, archives, institutions, and communities; they remain source-review pending and do not all indicate a resident Chhau tradition.","embedHeight":"clamp(30rem, 72svh, 48rem)"} -->
+<!-- BOOK_PAGE {"id":"map-of-chhau","pageType":"content","title":"Three Heartlands, Then the Evidence","plannedModels":["chhau-three-styles-lineup.glb"],"embedUrl":"/map-of-chhau/index.html","embedTitle":"Arnav’s evidence-first Map of Chhau","embedCaption":"Begin with the Mayurbhanj, Seraikella, and Purulia heartlands. Every additional marker must represent a specific sourced Chhau institution, archive, event, or UNESCO record—not generic Indian-arts or diaspora activity.","embedHeight":"clamp(30rem, 72svh, 48rem)"} -->
 Chhau lives within a connected cultural belt in eastern India, across the modern borders of Odisha, Jharkhand, and West Bengal.
 
 **Mayurbhanj Chhau** is centred in Mayurbhanj district in northern Odisha, with Baripada as an important institutional and festival centre. **Seraikella Chhau** is centred in Seraikella in present-day Jharkhand. **Purulia Chhau** is carried by troupes, musicians, and mask-making networks across Purulia district in West Bengal. [1][2][7][11][12]
 
 The three centres are close enough for people, instruments, stories, and artistic ideas to have travelled between them. Yet each place developed its own performance choices. Geography made connection possible. Local history made difference possible.
 
-The restored globe contains 48 working nodes, but they do not all make the same kind of claim. Begin with the eastern-Indian heartlands. Then zoom out to explore possible connections through Indian institutions, archives, stages, festivals, and communities elsewhere. Those wider markers are research leads, not a declaration that every place has its own resident Chhau tradition. Each requires source review before publication.
+This revised atlas is intentionally narrow. It includes the three heartlands and only additional places tied to a specific, cited Chhau institution, archive, event, or official record. Generic Indian-arts activity, a touring possibility, or the presence of a South Asian diaspora is not evidence of a resident Chhau tradition and does not justify a marker.
 
-> **Look:** Locate Baripada, Seraikela, and the Purulia cluster before following any arc across the world. Read the heartlands as orientation; read the wider arcs as questions to investigate, not proof by themselves.
+UNESCO’s 2010 inscription covers Chhau dance across all three traditions: Seraikella, Purulia, and Mayurbhanj. The Intergovernmental Committee adopted the decision at its fifth session in **Nairobi, Kenya**, not Paris. UNESCO’s official Chhau element record and fifth-session record are the authority for that marker. [1]
 
-This atlas is the first tool in the book because the word *Chhau* can otherwise make three traditions sound as if they came from one stage. They did not. They grew in neighbouring places and continued to meet, separate, and change. The world view comes second: it shows where my research can continue without shifting attention away from the communities at the tradition’s centre.
+> **Look:** Locate the Mayurbhanj, Seraikella, and Purulia heartlands first. Then open an additional marker and inspect the source and claim type attached to it. A marker without both should not be published.
+
+This atlas is the first tool in the book because the word *Chhau* can otherwise make three traditions sound as if they came from one stage. They did not. They grew in neighbouring places and continued to meet, separate, and change. The evidence layer comes second: it extends the map only where a source supports a precise claim, without shifting attention away from the communities at the tradition’s centre.
 
 <!-- BOOK_PAGE {"id":"first-look","pageType":"content","title":"Before We Name the Movement","plannedModels":["chhau-three-styles-lineup.glb"]} -->
 Before learning a single technical word, take one slow look at the three traditions.
@@ -158,7 +161,7 @@ A first comparison should give us landmarks, not stereotypes.
 
 These are starting points. Each tradition contains different repertoires, teachers, troupes, characters, and historical changes. A lyrical Purulia moment does not stop being Purulia. A vigorous Seraikella passage does not suddenly become Mayurbhanj. Traditions are recognised through combinations of choices, not one isolated feature.
 
-> **3D sandbox:** Compare three accurately labelled figures from the front and the side. Begin with the head, then move down through shoulders, torso, knees, costume, and base of support. Do not use the mask as your only clue.
+> **3D sandbox:** When the figures have been reviewed and approved, compare the three region-labelled studies from the front and the side. Begin with the head, then move down through shoulders, torso, knees, costume, and base of support. Do not use the mask as your only clue.
 
 The goal is not to decide which form is best. The better question is: what is each tradition asking the body to do?
 
@@ -306,7 +309,7 @@ An uncovered face allows the audience to see gaze, breath, and changes in the he
 
 Mayurbhanj movement is often described as vigorous, sculptural, and strongly connected with martial exercise. Its repertoire includes mythological and heroic subjects as well as pieces inspired by animals, birds, hunting, daily life, and nature. Published examples associated with different periods and groups include *Kirat Arjuna*, *Nataraja*, *Megha Duta*, and *Garuda Vahana*, among many others. These examples are not one fixed syllabus. [3][4]
 
-> **3D sandbox:** View an accurate Mayurbhanj figure without a mask. Rotate past the face and study the back, supporting leg, open chest, and direction of weight. Ask what still communicates when the facial expression is no longer visible.
+> **3D sandbox:** Once a Mayurbhanj practitioner has reviewed the figure, view the approved unmasked study. Rotate past the face and study the back, supporting leg, open chest, and direction of weight. Ask what still communicates when the facial expression is no longer visible.
 
 This section begins with place because style does not float free of geography. Baripada is not just a label attached to Mayurbhanj Chhau. It is part of the network through which festivals are organised, teachers are remembered, institutions operate, and generations meet.
 
@@ -346,7 +349,9 @@ Under **Maharaja Sriram Chandra Bhanja Deo**, court support and Chaitra performa
 
 After **Maharaja Pratap Chandra Bhanja Deo** assumed rule in 1928, Mohanta describes renewed support, committees, competitions, and experiments that widened music and repertoire. New works were created, and teachers observed other performance traditions. This is a reminder that careful adaptation is not new to Mayurbhanj Chhau. [3]
 
-After Mayurbhanj merged with Odisha in **1949**, artists, organisers, and public bodies built new forms of support. Government grants and rural competitions appeared in the 1950s. Mohanta dates the establishment of the Mayurbhanj Chhau Nrutya Pratisthan to 1960 and its registration under the Societies Act to 1961. The original institutional and registration records should still be checked before a final print edition. [3]
+After Mayurbhanj merged with Odisha in **1949**, artists, organisers, and public bodies built new forms of support. The institutional chronology is disputed. D. N. Patnaik reports that **Ananta Charan Sai**, working with **Bhabanishankar Das** and **Ramesh Chandra Mohapatra**, reorganised a group in 1949 under the banner *Mayurbhanj Chhow Nrutya Pratisthan*. Basanta Kumar Mohanta gives a different account: he credits **Bhabani Kumar Das** and other senior artists in the post-merger reorganisation, dates the establishment of the Mayurbhanj Chhau Nrutya Pratisthan to 1960, and dates its Societies Act registration to 1961. [3][4]
+
+The spellings, people named, and dates do not line up neatly. The available articles do not establish whether they describe the same legal organisation, successive groups, or differently remembered stages of one institution. This eBook therefore leaves the conflict visible until original registration, grant, minutes, and organisational records can be checked.
 
 > **Think:** A timeline tells us when support changed. It does not tell us every dancer, drummer, teacher, and family whose work made that change possible.
 
@@ -399,7 +404,7 @@ The exact angles matter in formal training, but they should come from a practiti
 
 **Dharan** offers a related but different idea. The word is connected with holding, especially holding the imagined or actual sword and shield. One technical description places it at the end of a dance, where rhythmic weight shifts help the dancer settle after exertion. Other teaching descriptions connect it with the held character-state before travel begins. These uses can sit together: dharan gathers weight, role, breath, and readiness. [4][6]
 
-> **Try safely:** Stand with your feet comfortably apart. Soften your knees only a little, keep breathing, and let your chest remain easy rather than forced. Shift your weight left and right without lifting the feet. This is a balance experiment inspired by the principle of readiness, not formal Chhau technique.
+> **Activity draft — not yet specialist-validated:** With an adult deciding whether the prompt is appropriate, stand with your feet comfortably apart. Soften your knees only a little, keep breathing, and let your chest remain easy rather than forced. Shift your weight left and right without lifting the feet. This is a provisional balance experiment inspired by the principle of readiness, not formal Chhau technique.
 
 > **3D sandbox:** View the Mayurbhanj core model from the front and side. Notice the relationship between feet, knees, pelvis, and chest. The model should show alignment, not invite children to copy the full depth.
 
@@ -423,11 +428,11 @@ Chhau asks us to read relationships: face and body, movement and pause, dancer a
 <!-- BOOK_PAGE {"id":"body-lab-boundary","pageType":"content","title":"A Body Lab That Does Not Pretend to Be Training"} -->
 An interactive book can help you notice Chhau with your own body. It cannot turn a screen into an akhara or replace a guru. That boundary is important because Mayurbhanj technique includes deep positions, repeated conditioning, aerial actions, and combat-derived movement learned through long correction.
 
-So this body lab works with qualities, not copied choreography.
+So this body lab works with qualities, not copied choreography. It remains an unvalidated draft: neither its age suitability nor its Chhau-specific boundaries have been reviewed by a pediatric movement/safety professional and a Chhau practitioner.
 
-Begin by making space. Use a clean, dry, non-slip surface. Remove bags, furniture, and anything another person might step into. Warm up by marching, changing direction gently, rolling the shoulders, and making shallow knee bends. New activity should begin gradually and remain appropriate to a child’s age, ability, and experience. [13]
+If the supervising adult decides to use the draft, begin by making space: use a clean, dry, non-slip surface and remove bags, furniture, and anything another person might step into. The suggested warm-up is gentle marching, direction changes, shoulder rolls, and shallow knee bends. General guidance says activity should be gradual and appropriate to a child’s age, ability, and experience, but that principle does not validate this particular sequence. [13]
 
-Now explore four safe ideas:
+If an adult decides the activity is appropriate, the draft explores four low-motion ideas:
 
 - **Ready:** stand comfortably wide with soft knees and an easy chest.
 - **Travel:** take four measured steps, letting each one arrive fully.
@@ -436,9 +441,9 @@ Now explore four safe ideas:
 
 This is not chauk, chali, or bhangi in the formal sense. It is an introductory study inspired by the principles those terms help us notice.
 
-Jumps belong in the **look closely** layer of this eBook unless a trained teacher is present. Dance injuries often involve the ankle, foot, leg, and lower back, and improper landing is a common cause of ankle sprain. High jumps, somersaults, deep loaded stances, fast turns, and weapon work should not be taught through self-guided instructions. [13]
+Jumps belong only in the **look closely** layer of this eBook. General dance-injury guidance discusses landing mechanics and lower-limb injury, but it is not Chhau-specific and does not validate this activity design. High jumps, somersaults, deep loaded stances, fast turns, and weapon work are excluded from every self-guided prompt and require in-person teaching. [13]
 
-> **Safety note:** Stop if you feel pain, dizziness, unusual breathlessness, or instability. A movement should never be continued simply because a model makes it look easy.
+> **Provisional boundary — not a validated safety protocol:** A model is not evidence that an activity is appropriate for a particular reader. Stop the activity and tell the supervising adult if anything feels wrong; seek appropriate professional advice rather than relying on this eBook.
 
 > **Think:** Which was harder—moving or arriving in stillness? Chhau often makes the final held position as meaningful as the action before it.
 
@@ -453,7 +458,7 @@ One useful comparison comes from Jiwan Pani: topkas and uflis are like an alphab
 
 This comparison helps, but even the “alphabet” is not printed identically everywhere. Published sources disagree about the number of Mayurbhanj topkas and uflis. They also vary in spelling: *ufli*, *ufil*, *uphli*, and *ufuli* may point towards related terminology. One writer may group an animal action under ufli, while another source may describe it beside a gait or jump family. These differences are evidence of transmission, not proof that one source must be careless.
 
-The safest way to learn the vocabulary is in layers:
+The most accurate way to approach the vocabulary is in layers:
 
 - Core terms supported across several technical accounts.
 - A named list documented in a particular publication or lineage.
@@ -477,7 +482,7 @@ D. N. Patnaik describes a structured presentation in which dancers begin behind 
 
 That account is valuable, but it describes a particular shaped Mayurbhanj performance structure. It should not become a rule for every troupe or all three Chhau styles. Published lineage lists also name different chalis—one-step, two-step, or three-step patterns, sideways and backward travel, and movements inspired by animals or natural forces. Those lists require a current guru’s confirmation before being taught as a syllabus. [4][6]
 
-What can we observe safely? Watch how a travelling phrase answers four questions:
+What can we observe without attempting the phrase? Watch how a travelling phrase answers four questions:
 
 - How much ground does it cover?
 - Where does the weight seem to settle?
@@ -488,7 +493,7 @@ Mayurbhanj choreography is often described as using space extensively. Jumps, tu
 
 > **3D sandbox:** Play the chali entry once with the pathway hidden, then again with footprints and direction arrows. The second view should reveal that the dance is composing space, not merely displaying a pose.
 
-> **Try safely:** Walk eight calm counts along a clear line and stop in balance. Change only the timing and notice how the character of the journey changes.
+> **Activity draft — not yet specialist-validated:** If an adult decides the prompt is appropriate, walk eight calm counts along a clear line and stop in balance. Change only the timing and notice how the character of the journey changes.
 
 The simplest movement—walking—becomes Chhau when the whole body carries an image through rhythm.
 
@@ -505,13 +510,13 @@ The distinction is easier to see than to memorise. Consider a few published Mayu
 - **Uska topka** has a springing quality.
 - **Baga or Bog topka** evokes the careful high step of a crane.
 
-Ufli lists draw images from work, grooming, combat, animals, and the environment. Historical examples refer to pounding rice, winnowing, grinding, drawing floor patterns, bathing, a tiger drinking, or a crane searching for fish. These are stylised movement images, not literal pantomime. [4][5]
+Ufli lists draw images from work, grooming, combat, animals, and the environment, but the regional column matters. In Jiwan Pani’s comparison, pounding rice, winnowing, grinding, drawing floor patterns, bathing, a tiger drinking, and a crane-like step appear among images shared by the Mayurbhanj and Seraikella lists; he identifies a crane searching for fish, a monkey drinking, a lobster-like jerk, and a monkey somersault as Mayurbhanj examples not found in his Seraikella list. These are source-specific classifications, not a universal syllabus. [5]
 
-The terms and lists vary. One source places an image differently from another; spellings shift between Odia and English transliteration; current teachers may preserve, adapt, or omit particular units. The eBook should show only a small, practitioner-verified selection.
+The terms and lists vary. One source places an image differently from another; spellings shift between Odia and English transliteration; current teachers may preserve, adapt, or omit particular units. Any model selection remains planned and must be regionally attributed and reviewed by a named practitioner before publication.
 
 > **3D sandbox:** Play a wave topka beside a daily-life ufli. Add a view that highlights torso pathways in one and leg pathways in the other. The goal is not to declare one body part “correct,” but to make the historical distinction visible.
 
-> **Try safely:** Draw a wave in the air with your hand. Then travel slowly along the same curved pathway without jumping. This explores image and pathway; it is not an attempt to perform Lahara topka.
+> **Activity draft — not yet specialist-validated:** If an adult decides the prompt is appropriate, draw a wave in the air with your hand. Then travel slowly along the same curved pathway without jumping. This explores image and pathway; it is not an attempt to perform Lahara topka.
 
 Movement grammar becomes memorable when the name, image, rhythm, and pathway meet. A list alone cannot do that work.
 
@@ -528,7 +533,7 @@ You do not need to attempt them in order to understand them. A useful 3D viewer 
 
 One documented Mayurbhanj presentation moves through **chali, nata, and natki**: an opening travel section, a central development, and a faster climax. That progression shows how vocabulary can grow into dramatic architecture. It is one historical model, not a universal formula. [4]
 
-> **Try safely:** Arrange four cards—ready, travel, quarter-turn, finish. Give the sequence a beginning and ending. Call it a Chhau-inspired movement study, not a bhangi, because formal bhangi belongs to practitioner-taught grammar.
+> **Activity draft — not yet specialist-validated:** Arrange four cards—ready, travel, quarter-turn, finish. Give the sequence a beginning and ending. If an adult decides to let you move it, use only calm walking and a comfortable change of direction. Call it a Chhau-inspired movement study, not a bhangi, because formal bhangi belongs to practitioner-taught grammar.
 
 A phrase is more than the sum of its movements. It is what rhythm and intention make those movements mean.
 
@@ -539,7 +544,9 @@ Chhau pays attention to animals, birds, water, weather, and landscape. That does
 
 A deer does not enter the stage wearing a label. Its quality emerges through light travel, sudden alertness, changes of direction, and the tension between movement and pause. A crane may appear through lifted steps and concentrated searching. A tiger may be read through lowered strength, readiness, and controlled weight. The dance selects, enlarges, and organises these observations through rhythm. [4][6]
 
-Mayurbhanj technical lists contain many such images: deer and goat jumps, a crane stalking or looking for fish, a tiger drinking, a peacock at water, river ripples, sea waves, a meteor, and the act of reaching toward the moon. The list is imaginative, but it is not a universal catalogue. A current practitioner must confirm which terms and forms remain active in a given lineage. [4][5]
+Published Mayurbhanj lists include deer and goat jumps, a crane-like step or a crane searching for fish, a tiger or monkey drinking, river ripples, and sea waves. Pani additionally identifies a lobster-like jerk and monkey somersault as Mayurbhanj examples not found in the Seraikella list he compared. [4][5]
+
+Three images previously blended into that Mayurbhanj list belong to the Seraikella material that Patnaik was quoting from Juga Bhanu Singh Deo: **Tara khosa** (a falling meteor or plucking stars), **Chand dhora** (catching the moon), and **Majhur/Mayur pani khia** (a peacock drinking). Their appearance inside Patnaik’s article about Mayurbhanj does not make them Mayurbhanj examples; he separates the quoted Seraikella list from the twenty-five Mayurbhanj uphlis that follow. [4] A current practitioner must still confirm whether and how any published term remains active in a particular lineage.
 
 The important idea is transformation. Observation becomes stylisation through choices:
 
@@ -553,12 +560,14 @@ The important idea is transformation. Observation becomes stylisation through ch
 
 This also prevents the activity from becoming a joke. “Move like a tiger” can quickly turn into roaring and crawling. A more respectful prompt is: “How can your body show alert, controlled strength without making a sound?”
 
-> **Try safely:** Walk four slow steps, pause, and listen. Change direction only after the pause. This is a forest-observation game inspired by the idea of animal gait; it is not a named Chhau movement.
+> **Activity draft — not yet specialist-validated:** If an adult decides the prompt is appropriate, walk four slow steps, pause, and listen. Change direction only after the pause. This is a forest-observation game inspired by the idea of animal gait; it is not a named Chhau movement.
 
 Nature enters Chhau because dancers have watched closely. The first skill this chapter teaches is therefore not imitation. It is attention.
 
 <!-- BOOK_PAGE {"id":"daily-work-becomes-dance","pageType":"content","title":"Daily Work Can Become Dance","plannedModels":["mayurbhanj-uflis.glb"]} -->
-Historical ufli lists preserve images from ordinary activity: lifting or throwing a pebble with the toes, sweeping, pounding rice, winnowing, grinding, bathing, applying oil, cleaning ornaments, and drawing patterns on the floor. The movements carry traces of the social world in which dancers and teachers lived. [4][5]
+Historical ufli lists preserve images from ordinary activity, but they cannot be merged into one Mayurbhanj catalogue. Pani’s side-by-side comparison places images such as grinding, bathing, pounding rice, winnowing, and drawing floor patterns among movements shared by the Mayurbhanj and Seraikella lists, although names and details differ. [5]
+
+Patnaik also reproduces a separate Seraikella list from Juga Bhanu Singh Deo that includes **Gooti phinga** (throwing a pebble with the toes), **Tel or Haldi mokha** (applying oil or turmeric), and **Khadu maja** (cleaning wristlets), along with the related toe-pebble and ornament-cleaning examples. Those specific descriptions must be labelled Seraikella, not Mayurbhanj. Patnaik’s subsequent Mayurbhanj list is different, even where the broader activity image overlaps. [4]
 
 We should read these lists carefully. They are not proof that every household worked in one way or that all Mayurbhanj lineages teach the same actions. Some descriptions come through older writers whose language and assumptions belong to their time. The actions also should not be presented as quaint village scenery. Work has weight, skill, and social meaning.
 
@@ -566,9 +575,9 @@ What the dance reveals is a compositional principle: repeated labour already con
 
 This transformation is different from mime. Mime asks the audience to identify the task. Dance may begin with the task but develop its weight, rhythm, and spatial pattern beyond literal description.
 
-> **3D sandbox:** Show three stages—observed action, stylised action, and phrase. The caption must identify the source term, publication, and practitioner who verified the animation.
+> **3D sandbox:** Show three stages—observed action, stylised action, and phrase. The caption must identify the regional list, source term, publication, and the named practitioner whose review is still required before the animation can be published.
 
-> **Try safely:** Choose a safe everyday action such as opening a curtain, carrying a light book, or wiping a table. Repeat it four times. Change only the timing. Then change only the pathway. You have explored how ordinary action can become composition, but you have not created an authentic ufli.
+> **Activity draft — not yet specialist-validated:** With an adult’s approval, choose a simple everyday action that does not require force, speed, or a balance challenge, such as opening a curtain or wiping a table. Repeat it four times. Change only the timing, then only the pathway. You have explored how ordinary action can become composition, but you have not created an authentic ufli.
 
 The distinction matters because cultural vocabulary is not free material without ownership. A named Mayurbhanj ufli carries transmission and should be credited to the practitioner or archive that demonstrated it.
 
@@ -591,7 +600,7 @@ Now add a rhythm. Clap four steady beats for travel, hold two beats for a pause,
 
 This activity borrows a learning principle from Mayurbhanj sources: nature is transformed through level, direction, rebound, timing, and rhythm. It does not reproduce *Harina dian*, *Baga topka*, *Lahara topka*, or any formal repertory phrase. Those require practitioner teaching. [4][6]
 
-> **Safety note:** Keep both feet close to the floor. Do not add a deer leap simply because a 3D model shows one. A model can demonstrate advanced movement without turning it into an instruction.
+> **Provisional boundary — not a validated safety protocol:** Keep this as a planning or observation game unless an adult approves the low-motion draft. Do not add a deer leap simply because a 3D model shows one. A model can demonstrate advanced movement without turning it into an instruction.
 
 > **3D sandbox:** Let the user switch between the full figure, footprint path, and rhythm timeline. A low-motion setting should replace animated jumps with key poses and arrows.
 
@@ -626,7 +635,7 @@ A musical chapter should help the reader hear layers:
 Once you hear those layers, a movement no longer appears alone. You begin to notice the invisible conversation holding the performance together.
 
 <!-- BOOK_PAGE {"id":"mayurbhanj-sound-world","pageType":"content","title":"The Mayurbhanj Sound World","plannedModels":["instrument-pack.glb"]} -->
-D. N. Patnaik describes a traditional Mayurbhanj ensemble built from **dhol**, **chadchadi or kadka**, **dhumsa**, and **mahuri**. Each instrument has a different task. [4]
+D. N. Patnaik describes one traditional Mayurbhanj ensemble built from **dhol**, **chadchadi or kadka**, **dhumsa**, and **mahuri**. Earlier in the same historical discussion, he describes a core accompaniment of mahuri, dhol, and dhumsa for Pharikhanda and Paikali material. These are source- and context-specific descriptions, not a complete chronological inventory. [4]
 
 The **dhol** is a barrel-shaped, double-headed drum played with the left palm and fingers and a blunt stick in the right hand. Patnaik calls it the most important rhythmic instrument because it provides the basic pattern.
 
@@ -636,7 +645,7 @@ The **dhumsa** is a large bowl-shaped kettledrum placed on the ground and struck
 
 The **mahuri** is a reed pipe related in sound and construction to the shehnai. It carries the melodic line, sometimes with several players performing together.
 
-These descriptions belong to a historical technical account. Instrument construction, terminology, and ensemble size can vary, so the 3D pack should identify the region, source, and musician who verifies each model. A generic “Indian drum” would not be good enough.
+These descriptions belong to a historical technical account. Instrument construction, terminology, and ensemble size can vary, and other sources list the ensemble differently. The 3D pack must identify the region and source, and its models remain pending review by a named musician. A generic “Indian drum” would not be good enough.
 
 > **3D sandbox:** Rotate each object, then tap its playing surface or reed to hear an isolated sample. A second button should place it back inside the ensemble so the reader hears its role rather than only its solo sound.
 
@@ -649,9 +658,9 @@ The ensemble becomes understandable when we stop hearing one wall of sound and b
 <!-- BOOK_PAGE {"id":"more-than-one-orchestra","pageType":"content","title":"Three Styles, More Than One Orchestra","plannedModels":["instrument-pack.glb"]} -->
 The three Chhau styles share a wider eastern Indian drum-and-reed sound world, but they do not use one identical orchestra. Even within a style, the ensemble may change with troupe, period, place, and repertoire.
 
-Mayurbhanj documentation names dhol, chadchadi, dhumsa, and mahuri, with additional references to nagara or related drums in some sources. Its music has also absorbed Jhoomar, Hindustani, Odissi, and Bengali Kirtan material at different historical moments. [3][4]
+The source lists should remain separate. Patnaik’s Mayurbhanj account names dhol, chadchadi or kadka, dhumsa, and mahuri in one description. Pani’s comparative article lists dhol, tikra or nagara, chadihadi, dhumsa, and mahoori as accompaniment in both Seraikella and Mayurbhanj. Mayurbhanj music is also described as drawing on Jhoomar, Hindustani, Odissi, and Bengali Kirtan material at different historical moments. [3][4][5]
 
-Jiwan Pani documents related percussion and mahuri instrumentation in Seraikella and Mayurbhanj, while another historical study records experiments with veena, mridangam, and pakhawaj in selected Seraikella contexts. These accounts should not be flattened into a claim that classical instruments replaced the regional ensemble everywhere. A current Seraikella musician should verify the sound used for each piece represented here. [5][9]
+Sharmila Chandra’s secondary account, citing earlier scholarship, instead says that **veena, mridangam, and pakhawaj** were used in place of the Purulia ensemble in an early-twentieth-century Seraikella context. [9] That account conflicts with, or may describe a different period or performance setting from, Pani’s shared five-instrument list. The present sources do not allow this eBook to choose one neat sequence. The original account by Suresh Awasthi and a current Seraikella musician should be consulted before the histories are reconciled or a piece-specific sound is modelled.
 
 Purulia adds another important layer. Deepsikha Chatterjee documents Jhumur singing, spoken or sung introductions, and plot-bearing vocal material alongside shehnai or pepti, dhol, dhamsa, and charchari. In one observed performance context, musicians sat to one side of the arena; earlier accounts also describe drummers moving within the playing space. [8]
 
@@ -676,7 +685,7 @@ Finally, listen for **arrival**. A strong accent may lock the dancer into a held
 
 This four-part listening path—entry, development, intensification, arrival—is a way to study one documented Mayurbhanj structure. It should not be labelled the universal order of a Chhau performance.
 
-> **Try safely:** Tap the steady entry pulse. Add one sharper layer. When the deep accent sounds, freeze your hand rather than your whole body. This keeps the activity musical and avoids turning it into unsupervised dance training.
+> **Activity draft — not yet specialist-validated:** Tap the steady entry pulse. Add one sharper layer. When the deep accent sounds, pause your hand rather than your whole body. This keeps the activity musical and avoids turning it into unsupervised dance training.
 
 > **3D sandbox:** Place the dancer’s pathway above the percussion waveform. Mark changes in tempo and important accents. Let users replay two seconds before and after each arrival.
 
@@ -720,7 +729,7 @@ Older martial pieces could foreground prowess, mock combat, and weapon handling 
 
 Local folklore and community memory matter too. Purulia troupes have developed works about regional history and contemporary life, including the Santhal rebellion, war, dowry, and adaptations such as a Chhau response to *Macbeth*. These works show that inheritance and invention can coexist. [8]
 
-This range creates a responsibility for a children’s book. Sacred figures should not become costume jokes or competitive battle games. Violent episodes can be discussed through choices, consequences, courage, and control without inviting children to copy strikes. Nature material can support movement exploration more safely, provided the activity is labelled “inspired by.”
+This range creates a responsibility for a children’s book. Sacred figures should not become costume jokes or competitive battle games. Violent episodes can be discussed through choices, consequences, courage, and control without inviting children to copy strikes. Nature material may support low-motion, “inspired by” draft prompts, but those prompts still require adult judgment and specialist validation.
 
 ### New educational story cards
 
@@ -818,9 +827,9 @@ The supplied photographic record shows particular Shiva and Abhimanyu-related co
 
 Props carry similar specificity. Sword-and-shield imagery connects strongly with documented martial training and dharan. A trident can establish Shiva; a bow can establish a hunter or archer. The prop extends the body’s line and participates in the final pose.
 
-That does not make it safe practice equipment. Mayurbhanj historical writing records the hazards of performance weaponry, and the eBook’s child activities should use empty hands, soft shapes, or on-screen overlays rather than hard replicas. [4][13]
+That does not make it practice equipment. Mayurbhanj historical writing records serious harm involving performance weaponry, so this eBook excludes physical weapon or hard-prop activities entirely; on-screen overlays may be used only for observation. This is a conservative editorial exclusion, not a validated Chhau safety protocol. [4][13]
 
-> **3D sandbox:** The Mayurbhanj core model should use verified practice clothing for technique clips. A separate repertoire model should carry the exact costume and props of one named work. Do not place a generic fantasy-warrior costume on both.
+> **3D sandbox:** The planned Mayurbhanj core model must not display practice clothing until a named practitioner has reviewed it. A separate repertoire model must remain unpublished until the costume and props of one named work are documented, permissioned, and approved. Do not place a generic fantasy-warrior costume on either.
 
 > **Look:** Hide the sword and shield while keeping the body pose. The stance should remain intelligible. Restore the props and observe how they complete the silhouette.
 
@@ -837,7 +846,7 @@ Seraikella masks are often described as smaller and more symbolically composed t
 
 The making process should be documented with a Seraikella artisan. It would be misleading to copy the well-recorded Charida process and relabel it “how Chhau masks are made.” Related traditions can use different materials, workshop knowledge, and finishing methods.
 
-> **3D sandbox:** Keep one verified Seraikella mask unchanged while the body moves through four practitioner-approved arrangements. Compare the mask from the audience’s viewpoint rather than only rotating it like an isolated sculpture.
+> **3D sandbox:** After a named Seraikella practitioner and mask maker have approved the reference, keep that one mask unchanged while the body moves through four reviewed arrangements. Until then, this remains a model brief rather than a practitioner-reviewed study.
 
 > **Credit rule:** Name the artisan, workshop or family tradition, source mask, character, date, and permission. If the design combines references, label it an interpretive educational reconstruction.
 
@@ -955,14 +964,14 @@ Training also includes learning how to be part of a group. A dancer must keep sp
 
 This is why the book uses the phrase **learn about Chhau** more often than **learn Chhau**. The first can begin here. The second asks for a living teacher and time.
 
-<!-- BOOK_PAGE {"id":"three-levels-of-learning","pageType":"content","title":"Look Closely, Try Safely, Learn With a Practitioner"} -->
+<!-- BOOK_PAGE {"id":"three-levels-of-learning","pageType":"content","title":"Look Closely, Use Draft Activities With an Adult, Learn With a Practitioner"} -->
 Every physical page in this eBook belongs to one of three levels.
 
 ### Look closely
 
 The full traditional movement may be shown in 3D or video. You can rotate it, slow it down, inspect its pathway, hear its rhythm, and read its source. Watching does not authorise copying.
 
-### Try safely
+### Activity draft — specialist validation pending
 
 The activity works with a low-risk quality such as shallow weight shift, measured walking, focus, rhythm clapping, a grounded rebound, or a simple pathway. It is labelled **Chhau-inspired** and does not use the name of a formal movement as if the reader had learned it.
 
@@ -970,16 +979,16 @@ The activity works with a low-risk quality such as shallow weight shift, measure
 
 Authentic vocabulary, deep loaded stances, repeated jumps, fast turns, combat-derived phrases, floor landings, masked movement, props, and repertory choreography require a trained Chhau teacher. [13]
 
-These levels protect accuracy as well as the body. A person can copy the visible outline of chauk and still miss its weight, energy, preparation, and lineage. A child can reproduce the shape of a jump while missing the landing that makes it safe.
+These levels are intended to protect accuracy and limit unsupported physical imitation, but they have not been validated as a safety framework. A person can copy the visible outline of chauk and still miss its weight, energy, preparation, and lineage. A child can reproduce the shape of a jump while missing the preparation and control that formal teaching supplies.
 
-> **Safety note:** A slow-motion model can reveal technique, but it cannot see your body. It cannot correct a knee, clear the floor, judge fatigue, or know your injury history.
+> **Provisional boundary — not a validated safety protocol:** A slow-motion model can reveal technique, but it cannot assess a learner, environment, fatigue level, or injury history. It must not be used to decide that a movement is appropriate for a child.
 
 The levels also protect the tradition from a different problem: false mastery. Completing a digital challenge should never award a badge that says “Chhau dancer.” Better badges recognise the habits that make learning possible: careful listener, steady observer, respectful storyteller, rhythm keeper, and good collaborator.
 
 This book opens a door. It does not move the akhara onto a screen.
 
-<!-- BOOK_PAGE {"id":"safe-movement-studio","pageType":"content","title":"A Safe Movement Studio"} -->
-This short studio is designed for ages 8–14 with an adult nearby. It takes about ten minutes and teaches attention, rhythm, pathway, and reflection. It is not formal Chhau training.
+<!-- BOOK_PAGE {"id":"safe-movement-studio","pageType":"content","title":"Draft Movement Studio — Specialist Review Pending"} -->
+This proposed ten-minute studio was written for readers ages 8–14, but that age range and the activity design have **not** been validated by a pediatric movement/safety professional or a Chhau practitioner. It is not medical advice, formal Chhau training, or an assurance that the activity is appropriate for a particular child. Until specialist review is complete, an adult who knows the child and setting must decide whether to use, adapt, or skip every physical prompt.
 
 ### Prepare
 
@@ -1004,9 +1013,9 @@ This short studio is designed for ages 8–14 with an adult nearby. It takes abo
 - contact, mock fighting, or hard props;
 - performance masks.
 
-Children’s physical activity should be age- and ability-appropriate, introduced gradually, and stopped if pain, dizziness, or unusual breathlessness appears. Dance medicine guidance also connects ankle injuries with poor landing mechanics and misalignment, which is why jumps remain watch-only here. [13]
+General child physical-activity guidance says activity should be appropriate to age and ability, while general dance-medicine material discusses alignment and landing-related injury. Neither source validates this Chhau-specific draft or establishes that it is suitable for every reader ages 8–14. Jumps therefore remain observation-only as a conservative editorial boundary pending professional review. [13]
 
-> **Try safely:** Repeat the four-count walk once with even timing and once with a pause before the last step. Which version made the arrival feel more important?
+> **Activity draft — not yet specialist-validated:** If the supervising adult decides the prompt is appropriate, repeat the four-count walk once with even timing and once with a pause before the last step. Which version made the arrival feel more important?
 
 ### Reflect
 
@@ -1017,7 +1026,7 @@ Children’s physical activity should be age- and ability-appropriate, introduce
 The final question is the most important. Good introductory learning should make the need for a teacher clearer, not make the teacher seem unnecessary.
 
 <!-- BOOK_PAGE {"id":"teacher-parent-layer","pageType":"content","title":"For Teachers and Parents"} -->
-The goal of a school or home activity is not to compress years of Chhau training into one unit. It is to help a child recognise place, people, sound, movement quality, and cultural responsibility.
+The goal of a future school or home activity is not to compress years of Chhau training into one unit. It is to help a child recognise place, people, sound, movement quality, and cultural responsibility. The four-session outline and every physical prompt below remain unvalidated drafts; they require review by a pediatric movement/safety professional and current Chhau practitioner before classroom use.
 
 A useful four-session introduction can follow this order:
 
@@ -1032,9 +1041,9 @@ Offer seated and low-mobility versions. A learner can trace a pathway with the h
 
 Never turn deities, ritual austerities, masks, or community identities into comedy. If children create a scene, call it “inspired by ideas encountered while studying Chhau.” If a practitioner teaches formal vocabulary, credit the teacher and lineage.
 
-> **Teacher note:** Reward careful listening, safe spacing, clear reflection, teamwork, and accurate naming. Do not reward the highest jump or the most aggressive warrior pose.
+> **Teacher note — draft pending specialist review:** Reward careful listening, conservative spacing, clear reflection, teamwork, and accurate naming. Do not invite or reward jumps, combat imitation, or aggressive warrior poses.
 
-Before publication or classroom use, invite a current Mayurbhanj practitioner to review terminology, movement prompts, costume references, pronunciation, and festival wording. Compensation and visible credit are part of that collaboration.
+Before publication or classroom use, a current Mayurbhanj practitioner must review terminology, movement prompts, costume references, pronunciation, and festival wording, and a pediatric movement/safety professional must review the proposed age range, activity design, exclusions, and warning language. Compensation and visible credit are part of that collaboration.
 
 The best outcome is not “I finished Chhau.” It is “I know what I am looking at, I know whose knowledge it is, and I want to learn more responsibly.”
 
@@ -1043,7 +1052,10 @@ The best outcome is not “I finished Chhau.” It is “I know what I am lookin
 <!-- BOOK_PAGE {"id":"after-the-palace","pageType":"content","title":"After the Palace"} -->
 Royal patronage helped organise, fund, and publicise Mayurbhanj Chhau, but that system could not last forever. When the former Mayurbhanj state merged with Odisha in 1949, the dance entered a difficult period. The court was no longer able to support training and performance in the same way. [3]
 
-The tradition continued because artists reorganised around it. Basanta Kumar Mohanta describes **Bhabani Kumar Das**, a former member of the Dakshinsahi group, working with older ustads and dancers to form the Mayurbhanj Chhau Dance Organisation. Government support followed in the early 1950s, and a rural Chhau competition was introduced in 1955, bringing groups from outside Baripada into a more visible structure. [3]
+The tradition continued because artists reorganised around it, but the surviving published accounts give conflicting institutional histories.
+
+- **D. N. Patnaik’s account:** in 1949, **Ananta Charan Sai**, with **Bhabanishankar Das** and **Ramesh Chandra Mohapatra**, reorganised a group under the banner *Mayurbhanj Chhow Nrutya Pratisthan*. [4]
+- **Basanta Kumar Mohanta’s account:** **Bhabani Kumar Das**, a former member of the Dakshinsahi group, worked with older ustads and dancers in post-merger organisation; government support and rural competition followed in the 1950s, and Mohanta dates the Pratisthan’s establishment to 1960 and registration to 1961. [3]
 
 Several later milestones matter:
 
@@ -1053,7 +1065,7 @@ Several later milestones matter:
 - **1983 and 1989:** the centre reportedly closed after three years and later restarted with a new course.
 - **2010:** Chhau dance, including its Mayurbhanj, Seraikella, and Purulia traditions, was inscribed on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity. [1][3]
 
-Mohanta’s establishment and registration dates describe two different milestones. Original institutional and registration records should still be checked rather than treating either year as the only possible date attached to the Pratisthan.
+It may be tempting to treat 1949 as an informal precursor, 1960 as formal establishment, and 1961 as registration. The articles alone do not prove that reconciliation, and they attribute the organisation differently. Until original registration, grant, minutes, and organisational records are checked, the names and dates must remain source-specific.
 
 Institutions are important, but they are not buildings alone. They work only when gurus teach, musicians play, students return, and communities consider the tradition worth carrying.
 
@@ -1087,7 +1099,7 @@ But a historical pattern is not automatically a permanent rule.
 
 In the wider Chhau world, women are already teaching, learning, choreographing, and performing. A documented Purulia example is Mousumi Choudhury and her all-women troupe, which continued creating work through digital performance during the COVID-19 period. That example belongs to Purulia and should not be used to claim that every Mayurbhanj institution has changed in the same way. It does show that Chhau’s present is not identical to its past. [14]
 
-For a children’s eBook, access should be wider than formal performance history. Children of every gender can learn where Chhau comes from, listen to its instruments, study its storytelling, and try safe introductory movement qualities. Inclusive education does not require us to pretend that the tradition was always inclusive. It asks us to tell the history honestly while opening respectful ways to participate now.
+For a children’s eBook, access should be wider than formal performance history. Children of every gender can learn where Chhau comes from, listen to its instruments, and study its storytelling. Any introductory movement prompt remains an adult-guided draft pending practitioner and pediatric movement/safety review. Inclusive education does not require us to pretend that the tradition was always inclusive. It asks us to tell the history honestly while opening respectful ways to participate now.
 
 Access also means more than gender. A useful resource should consider:
 
@@ -1182,7 +1194,7 @@ These are plain-language working definitions for this eBook. They are not substi
 
 **Topka / Tabka** — Image-bearing locomotion or gait. Jiwan Pani describes the body flexion as leading the image while footwork agrees. Counts and examples vary by source and lineage.
 
-**Ufli / Ufil / Uphli / Ufuli** — Movement imagery in which, in Pani’s comparison, the legs become especially eloquent and the body follows. Published lists draw from work, nature, animals, and other actions; the spellings and counts are not universal.
+**Ufli / Ufil / Uphli / Ufuli** — Movement imagery in which, in Pani’s comparison, the legs become especially eloquent and the body follows. Published lists draw from work, nature, animals, and other actions; the spellings and counts are not universal. Each example must retain its regional column: Patnaik’s quoted Seraikella list is not a Mayurbhanj list merely because it appears inside his Mayurbhanj article.
 
 <!-- BOOK_PAGE {"id":"glossary-music-performance","pageType":"content","title":"Glossary: Music and Performance"} -->
 **Chadchadi / Kadka / Charchari** — Names used for smaller, sharper percussion voices in different Chhau documentation. The instrument and spelling should be labelled by region and musician.
@@ -1216,9 +1228,9 @@ This timeline separates well-supported milestones from claims that still need ar
 - **Late nineteenth and early twentieth centuries:** court organisation, Uttarsahi and Dakshinsahi competition, musicians, and festival structures become more visible in Mayurbhanj accounts. [3]
 - **1912:** a widely repeated account records a specially prepared “War Dance” presentation in Calcutta in connection with George V and Queen Mary. Exact contemporary documentation still needs confirmation. [3]
 - **After 1928:** Maharaja Pratap Chandra Bhanja Deo is associated with renewed support, wider repertoire, musical exchange, and formal organisation. [3]
-- **1949:** Mayurbhanj merges with Odisha; artists and public bodies develop new systems of support. [3]
+- **1949:** Mayurbhanj merges with Odisha. Patnaik also dates Ananta Charan Sai’s reorganisation of a group under the *Mayurbhanj Chhow Nrutya Pratisthan* banner to this year, with Bhabanishankar Das and Ramesh Chandra Mohapatra. [4]
 - **1950s:** grants, organisation, and rural competitions support revival and wider participation. [3]
-- **1960–1961:** Mohanta dates establishment of the Mayurbhanj Chhau Nrutya Pratisthan to 1960 and registration under the Societies Act to 1961. Original records should still be checked. [3]
+- **1960–1961:** Mohanta dates establishment of the Mayurbhanj Chhau Nrutya Pratisthan to 1960 and registration under the Societies Act to 1961, with a different account of the people involved. These dates conflict with Patnaik’s 1949 banner account; the articles do not prove that they refer to successive legal stages. [3][4]
 - **1980s:** a Chhau Dance Training Centre operates in Baripada, closes, and later restarts according to Mohanta’s account. [3]
 - **2010:** Chhau dance is inscribed on UNESCO’s Representative List of the Intangible Cultural Heritage of Humanity. [1]
 - **Today:** Chhau continues through festivals, akharas, institutions, troupes, teaching, research, new work, digital media, and changing participation.
@@ -1231,7 +1243,8 @@ Some gaps should be researched further. They should not be filled with confident
 - The earliest documented use and meaning of the word *Chhau*.
 - The exact relationship among Paika practice, Rukmar or Pharikhanda traditions, and later Mayurbhanj Chhau.
 - Contemporary records for the 1912 Calcutta presentation.
-- Original registration records and dates for the Mayurbhanj Chhau Nrutya Pratisthan and later training centres.
+- Original registration, grant, minutes, and organisational records needed to resolve Patnaik’s 1949 Pratisthan-banner account against Mohanta’s 1960 establishment and 1961 registration account, without assuming the similarly named bodies were identical.
+- The original Suresh Awasthi source behind Chandra’s Seraikella orchestra account, compared with Pani’s instrument list, before proposing a single chronology or replacement story.
 - The contributions of artists and musicians whose names are missing from court-centred histories.
 - The specific Adivasi, Indigenous, and other local communities whose knowledge shaped particular regional histories, named place by place rather than generalised across all three styles.
 
@@ -1239,8 +1252,10 @@ Some gaps should be researched further. They should not be filled with confident
 
 - Chauk and dharan alignment in the lineage represented by each model.
 - The selected topka and ufli spellings, classification, pathways, and present use.
-- Jump preparation, landing, and safe slow-motion representation.
+- Pediatric movement/safety review of the proposed ages 8–14 range, every activity, the exclusions, and all Chhau-specific warning language; none is currently validated.
+- Practitioner review of jump preparation, landing, and any future slow-motion representation before it is shown as movement guidance.
 - Current ensemble names and playing techniques in all three styles.
+- Piece- and period-specific Seraikella instrumentation, reviewed with a current Seraikella musician rather than inferred by combining Pani’s and Chandra’s different accounts.
 - Piece-specific costume, prop, mask, colour, and repertoire details.
 - Present-day festival structure in Baripada and the wording used by participating communities.
 - Current participation by women and learners from different backgrounds in specific Mayurbhanj institutions and akharas.
@@ -1255,11 +1270,11 @@ Keeping this page is part of the book’s honesty. A future edition should becom
 <!-- BOOK_PAGE {"id":"library","pageType":"content","title":"Library"} -->
 Every numbered citation in the book points here. This is a working shelf, not a complete bibliography. Official and primary sources come first; later scholarship and project materials add detail or comparison.
 
-**[1]** UNESCO. *Chhau dance.* Representative List of the Intangible Cultural Heritage of Humanity, nomination 00337, inscribed 2010. https://ich.unesco.org/en/RL/chhau-dance-00337
+**[1]** UNESCO. *Chhau dance.* Representative List of the Intangible Cultural Heritage of Humanity, nomination 00337, inscribed 2010; and *Fifth session of the Intergovernmental Committee (5.COM)*, Nairobi, Kenya, 15–19 November 2010. https://ich.unesco.org/en/RL/chhau-dance-00337 and https://ich.unesco.org/en/5com
 
 **[2]** Indira Gandhi National Centre for the Arts. *IGNCA Inventory on the Intangible Cultural Heritage of India: Chhau Dance.* Submitted by Sangeet Natak Akademi. https://ignca.gov.in/ICH/ich_detail/ich00007.pdf
 
-**[3]** Mohanta, Basanta Kumar. “Growth and Development of Chhau Dance in Orissa.” *Orissa Review*, June 2008, pp. 27–32. Supplied research file: Growth_and_Development_of_Chhau_Dance_in(1).pdf.
+**[3]** Mohanta, Basanta Kumar. “Growth and Development of Chhau Dance in Orissa.” *Orissa Review*, June 2008, pp. 27–32. https://magazines.odisha.gov.in/Orissareview/2008/June-2008/engpdf/Pages27-32.pdf. Supplied research file: Growth_and_Development_of_Chhau_Dance_in(1).pdf.
 
 **[4]** Patnaik, D. N. “The Chhau Dance of Mayurbhanj: III.” *Sangeet Natak*, nos. 131–132, 1999, pp. 21–43. https://archive.org/stream/dli.ministry.11087/JSNA%2528131-132%252921-43_djvu.txt
 
@@ -1282,7 +1297,7 @@ Used for regional location and local cultural orientation; contested origin acco
 **[12]** Government of West Bengal, Purulia District. “Folk & Culture” and “History.” https://purulia.gov.in/folk-culture/ and https://purulia.gov.in/history/
 Used for district location, Charida, and local performance context. Dated terminology and confident origin claims on the portal are not repeated without corroboration.
 
-**[13]** NHS. Physical-activity guidance for children and young people; Johns Hopkins Medicine. “Common Dance Injuries and Prevention Tips.” Used for gradual progression, supervision, and landing-safety boundaries. https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-children-and-young-people/ and https://www.hopkinsmedicine.org/health/conditions-and-diseases/sports-injuries/common-dance-injuries-and-prevention-tips
+**[13]** NHS. Physical-activity guidance for children and young people; Johns Hopkins Medicine. “Common Dance Injuries and Prevention Tips.” Used only as general background for conservative draft exclusions. Neither source is Chhau-specific, validates the proposed activities, or establishes that the ages 8–14 routine is appropriate for an individual child. https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-children-and-young-people/ and https://www.hopkinsmedicine.org/health/conditions-and-diseases/sports-injuries/common-dance-injuries-and-prevention-tips
 
 **[14]** Kumar, Nayak, and Swain. “New Normal, Cultural Shifting and Intellectual Property Rights.” *Naad-Nartan* 12, no. 2, 2024, pp. 103–106. Used as a Purulia case study for digital access, credit, rights, and women’s participation.
 
@@ -1295,7 +1310,7 @@ Used for district location, Charida, and local performance context. Dated termin
 
 ### How the sources were used
 
-Official listings establish the three styles, living-heritage status, broad performance context, oral transmission, and shared vocabulary. Mayurbhanj technical writing supports body grammar, music, and repertoire. Regional scholarship supports comparison. Purulia research remains labelled as Purulia evidence. Safety sources guide only the adapted child activities.
+Official listings establish the three styles, living-heritage status, broad performance context, oral transmission, and shared vocabulary. Mayurbhanj technical writing supports body grammar, music, and repertoire, but regional movement lists remain separated by source. Regional scholarship supports comparison. Purulia research remains labelled as Purulia evidence. General safety sources informed conservative draft exclusions only; they do not validate the child activities or Chhau-specific guidance.
 
 No source was copied into this manuscript. The writing is an original synthesis, and disputed claims remain qualified.
 
@@ -1307,16 +1322,17 @@ This edition is written, but it is not ready to pretend that every production as
 - Project concept, initial research corpus, personal narrative, and creative direction — Arnav Ajana.
 - Manuscript drafting, structural development, and technical implementation — developed through an AI-assisted process under Arnav’s direction.
 - Source audit and separation of documented fact, interpretation, and open questions.
-- Page-level 3D model brief, credit requirements, and safety boundaries for child-facing activities.
+- Page-level 3D model brief, credit requirements, and provisional activity boundaries awaiting specialist validation.
 
-### Required before public release
+### Required before an editorially complete release
 
 - A named Mayurbhanj Chhau guru or senior practitioner reviews movement terms, history, repertoire, pronunciation, and every Mayurbhanj model.
 - Named Seraikella and Purulia practitioners review their comparison pages and models.
 - Mask makers approve and receive credit for any reproduced design.
 - Musicians verify instrument models, playing positions, audio labels, and ensemble descriptions.
+- A pediatric movement/safety professional reviews the proposed ages 8–14 range, every physical activity, the exclusions, and all warning language; a Chhau practitioner separately reviews the form-specific movement boundaries.
 - Every photograph, sound, video, model reference, and interview receives written permission and a complete credit line.
-- The placeholder audio sample is replaced or clearly retained only as a listening-interface demonstration.
+- Any future audio is added only after its source, performers, recording details, permission, licence, and required credit are documented.
 - Open historical questions are checked against original registration records, court papers, programmes, and contemporary newspapers where available.
 - Arnav completes a line-by-line authorial pass and rewrites any sentence he would not naturally say before presenting the project as his portfolio.
 

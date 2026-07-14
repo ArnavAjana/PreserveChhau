@@ -222,37 +222,49 @@ summary {
   display: flow-root;
 }
 
-.about-author-photo {
+.about-author-profile {
   float: right;
   width: min(42%, 18rem);
   margin: 0 0 1.5rem clamp(1.25rem, 4vw, 2.5rem);
-  overflow: hidden;
   border: 1px solid rgba(82, 41, 31, 0.16);
   border-radius: 0.9rem;
   background: var(--color-ivory);
+  padding: 1.4rem;
   box-shadow: 0 14px 34px rgba(54, 38, 28, 0.14);
+  text-align: center;
 }
 
-.about-author-photo-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  object-position: center center;
+.about-author-monogram {
+  display: grid;
+  width: 5rem;
+  height: 5rem;
+  margin: 0 auto 1rem;
+  place-items: center;
+  border: 1px solid rgba(155, 47, 34, 0.2);
+  border-radius: 999px;
+  background: rgba(155, 47, 34, 0.08);
+  color: var(--color-laterite-800);
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
-.about-author-photo figcaption {
-  border-top: 1px solid rgba(82, 41, 31, 0.12);
-  padding: 0.65rem 0.8rem 0.7rem;
-  color: rgba(32, 29, 25, 0.7);
+.about-author-name {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.about-author-role {
+  margin-top: 0.45rem;
+  color: rgba(32, 29, 25, 0.68);
   font-family: var(--font-sans);
   font-size: 0.72rem;
-  font-style: normal;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  line-height: 1.4;
-  text-align: center;
-  text-transform: uppercase;
+  font-weight: 600;
+  line-height: 1.55;
 }
 
 .reader-kicker {
@@ -724,19 +736,10 @@ summary {
   letter-spacing: 0.06em;
 }
 
-.music-volume-slider {
-  width: 100%;
-  accent-color: var(--color-marigold-400);
-}
-
 .reader-toc-layer {
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-}
-
-.page-audio-controls input[type="range"] {
-  min-width: 4rem;
 }
 
 /* -------------------------------------------------------------------
@@ -801,7 +804,7 @@ summary {
     line-height: 1.72;
   }
 
-  .about-author-photo {
+  .about-author-profile {
     float: none;
     width: min(100%, 24rem);
     margin: 0 auto 1.75rem;
@@ -849,15 +852,6 @@ summary {
     display: none;
   }
 
-  .page-audio-controls {
-    display: grid;
-    grid-template-columns: 2.75rem 2.25rem minmax(4rem, 1fr) 2.25rem;
-    gap: 0.5rem;
-  }
-
-  .page-audio-controls > span {
-    width: auto;
-  }
 }
 
 @media (orientation: landscape) and (max-height: 600px) {

@@ -7,6 +7,22 @@ const root = process.cwd();
 const publicRoot = resolve(root, "public");
 const failures = [];
 
+const rightsManifestPath = "ASSET_RIGHTS_PROVENANCE.json";
+const thirdPartyNoticesPath = "THIRD_PARTY_NOTICES.md";
+const apacheLicensePath = "THIRD_PARTY_LICENSES/Apache-2.0.txt";
+const basisNoticePath = "THIRD_PARTY_LICENSES/Basis-Universal-NOTICE.txt";
+const expectedApacheLicenseSha256 =
+  "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30";
+const expectedBasisNoticeSha256 =
+  "a710c77f53231533f19fbc00e04a7109077f2dec74232b62a96f2ac1a1c04c85";
+
+const forbiddenUnclearedMedia = [
+  "public/audio/dholki-1.mp3",
+  "public/audio/main-theme-ebook.mp3",
+  "public/images/arnav-ajana-about.jpg",
+  "map-of-chhau/public/images/night-sky.png",
+];
+
 async function listFiles(directory) {
   if (!existsSync(directory)) return [];
   const entries = await readdir(directory, { withFileTypes: true });
@@ -23,24 +39,86 @@ function requirePath(path) {
   if (!existsSync(resolve(root, path))) failures.push(`Missing required file: ${path}`);
 }
 
+async function sha256(path) {
+  return createHash("sha256").update(await readFile(path)).digest("hex");
+}
+
 [
   "Chhau_eBook_Content.md",
   "src/content/book-pages.ts",
   "map-of-chhau/src/ChhauGlobe.jsx",
   "map-of-chhau/public/data/countries.geojson",
-  "map-of-chhau/public/images/night-sky.png",
   "public/map-of-chhau/index.html",
   "public/map-of-chhau/data/countries.geojson",
-  "public/map-of-chhau/images/night-sky.png",
-  "public/audio/dholki-1.mp3",
-  "public/audio/main-theme-ebook.mp3",
-  "public/images/arnav-ajana-about.jpg",
   "public/draco/gltf/draco_decoder.js",
   "public/draco/gltf/draco_decoder.wasm",
   "public/draco/gltf/draco_wasm_wrapper.js",
   "public/basis/basis_transcoder.js",
   "public/basis/basis_transcoder.wasm",
+  rightsManifestPath,
+  thirdPartyNoticesPath,
+  apacheLicensePath,
+  basisNoticePath,
 ].forEach(requirePath);
+
+for (const path of forbiddenUnclearedMedia) {
+  if (existsSync(resolve(root, path))) {
+    failures.push(`Uncleared media must not be shipped: ${path}`);
+  }
+}
+
+for (const directory of ["public/audio", "public/images"]) {
+  const files = await listFiles(resolve(root, directory));
+  if (files.length > 0) {
+    failures.push(
+      `No media may be added to ${directory}/ without a complete manifest record and an explicit release-policy update.`,
+    );
+  }
+}
+
+const mapSourceImages = await listFiles(resolve(root, "map-of-chhau/public/images"));
+if (mapSourceImages.length > 0) {
+  failures.push(
+    "Atlas source images must not be shipped without per-file creator, source, permission, licence, and notice records.",
+  );
+}
+
+const atlasRemoteMediaPatterns = [
+  "wikipedia.org",
+  "wikimedia.org",
+  "upload.wikimedia.org",
+  "special:filepath",
+  "night-sky.png",
+];
+const atlasSourceFiles = await listFiles(resolve(root, "map-of-chhau/src"));
+for (const path of [resolve(root, "map-of-chhau/index.html"), ...atlasSourceFiles]) {
+  if (!existsSync(path) || ![".css", ".html", ".js", ".jsx"].includes(extname(path))) {
+    continue;
+  }
+  const source = (await readFile(path, "utf8")).toLowerCase();
+  for (const pattern of atlasRemoteMediaPatterns) {
+    if (source.includes(pattern)) {
+      failures.push(`Atlas media lookup or uncleared image reference remains in ${relative(root, path)}: ${pattern}`);
+    }
+  }
+}
+
+for (const retiredComponent of [
+  "src/components/AboutAuthorPhoto.tsx",
+  "src/components/PageAudioPlayer.tsx",
+]) {
+  if (existsSync(resolve(root, retiredComponent))) {
+    failures.push(`Retired uncleared-media component must not be restored: ${retiredComponent}`);
+  }
+}
+
+const readerSourcePath = resolve(root, "src/components/InteractiveEbookInterface.tsx");
+if (existsSync(readerSourcePath)) {
+  const readerSource = await readFile(readerSourcePath, "utf8");
+  if (readerSource.includes("<audio") || readerSource.includes("THEME_AUDIO_URL")) {
+    failures.push("The reader must not load audio until a cleared asset is approved.");
+  }
+}
 
 const mapIndexPath = resolve(publicRoot, "map-of-chhau/index.html");
 if (existsSync(mapIndexPath)) {
@@ -62,6 +140,16 @@ if (mapScripts.length !== 1 || mapStyles.length !== 1) {
   );
 }
 
+for (const path of [mapIndexPath, ...mapBundleFiles]) {
+  if (!existsSync(path) || ![".css", ".html", ".js"].includes(extname(path))) continue;
+  const output = (await readFile(path, "utf8")).toLowerCase();
+  for (const pattern of atlasRemoteMediaPatterns) {
+    if (output.includes(pattern)) {
+      failures.push(`Generated atlas contains a remote or uncleared media reference: ${pattern}`);
+    }
+  }
+}
+
 const legacyPublicPath = resolve(publicRoot, "models/chhau-web-assets");
 if (existsSync(legacyPublicPath)) {
   const legacyPublicFiles = await listFiles(legacyPublicPath);
@@ -78,26 +166,256 @@ if (existsSync(legacyArchivePath)) {
   }
 }
 
+let rightsManifest = null;
+if (existsSync(resolve(root, rightsManifestPath))) {
+  try {
+    rightsManifest = JSON.parse(await readFile(resolve(root, rightsManifestPath), "utf8"));
+  } catch (error) {
+    failures.push(
+      `Invalid ${rightsManifestPath}: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
+}
+
+const manifestedPaths = new Set();
+if (rightsManifest) {
+  if (rightsManifest.schemaVersion !== 1) {
+    failures.push(`${rightsManifestPath} must use schemaVersion 1.`);
+  }
+  if (rightsManifest.projectLicenseStatus?.status !== "no-broad-project-license") {
+    failures.push(`${rightsManifestPath} must state that no broad project licence is granted.`);
+  }
+  if (!Array.isArray(rightsManifest.assets) || rightsManifest.assets.length === 0) {
+    failures.push(`${rightsManifestPath} must contain at least one retained asset record.`);
+  } else {
+    for (const asset of rightsManifest.assets) {
+      const requiredFields = [
+        "path",
+        "status",
+        "component",
+        "creator",
+        "upstreamProject",
+        "distributionSource",
+        "distributionPackage",
+        "distributionVersion",
+        "distributionRevision",
+        "upstreamComponentVersion",
+        "distributionUrl",
+        "distributionIntegrity",
+        "sha256",
+        "license",
+        "licenseFile",
+        "noticeFile",
+      ];
+      for (const field of requiredFields) {
+        if (typeof asset[field] !== "string" || asset[field].trim() === "") {
+          failures.push(`Asset record ${asset.path ?? "<unknown>"} is missing ${field}.`);
+        }
+      }
+      if (asset.status !== "cleared-third-party") {
+        failures.push(`Retained asset ${asset.path ?? "<unknown>"} is not cleared-third-party.`);
+      }
+      if (
+        asset.distributionPackage !== "three" ||
+        asset.distributionVersion !== "0.184.0" ||
+        !asset.distributionRevision?.endsWith("/r184")
+      ) {
+        failures.push(`Retained decoder ${asset.path ?? "<unknown>"} lacks its exact three r184 distribution record.`);
+      }
+      if (asset.modified !== false) {
+        failures.push(`Retained decoder ${asset.path ?? "<unknown>"} must remain unmodified.`);
+      }
+      if (asset.license !== "Apache-2.0" || asset.licenseFile !== apacheLicensePath) {
+        failures.push(`Retained decoder ${asset.path ?? "<unknown>"} lacks its Apache-2.0 record.`);
+      }
+      if (asset.component === "Basis Universal transcoder") {
+        if (asset.copyrightNotice !== "Copyright © 2016–2026 Binomial LLC") {
+          failures.push(`Basis asset ${asset.path ?? "<unknown>"} has an incorrect copyright notice.`);
+        }
+        if (asset.upstreamNoticeFile !== basisNoticePath) {
+          failures.push(`Basis asset ${asset.path ?? "<unknown>"} lacks its upstream NOTICE record.`);
+        }
+      }
+      if (manifestedPaths.has(asset.path)) {
+        failures.push(`Duplicate asset-manifest path: ${asset.path}`);
+      }
+      manifestedPaths.add(asset.path);
+
+      const absolutePath = resolve(root, asset.path ?? "");
+      if (!existsSync(absolutePath)) {
+        failures.push(`Manifested asset is missing: ${asset.path}`);
+      } else if (typeof asset.sha256 === "string") {
+        const actualHash = await sha256(absolutePath);
+        if (actualHash !== asset.sha256) {
+          failures.push(
+            `Manifest hash mismatch for ${asset.path}: expected ${asset.sha256}, found ${actualHash}`,
+          );
+        }
+      }
+    }
+  }
+
+  const withheldPaths = new Set(
+    Array.isArray(rightsManifest.withheldAssets)
+      ? rightsManifest.withheldAssets.map((asset) => asset.formerPath)
+      : [],
+  );
+  for (const path of forbiddenUnclearedMedia) {
+    if (!withheldPaths.has(path)) {
+      failures.push(`${rightsManifestPath} must record the removal of ${path}.`);
+    }
+  }
+
+  if (!Array.isArray(rightsManifest.mapAssets) || rightsManifest.mapAssets.length !== 1) {
+    failures.push(`${rightsManifestPath} must contain exactly one map-geometry record.`);
+  } else {
+    const mapAsset = rightsManifest.mapAssets[0];
+    const requiredMapFields = [
+      "path",
+      "generatedPath",
+      "status",
+      "dataset",
+      "creator",
+      "upstreamSource",
+      "termsUrl",
+      "distributionSource",
+      "distributionFile",
+      "distributionUrl",
+      "distributionIntegrity",
+      "sourceSha256",
+      "sha256",
+      "modifications",
+      "license",
+    ];
+    for (const field of requiredMapFields) {
+      if (typeof mapAsset[field] !== "string" || mapAsset[field].trim() === "") {
+        failures.push(`Map-geometry record is missing ${field}.`);
+      }
+    }
+    if (
+      mapAsset.status !== "public-domain-data" ||
+      mapAsset.license !== "Public domain" ||
+      !mapAsset.termsUrl?.includes("naturalearthdata.com/about/terms-of-use")
+    ) {
+      failures.push("Map geometry lacks its Natural Earth public-domain record.");
+    }
+    for (const path of [mapAsset.path, mapAsset.generatedPath]) {
+      const absolutePath = resolve(root, path ?? "");
+      if (!existsSync(absolutePath)) {
+        failures.push(`Map-geometry file is missing: ${path}`);
+      } else if (typeof mapAsset.sha256 === "string") {
+        const actualHash = await sha256(absolutePath);
+        if (actualHash !== mapAsset.sha256) {
+          failures.push(
+            `Map-geometry hash mismatch for ${path}: expected ${mapAsset.sha256}, found ${actualHash}`,
+          );
+        }
+      }
+    }
+    const distributedSourcePath = resolve(
+      root,
+      "node_modules/three-globe",
+      mapAsset.distributionFile ?? "",
+    );
+    if (!existsSync(distributedSourcePath)) {
+      failures.push(`Natural Earth distribution source is missing: ${mapAsset.distributionFile}`);
+    } else if (typeof mapAsset.sourceSha256 === "string") {
+      const sourceHash = await sha256(distributedSourcePath);
+      if (sourceHash !== mapAsset.sourceSha256) {
+        failures.push(
+          `Natural Earth distribution-source hash mismatch: expected ${mapAsset.sourceSha256}, found ${sourceHash}`,
+        );
+      }
+    }
+  }
+
+  if (
+    !Array.isArray(rightsManifest.removedRemoteMedia) ||
+    rightsManifest.removedRemoteMedia.length !== 8
+  ) {
+    failures.push(
+      `${rightsManifestPath} must record all eight attribution-required Commons files as not distributed.`,
+    );
+  } else {
+    const remoteTitles = new Set();
+    for (const media of rightsManifest.removedRemoteMedia) {
+      for (const field of ["fileTitle", "creator", "license", "licenseUrl", "sourcePage"]) {
+        if (typeof media[field] !== "string" || media[field].trim() === "") {
+          failures.push(`Removed Commons record ${media.fileTitle ?? "<unknown>"} is missing ${field}.`);
+        }
+      }
+      if (media.status !== "not-distributed") {
+        failures.push(`Removed Commons record ${media.fileTitle ?? "<unknown>"} is not marked not-distributed.`);
+      }
+      if (remoteTitles.has(media.fileTitle)) {
+        failures.push(`Duplicate removed Commons record: ${media.fileTitle}`);
+      }
+      remoteTitles.add(media.fileTitle);
+    }
+  }
+}
+
+if (existsSync(resolve(root, apacheLicensePath))) {
+  const licenseHash = await sha256(resolve(root, apacheLicensePath));
+  if (licenseHash !== expectedApacheLicenseSha256) {
+    failures.push(`${apacheLicensePath} is not the verified complete Apache-2.0 text.`);
+  }
+}
+
+if (existsSync(resolve(root, basisNoticePath))) {
+  const noticeHash = await sha256(resolve(root, basisNoticePath));
+  if (noticeHash !== expectedBasisNoticeSha256) {
+    failures.push(`${basisNoticePath} does not match the recorded upstream NOTICE.`);
+  }
+}
+
+if (existsSync(resolve(root, thirdPartyNoticesPath))) {
+  const notices = await readFile(resolve(root, thirdPartyNoticesPath), "utf8");
+  for (const requiredNotice of [
+    "docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository",
+    "github.com/google/draco",
+    "github.com/BinomialLLC/basis_universal",
+    apacheLicensePath,
+    basisNoticePath,
+    "naturalearthdata.com/about/terms-of-use",
+    "commons.wikimedia.org/wiki/File:",
+  ]) {
+    if (!notices.includes(requiredNotice)) {
+      failures.push(`${thirdPartyNoticesPath} is missing required notice: ${requiredNotice}`);
+    }
+  }
+}
+
 const publicFiles = await listFiles(publicRoot);
 const hashes = new Map();
 for (const path of publicFiles) {
+  const relativePath = relative(root, path);
   const fileStat = await stat(path);
   if (fileStat.size > 25 * 1024 * 1024) {
     failures.push(
-      `Public asset exceeds 25 MiB: ${relative(root, path)} (${Math.ceil(fileStat.size / 1024 / 1024)} MiB)`,
+      `Public asset exceeds 25 MiB: ${relativePath} (${Math.ceil(fileStat.size / 1024 / 1024)} MiB)`,
     );
   }
 
-  const digest = createHash("sha256")
-    .update(await readFile(path))
-    .digest("hex");
+  const digest = await sha256(path);
   const previous = hashes.get(digest);
   if (previous) {
     failures.push(
-      `Exact duplicate public assets: ${relative(root, previous)} and ${relative(root, path)}`,
+      `Exact duplicate public assets: ${relative(root, previous)} and ${relativePath}`,
     );
   } else {
     hashes.set(digest, path);
+  }
+
+  const isGeneratedMapFile = relativePath.startsWith("public/map-of-chhau/");
+  const isApprovedModelPlaceholder =
+    relativePath === "public/models/chhau-approved/.gitkeep";
+  if (
+    !isGeneratedMapFile &&
+    !isApprovedModelPlaceholder &&
+    !manifestedPaths.has(relativePath)
+  ) {
+    failures.push(`Non-map public asset lacks a rights manifest record: ${relativePath}`);
   }
 }
 
@@ -107,6 +425,6 @@ if (failures.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Release verification passed: ${publicFiles.length} public files, one local globe bundle, no exact public duplicates, and no oversized public assets.`,
+    `Release verification passed: ${publicFiles.length} public files, one local globe bundle, ${manifestedPaths.size} rights-manifested decoder files, one provenance-checked public-domain geometry file, eight removed Commons records, no uncleared media, no exact public duplicates, and no oversized public assets.`,
   );
 }

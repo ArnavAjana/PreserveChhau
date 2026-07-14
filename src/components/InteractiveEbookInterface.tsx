@@ -14,8 +14,7 @@ import {
   type RefObject,
 } from "react";
 import { bookPages, type BookPage } from "@/content/book-pages";
-import { AboutAuthorPhoto } from "@/components/AboutAuthorPhoto";
-import { PageAudioPlayer } from "@/components/PageAudioPlayer";
+import { AboutAuthorProfile } from "@/components/AboutAuthorProfile";
 import { PageEmbed } from "@/components/PageEmbed";
 import { SandboxGuide } from "@/components/SandboxGuide";
 
@@ -54,8 +53,6 @@ const CitationContext = createContext<CitationContextValue | null>(null);
 const LIBRARY_PAGE_ID = "library";
 const STUDY_ANCHOR_PATTERN = /^>\s+\*\*(Sandbox|3D sandbox)\b/i;
 const LIBRARY_ENTRY_PATTERN = /^\*\*\[(\d+)\]\*\*\s*/;
-const THEME_AUDIO_URL = "/audio/main-theme-ebook.mp3";
-const THEME_START_VOLUME = 0.28;
 
 const REFERENCE_IDS = new Set<string>([
   "glossary-place-people",
@@ -78,14 +75,17 @@ const MODEL_LABELS: Record<string, string> = {
   "mayurbhanj-core.glb": "Mayurbhanj foundational movement study",
   "mayurbhanj-jumps.glb": "Mayurbhanj aerial movement key poses",
   "mayurbhanj-repertoire.glb": "Mayurbhanj repertoire study",
-  "mayurbhanj-topkas.glb": "Practitioner-selected Mayurbhanj topkas",
-  "mayurbhanj-uflis.glb": "Practitioner-selected Mayurbhanj uflis",
+  "mayurbhanj-topkas.glb":
+    "Planned Mayurbhanj topka study — practitioner review pending",
+  "mayurbhanj-uflis.glb":
+    "Planned Mayurbhanj ufli study — practitioner review pending",
   "prop-pack.glb": "Region-labelled performance props",
   "purulia-durga.glb": "Purulia Durga study",
   "purulia-ganesha.glb": "Purulia Ganesha study",
   "purulia-lion-vahana.glb": "Purulia lion-vahana study",
   "purulia-mahishasura.glb": "Purulia Mahishasura study",
-  "purulia-mask-layers.glb": "Maker-led Purulia mask construction study",
+  "purulia-mask-layers.glb":
+    "Planned Purulia mask-construction study — maker review pending",
   "purulia-masked-core.glb": "Purulia masked movement study",
   "purulia-technique.glb": "Purulia movement-grammar study",
   "seraikella-expression.glb": "Seraikella mask-and-body expression study",
@@ -206,10 +206,7 @@ export function InteractiveEbookInterface() {
   const [tocOpen, setTocOpen] = useState(false);
   const [tocQuery, setTocQuery] = useState("");
   const [pendingCitation, setPendingCitation] = useState<number | null>(null);
-  const [themePlaying, setThemePlaying] = useState(false);
-  const [themeVolume, setThemeVolume] = useState(THEME_START_VOLUME);
 
-  const themeAudioRef = useRef<HTMLAudioElement>(null);
   const pageHeadingRef = useRef<HTMLHeadingElement>(null);
   const tocDialogRef = useRef<HTMLDivElement>(null);
   const tocSearchRef = useRef<HTMLInputElement>(null);
@@ -356,10 +353,6 @@ export function InteractiveEbookInterface() {
   }, [pendingCitation, currentChapter, libraryPageIndex]);
 
   useEffect(() => {
-    if (themeAudioRef.current) themeAudioRef.current.volume = themeVolume;
-  }, [themeVolume]);
-
-  useEffect(() => {
     if (!tocOpen) return;
 
     const fallbackTrigger = tocTriggerRef.current;
@@ -408,23 +401,6 @@ export function InteractiveEbookInterface() {
     }));
   }
 
-  async function toggleThemeMusic() {
-    const audio = themeAudioRef.current;
-    if (!audio) return;
-
-    if (themePlaying) {
-      audio.pause();
-      return;
-    }
-
-    try {
-      audio.volume = themeVolume;
-      await audio.play();
-    } catch {
-      setThemePlaying(false);
-    }
-  }
-
   const viewer = useMemo(
     () =>
       shouldShowViewer ? (
@@ -455,15 +431,6 @@ export function InteractiveEbookInterface() {
   return (
     <CitationContext.Provider value={citationContextValue}>
       <div className="reader-shell min-h-screen">
-        <audio
-          loop
-          onPause={() => setThemePlaying(false)}
-          onPlay={() => setThemePlaying(true)}
-          preload="metadata"
-          ref={themeAudioRef}
-          src={THEME_AUDIO_URL}
-        />
-
         <p aria-live="polite" className="sr-only">
           {pendingCitation !== null
             ? `Opening source ${pendingCitation}`
@@ -575,14 +542,8 @@ export function InteractiveEbookInterface() {
               </nav>
 
               <div className="border-t border-ivory/10 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-[max(1.5rem,env(safe-area-inset-bottom))]">
-                <ThemeMusicControls
-                  isPlaying={themePlaying}
-                  onToggle={toggleThemeMusic}
-                  onVolumeChange={setThemeVolume}
-                  volume={themeVolume}
-                />
                 <Link
-                  className="mt-3 flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ivory/15 px-4 text-sm font-semibold text-ivory transition hover:border-marigold-300/60 hover:text-marigold-200"
+                  className="flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ivory/15 px-4 text-sm font-semibold text-ivory transition hover:border-marigold-300/60 hover:text-marigold-200"
                   href="/"
                 >
                   <HomeIcon className="h-4 w-4" />
@@ -628,20 +589,6 @@ export function InteractiveEbookInterface() {
                 </p>
               </div>
 
-              <button
-                aria-label={themePlaying ? "Pause theme music" : "Play theme music"}
-                className="reader-rail-button"
-                onClick={toggleThemeMusic}
-                type="button"
-              >
-                {themePlaying ? (
-                  <PauseIcon className="h-4 w-4" />
-                ) : (
-                  <MusicIcon className="h-4 w-4" />
-                )}
-                <span className="hidden lg:inline">Theme</span>
-              </button>
-
               <span className="shrink-0 text-xs font-semibold tabular-nums text-ink/70">
                 {currentChapter + 1}/{bookPages.length}
               </span>
@@ -680,55 +627,6 @@ function ViewerLoading() {
   return (
     <div className="grid h-full min-h-80 w-full place-items-center rounded-xl bg-ink text-sm font-medium text-ivory/75">
       Loading the 3D study…
-    </div>
-  );
-}
-
-function ThemeMusicControls({
-  isPlaying,
-  onToggle,
-  onVolumeChange,
-  volume,
-}: {
-  isPlaying: boolean;
-  onToggle: () => void;
-  onVolumeChange: (volume: number) => void;
-  volume: number;
-}) {
-  return (
-    <div className="rounded-xl bg-ivory/[0.06] p-3">
-      <div className="flex items-center justify-between gap-3">
-        <div>
-          <p className="reader-kicker text-marigold-200">Optional listening</p>
-          <p className="mt-1 text-sm font-medium text-ivory">eBook theme</p>
-        </div>
-        <button
-          aria-label={isPlaying ? "Pause theme music" : "Play theme music"}
-          className="reader-icon-button reader-icon-button-dark"
-          onClick={onToggle}
-          type="button"
-        >
-          {isPlaying ? (
-            <PauseIcon className="h-4 w-4" />
-          ) : (
-            <MusicIcon className="h-4 w-4" />
-          )}
-        </button>
-      </div>
-      <label className="mt-3 flex items-center gap-2 text-ivory/70">
-        <VolumeIcon className="h-4 w-4 shrink-0" />
-        <span className="sr-only">Theme music volume</span>
-        <input
-          aria-label="Theme music volume"
-          className="music-volume-slider"
-          max="1"
-          min="0"
-          onChange={(event) => onVolumeChange(Number(event.target.value))}
-          step="0.01"
-          type="range"
-          value={volume}
-        />
-      </label>
     </div>
   );
 }
@@ -967,7 +865,7 @@ function ContentPageBody({
       {chapter.body.trim() ? (
         <MarkdownContent
           anchorBlockIndex={hasStudyAnchor ? anchorBlockIndex : null}
-          leadNode={chapter.id === "about-me" ? <AboutAuthorPhoto /> : null}
+          leadNode={chapter.id === "about-me" ? <AboutAuthorProfile /> : null}
           page={chapter}
           studyNode={studyNode}
         />
@@ -990,19 +888,6 @@ function ContentPageBody({
         </div>
       ) : null}
 
-      {chapter.audioTracks?.length ? (
-        <div className="reader-prose mt-8 space-y-4">
-          {chapter.audioTracks.map((track) => (
-            <PageAudioPlayer
-              caption={track.caption}
-              key={track.src}
-              loop={track.loop}
-              src={track.src}
-              title={track.title}
-            />
-          ))}
-        </div>
-      ) : null}
     </>
   );
 }
@@ -1318,43 +1203,6 @@ function SearchIcon({ className }: IconProps) {
     <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
       <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
       <path d="m16.5 16.5 4 4" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function MusicIcon({ className }: IconProps) {
-  return (
-    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
-      <path
-        d="M9 18V5l11-2v13M9 9l11-2"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-      <path
-        d="M9 18a3 3 0 1 1-2-2.83M20 16a3 3 0 1 1-2-2.83"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function PauseIcon({ className }: IconProps) {
-  return (
-    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
-      <path d="M9 5v14M15 5v14" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function VolumeIcon({ className }: IconProps) {
-  return (
-    <svg aria-hidden="true" className={className} fill="none" viewBox="0 0 24 24">
-      <path d="M4 9v6h4l5 4V5L8 9H4Z" stroke="currentColor" strokeLinejoin="round" strokeWidth="2" />
-      <path d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
     </svg>
   );
 }

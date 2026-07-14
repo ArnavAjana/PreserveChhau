@@ -308,6 +308,14 @@
   min-width: 0;
   overflow: hidden;
   cursor: grab;
+  background-color: #04050c;
+  background-image:
+    radial-gradient(circle at 18% 27%, rgba(231, 220, 200, 0.48) 0 0.7px, transparent 1px),
+    radial-gradient(circle at 73% 62%, rgba(157, 178, 194, 0.38) 0 0.6px, transparent 0.95px),
+    radial-gradient(circle at 44% 81%, rgba(231, 220, 200, 0.28) 0 0.55px, transparent 0.9px),
+    radial-gradient(ellipse at 58% 45%, rgba(23, 39, 68, 0.28), transparent 56%);
+  background-position: 0 0, 17px 29px, 43px 11px, 0 0;
+  background-size: 97px 97px, 151px 151px, 211px 211px, 100% 100%;
 }
 .globe-stage:active {
   cursor: grabbing;
@@ -465,13 +473,6 @@
   height: 168px;
   background: #0a0908;
 }
-.detail-hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: saturate(0.92);
-}
 .detail-hero::after {
   content: '';
   position: absolute;
@@ -490,21 +491,9 @@
   font-style: italic;
   font-size: 19px;
   color: var(--text-dim);
-  background: var(--panel-2);
-}
-.hero-fallback.loading {
-  color: transparent;
-  background: linear-gradient(100deg, var(--panel-2) 30%, rgba(236, 229, 216, 0.05) 50%, var(--panel-2) 70%);
-  background-size: 220% 100%;
-  animation: shimmer 1.2s ease-in-out infinite;
-}
-@keyframes shimmer {
-  from {
-    background-position: 180% 0;
-  }
-  to {
-    background-position: -40% 0;
-  }
+  background:
+    radial-gradient(circle at 50% 42%, rgba(231, 220, 200, 0.07), transparent 40%),
+    linear-gradient(135deg, var(--panel-2), #0b111a);
 }
 .detail-close {
   position: absolute;
@@ -582,13 +571,51 @@
   line-height: 1.6;
   color: var(--text-dim);
 }
-.detail-figs {
+.detail-source {
   margin-top: 16px;
   padding-top: 14px;
   border-top: 1px solid var(--line);
   font-family: var(--sans);
   font-size: 13px;
   line-height: 1.5;
+  color: var(--text-dim);
+}
+.detail-source a {
+  display: block;
+  margin-top: 6px;
+  color: var(--accent);
+  text-decoration-line: underline;
+  text-decoration-color: rgba(231, 220, 200, 0.35);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.detail-source a:hover {
+  color: var(--text);
+  text-decoration-color: currentColor;
+}
+.detail-evidence {
+  display: grid;
+  gap: 6px;
+  margin: 13px 0 0;
+}
+.detail-evidence div {
+  display: grid;
+  grid-template-columns: 5.25rem 1fr;
+  gap: 10px;
+}
+.detail-evidence dt,
+.detail-evidence dd {
+  margin: 0;
+}
+.detail-evidence dt {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.detail-evidence dd {
+  font-size: 11.5px;
   color: var(--text-dim);
 }
 .detail-label {
@@ -904,7 +931,7 @@
     margin-top: 10px;
   }
   .detail-extra,
-  .detail-figs {
+  .detail-source {
     margin-top: 8px;
   }
 }

@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://en.wikipedia.org; font-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'",
+              "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'",
           },
         ],
         source: "/map-of-chhau/:path*",
@@ -42,7 +42,7 @@ const nextConfig: NextConfig = {
             value: "public, max-age=604800, stale-while-revalidate=86400",
           },
         ],
-        source: "/(audio|basis|draco|map-of-chhau/data|map-of-chhau/images)/:path*",
+        source: "/(basis|draco|map-of-chhau/data)/:path*",
       },
     ];
   },

@@ -12,7 +12,7 @@ These nine packages are enough for the first coherent 3D release.
 
 | Filename | Required subject and clips | Used beside |
 | --- | --- | --- |
-| `chhau-three-styles-lineup.glb` | Three accurately labelled full figures: unmasked Mayurbhanj, masked Seraikella, masked Purulia. Neutral comparison poses; front/side readability matters more than drama. | Map/first look; Chapter 1 comparison |
+| `chhau-three-styles-lineup.glb` | Three proposed full-figure studies—unmasked Mayurbhanj, masked Seraikella, and masked Purulia—to be regionally verified before being bound into the eBook. Neutral comparison poses; front/side readability matters more than drama. | Map/first look; Chapter 1 comparison |
 | `mayurbhanj-core.glb` | One validated Mayurbhanj rig in verified practice clothing. Neutral pose plus named clips for **chauk hold**, **dharan weight shift**, and **chali entry**. Any repertoire costume must be a separate, clearly named skin or package tied to a specific piece. | Chapters 3–5 and beginner observation pages |
 | `mayurbhanj-topkas.glb` | Same rig and costume. Separate clips for **sada**, **lahara**, **dheu/dhew**, **uska**, and **baga/bog topka**, only after a current Mayurbhanj guru confirms the version. | Movement Grammar |
 | `seraikella-expression.glb` | One maker- or troupe-referenced Seraikella mask and costume. Show the same fixed mask read through lifted, lowered, turned, and paused body arrangements. | Three-style comparison; mask-body expression |
@@ -26,7 +26,7 @@ These nine packages are enough for the first coherent 3D release.
 
 | Filename | Required subject and clips | Used beside |
 | --- | --- | --- |
-| `mayurbhanj-uflis.glb` | Three practitioner-selected examples—ideally one daily-life image, one nature/animal image, and one spatial phrase. Do not build from prose alone. | Nature, daily life, and bhangi |
+| `mayurbhanj-uflis.glb` | Three examples to be selected and confirmed by a named Mayurbhanj practitioner—ideally one daily-life image, one nature/animal image, and one spatial phrase. Do not build from prose alone. | Nature, daily life, and bhangi |
 | `mayurbhanj-chamka.glb` | Chest and shoulder accents against a visible beat marker. | Body and rhythm relationship |
 | `mayurbhanj-repertoire.glb` | One short, authentic excerpt chosen and demonstrated by a practitioner—preferably *Mayur* or *Nataraja*. Exact piece-specific costume and props. | Mayurbhanj performance lab |
 | `seraikella-ratri.glb` | One verified passage from *Ratri*, with the exact mask and costume for that version. | Story and repertoire |

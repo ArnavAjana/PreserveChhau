@@ -7,26 +7,18 @@ import {
   STYLE_COLORS,
   CATEGORIES,
   getStyleColor,
-  fetchWikiImage,
 } from './data';
 import './ChhauGlobe.css';
 
 // Vector globe — no raster earth. Both resources are bundled locally so the
 // atlas remains usable when a school network blocks third-party CDNs.
 const COUNTRIES_URL = './data/countries.geojson';
-const BG_IMG = './images/night-sky.png';
 
 const ACCENT = '#e7dcc8'; // host-country highlight (warm parchment, not neon)
 
-// Camera vantage points + the eastern-Indian heartlands that arcs radiate from.
+// Camera vantage points.
 const HOME_POV = { lat: 18, lng: 80, altitude: 2.5 };
 const INTRO_POV = { lat: 18, lng: 80, altitude: 4.5 };
-const HEARTLANDS = {
-  Mayurbhanj: { lat: 21.93, lng: 86.73 },
-  Seraikella: { lat: 22.7, lng: 85.93 },
-  Purulia: { lat: 23.2, lng: 86.03 },
-  'All Styles': { lat: 22.61, lng: 86.23 },
-};
 
 let countriesCache = null;
 
@@ -119,8 +111,6 @@ export default function ChhauGlobe() {
   const [globeReady, setGlobeReady] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [styleMode, setStyleMode] = useState('outline'); // 'outline' | 'hex'
-  const [images, setImages] = useState({});
-  const [failedImages, setFailedImages] = useState({});
   const [loading, setLoading] = useState(true);
   const [activeCat, setActiveCat] = useState(null);
   const [countries, setCountries] = useState(countriesCache || []);
@@ -224,38 +214,11 @@ export default function ChhauGlobe() {
   }, [countries, nodePoints]);
   const isHost = useCallback((f) => !!f?.__host, []);
 
-  // Glowing arcs radiating from the heartland to every node beyond India.
-  const arcsData = useMemo(
-    () =>
-      markerData
-        .filter((d) => d.country !== 'India')
-        .map((d, index) => {
-          const c = getStyleColor(d.style);
-          const styleKey = d.style.split('/')[0].trim();
-          const origin = HEARTLANDS[styleKey] || HEARTLANDS['All Styles'];
-          return {
-            startLat: origin.lat,
-            startLng: origin.lng,
-            endLat: d.lat,
-            endLng: d.lng,
-            cat: d.categorization,
-            color: [hexToRgba(c, 0.03), hexToRgba(c, 0.95)],
-            _gap: (index * 0.61803398875) % 1,
-          };
-        }),
-    [markerData]
-  );
-
   const isolating = activeCat !== null;
   const visibleMarkers = useMemo(
     () => (isolating ? markerData.filter((d) => d.categorization === activeCat) : markerData),
     [markerData, isolating, activeCat]
   );
-  const arcsForView = useMemo(
-    () => (isolating ? arcsData.filter((a) => a.cat === activeCat) : arcsData),
-    [arcsData, isolating, activeCat]
-  );
-
   const ringsData = useMemo(
     () =>
       selected
@@ -456,26 +419,6 @@ export default function ChhauGlobe() {
     return () => window.cancelAnimationFrame(frame);
   }, [menuOpen, mobileLayout]);
 
-  // Lazily fetch a representative photo for the focused node (unless it has a
-  // pinned, hand-verified image).
-  useEffect(() => {
-    if (selected?.img) return undefined;
-    const w = selected?.wiki;
-    if (!w) return undefined;
-    let cancelled = false;
-    fetchWikiImage(w).then((src) => {
-      if (!cancelled) setImages((prev) => (w in prev ? prev : { ...prev, [w]: src }));
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [selected]);
-
-  const heroKey = selected?.wiki;
-  const heroCandidate = selected?.img ?? (heroKey ? images[heroKey] : undefined);
-  const heroSrc = heroCandidate && !failedImages[heroCandidate] ? heroCandidate : undefined;
-  const heroLoading = selected?.img ? false : heroKey ? !(heroKey in images) : false;
-
   return (
     <div className="chhau-app">
       {/* --------------------------- LOADING --------------------------- */}
@@ -493,7 +436,7 @@ export default function ChhauGlobe() {
           <div className="loader-rule">
             <span />
           </div>
-          <span className="loader-sub">Charting a living tradition across the world</span>
+          <span className="loader-sub">Three heartlands · one documented UNESCO decision</span>
         </div>
       </div>
 
@@ -582,9 +525,8 @@ export default function ChhauGlobe() {
           ))}
         </div>
         <p className="atlas-note">
-          The three eastern-Indian heartlands anchor this atlas. Wider nodes are
-          research leads for stages, archives, institutions, and communities;
-          they do not all indicate a resident Chhau tradition.
+          Every published marker is tied to an official source. Unsourced stage
+          and diaspora research leads are withheld until they can be verified.
         </p>
       </aside>
 
@@ -619,7 +561,7 @@ export default function ChhauGlobe() {
             Map of <em>Chhau</em>
           </h2>
           <p>
-            {chhauGeodata.length} nodes · {countryCount} countries · roots, stages &amp; diaspora
+            {chhauGeodata.length} verified records · {countryCount} countries · three styles
           </p>
         </header>
 
@@ -641,7 +583,6 @@ export default function ChhauGlobe() {
               powerPreference: 'high-performance',
             }}
             globeMaterial={globeMaterial}
-            backgroundImageUrl={BG_IMG}
             backgroundColor="#04050c"
             showAtmosphere
             atmosphereColor="#5a6b7a"
@@ -656,7 +597,7 @@ export default function ChhauGlobe() {
             onPolygonHover={setHoverPoly}
             polygonLabel={(f) =>
               `<div class="poly-label">${escapeHtml(f.properties.ADMIN)}${
-                isHost(f) ? ' <b>· mapped research node</b>' : ''
+                isHost(f) ? ' <b>· verified atlas record</b>' : ''
               }</div>`
             }
             // --- hex-dot countries (alt style) ---
@@ -665,16 +606,6 @@ export default function ChhauGlobe() {
             hexPolygonMargin={0.35}
             hexPolygonColor={hexColor}
             hexPolygonAltitude={0.012}
-            // --- glowing arcs: heartland -> world ---
-            arcsData={arcsForView}
-            arcColor={(d) => d.color}
-            arcAltitudeAutoScale={0.5}
-            arcStroke={0.5}
-            arcDashLength={0.45}
-            arcDashGap={0.6}
-            arcDashInitialGap={(d) => d._gap}
-            arcDashAnimateTime={reduceMotion ? 0 : 4200}
-            arcsTransitionDuration={400}
             // --- custom interactive neon markers ---
             htmlElementsData={visibleMarkers}
             htmlElement={createMarker}
@@ -734,33 +665,14 @@ export default function ChhauGlobe() {
               Close
             </button>
             <div className="detail-hero">
-              {heroSrc ? (
-                // This standalone Vite atlas is outside Next Image's runtime.
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  alt={`${selected.city} reference view`}
-                  loading="lazy"
-                  onError={() =>
-                    setFailedImages((current) => ({
-                      ...current,
-                      [heroCandidate]: true,
-                    }))
-                  }
-                  referrerPolicy="no-referrer"
-                  src={heroSrc}
-                />
-              ) : (
-                <div className={`hero-fallback${heroLoading ? ' loading' : ''}`}>
-                  <span>{selected.city}</span>
-                </div>
-              )}
+              <div className="hero-fallback">
+                <span>{selected.city}</span>
+              </div>
               <span className="detail-style">{selected.style}</span>
             </div>
             <div className="detail-body">
               <p className="detail-status">
-                {selected.categorization === 'heritage'
-                  ? 'Eastern-Indian heartland entry'
-                  : 'Research lead · source review pending'}
+                Verified source record · {selected.evidenceType}
               </p>
               <h3 className="detail-city">{selected.city}</h3>
               <span className="detail-country">
@@ -769,9 +681,26 @@ export default function ChhauGlobe() {
               </span>
               <p className="detail-role">{selected.role}</p>
               {selected.detail && <p className="detail-extra">{selected.detail}</p>}
-              <div className="detail-figs">
-                <span className="detail-label">Key Institutions / Lineage</span>
-                {selected.keyFigures}
+              <div className="detail-source">
+                <span className="detail-label">Official source</span>
+                <a href={selected.sourceUrl} rel="noreferrer" target="_blank">
+                  {selected.sourceTitle}
+                </a>
+                {selected.secondarySourceUrl ? (
+                  <a href={selected.secondarySourceUrl} rel="noreferrer" target="_blank">
+                    {selected.secondarySourceTitle}
+                  </a>
+                ) : null}
+                <dl className="detail-evidence">
+                  <div>
+                    <dt>Record date</dt>
+                    <dd>{selected.date}</dd>
+                  </div>
+                  <div>
+                    <dt>Checked</dt>
+                    <dd>{selected.verifiedAt}</dd>
+                  </div>
+                </dl>
               </div>
             </div>
           </section>
@@ -795,7 +724,7 @@ export default function ChhauGlobe() {
           {tooltip.data.region && <div className="tt-region">{tooltip.data.region}</div>}
           <div className="tt-role">{tooltip.data.role}</div>
           <div className="tt-key">
-            <b>Key:</b> {tooltip.data.keyFigures}
+            <b>Evidence:</b> {tooltip.data.evidenceType}
           </div>
         </div>
       )}

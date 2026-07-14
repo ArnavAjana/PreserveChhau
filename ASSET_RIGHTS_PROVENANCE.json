@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "lastReviewed": "2026-07-14",
+  "scope": "Retained third-party static assets and map geometry shipped by the project, plus explicit records for withheld local media and removed remote Commons references.",
+  "projectLicenseStatus": {
+    "status": "no-broad-project-license",
+    "notice": "Public repository visibility permits viewing and GitHub forking under GitHub's Terms of Service; it does not grant a general right to reproduce, distribute, or create derivative works. No broad licence has been selected for PreserveChhau original material. All rights are reserved where a rights holder is established; where authorship or ownership is not yet confirmed, reuse permission is undetermined and is not granted. Third-party components remain governed by their own licences."
+  },
+  "assets": [
+    {
+      "path": "public/draco/gltf/draco_decoder.js",
+      "status": "cleared-third-party",
+      "component": "Draco glTF decoder",
+      "creator": "Google Draco project contributors",
+      "upstreamProject": "https://github.com/google/draco",
+      "distributionSource": "three@0.184.0, examples/jsm/libs/draco/gltf/draco_decoder.js",
+      "distributionPackage": "three",
+      "distributionVersion": "0.184.0",
+      "distributionRevision": "https://github.com/mrdoob/three.js/tree/r184",
+      "upstreamComponentVersion": "Not stated in the three@0.184.0 package; the exact distributed bytes are identified by SHA-256.",
+      "distributionUrl": "https://www.npmjs.com/package/three/v/0.184.0",
+      "distributionIntegrity": "sha512-wtTRjG92pM5eUg/KuUnHsqSAlPM296brTOcLgMRqEeylYTh/CdtvKUvCyyCQTzFuStieWxvZb8mVTMvdPyUpxg==",
+      "sha256": "8625489da79a805f4f2a7d511c3e52d8b4085608a9d2a4d5f4f9de5db0aea04f",
+      "modified": false,
+      "license": "Apache-2.0",
+      "licenseFile": "THIRD_PARTY_LICENSES/Apache-2.0.txt",
+      "noticeFile": "THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "path": "public/draco/gltf/draco_decoder.wasm",
+      "status": "cleared-third-party",
+      "component": "Draco glTF decoder",
+      "creator": "Google Draco project contributors",
+      "upstreamProject": "https://github.com/google/draco",
+      "distributionSource": "three@0.184.0, examples/jsm/libs/draco/gltf/draco_decoder.wasm",
+      "distributionPackage": "three",
+      "distributionVersion": "0.184.0",
+      "distributionRevision": "https://github.com/mrdoob/three.js/tree/r184",
+      "upstreamComponentVersion": "Not stated in the three@0.184.0 package; the exact distributed bytes are identified by SHA-256.",
+      "distributionUrl": "https://www.npmjs.com/package/three/v/0.184.0",
+      "distributionIntegrity": "sha512-wtTRjG92pM5eUg/KuUnHsqSAlPM296brTOcLgMRqEeylYTh/CdtvKUvCyyCQTzFuStieWxvZb8mVTMvdPyUpxg==",
+      "sha256": "a680d927bed9cb864ddbd63521868891af2bfbe755092761b4837487618df8ac",
+      "modified": false,
+      "license": "Apache-2.0",
+      "licenseFile": "THIRD_PARTY_LICENSES/Apache-2.0.txt",
+      "noticeFile": "THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "path": "public/draco/gltf/draco_wasm_wrapper.js",
+      "status": "cleared-third-party",
+      "component": "Draco glTF decoder",
+      "creator": "Google Draco project contributors",
+      "upstreamProject": "https://github.com/google/draco",
+      "distributionSource": "three@0.184.0, examples/jsm/libs/draco/gltf/draco_wasm_wrapper.js",
+      "distributionPackage": "three",
+      "distributionVersion": "0.184.0",
+      "distributionRevision": "https://github.com/mrdoob/three.js/tree/r184",
+      "upstreamComponentVersion": "Not stated in the three@0.184.0 package; the exact distributed bytes are identified by SHA-256.",
+      "distributionUrl": "https://www.npmjs.com/package/three/v/0.184.0",
+      "distributionIntegrity": "sha512-wtTRjG92pM5eUg/KuUnHsqSAlPM296brTOcLgMRqEeylYTh/CdtvKUvCyyCQTzFuStieWxvZb8mVTMvdPyUpxg==",
+      "sha256": "8bb2952d2ba7d67e1414f8df819410cb0434a666be53f671fff75f68843d76f6",
+      "modified": false,
+      "license": "Apache-2.0",
+      "licenseFile": "THIRD_PARTY_LICENSES/Apache-2.0.txt",
+      "noticeFile": "THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "path": "public/basis/basis_transcoder.js",
+      "status": "cleared-third-party",
+      "component": "Basis Universal transcoder",
+      "creator": "Binomial LLC and Basis Universal contributors",
+      "copyrightNotice": "Copyright © 2016–2026 Binomial LLC",
+      "upstreamProject": "https://github.com/BinomialLLC/basis_universal",
+      "distributionSource": "three@0.184.0, examples/jsm/libs/basis/basis_transcoder.js",
+      "distributionPackage": "three",
+      "distributionVersion": "0.184.0",
+      "distributionRevision": "https://github.com/mrdoob/three.js/tree/r184",
+      "upstreamComponentVersion": "Not stated in the three@0.184.0 package; the exact distributed bytes are identified by SHA-256.",
+      "distributionUrl": "https://www.npmjs.com/package/three/v/0.184.0",
+      "distributionIntegrity": "sha512-wtTRjG92pM5eUg/KuUnHsqSAlPM296brTOcLgMRqEeylYTh/CdtvKUvCyyCQTzFuStieWxvZb8mVTMvdPyUpxg==",
+      "sha256": "8478b5b6d6b74e7d3082b89f6417321d8d1dc0307f2b30d4484bb11b441696a1",
+      "modified": false,
+      "license": "Apache-2.0",
+      "licenseFile": "THIRD_PARTY_LICENSES/Apache-2.0.txt",
+      "upstreamNoticeFile": "THIRD_PARTY_LICENSES/Basis-Universal-NOTICE.txt",
+      "noticeFile": "THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "path": "public/basis/basis_transcoder.wasm",
+      "status": "cleared-third-party",
+      "component": "Basis Universal transcoder",
+      "creator": "Binomial LLC and Basis Universal contributors",
+      "copyrightNotice": "Copyright © 2016–2026 Binomial LLC",
+      "upstreamProject": "https://github.com/BinomialLLC/basis_universal",
+      "distributionSource": "three@0.184.0, examples/jsm/libs/basis/basis_transcoder.wasm",
+      "distributionPackage": "three",
+      "distributionVersion": "0.184.0",
+      "distributionRevision": "https://github.com/mrdoob/three.js/tree/r184",
+      "upstreamComponentVersion": "Not stated in the three@0.184.0 package; the exact distributed bytes are identified by SHA-256.",
+      "distributionUrl": "https://www.npmjs.com/package/three/v/0.184.0",
+      "distributionIntegrity": "sha512-wtTRjG92pM5eUg/KuUnHsqSAlPM296brTOcLgMRqEeylYTh/CdtvKUvCyyCQTzFuStieWxvZb8mVTMvdPyUpxg==",
+      "sha256": "6cf17dc889352c42e9acf8897107978d127005fe3386c36a0e3845e27967630a",
+      "modified": false,
+      "license": "Apache-2.0",
+      "licenseFile": "THIRD_PARTY_LICENSES/Apache-2.0.txt",
+      "upstreamNoticeFile": "THIRD_PARTY_LICENSES/Basis-Universal-NOTICE.txt",
+      "noticeFile": "THIRD_PARTY_NOTICES.md"
+    }
+  ],
+  "mapAssets": [
+    {
+      "path": "map-of-chhau/public/data/countries.geojson",
+      "generatedPath": "public/map-of-chhau/data/countries.geojson",
+      "status": "public-domain-data",
+      "dataset": "Natural Earth 1:110m Admin 0 countries",
+      "creator": "Natural Earth contributors",
+      "upstreamSource": "https://www.naturalearthdata.com/downloads/110m-cultural-vectors/110m-admin-0-countries/",
+      "termsUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "distributionSource": "three-globe@2.45.2, example/country-polygons/ne_110m_admin_0_countries.geojson",
+      "distributionFile": "example/country-polygons/ne_110m_admin_0_countries.geojson",
+      "distributionUrl": "https://www.npmjs.com/package/three-globe/v/2.45.2",
+      "distributionIntegrity": "sha512-3qJE2LAdyHsUPt02mgMRc+PG3j9kGEA0fUYrwKPGIVtvMR1XjDn9hCXu31AWocdgHOFcXkrRVz7jJZzTIvR0eQ==",
+      "sourceSha256": "a4d67eac9c75d5b6f20170d2b07bb53ea791536b0c8e5ebae3ba94df093f76e0",
+      "sha256": "1a48e4c7fbbfa6a72e014c47ecd8c5ec54b96a7a7de2c164bab0b946c5cd4fdf",
+      "modifications": "Retained each feature's type, ADMIN property, and geometry; removed other properties; serialized as compact JSON with a final newline.",
+      "license": "Public domain"
+    }
+  ],
+  "withheldAssets": [
+    {
+      "formerPath": "public/audio/dholki-1.mp3",
+      "reason": "Removed from the public release: creator, source, and publication permission were not documented."
+    },
+    {
+      "formerPath": "public/audio/main-theme-ebook.mp3",
+      "reason": "Removed from the public release: creator, source, and publication permission were not documented."
+    },
+    {
+      "formerPath": "public/images/arnav-ajana-about.jpg",
+      "reason": "Removed from the public release: photographer, subject/guardian publication permission where applicable, and reuse terms were not documented."
+    },
+    {
+      "formerPath": "map-of-chhau/public/images/night-sky.png",
+      "reason": "Removed from the public release: creator, source, and reuse terms were not documented. The atlas now uses code-authored CSS gradients and a solid Three.js background."
+    }
+  ],
+  "removedRemoteMedia": [
+    {
+      "fileTitle": "Performance of Chhau dance of Purulia.jpg",
+      "creator": "Skasish",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Performance_of_Chhau_dance_of_Purulia.jpg",
+      "status": "not-distributed"
+    },
+    {
+      "fileTitle": "Chhau Dance of Purulia, West bengal.jpg",
+      "creator": "Samar prasad",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Chhau_Dance_of_Purulia,_West_bengal.jpg",
+      "status": "not-distributed"
+    },
+    {
+      "fileTitle": "Chhau Dancers of Purulia.jpg",
+      "creator": "Samar prasad",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Chhau_Dancers_of_Purulia.jpg",
+      "status": "not-distributed"
+    },
+    {
+      "fileTitle": "Radha Khrisna in Seraikella Chhau Dance.jpg",
+      "creator": "Ramesh Lalwani",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Radha_Khrisna_in_Seraikella_Chhau_Dance.jpg",
+      "status": "not-distributed"
+    },
+    {
+      "fileTitle": "Chhau dancer from Jharkhand.jpg",
+      "creator": "Anupmahato",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Chhau_dancer_from_Jharkhand.jpg",
+      "status": "not-distributed"
+    },
+    {
+      "fileTitle": "Mayurbhanj Chhau.jpg",
+      "creator": "Ramesh Lalwani",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Mayurbhanj_Chhau.jpg",
+      "status": "not-distributed"
+    },
+    {
+      "fileTitle": "Chhau - The Dance of the Masks 01.jpg",
+      "creator": "Bharath chandra badavath",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Chhau_-_The_Dance_of_the_Masks_01.jpg",
+      "status": "not-distributed"
+    },
+    {
+      "fileTitle": "The Esplanade – Theatres on the Bay.jpg",
+      "creator": "William Cho",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_Esplanade_%E2%80%93_Theatres_on_the_Bay.jpg",
+      "status": "not-distributed"
+    }
+  ]
+}

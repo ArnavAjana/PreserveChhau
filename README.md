@@ -6,24 +6,27 @@ The project begins with Arnav’s own entry through Mayurbhanj Chhau, then keeps
 Mayurbhanj, Seraikella, and Purulia connected without treating them as
 interchangeable.
 
-The complete working manuscript and technical implementation were developed
-through an AI-assisted process under Arnav’s direction. Arnav owns the project
-concept, initial research corpus, personal narrative, judgement, and creative
-direction. A final line-by-line authorial pass, practitioner consultation,
-source checking, permissions review, and cultural-model approval are required
-before public release.
+This public repository contains a working draft of the manuscript and technical
+implementation, developed through an AI-assisted process under Arnav’s
+direction. Arnav originated the project concept and supplied or assembled the
+initial research corpus; the underlying rights in those sources remain with
+their respective authors and publishers. His personal narrative, judgement,
+and creative direction shape the project. A final line-by-line authorial pass,
+practitioner consultation, source checking, permissions review, pediatric
+movement/safety review, and cultural-model approval are required before an
+editorially complete release.
 
 ## What is included
 
 - `/` — an Arnav-first introduction and direct links into every section
 - `/ebook` — a responsive 76-screen reader containing 12 chapters, source
-  links, audio, Arnav’s restored 48-node world globe, safe learning prompts,
-  deep links, searchable contents, and honest placeholders for planned 3D
-  studies
+  links, Arnav’s evidence-first four-record globe, unvalidated adult-guided
+  activity drafts, deep links, searchable contents, and honest placeholders
+  for planned 3D studies
 - `/experience` — the complete 23-model production roadmap, grouped by release
   priority and written for human review rather than as a raw file list
 - `map-of-chhau/` — the maintainable React/Vite source for Arnav’s interactive
-  globe, including its local country geometry and starfield source assets
+  globe, including its local public-domain country geometry
 - `public/map-of-chhau/` — an ignored deployment bundle regenerated from that
   source before development, verification, and production builds
 - `src/components/ChhauModelViewer.tsx` — the reusable GLB study sandbox with
@@ -80,11 +83,11 @@ npm run build:book
 The generator validates the manuscript and rebuilds all 76 runtime pages. Page
 metadata can opt into:
 
-- `audioTracks` — shared audio player
 - `embedUrl`, `embedTitle`, and `embedCaption` — local interactive embed
 - `interactive: "sandbox-guide"` — the guided 3D controls preview
-- `plannedModels` — reviewed model filenames that remain visible as preparation
-  cards until a real asset is approved and deliberately bound
+- `plannedModels` — planned model filenames that remain visible as preparation
+  cards until a real asset is practitioner-reviewed, rights-cleared, approved,
+  and deliberately bound
 
 ## Interactive globe workflow
 
@@ -97,14 +100,11 @@ source assets there; never hand-edit the ignored deployment output in
 npm run build:map
 ```
 
-Vite copies `map-of-chhau/public/data/countries.geojson` and
-`map-of-chhau/public/images/night-sky.png` beside a deployable `index.html` and
-hashed CSS/JavaScript bundle in `public/map-of-chhau/`. Next.js serves that
-generated output inside the eBook iframe or as a full-screen page. The core
-globe therefore does not depend on a remote map tile or background service.
-Optional reference thumbnails may be requested from Wikimedia/Wikipedia after
-a node is selected; the text card and globe remain usable when those images are
-unavailable.
+Vite copies `map-of-chhau/public/data/countries.geojson` beside a deployable
+`index.html` and hashed CSS/JavaScript bundle in `public/map-of-chhau/`. Next.js
+serves that generated output inside the eBook iframe or as a full-screen page.
+The globe uses a code-authored background and does not request remote map tiles,
+background images, Wikipedia, or Wikimedia Commons media.
 
 To refresh both authored outputs in their required order, run:
 
@@ -138,18 +138,40 @@ current repository. They occupied roughly 510 MB, contained no animation clips,
 and lacked the lineage, performer, maker, source, permission, and review records
 required for this project.
 
+## Rights and provenance
+
+No broad project licence has been selected. Public GitHub visibility allows
+viewing and forking under GitHub’s Terms of Service, but it does not grant a
+general right to reproduce, distribute, or create derivative works. Default
+copyright rules apply; all rights are reserved where a rights holder is
+established, and reuse is not granted where ownership remains undetermined.
+[GitHub’s official licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)
+explains this distinction.
+
+The current public build omits the two audio files, author photograph, and atlas
+starfield that lacked complete creator, source, permission, and reuse records.
+The atlas also performs no Wikimedia Commons image lookup; the eight formerly
+referenced attribution-required Commons files are recorded individually as not
+distributed. Retained Draco and Basis decoder files, plus the public-domain
+Natural Earth geometry, have exact package-version, source, modification, hash,
+and licence records in `ASSET_RIGHTS_PROVENANCE.json`. See
+`THIRD_PARTY_NOTICES.md` and the complete local Apache 2.0 text in
+`THIRD_PARTY_LICENSES/Apache-2.0.txt` before redistributing those components.
+
 ## Project structure
 
 ```text
 Chhau_eBook_Content.md             canonical manuscript
 CHHAU_3D_MODEL_ASSET_REQUEST.md   model production and approval brief
+ASSET_RIGHTS_PROVENANCE.json      per-file rights, source, version, and hashes
+THIRD_PARTY_NOTICES.md            third-party attribution and project status
+THIRD_PARTY_LICENSES/             complete third-party licence texts
 scripts/build-book-pages.mjs      manuscript validator and generator
 src/app/                          Next.js routes and global styles
 src/components/                   reader, media, map embed, and 3D UI
 src/content/book-pages.ts         generated runtime content
 map-of-chhau/                     maintainable React/Vite globe source
 map-of-chhau/public/              local globe source assets copied by Vite
-public/audio/                     web audio used by the reader
 public/map-of-chhau/              ignored, generated globe deployment output
 public/draco/                     local Draco decoder
 public/basis/                     local KTX2 transcoder

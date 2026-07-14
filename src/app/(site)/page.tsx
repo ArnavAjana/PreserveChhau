@@ -25,7 +25,7 @@ const partDescriptions: Record<string, string> = {
   "Performance, Festival, and Community":
     "Meet the wider network that makes a performance possible.",
   "Learning With Care":
-    "Look closely, explore safely, and leave formal training to practitioners.",
+    "Look closely, treat every activity as an unvalidated adult-guided draft, and leave formal training to practitioners.",
   "A Living Tradition":
     "Consider access, change, rights, credit, and what responsible preservation asks of us.",
   "Words, Timeline, and Library":
@@ -73,7 +73,7 @@ const traditions = [
   },
   {
     description:
-      "A masked, festival-scale tradition with bold silhouettes, maker-led craft, vigorous movement, and strong village-troupe networks.",
+      "A masked, festival-scale tradition with bold silhouettes, regionally specific mask-making craft, vigorous movement, and strong village-troupe networks.",
     name: "Purulia Chhau",
     region: "West Bengal",
   },
