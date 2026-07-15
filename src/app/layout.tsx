@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "PreserveChhau — Arnav Ajana’s Interactive Chhau eBook",
+    default: "PreserveChhau: Arnav Ajana’s Interactive Chhau eBook",
     template: "%s · PreserveChhau",
   },
   description:
@@ -18,9 +18,9 @@ export const metadata: Metadata = {
     "intangible cultural heritage",
   ],
   openGraph: {
-    title: "PreserveChhau — Arnav Ajana’s Interactive Chhau eBook",
+    title: "PreserveChhau: Arnav Ajana’s Interactive Chhau eBook",
     description:
-      "How one student’s performance became a habit, a set of questions, and a Mayurbhanj-centred interactive eBook about Chhau.",
+      "One student’s path from a Chhau performance to a source-linked, Mayurbhanj-centred interactive eBook.",
     type: "website",
     siteName: "PreserveChhau",
   },

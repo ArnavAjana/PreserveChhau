@@ -426,6 +426,10 @@
   display: none;
 }
 
+.sidebar-mobile-close {
+  display: none;
+}
+
 .map-error {
   position: absolute;
   top: 108px;
@@ -588,6 +592,7 @@
   text-decoration-color: rgba(231, 220, 200, 0.35);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+  overflow-wrap: anywhere;
 }
 .detail-source a:hover {
   color: var(--text);
@@ -617,6 +622,7 @@
 .detail-evidence dd {
   font-size: 11.5px;
   color: var(--text-dim);
+  overflow-wrap: anywhere;
 }
 .detail-label {
   display: block;
@@ -779,6 +785,28 @@
   }
   .sidebar.open {
     transform: none;
+  }
+  .sidebar-mobile-close {
+    position: absolute;
+    top: max(14px, env(safe-area-inset-top));
+    right: max(14px, env(safe-area-inset-right));
+    z-index: 2;
+    display: grid;
+    min-width: 64px;
+    height: 44px;
+    place-items: center;
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .sidebar .brand {
+    padding-right: 104px;
   }
   .menu-toggle {
     display: grid;

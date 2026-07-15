@@ -5,9 +5,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/ebook", label: "eBook" },
-  { href: "/experience", label: "3D Studies" },
+  { href: "/about", label: "About Arnav" },
+  { href: "/ebook", label: "Read" },
+  { href: "/ebook#map-of-chhau", label: "Atlas" },
+  { href: "/experience", label: "3D roadmap" },
 ];
 
 export function Header() {
@@ -31,28 +32,29 @@ export function Header() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-laterite-900/10 bg-ivory/95 backdrop-blur-xl">
+    <header className="site-header">
       <nav
         aria-label="Main navigation"
-        className="mx-auto flex min-h-[4.25rem] max-w-6xl items-center justify-between px-6"
+        className="site-nav"
       >
         <Link
           href="/"
-          className="font-display text-xl font-semibold tracking-tight text-ink"
+          className="site-wordmark"
         >
-          Preserve<span className="text-marigold-600">Chhau</span>
+          <span>PreserveChhau</span>
+          <small>Arnav Ajana’s field guide</small>
         </Link>
 
-        <ul className="hidden items-center gap-7 sm:flex">
+        <ul className="site-links">
           {links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
-                className={`rounded-sm py-2 text-sm font-semibold transition-colors hover:text-laterite-700 ${
+                className={`site-link ${
                   isActive(link.href)
-                    ? "text-laterite-700 underline decoration-marigold-400 decoration-2 underline-offset-8"
-                    : "text-midnight-900"
+                    ? "is-active"
+                    : ""
                 }`}
               >
                 {link.label}
@@ -63,36 +65,21 @@ export function Header() {
 
         <button
           type="button"
-          className="grid h-11 w-11 place-items-center rounded-lg text-ink hover:bg-laterite-100 sm:hidden"
+          className="site-menu-button"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((value) => !value)}
           ref={menuButtonRef}
         >
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            aria-hidden="true"
-          >
-            {open ? (
-              <path d="M6 6l12 12M18 6L6 18" />
-            ) : (
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            )}
-          </svg>
+          {open ? "Close" : "Menu"}
         </button>
       </nav>
 
       {open && (
         <ul
           id="mobile-menu"
-          className="border-t border-laterite-900/10 bg-ivory px-6 pb-4 sm:hidden"
+          className="site-mobile-menu"
         >
           {links.map((link) => (
             <li key={link.href}>
@@ -100,7 +87,7 @@ export function Header() {
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
-                className={`block rounded-sm py-3 text-sm font-semibold ${
+                className={`site-mobile-link ${
                   isActive(link.href) ? "text-laterite-700" : "text-midnight-900"
                 }`}
               >

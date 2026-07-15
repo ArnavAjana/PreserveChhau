@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import * as THREE from 'three';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import Globe from 'react-globe.gl';
 import {
   chhauGeodata,
@@ -10,7 +9,7 @@ import {
 } from './data';
 import './ChhauGlobe.css';
 
-// Vector globe — no raster earth. Both resources are bundled locally so the
+// Vector globe with no raster earth. Both resources are bundled locally so the
 // atlas remains usable when a school network blocks third-party CDNs.
 const COUNTRIES_URL = './data/countries.geojson';
 
@@ -100,6 +99,9 @@ export default function ChhauGlobe() {
   const menuToggleRef = useRef(null);
   const menuWasOpenRef = useRef(false);
   const sidebarRef = useRef(null);
+  const detailCloseRef = useRef(null);
+  const hadSelectionRef = useRef(false);
+  const selectionTriggerRef = useRef(null);
   const [stageRef, { width, height }] = useElementSize();
 
   const [selected, setSelected] = useState(null);
@@ -130,9 +132,7 @@ export default function ChhauGlobe() {
     media.addEventListener('change', stopRotation);
     return () => media.removeEventListener('change', stopRotation);
   }, []);
-  const bloomRef = useRef(null);
-
-  // Dark "hologram" planet — lit by the scene so a soft terminator gives depth.
+  // A dark planet lit by the scene so a soft terminator gives depth.
   const globeMaterial = useMemo(
     () =>
       new THREE.MeshPhongMaterial({
@@ -161,7 +161,7 @@ export default function ChhauGlobe() {
       })
       .catch(() => {
         if (!cancelled) {
-          setMapError('Country outlines could not load. Location markers are still available.');
+          setMapError('Country outlines did not load. Location markers remain available.');
         }
       });
     return () => {
@@ -188,8 +188,8 @@ export default function ChhauGlobe() {
     []
   );
 
-  // Split every country into individual polygons, flagging only the polygon
-  // that actually contains a Chhau node as a host. This keeps overseas
+  // Split every country into individual polygons. Flag only the polygon
+  // containing a Chhau node as a host. This keeps overseas
   // territories (e.g. French Guiana, which has no node) from lighting up.
   const nodePoints = useMemo(() => chhauGeodata.map((d) => [d.lng, d.lat]), []);
   const polyFeatures = useMemo(() => {
@@ -233,6 +233,9 @@ export default function ChhauGlobe() {
 
   // ---- Stable interaction handlers ----------------------------------------
   const focusNode = useCallback((d) => {
+    if (document.activeElement instanceof HTMLElement) {
+      selectionTriggerRef.current = document.activeElement;
+    }
     setSelected(d);
     setAutoRotate(false);
     setMenuOpen(false);
@@ -285,7 +288,7 @@ export default function ChhauGlobe() {
       el.type = 'button';
       el.className = 'chhau-marker';
       el.style.setProperty('--mc', color);
-      el.setAttribute('aria-label', `Open ${d.city}, ${d.country} — ${d.style}`);
+      el.setAttribute('aria-label', `Open ${d.city}, ${d.country}. ${d.style}`);
       el.title = `${d.city}, ${d.country}`;
       el.innerHTML =
         '<span class="marker-pulse"></span><span class="marker-pulse d2"></span><span class="marker-core"></span>';
@@ -368,27 +371,6 @@ export default function ChhauGlobe() {
     c.autoRotateSpeed = 0.45;
   }, [autoRotate, globeReady]);
 
-  // Cinematic bloom on capable, wider screens. Small and reduced-motion
-  // displays keep the same information with a substantially lighter render.
-  useEffect(() => {
-    const g = globeRef.current;
-    if (!g || !globeReady || reduceMotion || width < 700) return undefined;
-    const composer = g.postProcessingComposer();
-    const bloom = new UnrealBloomPass(
-      new THREE.Vector2(width, height),
-      0.38,
-      0.4,
-      0
-    );
-    bloomRef.current = bloom;
-    composer.addPass(bloom);
-    return () => {
-      composer.removePass?.(bloom);
-      bloom.dispose?.();
-      bloomRef.current = null;
-    };
-  }, [globeReady, reduceMotion, width, height]);
-
   useEffect(() => {
     function handleEscape(event) {
       if (event.key !== 'Escape') return;
@@ -396,9 +378,33 @@ export default function ChhauGlobe() {
       setSelected(null);
       setTooltip(null);
     }
+    function handleTab(event) {
+      if (event.key !== 'Tab' || !mobileLayout || !menuOpen || !sidebarRef.current) return;
+      const focusable = Array.from(
+        sidebarRef.current.querySelectorAll(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter(
+        (element) => element.getClientRects().length > 0 && !element.closest('[inert]')
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
     document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, []);
+    document.addEventListener('keydown', handleTab);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('keydown', handleTab);
+    };
+  }, [menuOpen, mobileLayout]);
 
   useEffect(() => {
     if (!mobileLayout) {
@@ -419,6 +425,27 @@ export default function ChhauGlobe() {
     return () => window.cancelAnimationFrame(frame);
   }, [menuOpen, mobileLayout]);
 
+  useEffect(() => {
+    const hadSelection = hadSelectionRef.current;
+    hadSelectionRef.current = Boolean(selected);
+
+    const frame = window.requestAnimationFrame(() => {
+      if (selected) {
+        detailCloseRef.current?.focus();
+        return;
+      }
+      if (!hadSelection) return;
+      const previous = selectionTriggerRef.current;
+      if (!mobileLayout && previous?.isConnected && !previous.closest('[inert]')) {
+        previous.focus();
+      } else {
+        menuToggleRef.current?.focus();
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [selected, mobileLayout]);
+
   return (
     <div className="chhau-app">
       {/* --------------------------- LOADING --------------------------- */}
@@ -436,7 +463,7 @@ export default function ChhauGlobe() {
           <div className="loader-rule">
             <span />
           </div>
-          <span className="loader-sub">Three heartlands · one documented UNESCO decision</span>
+          <span className="loader-sub">Three heartlands. One documented UNESCO decision.</span>
         </div>
       </div>
 
@@ -444,11 +471,21 @@ export default function ChhauGlobe() {
       <aside
         aria-hidden={mobileLayout && !menuOpen}
         aria-label="Chhau atlas locations"
+        aria-modal={mobileLayout && menuOpen ? true : undefined}
         className={`sidebar${menuOpen ? ' open' : ''}`}
         id="atlas-locations"
         inert={mobileLayout && !menuOpen}
         ref={sidebarRef}
+        role={mobileLayout && menuOpen ? 'dialog' : undefined}
       >
+        <button
+          aria-label="Close locations panel"
+          className="sidebar-mobile-close"
+          onClick={() => setMenuOpen(false)}
+          type="button"
+        >
+          Close
+        </button>
         <div className="brand">
           <span className="brand-kicker">An Interactive Atlas</span>
           <h1 className="brand-title">
@@ -458,7 +495,7 @@ export default function ChhauGlobe() {
 
         {isolating && (
           <button className="show-all" onClick={() => setActiveCat(null)} type="button">
-            Showing {CATEGORIES.find((c) => c.key === activeCat)?.label} — view all
+            Showing {CATEGORIES.find((c) => c.key === activeCat)?.label}. View all.
           </button>
         )}
 
@@ -525,8 +562,8 @@ export default function ChhauGlobe() {
           ))}
         </div>
         <p className="atlas-note">
-          Every published marker is tied to an official source. Unsourced stage
-          and diaspora research leads are withheld until they can be verified.
+          Every marker links to an official source. Unsourced stage and diaspora
+          leads stay off this map until source review is complete.
         </p>
       </aside>
 
@@ -535,12 +572,17 @@ export default function ChhauGlobe() {
           aria-label="Close locations panel"
           className="sidebar-backdrop"
           onClick={() => setMenuOpen(false)}
+          tabIndex={-1}
           type="button"
         />
       ) : null}
 
       {/* ------------------------------ STAGE ------------------------------ */}
-      <div className="globe-stage" ref={stageRef}>
+      <div
+        className="globe-stage"
+        inert={mobileLayout && menuOpen}
+        ref={stageRef}
+      >
         <div className="stage-vignette" />
 
         <button
@@ -561,7 +603,7 @@ export default function ChhauGlobe() {
             Map of <em>Chhau</em>
           </h2>
           <p>
-            {chhauGeodata.length} verified records · {countryCount} countries · three styles
+            {chhauGeodata.length} verified records. {countryCount} countries. Three styles.
           </p>
         </header>
 
@@ -660,6 +702,7 @@ export default function ChhauGlobe() {
               className="detail-close"
               onClick={() => setSelected(null)}
               aria-label={`Close details for ${selected.city}`}
+              ref={detailCloseRef}
               type="button"
             >
               Close
@@ -672,11 +715,11 @@ export default function ChhauGlobe() {
             </div>
             <div className="detail-body">
               <p className="detail-status">
-                Verified source record · {selected.evidenceType}
+                Verified source record. {selected.evidenceType}
               </p>
               <h3 className="detail-city">{selected.city}</h3>
               <span className="detail-country">
-                {selected.region ? `${selected.region} · ` : ''}
+                {selected.region ? `${selected.region}. ` : ''}
                 {selected.country}
               </span>
               <p className="detail-role">{selected.role}</p>

@@ -39,7 +39,6 @@ export type ChhauModelViewerProps = {
   modelLabel?: string;
   modelScale?: number | string | null;
   modelUrl?: string | null;
-  showFallbackScene?: boolean;
 };
 
 type PlaybackSnapshot = {
@@ -372,43 +371,6 @@ function RotatingGroup({
   return <group ref={ref}>{children}</group>;
 }
 
-function ControlsPreview({
-  autoRotate,
-  resetNonce,
-}: {
-  autoRotate: boolean;
-  resetNonce: number;
-}) {
-  const ref = useRef<Group>(null);
-  useEffect(() => {
-    ref.current?.rotation.set(0, 0, 0);
-  }, [resetNonce]);
-  useFrame((_, delta) => {
-    if (autoRotate && ref.current) ref.current.rotation.y += delta * 0.28;
-  });
-
-  return (
-    <group ref={ref}>
-      <mesh castShadow position={[0, 0.2, 0]}>
-        <cylinderGeometry args={[0.38, 0.58, 2.15, 32]} />
-        <meshStandardMaterial color="#a75336" roughness={0.76} />
-      </mesh>
-      <mesh castShadow position={[0, 1.52, 0]}>
-        <sphereGeometry args={[0.42, 32, 32]} />
-        <meshStandardMaterial color="#d6a64b" roughness={0.68} />
-      </mesh>
-      <mesh position={[0, 0.4, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[1.08, 0.025, 12, 96]} />
-        <meshStandardMaterial color="#eadfc8" emissive="#5a2818" />
-      </mesh>
-      <mesh position={[0, 1.45, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.72, 0.02, 12, 96]} />
-        <meshStandardMaterial color="#eadfc8" emissive="#5a2818" />
-      </mesh>
-    </group>
-  );
-}
-
 function LightingRig({ preset }: { preset: LightingPreset }) {
   if (preset === "soft") {
     return (
@@ -546,7 +508,7 @@ function IconButton({
       aria-expanded={ariaExpanded}
       aria-label={ariaLabel}
       aria-pressed={pressed}
-      className={`grid h-9 min-w-9 shrink-0 place-items-center rounded-xl border px-2 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0b34a] sm:h-11 sm:min-w-11 sm:px-3 sm:text-sm ${
+      className={`grid h-11 min-w-11 shrink-0 place-items-center rounded-xl border px-2 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0b34a] sm:px-3 sm:text-sm ${
         active
           ? "border-[#d68a45] bg-[#9f402b] text-white"
           : "border-white/15 bg-[#111513]/80 text-[#efe7d0] hover:bg-[#29302d]"
@@ -653,12 +615,12 @@ function ViewerToolbar({
             buttonRef={settingsButtonRef}
             onClick={() => setSettingsOpen((value) => !value)}
           >
-            View
+            Options
           </IconButton>
           {settingsOpen ? (
             <div
               aria-label="3D viewer options"
-              className="absolute right-0 top-[2.75rem] max-h-[min(70vh,24rem)] w-[min(21rem,calc(100vw-1rem))] overflow-y-auto rounded-2xl border border-white/15 bg-[#111513]/95 p-3 text-[#efe7d0] shadow-2xl backdrop-blur-xl sm:top-[3.25rem] sm:w-[min(21rem,calc(100vw-2rem))] sm:p-4"
+              className="absolute right-0 top-[3.25rem] max-h-[min(70dvh,24rem)] w-[min(21rem,calc(100vw-3rem))] overflow-y-auto rounded-2xl border border-white/15 bg-[#111513]/95 p-3 text-[#efe7d0] shadow-2xl backdrop-blur-xl sm:w-[min(21rem,calc(100vw-4rem))] sm:p-4"
               id={settingsId}
               ref={settingsPanelRef}
               role="dialog"
@@ -712,7 +674,7 @@ function ViewerToolbar({
           onClick={onToggleFullscreen}
           pressed={isFullscreen}
         >
-          {isFullscreen ? "Close" : "Full"}
+          {isFullscreen ? "Exit" : "Full screen"}
         </IconButton>
       </div>
     </div>
@@ -739,7 +701,7 @@ function OptionGroup({
         {options.map(([optionValue, optionLabel]) => (
           <button
             aria-pressed={optionValue === value}
-            className={`min-h-10 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
+            className={`min-h-11 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
               optionValue === value
                 ? "border-[#d68a45] bg-[#9f402b] text-white"
                 : "border-white/10 bg-white/5 text-[#efe7d0] hover:bg-white/10"
@@ -795,7 +757,7 @@ function AnimationControls({
         <button
           aria-label={isPlaying ? "Pause animation" : "Play animation"}
           aria-pressed={isPlaying}
-          className="h-9 shrink-0 rounded-xl bg-[#9f402b] px-3 text-xs font-bold text-white transition hover:bg-[#b24a32] sm:h-11 sm:px-4 sm:text-sm"
+          className="h-11 shrink-0 rounded-xl bg-[#9f402b] px-3 text-xs font-bold text-white transition hover:bg-[#b24a32] sm:px-4 sm:text-sm"
           onClick={() => onPlayChange(!isPlaying)}
           type="button"
         >
@@ -804,7 +766,7 @@ function AnimationControls({
         <label className="min-w-0 flex-1 sm:max-w-64">
           <span className="sr-only">Animation clip</span>
           <select
-            className="h-9 w-full min-w-0 rounded-xl border border-white/15 bg-white/8 px-2 text-xs text-[#efe7d0] sm:h-11 sm:px-3 sm:text-sm"
+            className="h-11 w-full min-w-0 rounded-xl border border-white/15 bg-white/8 px-2 text-xs text-[#efe7d0] sm:px-3 sm:text-sm"
             onChange={(event) => onClipChange(event.target.value)}
             value={activeClip}
           >
@@ -815,7 +777,7 @@ function AnimationControls({
             ))}
           </select>
         </label>
-        <label className="flex h-9 shrink-0 items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-2 text-xs font-semibold sm:h-11 sm:gap-2 sm:px-3">
+        <label className="flex h-11 shrink-0 items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-2 text-xs font-semibold sm:gap-2 sm:px-3">
           <span className="hidden sm:inline">Speed</span>
           <select
             aria-label="Animation speed"
@@ -830,7 +792,7 @@ function AnimationControls({
         </label>
         <button
           aria-pressed={loop}
-          className={`h-9 shrink-0 rounded-xl border px-2 text-xs font-bold sm:h-11 sm:px-3 ${
+          className={`h-11 shrink-0 rounded-xl border px-2 text-xs font-bold sm:px-3 ${
             loop
               ? "border-[#d68a45] bg-[#9f402b] text-white"
               : "border-white/15 bg-white/5"
@@ -847,7 +809,7 @@ function AnimationControls({
         </span>
         <input
           aria-label="Animation timeline"
-          className="h-2 min-w-0 flex-1 cursor-pointer accent-[#d68a45]"
+          className="h-11 min-w-0 flex-1 cursor-pointer accent-[#d68a45]"
           max={playback.duration || 0}
           min={0}
           onChange={(event) => onSeek(Number(event.target.value))}
@@ -868,7 +830,6 @@ export function ChhauModelViewer({
   modelLabel = "3D study",
   modelScale = 1,
   modelUrl,
-  showFallbackScene = false,
 }: ChhauModelViewerProps) {
   const normalizedModelUrl = normalizeModelUrl(modelUrl);
   const normalizedModelScale = normalizeModelScale(modelScale);
@@ -947,7 +908,7 @@ export function ChhauModelViewer({
         setStatusMessage("Fullscreen is not available in this browser.");
       }
     } catch {
-      setStatusMessage("Fullscreen could not be opened.");
+      setStatusMessage("Fullscreen failed to open.");
     }
   }, []);
 
@@ -1042,7 +1003,7 @@ export function ChhauModelViewer({
     />
   ) : null;
 
-  if (!normalizedModelUrl && !showFallbackScene) {
+  if (!normalizedModelUrl) {
     return (
       <div
         aria-label={`${modelLabel} 3D viewer`}
@@ -1052,7 +1013,7 @@ export function ChhauModelViewer({
         <div>
           <p className="text-sm font-bold text-[#efe7d0]">3D study not yet available</p>
           <p className="mt-2 max-w-sm text-xs leading-5 text-[#efe7d0]/55">
-            This space stays empty until the model has practitioner, credit, and rights review.
+            This space stays empty until practitioner, credit, and rights review are complete.
           </p>
         </div>
       </div>
@@ -1068,81 +1029,50 @@ export function ChhauModelViewer({
       style={{ background: backgroundCss(background) }}
     >
       <p className="sr-only" aria-live="polite">{statusMessage}</p>
-      {normalizedModelUrl ? (
-        <ModelErrorBoundary
-          fallback={
-            <ViewerStatus>
-              The model could not be loaded. Check the file path and compression decoders.
-            </ViewerStatus>
-          }
-          resetKey={normalizedModelUrl}
-        >
-          <Suspense fallback={<ViewerStatus>Preparing 3D study…</ViewerStatus>}>
-            <Canvas
-              camera={{ fov: 38, position: [0, 0.7, 4] }}
-              dpr={useCompactRendering ? 1 : [1, 1.5]}
-              frameloop={isAnimating ? "always" : "demand"}
-              gl={{ alpha: true, antialias: !useCompactRendering }}
-              shadows
-              style={{
-                background: "transparent",
-                touchAction: isFullscreen ? "none" : "pan-y",
-              }}
-            >
-              <Bounds clip fit margin={1.25} observe>
-                <Center>
-                  <RotatingGroup autoRotate={autoRotate} resetNonce={resetNonce}>
-                    <LoadedModel
-                      activeClip={activeClip}
-                      appearance={appearance}
-                      isPlaying={isPlaying}
-                      loop={loop}
-                      onClipsChange={handleClipsChange}
-                      onPlaybackChange={handlePlaybackChange}
-                      scale={normalizedModelScale}
-                      seekCommand={seekCommand}
-                      speed={speed}
-                      url={normalizedModelUrl}
-                    />
-                  </RotatingGroup>
-                </Center>
-              </Bounds>
-              {commonScene}
-            </Canvas>
-          </Suspense>
-        </ModelErrorBoundary>
-      ) : (
-        <Canvas
-          camera={{ fov: 38, position: [0, 0.5, 4.6] }}
-          dpr={useCompactRendering ? 1 : [1, 1.5]}
-          frameloop={autoRotate ? "always" : "demand"}
-          gl={{ alpha: true, antialias: !useCompactRendering }}
-          shadows
-          style={{
-            background: "transparent",
-            touchAction: isFullscreen ? "none" : "pan-y",
-          }}
-        >
-          <Bounds clip fit margin={1.35} observe>
-            <Center>
-              <ControlsPreview autoRotate={autoRotate} resetNonce={resetNonce} />
-            </Center>
-          </Bounds>
-          {commonScene}
-        </Canvas>
-      )}
+      <ModelErrorBoundary
+        fallback={
+          <ViewerStatus>
+            The model did not load. Check its file path and compression decoders.
+          </ViewerStatus>
+        }
+        resetKey={normalizedModelUrl}
+      >
+        <Suspense fallback={<ViewerStatus>Preparing 3D study...</ViewerStatus>}>
+          <Canvas
+            camera={{ fov: 38, position: [0, 0.7, 4] }}
+            dpr={useCompactRendering ? 1 : [1, 1.5]}
+            frameloop={isAnimating ? "always" : "demand"}
+            gl={{ alpha: true, antialias: !useCompactRendering }}
+            shadows
+            style={{
+              background: "transparent",
+              touchAction: isFullscreen ? "none" : "pan-y",
+            }}
+          >
+            <Bounds clip fit margin={1.25} observe>
+              <Center>
+                <RotatingGroup autoRotate={autoRotate} resetNonce={resetNonce}>
+                  <LoadedModel
+                    activeClip={activeClip}
+                    appearance={appearance}
+                    isPlaying={isPlaying}
+                    loop={loop}
+                    onClipsChange={handleClipsChange}
+                    onPlaybackChange={handlePlaybackChange}
+                    scale={normalizedModelScale}
+                    seekCommand={seekCommand}
+                    speed={speed}
+                    url={normalizedModelUrl}
+                  />
+                </RotatingGroup>
+              </Center>
+            </Bounds>
+            {commonScene}
+          </Canvas>
+        </Suspense>
+      </ModelErrorBoundary>
       {toolbar}
       {animationControls}
-      {!normalizedModelUrl ? (
-        <div className="pointer-events-none absolute inset-x-3 bottom-3 z-20 rounded-2xl border border-white/12 bg-[#111513]/86 p-3 text-[#efe7d0] backdrop-blur">
-          <p className="text-xs font-bold uppercase tracking-[0.14em] text-[#e4a84a]">
-            Viewer controls preview
-          </p>
-          <p className="mt-1 text-xs leading-5 text-[#efe7d0]/65">
-            This abstract object demonstrates the controls. It is not a Chhau dancer, pose, mask, or costume.
-          </p>
-        </div>
-      ) : null}
     </div>
   );
 }

@@ -2,15 +2,15 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-laterite-900/10 bg-ink text-ivory/70">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 sm:grid-cols-3">
+    <footer className="site-footer">
+      <div className="site-footer-grid">
         <div>
           <p className="font-display text-lg font-semibold text-ivory">
             Preserve<span className="text-marigold-400">Chhau</span>
           </p>
           <p className="mt-3 max-w-xs text-sm leading-relaxed">
-            A student’s attempt to make the first encounter with Chhau clearer
-            and more connected while working toward complete credit.
+            I built this student project to give first-time readers a clear,
+            source-linked way into Chhau.
           </p>
         </div>
 
@@ -20,8 +20,18 @@ export function Footer() {
           </p>
           <ul className="mt-3 space-y-2 text-sm">
             <li>
-              <Link href="/ebook#about-me" className="rounded-sm hover:text-marigold-300">
+              <Link href="/about" className="rounded-sm hover:text-marigold-300">
+                About Arnav
+              </Link>
+            </li>
+            <li>
+              <Link href="/ebook#chhau" className="rounded-sm hover:text-marigold-300">
                 Read the eBook
+              </Link>
+            </li>
+            <li>
+              <Link href="/ebook#map-of-chhau" className="rounded-sm hover:text-marigold-300">
+                Map of Chhau
               </Link>
             </li>
             <li>
@@ -38,17 +48,21 @@ export function Footer() {
           </p>
           <p className="mt-3 text-sm leading-relaxed">
             Chhau was inscribed on UNESCO’s Representative List of the
-            Intangible Cultural Heritage of Humanity in 2010. This project
-            keeps its three regional traditions distinct.
+            Intangible Cultural Heritage of Humanity in 2010. I keep its three
+            regional traditions distinct throughout this project.
+          </p>
+          <p className="mt-3 text-xs leading-relaxed text-ivory/55">
+            Independent student project. This draft does not use the UNESCO
+            emblem. UNESCO inscription does not endorse this project.
           </p>
         </div>
       </div>
-      <div className="border-t border-ivory/10 px-6 py-5 text-center text-xs text-ivory/45">
-        Project concept, research assembly, personal narrative, and creative
-        direction by Arnav Ajana. Rights in the assembled sources remain with
-        their authors and publishers. Drafting and technical implementation were
-        AI-assisted under his direction. Practitioners and communities remain
-        the authorities on their own traditions.
+      <div className="site-footer-notice">
+        Arnav Ajana led the project concept, research assembly, personal
+        narrative, and creative direction. AI supported drafting and technical
+        implementation under his direction. Source rights stay with their
+        authors and publishers. Practitioners and communities remain the
+        authorities on their traditions.
       </div>
     </footer>
   );

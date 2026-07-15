@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { MotionReveal } from "@/components/MotionReveal";
 
 export const metadata: Metadata = {
   title: "3D Study Roadmap",
@@ -24,166 +25,166 @@ type ReleaseGroup = {
 const releaseGroups: ReleaseGroup[] = [
   {
     id: "essential-comparison-set",
-    eyebrow: "First release · 9 studies",
-    title: "The essential comparison set",
+    eyebrow: "Release one: 9 studies",
+    title: "Start with clear comparisons",
     description:
-      "These establish the three traditions, Mayurbhanj’s core movement, masked expression, instruments, and one paired story study.",
+      "These studies introduce the three traditions, Mayurbhanj movement, masked expression, instruments, and one paired story.",
     studies: [
       {
         name: "Three-style line-up",
         file: "chhau-three-styles-lineup.glb",
         purpose:
-          "A proposed neutral comparison of Mayurbhanj, Seraikella, and Purulia figures; regional labels and forms remain pending practitioner review.",
+          "Compare neutral figures from Mayurbhanj, Seraikella, and Purulia. Practitioners still need to review every regional label and form.",
       },
       {
         name: "Mayurbhanj foundations",
         file: "mayurbhanj-core.glb",
         purpose:
-          "One proposed rig for chauk, dharan, and chali studies, pending a named Mayurbhanj practitioner’s review.",
+          "Study chauk, dharan, and chali on one proposed rig. A named Mayurbhanj practitioner still needs to review it.",
       },
       {
         name: "Mayurbhanj topkas",
         file: "mayurbhanj-topkas.glb",
         purpose:
-          "A candidate set of named topkas on the same rig; selection, spelling, and motion are not yet practitioner-confirmed.",
+          "Place named topkas on the same rig. Practitioners have not confirmed the selection, spelling, or motion.",
       },
       {
         name: "Seraikella mask and body",
         file: "seraikella-expression.glb",
         purpose:
-          "A planned study of one fixed mask read through the body, pending Seraikella practitioner and mask-maker reference approval.",
+          "Read one fixed mask through changes in the body. A Seraikella practitioner and mask maker still need to approve the references.",
       },
       {
         name: "Purulia masked figure",
         file: "purulia-masked-core.glb",
         purpose:
-          "A proposed character study whose headgear, costume, cloth motion, maker credit, and permissions remain to be confirmed.",
+          "Study one proposed character. Headgear, costume, cloth motion, maker credit, and permissions remain unconfirmed.",
       },
       {
         name: "Durga",
         file: "purulia-durga.glb",
         purpose:
-          "A planned troupe-specific Durga address and phrase, pending selection and review with that troupe.",
+          "Present a troupe-specific Durga address and phrase. The troupe still needs to select and review the reference.",
       },
       {
         name: "Mahishasura",
         file: "purulia-mahishasura.glb",
         purpose:
-          "A proposed paired entrance, confrontation, and fall, pending troupe, movement, and safety review.",
+          "Pair an entrance, confrontation, and controlled fall. Troupe, movement, and safety review remain pending.",
       },
       {
         name: "Mask comparison",
         file: "mask-comparison.glb",
         purpose:
-          "A planned view of Seraikella and Purulia masks beside an unmasked Mayurbhanj figure; maker permissions and regional review are pending.",
+          "Place Seraikella and Purulia masks beside an unmasked Mayurbhanj figure. Maker permissions and regional review remain pending.",
       },
       {
         name: "Instrument collection",
         file: "instrument-pack.glb",
         purpose:
-          "Proposed region-labelled drums, smaller percussion, and reed instruments, pending musician review of every label and form.",
+          "Show region-labelled drums, smaller percussion, and reed instruments. Musicians still need to review every label and form.",
       },
     ],
   },
   {
     id: "movement-making-performance-space",
-    eyebrow: "Second release · 10 studies",
-    title: "Movement, making, and performance space",
+    eyebrow: "Release two: 10 studies",
+    title: "Add movement, making, and space",
     description:
-      "These add regional vocabulary, repertoire, costume construction, props, and the wider performance environment.",
+      "These studies add regional terms, repertoire, costume construction, props, and performance spaces.",
     studies: [
       {
         name: "Mayurbhanj uflis",
         file: "mayurbhanj-uflis.glb",
         purpose:
-          "Candidate Mayurbhanj examples drawn from source-specific lists; practitioner selection and review are still pending.",
+          "Choose Mayurbhanj examples from source-specific lists. Practitioner selection and review remain pending.",
       },
       {
         name: "Mayurbhanj chamka",
         file: "mayurbhanj-chamka.glb",
         purpose:
-          "A proposed chest-and-shoulder accent study with a beat marker, pending practitioner and musician review.",
+          "Match chest and shoulder accents to a beat marker. Practitioner and musician review remain pending.",
       },
       {
         name: "Mayurbhanj repertoire",
         file: "mayurbhanj-repertoire.glb",
         purpose:
-          "One candidate excerpt to be chosen with a practitioner; piece-specific movement, costume, props, and permissions remain pending.",
+          "Choose one excerpt with a practitioner. Piece-specific movement, costume, props, and permissions remain pending.",
       },
       {
         name: "Seraikella Ratri",
         file: "seraikella-ratri.glb",
         purpose:
-          "A candidate passage from Ratri whose version, movement, mask, costume, and permissions still require verification.",
+          "Study one passage from Ratri. Its version, movement, mask, costume, and permissions still need verification.",
       },
       {
         name: "Purulia technique",
         file: "purulia-technique.glb",
         purpose:
-          "Proposed chal, pirkiti, chhok, and ulfa studies; terminology, motion, and landing remain pending Purulia practitioner review.",
+          "Study chal, pirkiti, chhok, and ulfa. A Purulia practitioner still needs to review the terms, motion, and landing.",
       },
       {
         name: "Purulia Ganesha",
         file: "purulia-ganesha.glb",
         purpose:
-          "A planned invocation study whose exact mask, costume, entry, maker credit, and permissions remain to be approved.",
+          "Study an invocation entry. The exact mask, costume, entry, maker credit, and permissions still need approval.",
       },
       {
         name: "Purulia mask layers",
         file: "purulia-mask-layers.glb",
         purpose:
-          "A proposed exploded view of one named Charida maker’s process, to be developed only with that maker’s participation and permission.",
+          "Show the stages in one named Charida maker’s process. Work starts only with the maker’s participation and permission.",
       },
       {
         name: "Costume comparison",
         file: "costume-comparison.glb",
         purpose:
-          "Three proposed turntable figures; every piece- or troupe-specific dress detail remains pending review and permission.",
+          "Turn three figures for comparison. Every piece-specific or troupe-specific dress detail still needs review and permission.",
       },
       {
         name: "Performance props",
         file: "prop-pack.glb",
         purpose:
-          "Proposed source-based props—not generic fantasy objects—pending piece-specific practitioner and maker review.",
+          "Use source-based props instead of generic fantasy objects. Piece-specific practitioner and maker review remain pending.",
       },
       {
         name: "Arena and akhara",
         file: "asar-akhada-diorama.glb",
         purpose:
-          "Proposed source-based performance layouts with musicians, entry paths, and spectators, pending local review.",
+          "Map source-based performance layouts with musicians, entry paths, and spectators. Local review remains pending.",
       },
     ],
   },
   {
     id: "reference-work-in-progress",
-    eyebrow: "Later depth · 4 studies",
-    title: "Studies that need more reference work",
+    eyebrow: "Later release: 4 studies",
+    title: "Wait for stronger references",
     description:
-      "These wait because aerial movement, paired costumes, and lineage-specific repertoire need stronger motion, safety, or iconographic review.",
+      "Aerial movement, paired costumes, and lineage-specific repertoire need stronger motion, safety, or visual review first.",
     studies: [
       {
         name: "Mayurbhanj jumps",
         file: "mayurbhanj-jumps.glb",
         purpose:
-          "A future dumka and dian study only after a guru selects the examples and a qualified specialist reviews their representation.",
+          "Study dumka and dian only after a guru selects the examples and a qualified specialist reviews their representation.",
       },
       {
         name: "Second Seraikella exemplar",
         file: "seraikella-second-exemplar.glb",
         purpose:
-          "Ardhanarishvara or Mayura, to be chosen with a consultant and built only after piece-specific references are approved.",
+          "Choose Ardhanarishvara or Mayura with a consultant. Build the study only after approval of piece-specific references.",
       },
       {
         name: "Purulia lion vahana",
         file: "purulia-lion-vahana.glb",
         purpose:
-          "A proposed two-person lion-costume study, pending troupe-specific costume, movement, and permission records.",
+          "Study a two-person lion costume. Troupe-specific costume, movement, and permission records remain pending.",
       },
       {
         name: "Group formations",
         file: "group-formation-pack.glb",
         purpose:
-          "Proposed schematic transitions whose relationship to any named repertoire remains pending practitioner review.",
+          "Show schematic transitions. Their link to named repertoire remains pending practitioner review.",
       },
     ],
   },
@@ -191,112 +192,85 @@ const releaseGroups: ReleaseGroup[] = [
 
 export default function ExperiencePage() {
   return (
-    <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
-      <div className="max-w-3xl">
-        <p className="text-sm font-semibold tracking-[0.22em] text-marigold-700 uppercase">
-          3D study roadmap
-        </p>
-        <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-laterite-900 sm:text-6xl">
-          Twenty-three planned models—none yet approved
-        </h1>
-        <p className="mt-6 text-lg leading-8 text-midnight-800">
-          The sandbox itself is built, but these entries are specifications—not
-          finished or approved models. Each study must name its
-          regional style, reference performer, practitioner reviewer, maker where
-          relevant, and permission status before it appears beside the book.
-        </p>
-      </div>
+    <>
+      <section className="experience-hero" aria-labelledby="experience-title">
+        <MotionReveal className="experience-hero-inner">
+          <p className="editorial-kicker text-marigold-300">3D study roadmap</p>
+          <h1 id="experience-title">Twenty-three studies. Zero shortcuts.</h1>
+          <p className="experience-hero-deck">
+            The viewer is ready. The cultural models are not. Each study waits
+            for a named source, clear rights, full credit, regional accuracy,
+            and review by the right practitioner, musician, or maker.
+          </p>
+          <div className="experience-stats" aria-label="Roadmap totals">
+            <p><strong>09</strong><span>first comparisons</span></p>
+            <p><strong>10</strong><span>movement, making, and space</span></p>
+            <p><strong>04</strong><span>held for stronger references</span></p>
+          </div>
+        </MotionReveal>
+      </section>
 
-      <div className="mt-10 grid gap-4 border-y border-laterite-900/15 py-6 sm:grid-cols-3">
-        <p className="text-sm leading-6 text-midnight-800">
-          <strong className="block text-2xl text-laterite-900">9</strong>
-          essential studies for the first coherent release
-        </p>
-        <p className="text-sm leading-6 text-midnight-800">
-          <strong className="block text-2xl text-laterite-900">10</strong>
-          second-release studies for greater depth
-        </p>
-        <p className="text-sm leading-6 text-midnight-800">
-          <strong className="block text-2xl text-laterite-900">4</strong>
-          advanced studies held until qualified review is arranged
-        </p>
-      </div>
-
-      <div className="mt-16 space-y-20">
+      <div className="experience-groups">
         {releaseGroups.map((group) => (
-          <section aria-labelledby={`${group.id}-heading`} key={group.id}>
-            <div className="grid gap-5 lg:grid-cols-[0.8fr_1.6fr] lg:gap-12">
-              <div>
-                <p className="text-xs font-bold tracking-[0.18em] text-marigold-700 uppercase">
+          <MotionReveal key={group.id}>
+            <section className="experience-group" aria-labelledby={`${group.id}-heading`}>
+              <div className="experience-group-intro">
+                <p className="editorial-kicker text-laterite-700">
                   {group.eyebrow}
                 </p>
                 <h2
-                  className="mt-3 font-display text-3xl font-bold text-laterite-900"
                   id={`${group.id}-heading`}
                 >
                   {group.title}
                 </h2>
-                <p className="mt-4 text-sm leading-6 text-midnight-800">
-                  {group.description}
-                </p>
+                <p>{group.description}</p>
               </div>
 
-              <ol className="grid gap-px overflow-hidden rounded-2xl border border-laterite-900/15 bg-laterite-900/15 sm:grid-cols-2">
+              <ol className="experience-study-list">
                 {group.studies.map((study, index) => (
-                  <li className="bg-[#fffaf0] p-5 sm:p-6" key={study.file}>
-                    <div className="flex items-start gap-3">
-                      <span
-                        aria-hidden="true"
-                        className="grid size-8 shrink-0 place-items-center rounded-full bg-marigold-100 text-xs font-bold text-laterite-800"
-                      >
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <h3 className="font-display text-lg font-bold text-laterite-900">
-                          {study.name}
-                        </h3>
-                        <p className="mt-2 text-sm leading-6 text-midnight-800">
-                          {study.purpose}
-                        </p>
-                        <code className="mt-3 block break-all text-[11px] text-midnight-700">
-                          {study.file}
-                        </code>
-                      </div>
+                  <li className="experience-study" key={study.file}>
+                    <span className="experience-study-number">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <div>
+                      <h3>{study.name}</h3>
+                      <p>{study.purpose}</p>
                     </div>
+                    <code>{study.file}</code>
                   </li>
                 ))}
               </ol>
-            </div>
-          </section>
+            </section>
+          </MotionReveal>
         ))}
       </div>
 
-      <aside className="mt-20 rounded-3xl border border-marigold-700/25 bg-marigold-50 p-6 sm:p-9">
-        <p className="text-xs font-bold tracking-[0.18em] text-marigold-800 uppercase">
-          What to send with every model
-        </p>
-        <p className="mt-3 max-w-3xl text-base leading-7 text-midnight-800">
-          Include a sidecar record naming the lineage, movement or character,
-          modeller, reference performer, proposed practitioner reviewer, maker
-          or troupe, source material, permission, licence, required credit line,
-          and current approval status. The repository’s asset brief contains the
-          full technical and approval checklist.
-        </p>
-        <div className="mt-6 flex flex-wrap gap-3">
+      <aside className="experience-gate" aria-labelledby="experience-gate-title">
+        <MotionReveal>
+          <p className="editorial-kicker text-marigold-300">The release gate</p>
+          <h2 id="experience-gate-title">What must travel with every model.</h2>
+          <p>
+            Send the lineage, named movement or character, modeller, reference
+            performer, practitioner reviewer, maker or troupe, source material,
+            permission, licence, credit line, and approval record. The file is
+            only one part of the study.
+          </p>
+          <div className="experience-gate-actions">
           <Link
-            className="rounded-full bg-laterite-800 px-5 py-3 text-sm font-bold text-white transition hover:bg-laterite-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marigold-500"
+            className="editorial-button editorial-button-gold"
             href="/ebook#how-to-use-this-book"
           >
             Try the sandbox controls
           </Link>
           <Link
-            className="rounded-full border border-laterite-800/25 bg-white/70 px-5 py-3 text-sm font-bold text-laterite-900 transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-marigold-500"
+            className="editorial-text-link text-ivory"
             href="/ebook#credits-review-status"
           >
             Read credits and review status
           </Link>
-        </div>
+          </div>
+        </MotionReveal>
       </aside>
-    </div>
+    </>
   );
 }

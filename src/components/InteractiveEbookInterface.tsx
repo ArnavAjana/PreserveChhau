@@ -10,6 +10,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
   type RefObject,
 } from "react";
@@ -48,11 +49,15 @@ type ModelOption = {
   modelScale?: number;
 };
 
+type ReaderViewMode = "spread" | "single";
+
 const CitationContext = createContext<CitationContextValue | null>(null);
 
 const LIBRARY_PAGE_ID = "library";
-const STUDY_ANCHOR_PATTERN = /^>\s+\*\*(Sandbox|3D sandbox)\b/i;
-const LIBRARY_ENTRY_PATTERN = /^\*\*\[(\d+)\]\*\*\s*/;
+const SPREAD_MEDIA_QUERY =
+  "(min-width: 1400px) and (min-height: 760px) and (orientation: landscape)";
+const STUDY_ANCHOR_PATTERN = /^>\s+(?:\*\*)?(Sandbox|3D sandbox)\b/i;
+const LIBRARY_ENTRY_PATTERN = /^(?:\*\*)?\[(\d+)\](?:\*\*)?\s*/;
 
 const REFERENCE_IDS = new Set<string>([
   "glossary-place-people",
@@ -76,16 +81,16 @@ const MODEL_LABELS: Record<string, string> = {
   "mayurbhanj-jumps.glb": "Mayurbhanj aerial movement key poses",
   "mayurbhanj-repertoire.glb": "Mayurbhanj repertoire study",
   "mayurbhanj-topkas.glb":
-    "Planned Mayurbhanj topka study — practitioner review pending",
+    "Planned Mayurbhanj topka study. Practitioner review pending.",
   "mayurbhanj-uflis.glb":
-    "Planned Mayurbhanj ufli study — practitioner review pending",
+    "Planned Mayurbhanj ufli study. Practitioner review pending.",
   "prop-pack.glb": "Region-labelled performance props",
   "purulia-durga.glb": "Purulia Durga study",
   "purulia-ganesha.glb": "Purulia Ganesha study",
   "purulia-lion-vahana.glb": "Purulia lion-vahana study",
   "purulia-mahishasura.glb": "Purulia Mahishasura study",
   "purulia-mask-layers.glb":
-    "Planned Purulia mask-construction study — maker review pending",
+    "Planned Purulia mask-construction study. Maker review pending.",
   "purulia-masked-core.glb": "Purulia masked movement study",
   "purulia-technique.glb": "Purulia movement-grammar study",
   "seraikella-expression.glb": "Seraikella mask-and-body expression study",
@@ -99,27 +104,25 @@ function useCitationOnClick(): (citationNumber: number) => void {
 }
 
 function getChapterEyebrow(page: BookPage): string | null {
-  if (page.title.includes(" — ")) {
-    return page.title.split(" — ")[0];
+  const sectionMatch = page.title.match(/^(Chapter [^:]+|Reference):\s+(.+)$/);
+  if (sectionMatch) {
+    return sectionMatch[1];
   }
 
   const pageIndex = bookPages.findIndex((candidate) => candidate.id === page.id);
   for (let index = pageIndex - 1; index >= 0; index -= 1) {
     const section = bookPages[index];
     if (section.pageType !== "section") continue;
-    return section.title.includes(" — ")
-      ? section.title.split(" — ")[0]
-      : section.title;
+    return section.title.match(/^(Chapter [^:]+|Reference):\s+(.+)$/)?.[1]
+      ?? section.title;
   }
 
   return null;
 }
 
 function getChapterTitle(page: BookPage): string {
-  if (page.title.includes(" — ")) {
-    return page.title.split(" — ").slice(1).join(" — ");
-  }
-  return page.title;
+  return page.title.match(/^(Chapter [^:]+|Reference):\s+(.+)$/)?.[2]
+    ?? page.title;
 }
 
 function getTocGroups(): TocGroup[] {
@@ -174,6 +177,70 @@ function formatModelLabel(filename: string): string {
   return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
+function getModelOptionsForPage(page: BookPage): ModelOption[] {
+  if (page.modelOptions?.length) return page.modelOptions;
+  if (!page.modelUrl) return [];
+  return [
+    {
+      label: "3D study",
+      modelScale: page.modelScale,
+      modelUrl: page.modelUrl,
+    },
+  ];
+}
+
+function isFeaturePage(page: BookPage): boolean {
+  return (
+    page.pageType !== "content" ||
+    page.id === "about-me" ||
+    REFERENCE_IDS.has(page.id) ||
+    Boolean(
+      page.embedUrl ||
+        page.interactive ||
+        page.modelUrl ||
+        page.modelOptions?.length,
+    )
+  );
+}
+
+function createSpreadPlan(pages: BookPage[]): number[][] {
+  const spreads: number[][] = [];
+
+  for (let index = 0; index < pages.length; ) {
+    const page = pages[index];
+    const nextPage = pages[index + 1];
+
+    if (isFeaturePage(page)) {
+      spreads.push([index]);
+      index += 1;
+      continue;
+    }
+
+    if (nextPage && !isFeaturePage(nextPage)) {
+      spreads.push([index, index + 1]);
+      index += 2;
+      continue;
+    }
+
+    spreads.push([index]);
+    index += 1;
+  }
+
+  return spreads;
+}
+
+const BOOK_SPREADS = createSpreadPlan(bookPages);
+
+function subscribeToSpreadSupport(onChange: () => void): () => void {
+  const media = window.matchMedia(SPREAD_MEDIA_QUERY);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+}
+
+function getSpreadSupport(): boolean {
+  return window.matchMedia(SPREAD_MEDIA_QUERY).matches;
+}
+
 function getStudyPrompt(body: string): string | null {
   const block = body
     .split(/\n{2,}/)
@@ -182,7 +249,7 @@ function getStudyPrompt(body: string): string | null {
 
   if (!block) return null;
   return block
-    .replace(/^>\s+\*\*(?:Sandbox|3D sandbox):?\*\*\s*/i, "")
+    .replace(/^>\s+(?:\*\*)?(?:Sandbox|3D sandbox):?(?:\*\*)?\s*/i, "")
     .replace(/^>\s?/gm, "")
     .trim();
 }
@@ -200,6 +267,13 @@ const ChhauModelViewer = dynamic(
 
 export function InteractiveEbookInterface() {
   const [currentChapter, setCurrentChapter] = useState(0);
+  const [readerViewMode, setReaderViewMode] =
+    useState<ReaderViewMode>("spread");
+  const supportsSpread = useSyncExternalStore(
+    subscribeToSpreadSupport,
+    getSpreadSupport,
+    () => false,
+  );
   const [selectedModelIndexes, setSelectedModelIndexes] = useState<
     Record<string, number>
   >({});
@@ -215,6 +289,27 @@ export function InteractiveEbookInterface() {
 
   const currentPage = bookPages[currentChapter] ?? bookPages[0];
   const currentGroupLabel = getCurrentGroupLabel(currentChapter);
+  const isSpread = readerViewMode === "spread" && supportsSpread;
+  const activeSpreadIndex = Math.max(
+    0,
+    BOOK_SPREADS.findIndex((spread) => spread.includes(currentChapter)),
+  );
+  const visiblePageIndexes = isSpread
+    ? BOOK_SPREADS[activeSpreadIndex] ?? [currentChapter]
+    : [currentChapter];
+  const visiblePages = visiblePageIndexes.map((index) => bookPages[index]);
+  const visibleNextPage = visiblePages[1];
+  const visibleEndIndex = visiblePageIndexes.at(-1) ?? currentChapter;
+  const previousTargetIndex = isSpread
+    ? BOOK_SPREADS[activeSpreadIndex - 1]?.[0]
+    : currentChapter > 0
+      ? currentChapter - 1
+      : undefined;
+  const nextTargetIndex = isSpread
+    ? BOOK_SPREADS[activeSpreadIndex + 1]?.[0]
+    : currentChapter + 1 < bookPages.length
+      ? currentChapter + 1
+      : undefined;
 
   const libraryPageIndex = useMemo(
     () => bookPages.findIndex((page) => page.id === LIBRARY_PAGE_ID),
@@ -222,18 +317,7 @@ export function InteractiveEbookInterface() {
   );
 
   const modelOptions = useMemo<ModelOption[]>(
-    () =>
-      currentPage.modelOptions?.length
-        ? currentPage.modelOptions
-        : currentPage.modelUrl
-          ? [
-              {
-                label: "3D study",
-                modelScale: currentPage.modelScale,
-                modelUrl: currentPage.modelUrl,
-              },
-            ]
-          : [],
+    () => getModelOptionsForPage(currentPage),
     [currentPage],
   );
 
@@ -304,6 +388,10 @@ export function InteractiveEbookInterface() {
       window.removeEventListener("hashchange", syncFromLocation);
       window.removeEventListener("popstate", syncFromLocation);
     };
+  }, []);
+
+  const changeReaderView = useCallback((mode: ReaderViewMode) => {
+    setReaderViewMode(mode);
   }, []);
 
   useEffect(() => {
@@ -394,6 +482,37 @@ export function InteractiveEbookInterface() {
     };
   }, [tocOpen]);
 
+  useEffect(() => {
+    if (tocOpen) return;
+
+    function handlePageKeys(event: KeyboardEvent) {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      const target = event.target as HTMLElement | null;
+      if (
+        target?.closest(
+          "input, textarea, select, button, a, summary, [contenteditable='true']",
+        )
+      ) {
+        return;
+      }
+
+      if (event.key === "ArrowLeft" && previousTargetIndex !== undefined) {
+        event.preventDefault();
+        navigateTo(previousTargetIndex);
+      }
+      if (
+        event.key === "ArrowRight" &&
+        nextTargetIndex !== undefined
+      ) {
+        event.preventDefault();
+        navigateTo(nextTargetIndex);
+      }
+    }
+
+    document.addEventListener("keydown", handlePageKeys);
+    return () => document.removeEventListener("keydown", handlePageKeys);
+  }, [navigateTo, nextTargetIndex, previousTargetIndex, tocOpen]);
+
   function setSelectedModelIndex(index: number) {
     setSelectedModelIndexes((previousIndexes) => ({
       ...previousIndexes,
@@ -425,7 +544,7 @@ export function InteractiveEbookInterface() {
   }, [tocQuery]);
 
   const progress = Math.round(
-    ((currentChapter + 1) / Math.max(bookPages.length, 1)) * 100,
+    ((visibleEndIndex + 1) / Math.max(bookPages.length, 1)) * 100,
   );
 
   return (
@@ -434,7 +553,9 @@ export function InteractiveEbookInterface() {
         <p aria-live="polite" className="sr-only">
           {pendingCitation !== null
             ? `Opening source ${pendingCitation}`
-            : `${getChapterTitle(currentPage)}, page ${currentChapter + 1} of ${bookPages.length}`}
+            : visibleNextPage
+              ? `${visiblePages.map((page) => getChapterTitle(page)).join(" and ")}, pages ${visiblePageIndexes.map((index) => index + 1).join(" and ")} of ${bookPages.length}`
+              : `${getChapterTitle(currentPage)}, page ${currentChapter + 1} of ${bookPages.length}`}
         </p>
 
         {tocOpen ? (
@@ -460,7 +581,7 @@ export function InteractiveEbookInterface() {
                     Contents
                   </h2>
                   <p className="mt-1 text-sm text-ivory/60">
-                    {bookPages.length} pages across twelve chapters
+                    {bookPages.length} pages. Twelve chapters.
                   </p>
                 </div>
                 <button
@@ -559,7 +680,7 @@ export function InteractiveEbookInterface() {
           inert={tocOpen ? true : undefined}
         >
           <header className="reader-top-rail">
-            <div className="reader-rail-inner mx-auto flex min-h-[4.25rem] max-w-[1120px] items-center gap-3 px-4 sm:px-6">
+            <div className="reader-rail-inner mx-auto flex min-h-[4.5rem] max-w-[1920px] items-center gap-3 px-4 sm:px-6">
               <button
                 aria-expanded={tocOpen}
                 aria-haspopup="dialog"
@@ -569,7 +690,7 @@ export function InteractiveEbookInterface() {
                 type="button"
               >
                 <MenuIcon className="h-4 w-4" />
-                <span>Contents</span>
+                <span>Book contents</span>
               </button>
 
               <Link
@@ -579,6 +700,29 @@ export function InteractiveEbookInterface() {
               >
                 Preserve<span className="text-laterite-700">Chhau</span>
               </Link>
+
+              <div
+                aria-label="Page layout"
+                className="reader-view-toggle"
+                role="group"
+              >
+                <button
+                  aria-pressed={readerViewMode === "spread"}
+                  className={readerViewMode === "spread" ? "is-active" : ""}
+                  onClick={() => changeReaderView("spread")}
+                  type="button"
+                >
+                  Two pages
+                </button>
+                <button
+                  aria-pressed={readerViewMode === "single"}
+                  className={readerViewMode === "single" ? "is-active" : ""}
+                  onClick={() => changeReaderView("single")}
+                  type="button"
+                >
+                  One page
+                </button>
+              </div>
 
               <div className="min-w-0 flex-1 text-center">
                 <p className="reader-kicker truncate text-laterite-700">
@@ -590,7 +734,10 @@ export function InteractiveEbookInterface() {
               </div>
 
               <span className="shrink-0 text-xs font-semibold tabular-nums text-ink/70">
-                {currentChapter + 1}/{bookPages.length}
+                {visibleNextPage
+                  ? visiblePageIndexes.map((index) => index + 1).join(" and ")
+                  : currentChapter + 1}
+                /{bookPages.length}
               </span>
             </div>
             <div
@@ -609,11 +756,15 @@ export function InteractiveEbookInterface() {
             <BookContent
               currentChapter={currentChapter}
               headingRef={pageHeadingRef}
+              isSpread={isSpread}
               modelOptions={modelOptions}
+              nextTargetIndex={nextTargetIndex}
               onNavigate={navigateTo}
               page={currentPage}
+              previousTargetIndex={previousTargetIndex}
               selectedModelIndex={selectedModelIndex}
               setSelectedModelIndex={setSelectedModelIndex}
+              visiblePageIndexes={visiblePageIndexes}
               viewer={viewer}
             />
           </main>
@@ -626,7 +777,7 @@ export function InteractiveEbookInterface() {
 function ViewerLoading() {
   return (
     <div className="grid h-full min-h-80 w-full place-items-center rounded-xl bg-ink text-sm font-medium text-ivory/75">
-      Loading the 3D study…
+      Loading the 3D study...
     </div>
   );
 }
@@ -634,27 +785,139 @@ function ViewerLoading() {
 function BookContent({
   currentChapter,
   headingRef,
+  isSpread,
   modelOptions,
+  nextTargetIndex,
   onNavigate,
   page,
+  previousTargetIndex,
   selectedModelIndex,
   setSelectedModelIndex,
+  visiblePageIndexes,
   viewer,
 }: {
   currentChapter: number;
   headingRef: RefObject<HTMLHeadingElement | null>;
+  isSpread: boolean;
   modelOptions: ModelOption[];
+  nextTargetIndex?: number;
   onNavigate: (index: number, options?: NavigateOptions) => void;
   page: BookPage;
+  previousTargetIndex?: number;
+  selectedModelIndex: number;
+  setSelectedModelIndex: (index: number) => void;
+  visiblePageIndexes: number[];
+  viewer?: ReactNode;
+}) {
+  const previousPage =
+    previousTargetIndex === undefined
+      ? undefined
+      : bookPages[previousTargetIndex];
+  const nextPage =
+    nextTargetIndex === undefined ? undefined : bookPages[nextTargetIndex];
+
+  return (
+    <div className="reader-stage page-enter-minimal" key={`${page.id}-${isSpread}`}>
+      <div
+        className="reader-spread"
+        data-layout={visiblePageIndexes.length === 2 ? "pair" : "single"}
+      >
+        {visiblePageIndexes.map((pageIndex) => {
+          const visiblePage = bookPages[pageIndex];
+          const isActive = pageIndex === currentChapter;
+          const visibleModelOptions = isActive
+            ? modelOptions
+            : getModelOptionsForPage(visiblePage);
+
+          return (
+            <BookSheet
+              active={isActive}
+              headingRef={isActive ? headingRef : undefined}
+              key={visiblePage.id}
+              modelOptions={visibleModelOptions}
+              page={visiblePage}
+              pageNumber={pageIndex + 1}
+              selectedModelIndex={isActive ? selectedModelIndex : 0}
+              setSelectedModelIndex={
+                isActive ? setSelectedModelIndex : () => undefined
+              }
+              viewer={isActive ? viewer : undefined}
+            />
+          );
+        })}
+      </div>
+
+      <nav aria-label="Page navigation" className="reader-page-navigation">
+        {previousPage && previousTargetIndex !== undefined ? (
+          <button
+            className="reader-adjacent-link reader-adjacent-previous"
+            onClick={() => onNavigate(previousTargetIndex)}
+            type="button"
+          >
+            <ChevronLeftIcon className="h-5 w-5 shrink-0" />
+            <span>
+              <span className="reader-adjacent-label">
+                {isSpread ? "Previous pages" : "Previous"}
+              </span>
+              <span className="reader-adjacent-title">
+                {getChapterTitle(previousPage)}
+              </span>
+            </span>
+          </button>
+        ) : null}
+
+        {nextPage && nextTargetIndex !== undefined ? (
+          <button
+            className={`reader-adjacent-link reader-adjacent-next ${
+              previousPage ? "" : "sm:col-start-2"
+            }`}
+            onClick={() => onNavigate(nextTargetIndex)}
+            type="button"
+          >
+            <span>
+              <span className="reader-adjacent-label">
+                {isSpread ? "Next pages" : "Next"}
+              </span>
+              <span className="reader-adjacent-title">
+                {getChapterTitle(nextPage)}
+              </span>
+            </span>
+            <ChevronRightIcon className="h-5 w-5 shrink-0" />
+          </button>
+        ) : null}
+      </nav>
+    </div>
+  );
+}
+
+function BookSheet({
+  active,
+  headingRef,
+  modelOptions,
+  page,
+  pageNumber,
+  selectedModelIndex,
+  setSelectedModelIndex,
+  viewer,
+}: {
+  active: boolean;
+  headingRef?: RefObject<HTMLHeadingElement | null>;
+  modelOptions: ModelOption[];
+  page: BookPage;
+  pageNumber: number;
   selectedModelIndex: number;
   setSelectedModelIndex: (index: number) => void;
   viewer?: ReactNode;
 }) {
-  const previousPage = bookPages[currentChapter - 1];
-  const nextPage = bookPages[currentChapter + 1];
-
   return (
-    <article className="heritage-paper reader-page page-enter-minimal" key={page.id}>
+    <article
+      aria-current={active ? "page" : undefined}
+      className="heritage-paper reader-page"
+      data-active={active ? "true" : "false"}
+      data-about={page.id === "about-me" ? "true" : undefined}
+      data-embed={page.embedUrl ? "true" : undefined}
+      data-feature={isFeaturePage(page) ? "true" : "false"}
+    >
       <div className="reader-page-inner">
         {page.pageType === "cover" ? (
           <CoverPage headingRef={headingRef} />
@@ -670,45 +933,10 @@ function BookContent({
             viewer={viewer}
           />
         )}
-
-        <nav aria-label="Page navigation" className="reader-page-navigation">
-          {previousPage ? (
-            <button
-              className="reader-adjacent-link reader-adjacent-previous"
-              onClick={() => onNavigate(currentChapter - 1)}
-              type="button"
-            >
-              <ChevronLeftIcon className="h-5 w-5 shrink-0" />
-              <span>
-                <span className="reader-adjacent-label">Previous</span>
-                <span className="reader-adjacent-title">
-                  {getChapterTitle(previousPage)}
-                </span>
-              </span>
-            </button>
-          ) : (
-            <span />
-          )}
-
-          {nextPage ? (
-            <button
-              className="reader-adjacent-link reader-adjacent-next"
-              onClick={() => onNavigate(currentChapter + 1)}
-              type="button"
-            >
-              <span>
-                <span className="reader-adjacent-label">Next</span>
-                <span className="reader-adjacent-title">
-                  {getChapterTitle(nextPage)}
-                </span>
-              </span>
-              <ChevronRightIcon className="h-5 w-5 shrink-0" />
-            </button>
-          ) : (
-            <span />
-          )}
-        </nav>
       </div>
+      <footer aria-label={`Page ${pageNumber}`} className="reader-page-folio">
+        {String(pageNumber).padStart(2, "0")}
+      </footer>
     </article>
   );
 }
@@ -716,7 +944,7 @@ function BookContent({
 function CoverPage({
   headingRef,
 }: {
-  headingRef: RefObject<HTMLHeadingElement | null>;
+  headingRef?: RefObject<HTMLHeadingElement | null>;
 }) {
   return (
     <section className="reader-cover" aria-labelledby="book-cover-title">
@@ -736,8 +964,8 @@ function CoverPage({
           Chhau
         </h1>
         <p className="reader-cover-deck">
-          One performance. Many questions. A student’s journey into Mayurbhanj
-          Chhau and its wider family.
+          I met Chhau through one performance. My questions led into
+          Mayurbhanj Chhau and its wider family.
         </p>
         <div className="mx-auto mt-10 h-px w-20 bg-laterite-700/35" />
         <p className="mt-8 text-sm font-semibold tracking-[0.14em] text-ink/65 uppercase">
@@ -755,12 +983,11 @@ function SectionPage({
   headingRef,
   page,
 }: {
-  headingRef: RefObject<HTMLHeadingElement | null>;
+  headingRef?: RefObject<HTMLHeadingElement | null>;
   page: BookPage;
 }) {
-  const eyebrow = page.title.includes(" — ")
-    ? page.title.split(" — ")[0]
-    : "Part";
+  const eyebrow = page.title.match(/^(Chapter [^:]+|Reference):\s+(.+)$/)?.[1]
+    ?? "Part";
 
   return (
     <section className="section-cover">
@@ -797,7 +1024,7 @@ function ContentPageBody({
   viewer,
 }: {
   chapter: BookPage;
-  headingRef: RefObject<HTMLHeadingElement | null>;
+  headingRef?: RefObject<HTMLHeadingElement | null>;
   modelOptions: ModelOption[];
   selectedModelIndex: number;
   setSelectedModelIndex: (index: number) => void;
@@ -810,7 +1037,6 @@ function ContentPageBody({
   const hasStudyAnchor = anchorBlockIndex >= 0;
   const studyPrompt = getStudyPrompt(chapter.body);
   const hasPlannedStudy = Boolean(chapter.plannedModels?.length || hasStudyAnchor);
-
   const viewerBlock = viewer ? (
     <div className="reader-study-breakout space-y-3">
       <ModelChoiceTabs
@@ -827,7 +1053,7 @@ function ContentPageBody({
         {viewer}
       </div>
       <p className="reader-media-caption">
-        Drag to rotate · use +/− to zoom · fullscreen enables pinch and pan
+        Drag to rotate. Use + and − to zoom. Full screen adds pinch and pan.
       </p>
     </div>
   ) : null;
@@ -840,36 +1066,50 @@ function ContentPageBody({
   ) : null;
 
   const studyNode = viewerBlock ?? plannedStudy;
+  const isAboutPage = chapter.id === "about-me";
+  const isEmbeddedPage = Boolean(chapter.embedUrl);
 
   return (
     <>
-      <header className="reader-prose mb-8">
-        {getChapterEyebrow(chapter) ? (
-          <p className="reader-kicker text-laterite-700">
-            {getChapterEyebrow(chapter)}
-          </p>
-        ) : null}
-        <h1
-          className="reader-content-title"
-          ref={headingRef}
-          tabIndex={-1}
-        >
-          {getChapterTitle(chapter)}
-        </h1>
-      </header>
+      <section
+        className={[
+          "reader-editorial-grid",
+          isAboutPage ? "reader-about-layout" : null,
+          isEmbeddedPage ? "reader-embed-layout" : null,
+        ]
+          .filter(Boolean)
+          .join(" ")}
+      >
+        <header className="reader-title-column">
+          {getChapterEyebrow(chapter) ? (
+            <p className="reader-kicker text-laterite-700">
+              {getChapterEyebrow(chapter)}
+            </p>
+          ) : null}
+          <h1
+            className="reader-content-title"
+            ref={headingRef}
+            tabIndex={-1}
+          >
+            {getChapterTitle(chapter)}
+          </h1>
+          {isAboutPage ? <AboutAuthorProfile /> : null}
+        </header>
 
-      {!hasStudyAnchor && studyNode ? (
-        <div className="reader-study-breakout mb-8">{studyNode}</div>
-      ) : null}
+        <div className="reader-copy-column">
+          {!hasStudyAnchor && studyNode ? (
+            <div className="reader-study-breakout mb-8">{studyNode}</div>
+          ) : null}
 
-      {chapter.body.trim() ? (
-        <MarkdownContent
-          anchorBlockIndex={hasStudyAnchor ? anchorBlockIndex : null}
-          leadNode={chapter.id === "about-me" ? <AboutAuthorProfile /> : null}
-          page={chapter}
-          studyNode={studyNode}
-        />
-      ) : null}
+          {chapter.body.trim() ? (
+            <MarkdownContent
+              anchorBlockIndex={hasStudyAnchor ? anchorBlockIndex : null}
+              page={chapter}
+              studyNode={studyNode}
+            />
+          ) : null}
+        </div>
+      </section>
 
       {chapter.interactive === "sandbox-guide" ? (
         <div className="reader-media-breakout">
@@ -878,7 +1118,7 @@ function ContentPageBody({
       ) : null}
 
       {chapter.embedUrl ? (
-        <div className="reader-media-breakout">
+        <div className="reader-embed-breakout">
           <PageEmbed
             caption={chapter.embedCaption}
             height={chapter.embedHeight}
@@ -910,7 +1150,7 @@ function PlannedStudyCard({
             3D study in preparation
           </p>
           <h2 className="mt-2 text-lg font-semibold text-ink">
-            What this interactive study will help you notice
+            What to look for in this study
           </h2>
           {prompt ? <p className="mt-3 text-sm leading-7 text-ink/75">{prompt}</p> : null}
 
@@ -925,8 +1165,8 @@ function PlannedStudyCard({
           ) : null}
 
           <p className="mt-4 border-t border-laterite-900/10 pt-4 text-xs leading-6 text-ink/60">
-            This will be published only after its movement, regional details,
-            credits, permissions, and learning notes have been reviewed.
+            Publication waits for review of the movement, regional details,
+            credits, permissions, and learning notes.
           </p>
         </div>
       </div>
@@ -1080,7 +1320,7 @@ function renderMarkdownBlock(block: string, key: string) {
 
 function renderInlineMarkdown(text: string): ReactNode[] {
   const pieces = text.split(
-    /(\*\*[^*]+\*\*|\*[^*]+\*|(?:\[\d+\])+|https?:\/\/[^\s]+)/g,
+    /(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\(#[A-Za-z0-9-]+\)|(?:\[\d+\])+|https?:\/\/[^\s]+)/g,
   );
 
   return pieces.map((piece, index) => {
@@ -1090,6 +1330,19 @@ function renderInlineMarkdown(text: string): ReactNode[] {
 
     if (piece.startsWith("*") && piece.endsWith("*")) {
       return <em key={`${piece}-${index}`}>{piece.slice(1, -1)}</em>;
+    }
+
+    const internalLink = piece.match(/^\[([^\]]+)\]\((#[A-Za-z0-9-]+)\)$/);
+    if (internalLink) {
+      return (
+        <a
+          className="font-semibold text-laterite-700 underline decoration-laterite-300 underline-offset-4 transition-colors hover:text-laterite-900"
+          href={internalLink[2]}
+          key={`${piece}-${index}`}
+        >
+          {internalLink[1]}
+        </a>
+      );
     }
 
     if (/^(\[\d+\])+$/.test(piece)) {

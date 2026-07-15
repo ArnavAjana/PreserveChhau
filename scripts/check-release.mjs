@@ -19,9 +19,9 @@ const expectedBasisNoticeSha256 =
 const forbiddenUnclearedMedia = [
   "public/audio/dholki-1.mp3",
   "public/audio/main-theme-ebook.mp3",
-  "public/images/arnav-ajana-about.jpg",
   "map-of-chhau/public/images/night-sky.png",
 ];
+const approvedUserSuppliedMedia = ["public/images/arnav-ajana-about.jpg"];
 
 async function listFiles(directory) {
   if (!existsSync(directory)) return [];
@@ -55,10 +55,13 @@ async function sha256(path) {
   "public/draco/gltf/draco_wasm_wrapper.js",
   "public/basis/basis_transcoder.js",
   "public/basis/basis_transcoder.wasm",
+  "public/images/arnav-ajana-about.jpg",
   rightsManifestPath,
   thirdPartyNoticesPath,
   apacheLicensePath,
   basisNoticePath,
+  "THIRD_PARTY_LICENSES/Motion-MIT.txt",
+  "THIRD_PARTY_LICENSES/Framer-Motion-MIT.txt",
 ].forEach(requirePath);
 
 for (const path of forbiddenUnclearedMedia) {
@@ -67,11 +70,20 @@ for (const path of forbiddenUnclearedMedia) {
   }
 }
 
-for (const directory of ["public/audio", "public/images"]) {
-  const files = await listFiles(resolve(root, directory));
-  if (files.length > 0) {
+const publicAudioFiles = await listFiles(resolve(root, "public/audio"));
+if (publicAudioFiles.length > 0) {
+  failures.push(
+    "No audio may be added to public/audio/ without a complete manifest record and an explicit release-policy update.",
+  );
+}
+
+const approvedUserSuppliedMediaSet = new Set(approvedUserSuppliedMedia);
+const publicImageFiles = await listFiles(resolve(root, "public/images"));
+for (const path of publicImageFiles) {
+  const relativePath = relative(root, path);
+  if (!approvedUserSuppliedMediaSet.has(relativePath)) {
     failures.push(
-      `No media may be added to ${directory}/ without a complete manifest record and an explicit release-policy update.`,
+      `Unapproved image in public/images/: ${relativePath}. Add a complete manifest record and an explicit release-policy update before shipping it.`,
     );
   }
 }
@@ -255,6 +267,73 @@ if (rightsManifest) {
     }
   }
 
+  if (!Array.isArray(rightsManifest.authoredMedia) || rightsManifest.authoredMedia.length !== 1) {
+    failures.push(`${rightsManifestPath} must contain exactly one user-supplied media record.`);
+  } else {
+    const authoredMediaPaths = new Set();
+    for (const media of rightsManifest.authoredMedia) {
+      const requiredFields = [
+        "path",
+        "status",
+        "mediaType",
+        "title",
+        "subject",
+        "creator",
+        "suppliedBy",
+        "permissionEvidence",
+        "permissionScope",
+        "credit",
+        "reuseTerms",
+        "sha256",
+      ];
+      for (const field of requiredFields) {
+        if (typeof media[field] !== "string" || media[field].trim() === "") {
+          failures.push(`User-supplied media record ${media.path ?? "<unknown>"} is missing ${field}.`);
+        }
+      }
+      if (media.status !== "user-supplied-with-explicit-publication-request") {
+        failures.push(`User-supplied media ${media.path ?? "<unknown>"} lacks the required status.`);
+      }
+      if (media.path !== "public/images/arnav-ajana-about.jpg") {
+        failures.push(`Unexpected user-supplied media path: ${media.path ?? "<unknown>"}`);
+      }
+      if (media.subject !== "Arnav Ajana" || !media.suppliedBy?.startsWith("Arnav Ajana")) {
+        failures.push(`Author photograph ${media.path ?? "<unknown>"} lacks its subject and supplier record.`);
+      }
+      if (media.creator !== "Photographer not identified in the supplied record") {
+        failures.push(`Author photograph ${media.path ?? "<unknown>"} must not claim an unidentified photographer.`);
+      }
+      if (!media.permissionEvidence?.includes("2026-07-14")) {
+        failures.push(`Author photograph ${media.path ?? "<unknown>"} lacks dated permission evidence.`);
+      }
+      if (!media.reuseTerms?.includes("No standalone or general reuse licence is granted")) {
+        failures.push(`Author photograph ${media.path ?? "<unknown>"} lacks its reuse restriction.`);
+      }
+      if (authoredMediaPaths.has(media.path) || manifestedPaths.has(media.path)) {
+        failures.push(`Duplicate asset-manifest path: ${media.path}`);
+      }
+      authoredMediaPaths.add(media.path);
+      manifestedPaths.add(media.path);
+
+      const absolutePath = resolve(root, media.path ?? "");
+      if (!existsSync(absolutePath)) {
+        failures.push(`Manifested user-supplied media is missing: ${media.path}`);
+      } else if (typeof media.sha256 === "string") {
+        const actualHash = await sha256(absolutePath);
+        if (actualHash !== media.sha256) {
+          failures.push(
+            `Manifest hash mismatch for ${media.path}: expected ${media.sha256}, found ${actualHash}`,
+          );
+        }
+      }
+    }
+    for (const path of approvedUserSuppliedMedia) {
+      if (!authoredMediaPaths.has(path)) {
+        failures.push(`${rightsManifestPath} must record approved user-supplied media: ${path}.`);
+      }
+    }
+  }
+
   const withheldPaths = new Set(
     Array.isArray(rightsManifest.withheldAssets)
       ? rightsManifest.withheldAssets.map((asset) => asset.formerPath)
@@ -263,6 +342,11 @@ if (rightsManifest) {
   for (const path of forbiddenUnclearedMedia) {
     if (!withheldPaths.has(path)) {
       failures.push(`${rightsManifestPath} must record the removal of ${path}.`);
+    }
+  }
+  for (const path of approvedUserSuppliedMedia) {
+    if (withheldPaths.has(path)) {
+      failures.push(`${rightsManifestPath} must not mark approved user-supplied media as withheld: ${path}.`);
     }
   }
 
@@ -379,6 +463,8 @@ if (existsSync(resolve(root, thirdPartyNoticesPath))) {
     basisNoticePath,
     "naturalearthdata.com/about/terms-of-use",
     "commons.wikimedia.org/wiki/File:",
+    "public/images/arnav-ajana-about.jpg",
+    "Photograph supplied by Arnav Ajana.",
   ]) {
     if (!notices.includes(requiredNotice)) {
       failures.push(`${thirdPartyNoticesPath} is missing required notice: ${requiredNotice}`);
@@ -425,6 +511,6 @@ if (failures.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Release verification passed: ${publicFiles.length} public files, one local globe bundle, ${manifestedPaths.size} rights-manifested decoder files, one provenance-checked public-domain geometry file, eight removed Commons records, no uncleared media, no exact public duplicates, and no oversized public assets.`,
+    `Release verification passed: ${publicFiles.length} public files, one local globe bundle, ${rightsManifest?.assets?.length ?? 0} rights-manifested decoder files, ${rightsManifest?.authoredMedia?.length ?? 0} approved user-supplied media file, one provenance-checked public-domain geometry file, eight removed Commons records, no uncleared media, no exact public duplicates, and no oversized public assets.`,
   );
 }

@@ -94,6 +94,25 @@ SHA-256 values, npm integrity, and modification note are recorded in
 - Natural Earth terms: <https://www.naturalearthdata.com/about/terms-of-use/>
 - Published package: <https://www.npmjs.com/package/three-globe/v/2.45.2>
 
+## User-supplied author photograph
+
+Bundled file:
+
+- `public/images/arnav-ajana-about.jpg`
+
+Subject and supplier: Arnav Ajana, the project owner and pictured subject.
+
+Creator: the photographer was not identified in the supplied record.
+
+Permission record: Arnav Ajana supplied the file and explicitly instructed the
+project to publish it in the About Me and author sections on 14 July 2026. Its
+use is limited to the PreserveChhau About Me and author-profile presentation.
+The displayed credit is “Photograph supplied by Arnav Ajana.” No standalone or
+general reuse licence is granted. All rights are reserved.
+
+The exact file hash and permission record are preserved in
+`ASSET_RIGHTS_PROVENANCE.json`.
+
 ## Removed or withheld media
 
 The following media is not part of the current public build because its rights
@@ -101,8 +120,6 @@ record was incomplete:
 
 - two audio files whose creator, source, and publication permission were not
   documented;
-- the author photograph, whose photographer, publication permission, and reuse
-  terms were not documented; and
 - the atlas starfield, whose creator, source, and reuse terms were not
   documented.
 
@@ -136,3 +153,10 @@ Packages installed through npm remain governed by the licence metadata and
 licence files in their respective distributions. `package-lock.json` pins the
 resolved package versions and integrity values. Those dependency licences do
 not grant a licence for PreserveChhau original material.
+
+The interface imports `motion@12.42.2`. Its React entrypoint includes
+`framer-motion@12.42.2`, `motion-dom@12.42.2`, and `motion-utils@12.39.0`.
+These packages are published by the Motion project under the MIT licence.
+The copyright notices and complete licence texts distributed with this project
+are in `THIRD_PARTY_LICENSES/Motion-MIT.txt` and
+`THIRD_PARTY_LICENSES/Framer-Motion-MIT.txt`.

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "lastReviewed": "2026-07-14",
-  "scope": "Retained third-party static assets and map geometry shipped by the project, plus explicit records for withheld local media and removed remote Commons references.",
+  "scope": "Retained third-party static assets, user-supplied project media, and map geometry shipped by the project, plus explicit records for withheld local media and removed remote Commons references.",
   "projectLicenseStatus": {
     "status": "no-broad-project-license",
     "notice": "Public repository visibility permits viewing and GitHub forking under GitHub's Terms of Service; it does not grant a general right to reproduce, distribute, or create derivative works. No broad licence has been selected for PreserveChhau original material. All rights are reserved where a rights holder is established; where authorship or ownership is not yet confirmed, reuse permission is undetermined and is not granted. Third-party components remain governed by their own licences."
@@ -107,6 +107,22 @@
       "noticeFile": "THIRD_PARTY_NOTICES.md"
     }
   ],
+  "authoredMedia": [
+    {
+      "path": "public/images/arnav-ajana-about.jpg",
+      "status": "user-supplied-with-explicit-publication-request",
+      "mediaType": "Photograph",
+      "title": "Portrait of Arnav Ajana beside a horse",
+      "subject": "Arnav Ajana",
+      "creator": "Photographer not identified in the supplied record",
+      "suppliedBy": "Arnav Ajana, project owner and pictured subject",
+      "permissionEvidence": "Arnav Ajana supplied the file and explicitly instructed the project to publish it in the About Me and author sections on 2026-07-14.",
+      "permissionScope": "Display and distribute the photograph as part of PreserveChhau's About Me and author-profile presentation.",
+      "credit": "Photograph supplied by Arnav Ajana.",
+      "reuseTerms": "No standalone or general reuse licence is granted. All rights reserved.",
+      "sha256": "3b4e24ca493f25742777627777867af2bb38e1f9af08e12d7fe661c76d0c6d9b"
+    }
+  ],
   "mapAssets": [
     {
       "path": "map-of-chhau/public/data/countries.geojson",
@@ -134,10 +150,6 @@
     {
       "formerPath": "public/audio/main-theme-ebook.mp3",
       "reason": "Removed from the public release: creator, source, and publication permission were not documented."
-    },
-    {
-      "formerPath": "public/images/arnav-ajana-about.jpg",
-      "reason": "Removed from the public release: photographer, subject/guardian publication permission where applicable, and reuse terms were not documented."
     },
     {
       "formerPath": "map-of-chhau/public/images/night-sky.png",

@@ -1,12 +1,12 @@
 // Evidence-first atlas records.
 //
 // Publication rule: a marker is included only when an official primary source
-// supports the Chhau-specific claim attached to that place. A map coordinate
+// supports the Chhau-specific claim attached to each place. A map coordinate
 // locates the named place; it does not imply an origin, resident tradition, or
 // performance history beyond the words in `detail`.
 //
-// Research leads are intentionally excluded from the public dataset. They can
-// return only after a source review and with the metadata required below.
+// Research leads are intentionally excluded from the public dataset. Return
+// them only after source review and with the metadata required below.
 
 const VERIFIED_AT = '2026-07-14';
 
@@ -21,9 +21,9 @@ export const chhauGeodata = [
     region: 'Purulia district, West Bengal',
     lat: 23.2,
     lng: 86.03,
-    role: 'Officially documented Purulia Chhau mask-making village',
+    role: 'A documented Purulia Chhau mask-making village',
     detail:
-      'Purulia District Administration identifies “Chorida” as a small village in the district where, during the Chhau season, practically every house takes part in making masks or assembling headgear. This marker records that documented craft role.',
+      'Purulia District Administration identifies “Chorida” as a small village where practically every house makes masks or assembles headgear during the Chhau season. This marker records its documented role in Purulia Chhau mask making.',
     sourceTitle: 'Folk & Culture — Purulia District Administration',
     sourceUrl: 'https://purulia.gov.in/folk-culture/',
     evidenceType: 'Government district cultural record',
@@ -41,9 +41,9 @@ export const chhauGeodata = [
     region: 'Seraikela-Kharsawan district, Jharkhand',
     lat: 22.7,
     lng: 85.93,
-    role: 'Officially documented Seraikella Chhau centre',
+    role: 'A documented centre for Seraikella Chhau',
     detail:
-      'The Seraikela-Kharsawan District Administration identifies the district with Chhau and describes Seraikella Chhau as using masks to identify characters in performances associated with the annual spring season.',
+      'Seraikela-Kharsawan District Administration links the district with Chhau. It describes Seraikella Chhau performers using masks to identify characters during performances linked to the annual spring season.',
     sourceTitle: 'Culture & Heritage — Seraikela-Kharsawan District Administration',
     sourceUrl: 'https://seraikela.nic.in/culture-heritage/',
     evidenceType: 'Government district cultural record',
@@ -61,9 +61,9 @@ export const chhauGeodata = [
     region: 'Mayurbhanj district, Odisha',
     lat: 21.932,
     lng: 86.751,
-    role: 'District-headquarters map anchor for Mayurbhanj Chhau',
+    role: 'District headquarters used as a map anchor for Mayurbhanj Chhau',
     detail:
-      'Baripada is used here only as the mapped headquarters of Mayurbhanj district. The district administration identifies Chhau as part of Mayurbhanj’s cultural heritage and describes the form as known for beauty and vigour. This marker does not claim that Baripada is Chhau’s origin.',
+      'This map uses Baripada only as the headquarters of Mayurbhanj district. The district administration lists Chhau as part of Mayurbhanj’s cultural heritage and describes the form as known for beauty and vigour. The marker makes no origin claim for Baripada.',
     sourceTitle: 'Culture & Heritage — Mayurbhanj District Administration',
     sourceUrl: 'https://mayurbhanj.odisha.gov.in/en/tourism/culture-Heritage',
     secondarySourceTitle: 'Mayurbhanj District at a Glance — Government of Odisha',
@@ -85,7 +85,7 @@ export const chhauGeodata = [
     lng: 36.817,
     role: 'Venue of UNESCO’s 2010 Chhau inscription decision',
     detail:
-      'At its fifth session in Nairobi, Kenya, UNESCO’s Intergovernmental Committee inscribed Chhau dance on the Representative List. UNESCO’s element record describes three distinct styles: Seraikella, Purulia and Mayurbhanj. Nairobi is the decision venue, not a Chhau heartland.',
+      'UNESCO’s Intergovernmental Committee inscribed Chhau dance on the Representative List during its fifth session in Nairobi, Kenya. The element record names three distinct styles: Seraikella, Purulia and Mayurbhanj. Nairobi marks the decision venue. It is not a Chhau heartland.',
     sourceTitle: 'Fifth session of the Intergovernmental Committee (5.COM)',
     sourceUrl: 'https://ich.unesco.org/en/5com',
     secondarySourceTitle: 'Chhau dance — Representative List of the Intangible Cultural Heritage of Humanity',
@@ -97,7 +97,7 @@ export const chhauGeodata = [
   },
 ];
 
-// Style -> earth-pigment hue (muted, harmonious — a printed-atlas legend, not neon).
+// Style -> earth-pigment hue. The palette reads like a printed atlas, not neon.
 export const STYLE_COLORS = {
   Purulia: '#cf6a4a', // warm clay
   Seraikella: '#5f8f8a', // muted teal
@@ -113,7 +113,7 @@ export const CATEGORIES = [
   {
     key: 'heartland',
     label: 'Living Heartlands',
-    blurb: 'Officially documented regional anchors',
+    blurb: 'Documented regional anchors',
   },
   {
     key: 'milestone',

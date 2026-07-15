@@ -1,6 +1,6 @@
 # Map of Chhau source
 
-This is the maintainable source for Arnav's original interactive world globe.
+This directory holds the maintained source for Arnav's interactive world globe.
 The eBook embeds the generated build at `/map-of-chhau/index.html`.
 
 ## Commands
@@ -9,27 +9,26 @@ The eBook embeds the generated build at `/map-of-chhau/index.html`.
 - `npm run build:content` regenerates the eBook pages and rebuilds the globe.
 - `npm run dev` and `npm run build` run `build:content` automatically.
 
-The source-controlled country geometry lives in this directory's `public/`
-folder. Vite copies it alongside a fresh HTML/CSS/JavaScript bundle in the
-ignored root-level `public/map-of-chhau/` output directory. The star field is
-made from CSS gradients, so the atlas has no background-image licence burden.
-The output is regenerated before local development, verification, and
-production builds.
+Source-controlled country geometry lives in this directory's `public/` folder.
+Vite copies it beside a fresh HTML, CSS, and JavaScript bundle in the ignored
+root-level `public/map-of-chhau/` output directory. CSS gradients draw the star
+field. No background-image licence applies. Each development, verification,
+and production build regenerates the output.
 
 ## Data and publication status
 
-The public dataset contains four verified records: three eastern-Indian
-heartland anchors and the venue of UNESCO's 2010 inscription decision. Every
+The public dataset contains four verified records. Three mark eastern Indian
+heartland anchors. One marks the venue of UNESCO's 2010 inscription decision. Every
 record includes its evidence type, source title, source URL, record date, and
-verification date. Unsourced stage, institution, archive, and diaspora leads
-are excluded from the published map.
+verification date. The published map excludes unsourced stage, institution,
+archive, and diaspora leads.
 
-The source policy is deliberately narrow: public markers require a Chhau-
-specific primary record from UNESCO or a government cultural authority. The
+The source policy is narrow. Each public marker needs a Chhau-specific primary
+record from UNESCO or a government cultural authority. The
 Nairobi marker records a committee decision venue, not a resident Chhau
 tradition. The Baripada marker uses Mayurbhanj's district headquarters only as
 a map anchor and makes no origin claim. Kharsawan, Bamnia, Palma, and generic
-international arts or diaspora locations are not published because the prior
+international arts or diaspora locations stay unpublished. Their previous
 entries did not meet this standard.
 
 ### Primary source register
@@ -45,10 +44,10 @@ The record-level `verifiedAt` value is `2026-07-14`.
 
 `public/data/countries.geojson` is derived from the Natural Earth 1:110m Admin
 0 country dataset distributed in the `three-globe@2.45.2` country-polygons
-example. This project retained each feature's type, `ADMIN` property, and
-geometry, removed the other properties, and serialized compact JSON with a
-final newline. Natural Earth places its map data in the public domain. The
+example. The local transformation retained each feature's type, `ADMIN`
+property, and geometry. It removed other properties and serialized compact JSON
+with a final newline. Natural Earth places its map data in the public domain. The
 exact source/distribution versions, hashes, transformation, and terms URL are
-recorded in the root `ASSET_RIGHTS_PROVENANCE.json`. Detail cards are text-only:
-the atlas performs no Wikipedia, Wikimedia Commons, or other remote image
+recorded in the root `ASSET_RIGHTS_PROVENANCE.json`. Detail cards use text only.
+The atlas performs no Wikipedia, Wikimedia Commons, or other remote image
 lookup.

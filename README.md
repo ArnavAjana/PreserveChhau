@@ -1,46 +1,65 @@
 # PreserveChhau
 
-PreserveChhau is Arnav Ajana’s student-led interactive eBook about Chhau: a
-family of three related dance and dance-theatre traditions from eastern India.
-The project begins with Arnav’s own entry through Mayurbhanj Chhau, then keeps
-Mayurbhanj, Seraikella, and Purulia connected without treating them as
-interchangeable.
+PreserveChhau is Arnav Ajana’s student-led interactive eBook about Chhau. It
+introduces three related dance and dance-theatre traditions from eastern India.
+Arnav enters through Mayurbhanj Chhau and keeps Mayurbhanj, Seraikella, and
+Purulia connected without treating them as interchangeable.
 
-This public repository contains a working draft of the manuscript and technical
-implementation, developed through an AI-assisted process under Arnav’s
-direction. Arnav originated the project concept and supplied or assembled the
-initial research corpus; the underlying rights in those sources remain with
-their respective authors and publishers. His personal narrative, judgement,
-and creative direction shape the project. A final line-by-line authorial pass,
-practitioner consultation, source checking, permissions review, pediatric
-movement/safety review, and cultural-model approval are required before an
-editorially complete release.
+This repository contains a working manuscript and application. Arnav formed
+the project idea and supplied or assembled the first research corpus. His
+personal story, judgement, and creative direction guide the work. AI supported
+drafting and code under his direction. Source rights stay with their authors
+and publishers.
+
+An editorial release still requires a final author pass, practitioner
+consultation, source checks, permissions review, pediatric movement and safety
+review, and approval of cultural models.
+
+## Quick start on a Mac
+
+Double-click `Start-PreserveChhau.command`. The launcher checks Node.js,
+installs the exact packages from `package-lock.json` when needed, then starts
+the site at <http://localhost:3000>.
+
+If macOS blocks the first launch, open Terminal in this folder and run:
+
+```bash
+bash Start-PreserveChhau.command
+```
+
+The package install matters. Running `npm run dev` before `npm ci` produces a
+`vite: command not found` error because downloaded project archives do not
+include `node_modules`.
 
 ## What is included
 
-- `/` — an Arnav-first introduction and direct links into every section
-- `/ebook` — a responsive 76-screen reader containing 12 chapters, source
-  links, Arnav’s evidence-first four-record globe, unvalidated adult-guided
-  activity drafts, deep links, searchable contents, and honest placeholders
-  for planned 3D studies
-- `/experience` — the complete 23-model production roadmap, grouped by release
-  priority and written for human review rather than as a raw file list
-- `map-of-chhau/` — the maintainable React/Vite source for Arnav’s interactive
-  globe, including its local public-domain country geometry
-- `public/map-of-chhau/` — an ignored deployment bundle regenerated from that
+- `/`: a focused opening with three primary routes and six question-led paths
+- `/about`: Arnav’s full project story, position, and working method
+- `/ebook`: a responsive 76-screen reader with a wide-screen two-page spread,
+  a broad one-page mode, 12 chapters, source links, a four-record atlas,
+  unvalidated adult-guided activity drafts, deep links, searchable contents,
+  and placeholders for planned 3D studies
+- `/experience`: the 23-model production roadmap, grouped by release priority
+  and written for review
+- `map-of-chhau/`: maintainable React and Vite source for the interactive globe,
+  including local public-domain country geometry
+- `public/map-of-chhau/`: an ignored deployment bundle rebuilt from the atlas
   source before development, verification, and production builds
-- `src/components/ChhauModelViewer.tsx` — the reusable GLB study sandbox with
+- `src/components/ChhauModelViewer.tsx`: the reusable GLB study sandbox with
   skeleton-safe animation, clip selection, pause/scrub, playback speed, camera,
   appearance, lighting, zoom, reset, and fullscreen controls
+- `CHHAU_AUDIO_ACQUISITION.md`: region-specific instrument lists, exact archive
+  leads, rights decisions, and a clean original-recording brief
+- `LEGACY_3D_ASSET_AUDIT.md`: technical and editorial review of all 17 recovered
+  GLBs, including the decision to keep them outside the public eBook
 
-The viewer’s fallback object demonstrates the controls only. It is explicitly
-not presented as a Chhau dancer, pose, mask, or costume.
+The reader shows no fallback model. A text guide explains the intended controls
+without displaying an invented dancer, pose, mask, costume, or instrument.
 
 ## Run locally
 
-Use Node.js **22.12 or newer** (recommended). Node 20.19 or newer is the minimum
-supported version. The repository includes `.nvmrc` for compatible Node version
-managers.
+Use Node.js `22.12` or newer. Node `20.19` is the minimum supported version. The
+repository includes `.nvmrc` for compatible Node version managers.
 
 ```bash
 git clone https://github.com/ArnavAjana/PreserveChhau.git
@@ -49,12 +68,13 @@ npm ci
 npm run dev
 ```
 
-Open <http://localhost:3000>. No environment file is required for local use.
-Create `.env.local` only for deployment, when `NEXT_PUBLIC_SITE_URL` should be
-set to the real public origin for correct absolute sitemap and robots URLs.
-The `predev` hook runs `npm run build:content`, so both the eBook pages and globe
-bundle are refreshed before the Next.js development server starts. The globe
-can also be opened directly at <http://localhost:3000/map-of-chhau/index.html>.
+Open <http://localhost:3000>. Local use needs no environment file. For
+deployment, create `.env.local` and set `NEXT_PUBLIC_SITE_URL` to the public
+origin. This keeps sitemap and robots URLs correct.
+
+The `predev` hook runs `npm run build:content`. It refreshes the eBook pages and
+globe bundle before Next.js starts. Open the globe directly at
+<http://localhost:3000/map-of-chhau/index.html>.
 
 ## Verification and production
 
@@ -65,10 +85,9 @@ npm run build
 npm run start
 ```
 
-`npm run build:content` regenerates the book data and the globe deployment
-bundle. `npm run verify` does the same, then runs strict TypeScript checking and
-lints the full authored tree. `npm run build` also rebuilds both content outputs
-before creating the production application.
+`npm run build:content` rebuilds the book data and globe bundle. `npm run verify`
+rebuilds both, runs strict TypeScript checks, and lints the authored tree.
+`npm run build` rebuilds both outputs before creating the production app.
 
 ## eBook content workflow
 
@@ -81,20 +100,19 @@ npm run build:book
 ```
 
 The generator validates the manuscript and rebuilds all 76 runtime pages. Page
-metadata can opt into:
+metadata supports:
 
-- `embedUrl`, `embedTitle`, and `embedCaption` — local interactive embed
-- `interactive: "sandbox-guide"` — the guided 3D controls preview
-- `plannedModels` — planned model filenames that remain visible as preparation
-  cards until a real asset is practitioner-reviewed, rights-cleared, approved,
-  and deliberately bound
+- `embedUrl`, `embedTitle`, and `embedCaption`: local interactive embed
+- `interactive: "sandbox-guide"`: text guide for the reviewed 3D controls
+- `plannedModels`: planned filenames shown as preparation cards until a real
+  asset passes practitioner review, rights clearance, approval, and deliberate
+  binding
 
 ## Interactive globe workflow
 
-`map-of-chhau/` is the standalone, maintainable source application for the
-world globe. Edit its React components, styles, node dataset, or `public/`
-source assets there; never hand-edit the ignored deployment output in
-`public/map-of-chhau/`.
+`map-of-chhau/` holds the standalone source application. Edit React components,
+styles, node data, and `public/` source assets there. Do not hand-edit the
+ignored output in `public/map-of-chhau/`.
 
 ```bash
 npm run build:map
@@ -102,7 +120,7 @@ npm run build:map
 
 Vite copies `map-of-chhau/public/data/countries.geojson` beside a deployable
 `index.html` and hashed CSS/JavaScript bundle in `public/map-of-chhau/`. Next.js
-serves that generated output inside the eBook iframe or as a full-screen page.
+serves the generated output inside the eBook iframe or as a full-screen page.
 The globe uses a code-authored background and does not request remote map tiles,
 background images, Wikipedia, or Wikimedia Commons media.
 
@@ -112,8 +130,8 @@ To refresh both authored outputs in their required order, run:
 npm run build:content
 ```
 
-This is also run automatically before `npm run dev`, `npm run build`, and as
-part of `npm run verify`.
+This command runs before `npm run dev`, before `npm run build`, and during
+`npm run verify`.
 
 ## 3D asset workflow
 
@@ -124,13 +142,13 @@ files go in:
 public/models/chhau-approved/
 ```
 
-Every model must arrive with a sidecar credit and review record covering its
+Every model needs a sidecar credit and review record covering its
 lineage, movement or character, modeller, reference performer, practitioner
 reviewer, maker or troupe, source material, permission, licence, and required
 credit line. A matching filename alone is not approval.
 
 The viewer supports Draco-compressed geometry and KTX2 textures through local
-files in `public/draco/` and `public/basis/`; it does not fetch decoders from a
+files in `public/draco/` and `public/basis/`. It does not fetch decoders from a
 third-party CDN.
 
 The original upload’s 17 uncredited prototype GLBs were removed from the
@@ -140,21 +158,25 @@ required for this project.
 
 ## Rights and provenance
 
-No broad project licence has been selected. Public GitHub visibility allows
-viewing and forking under GitHub’s Terms of Service, but it does not grant a
-general right to reproduce, distribute, or create derivative works. Default
-copyright rules apply; all rights are reserved where a rights holder is
-established, and reuse is not granted where ownership remains undetermined.
+No broad project licence has been selected. GitHub’s Terms of Service permit
+viewing and forking on GitHub. They do not grant general reproduction,
+distribution, or derivative rights. Default copyright rules apply. All rights
+are reserved where a rights holder is established. Reuse is not granted where
+ownership remains undetermined.
 [GitHub’s official licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)
 explains this distinction.
 
-The current public build omits the two audio files, author photograph, and atlas
-starfield that lacked complete creator, source, permission, and reuse records.
-The atlas also performs no Wikimedia Commons image lookup; the eight formerly
-referenced attribution-required Commons files are recorded individually as not
-distributed. Retained Draco and Basis decoder files, plus the public-domain
-Natural Earth geometry, have exact package-version, source, modification, hash,
-and licence records in `ASSET_RIGHTS_PROVENANCE.json`. See
+The current public build includes the author photograph supplied by Arnav Ajana
+for the About Me and author sections. Its photographer was not identified in
+the supplied record, no general reuse licence is granted, and its exact hash and
+permission scope are recorded in `ASSET_RIGHTS_PROVENANCE.json`. The two audio
+files and atlas starfield remain omitted because their creator, source,
+permission, and reuse records were incomplete. The atlas performs no Wikimedia
+Commons image lookup. The eight formerly referenced attribution-required
+Commons files are recorded individually as not distributed. Retained Draco and
+Basis decoder files, plus the public-domain Natural Earth geometry, have exact
+package-version, source, modification, hash, and licence records in
+`ASSET_RIGHTS_PROVENANCE.json`. See
 `THIRD_PARTY_NOTICES.md` and the complete local Apache 2.0 text in
 `THIRD_PARTY_LICENSES/Apache-2.0.txt` before redistributing those components.
 
@@ -181,12 +203,13 @@ public/models/chhau-approved/     reviewed release models
 ## Stack
 
 - Next.js 16 and React 19
+- Motion for restrained, reduced-motion-aware interface transitions
 - TypeScript 5 in strict mode
 - Tailwind CSS 4
 - Three.js, React Three Fiber, and Drei
 - Vite and react-globe.gl for the standalone atlas
 - npm with a committed lockfile for reproducible installs
 
-The repository intentionally does not commit dependencies, framework output,
-compiled globe bundles, raw production masters, unreviewed models, or duplicate
-assets. All runtime outputs are reproducible from the maintained source.
+The repository does not commit dependencies, framework output, compiled globe
+bundles, raw production masters, unreviewed models, or duplicate assets. The
+maintained source reproduces every runtime output.
