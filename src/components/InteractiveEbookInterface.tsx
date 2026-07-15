@@ -56,7 +56,8 @@ const CitationContext = createContext<CitationContextValue | null>(null);
 const LIBRARY_PAGE_ID = "library";
 const SPREAD_MEDIA_QUERY =
   "(min-width: 1400px) and (min-height: 760px) and (orientation: landscape)";
-const STUDY_ANCHOR_PATTERN = /^>\s+(?:\*\*)?(Sandbox|3D sandbox)\b/i;
+const STUDY_ANCHOR_PATTERN =
+  /^>\s+(?:\*\*)?(Sandbox|3D sandbox|3D prototype)\b/i;
 const LIBRARY_ENTRY_PATTERN = /^(?:\*\*)?\[(\d+)\](?:\*\*)?\s*/;
 
 const REFERENCE_IDS = new Set<string>([
@@ -66,7 +67,6 @@ const REFERENCE_IDS = new Set<string>([
   "timeline",
   "questions-still-open",
   "library",
-  "credits-review-status",
 ]);
 
 const MODEL_LABELS: Record<string, string> = {
@@ -249,7 +249,10 @@ function getStudyPrompt(body: string): string | null {
 
   if (!block) return null;
   return block
-    .replace(/^>\s+(?:\*\*)?(?:Sandbox|3D sandbox):?(?:\*\*)?\s*/i, "")
+    .replace(
+      /^>\s+(?:\*\*)?(?:Sandbox|3D sandbox|3D prototype):?(?:\*\*)?\s*/i,
+      "",
+    )
     .replace(/^>\s?/gm, "")
     .trim();
 }
@@ -524,6 +527,8 @@ export function InteractiveEbookInterface() {
     () =>
       shouldShowViewer ? (
         <ChhauModelViewer
+          key={`${currentPage.id}:${selectedModel?.modelUrl ?? currentPage.modelUrl ?? "none"}`}
+          modelLabel={selectedModel?.label ?? "3D study"}
           modelScale={selectedModel?.modelScale ?? currentPage.modelScale}
           modelUrl={selectedModel?.modelUrl ?? currentPage.modelUrl}
         />

@@ -13,7 +13,7 @@ const workingPrinciples = [
   ["Ask before claiming", "I start with a question and follow the strongest source I have. I do not turn a gap into a confident story."],
   ["Keep the three styles distinct", "A movement, mask, instrument, or history stays with the region named by its source."],
   ["Credit the people", "Dancers, teachers, musicians, makers, writers, and communities are part of the knowledge, not material around it."],
-  ["Leave room for correction", "This book records review status and open questions because a public project should show where work remains."],
+  ["Leave room for correction", "This book records open questions because a public project should show where work remains."],
 ] as const;
 
 export default function AboutPage() {

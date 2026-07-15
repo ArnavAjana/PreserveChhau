@@ -13,7 +13,7 @@ const routes = [
     href: "/ebook#chhau",
     index: "02",
     label: "Read the eBook",
-    text: "Move through 76 short pages on place, body, music, history, and practice.",
+    text: "Move through 75 short pages on place, body, music, history, and practice.",
   },
   {
     href: "/ebook#map-of-chhau",
@@ -172,16 +172,11 @@ export default function HomePage() {
           <h2 id="method-title">Sources stay visible. Uncertainty stays visible too.</h2>
           <p>
             When accounts conflict, I name the conflict. When a movement belongs
-            to one tradition, I do not move it into another. Every future model,
-            photograph, and recording needs clear permission, credit, and review
-            before publication.
+            to one tradition, I do not move it into another.
           </p>
         </MotionReveal>
         <MotionReveal className="home-method-links" delay={0.1}>
-          <Link className="editorial-button editorial-button-gold" href="/ebook#credits-review-status">
-            Check review status
-          </Link>
-          <Link className="editorial-text-link text-ivory" href="/ebook#library">
+          <Link className="editorial-button editorial-button-gold" href="/ebook#library">
             Open the source library
           </Link>
         </MotionReveal>

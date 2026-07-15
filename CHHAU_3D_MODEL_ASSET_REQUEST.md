@@ -101,7 +101,12 @@ Before a model appears in the eBook, a current practitioner should confirm:
 - repertoire sequence and character identity
 - whether the model is an authentic demonstration, a schematic study, or a clearly labelled reconstruction
 
-The current repository excludes the 17 generic prototype GLBs from the original upload. Their filenames did not identify lineage, costume, character, pose, performer, or source. None contained animation clips. Together they occupied roughly 510 MB. Do not restore them as reference material. Only reviewed, credited, optimised packages meeting this brief belong in the release repository.
+The current repository includes the 17 generic prototype GLBs from the original
+upload as load-on-demand interface studies. Their filenames do not identify
+lineage, costume, character, pose, performer, or source. None contains animation
+clips. Together they occupy roughly 510 MB. They are not reference material and
+do not fill any model request in this brief. Source-based packages still need to
+meet the requirements above.
 
 The full technical and editorial decision record is in
 `LEGACY_3D_ASSET_AUDIT.md`.

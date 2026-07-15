@@ -4,7 +4,7 @@ const guideItems = [
   {
     number: "01",
     title: "Turn the study",
-    text: "Drag to rotate an approved model. Zoom stays deliberate so the page does not fight your scroll.",
+    text: "Drag to rotate a loaded model. Zoom stays deliberate so the page does not fight your scroll.",
   },
   {
     number: "02",
@@ -14,7 +14,7 @@ const guideItems = [
   {
     number: "03",
     title: "Separate surface from form",
-    text: "Texture shows an approved surface. Clay shows mass. Structure reveals the model geometry.",
+    text: "Texture shows the generated surface. Clay shows mass. Structure reveals the model geometry.",
   },
   {
     number: "04",
@@ -32,9 +32,9 @@ export function SandboxGuide() {
           <h2 id="sandbox-guide-title">How a 3D study will work.</h2>
         </div>
         <p>
-          No cultural model loads on this page. The recovered legacy files stay
-          outside the public eBook because their source, rights, regional
-          identity, and practitioner review remain unresolved.
+          No model loads on this page. Three pages in the eBook hold the
+          recovered files as static generated prototypes. Each file loads only
+          after you choose it.
         </p>
       </header>
 
@@ -50,8 +50,8 @@ export function SandboxGuide() {
 
       <div className="sandbox-guide-status">
         <p>
-          A study appears only after its model, movement or object source,
-          permissions, credits, and review record are complete.
+          The current prototypes help test digital form and camera controls.
+          They do not document Chhau. Source-based studies remain on the roadmap.
         </p>
         <Link href="/experience">See the 23-study roadmap</Link>
       </div>

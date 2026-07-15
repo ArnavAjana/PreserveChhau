@@ -113,6 +113,29 @@ general reuse licence is granted. All rights are reserved.
 The exact file hash and permission record are preserved in
 `ASSET_RIGHTS_PROVENANCE.json`.
 
+## Recovered generated 3D prototypes
+
+Bundled directory:
+
+- `public/models/chhau-web-assets/`
+
+The directory contains 17 static GLB files recovered byte for byte from project
+commit `27c346b7d6612360c84df56b5ab69d8d260ecb96`. The recovered project record
+identifies them as Tripo-generated. It does not identify the operator, prompt,
+training inputs, source pose, modeller, performer, maker, or a general reuse
+licence.
+
+Arnav Ajana directed their publication inside PreserveChhau on 15 July 2026.
+The eBook presents them as generic visual prototypes and loads each file only
+after a reader requests it. They are not evidence of a named Chhau movement,
+regional tradition, costume, character, instrument, prop, troupe, formation,
+or performance setting.
+
+The exact path, size, SHA-256, Git blob SHA-1, publication instruction, reuse
+status, cultural limit, and technical status are recorded in
+`ASSET_RIGHTS_PROVENANCE.json`. No standalone or general reuse licence is
+granted by this notice.
+
 ## Removed or withheld media
 
 The following media is not part of the current public build because its rights

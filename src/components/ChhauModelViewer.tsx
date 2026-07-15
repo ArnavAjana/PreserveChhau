@@ -34,6 +34,26 @@ type BackgroundMode = "ink" | "paper";
 type LightingPreset = "studio" | "soft" | "dramatic";
 type CameraView = "front" | "three-quarter" | "side" | "back";
 
+const RECOVERED_PROTOTYPE_BYTES: Record<string, number> = {
+  "chhau-figure-5a81ddf6.glb": 28751596,
+  "chhau-group-1.glb": 31412360,
+  "dance-troupe.glb": 58838248,
+  "dancer-character.glb": 31065172,
+  "human-figure-copy.glb": 29068768,
+  "human-figure.glb": 29740348,
+  "longsword.glb": 24083824,
+  "martial-artist-2.glb": 29692544,
+  "martial-artist-copy-2.glb": 29553164,
+  "martial-artist-copy.glb": 28999220,
+  "martial-artist-duo.glb": 30208160,
+  "martial-artist-with-sword.glb": 28559496,
+  "martial-artist.glb": 31324908,
+  "performing-dancers.glb": 30013920,
+  "round-shield.glb": 30687460,
+  "traditional-dancer-copy.glb": 31255260,
+  "traditional-dancer.glb": 30503892,
+};
+
 export type ChhauModelViewerProps = {
   className?: string;
   modelLabel?: string;
@@ -106,6 +126,12 @@ function normalizeModelScale(modelScale: ChhauModelViewerProps["modelScale"]) {
   return typeof value === "number" && Number.isFinite(value) && value > 0
     ? value
     : 1;
+}
+
+function getPrototypeSizeLabel(modelUrl: string) {
+  const filename = modelUrl.split("/").pop() ?? "";
+  const bytes = RECOVERED_PROTOTYPE_BYTES[filename];
+  return bytes ? `${(bytes / 1024 / 1024).toFixed(1)} MiB` : null;
 }
 
 function humanizeClipName(name: string) {
@@ -833,6 +859,11 @@ export function ChhauModelViewer({
 }: ChhauModelViewerProps) {
   const normalizedModelUrl = normalizeModelUrl(modelUrl);
   const normalizedModelScale = normalizeModelScale(modelScale);
+  const isRecoveredPrototype =
+    normalizedModelUrl?.startsWith("/models/chhau-web-assets/") ?? false;
+  const prototypeSizeLabel = normalizedModelUrl
+    ? getPrototypeSizeLabel(normalizedModelUrl)
+    : null;
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitControlsRef = useRef<OrbitControlsImpl | null>(null);
 
@@ -857,6 +888,9 @@ export function ChhauModelViewer({
   const [statusMessage, setStatusMessage] = useState("");
   const [zoomCommand, setZoomCommand] = useState<ZoomCommand | null>(null);
   const [useCompactRendering, setUseCompactRendering] = useState(false);
+  const [loadedPrototypeUrl, setLoadedPrototypeUrl] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 640px), (max-height: 600px)");
@@ -1013,7 +1047,42 @@ export function ChhauModelViewer({
         <div>
           <p className="text-sm font-bold text-[#efe7d0]">3D study not yet available</p>
           <p className="mt-2 max-w-sm text-xs leading-5 text-[#efe7d0]/55">
-            This space stays empty until practitioner, credit, and rights review are complete.
+            This space is reserved for a future model study.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (
+    isRecoveredPrototype &&
+    loadedPrototypeUrl !== normalizedModelUrl
+  ) {
+    return (
+      <div
+        aria-label={`${modelLabel} 3D visual prototype`}
+        className={`grid place-items-center bg-[#151817] p-6 text-center ${shellClassName}`}
+        role="region"
+      >
+        <div className="max-w-md">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f0b34a]">
+            Historical 3D prototype
+          </p>
+          <p className="mt-3 text-lg font-bold text-[#efe7d0]">{modelLabel}</p>
+          <p className="mt-2 text-sm leading-6 text-[#efe7d0]/70">
+            Large static model{prototypeSizeLabel ? `, ${prototypeSizeLabel}` : ""}.
+            It loads after you choose, so the book stays responsive.
+          </p>
+          <button
+            className="mt-5 min-h-11 rounded-xl bg-[#9f402b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#b24a32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f0b34a]"
+            onClick={() => setLoadedPrototypeUrl(normalizedModelUrl)}
+            type="button"
+          >
+            Load 3D prototype
+          </button>
+          <p className="mt-4 text-xs leading-5 text-[#efe7d0]/55">
+            Generic generated study. It is not evidence of a named Chhau movement,
+            regional tradition, costume, character, formation, performance, or prop.
           </p>
         </div>
       </div>
@@ -1053,6 +1122,7 @@ export function ChhauModelViewer({
               <Center>
                 <RotatingGroup autoRotate={autoRotate} resetNonce={resetNonce}>
                   <LoadedModel
+                    key={normalizedModelUrl}
                     activeClip={activeClip}
                     appearance={appearance}
                     isPlaying={isPlaying}

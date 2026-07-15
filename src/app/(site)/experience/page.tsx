@@ -262,12 +262,6 @@ export default function ExperiencePage() {
           >
             Try the sandbox controls
           </Link>
-          <Link
-            className="editorial-text-link text-ivory"
-            href="/ebook#credits-review-status"
-          >
-            Read credits and review status
-          </Link>
           </div>
         </MotionReveal>
       </aside>

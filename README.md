@@ -35,10 +35,11 @@ include `node_modules`.
 
 - `/`: a focused opening with three primary routes and six question-led paths
 - `/about`: Arnav’s full project story, position, and working method
-- `/ebook`: a responsive 76-screen reader with a wide-screen two-page spread,
+- `/ebook`: a responsive 75-screen reader with a wide-screen two-page spread,
   a broad one-page mode, 12 chapters, source links, a four-record atlas,
   unvalidated adult-guided activity drafts, deep links, searchable contents,
-  and placeholders for planned 3D studies
+  17 load-on-demand historical 3D prototypes, and placeholders for planned 3D
+  studies
 - `/experience`: the 23-model production roadmap, grouped by release priority
   and written for review
 - `map-of-chhau/`: maintainable React and Vite source for the interactive globe,
@@ -51,10 +52,12 @@ include `node_modules`.
 - `CHHAU_AUDIO_ACQUISITION.md`: region-specific instrument lists, exact archive
   leads, rights decisions, and a clean original-recording brief
 - `LEGACY_3D_ASSET_AUDIT.md`: technical and editorial review of all 17 recovered
-  GLBs, including the decision to keep them outside the public eBook
+  GLBs, their current page allocation, and the limits on what they represent
 
-The reader shows no fallback model. A text guide explains the intended controls
-without displaying an invented dancer, pose, mask, costume, or instrument.
+The recovered GLBs appear only as generic visual prototypes. Each file loads
+after the reader chooses it. The page copy states that the mesh is not evidence
+of a Chhau movement, regional tradition, costume, character, formation, event,
+or prop.
 
 ## Run locally
 
@@ -99,11 +102,12 @@ rebuilds both, runs strict TypeScript checks, and lints the authored tree.
 npm run build:book
 ```
 
-The generator validates the manuscript and rebuilds all 76 runtime pages. Page
+The generator validates the manuscript and rebuilds all 75 runtime pages. Page
 metadata supports:
 
 - `embedUrl`, `embedTitle`, and `embedCaption`: local interactive embed
 - `interactive: "sandbox-guide"`: text guide for the reviewed 3D controls
+- `modelOptions`: selectable published GLB studies, with a visible label and URL
 - `plannedModels`: planned filenames shown as preparation cards until a real
   asset passes practitioner review, rights clearance, approval, and deliberate
   binding
@@ -151,10 +155,12 @@ The viewer supports Draco-compressed geometry and KTX2 textures through local
 files in `public/draco/` and `public/basis/`. It does not fetch decoders from a
 third-party CDN.
 
-The original upload’s 17 uncredited prototype GLBs were removed from the
-current repository. They occupied roughly 510 MB, contained no animation clips,
-and lacked the lineage, performer, maker, source, permission, and review records
-required for this project.
+The original upload’s 17 generated prototype GLBs are restored under
+`public/models/chhau-web-assets/`. They occupy roughly 510 MB and contain no
+animation clips. The eBook groups them on three non-regional pages, labels every
+option as a prototype, and loads one file only after the reader requests it.
+They do not replace the planned source-based studies in
+`CHHAU_3D_MODEL_ASSET_REQUEST.md`.
 
 ## Rights and provenance
 
@@ -198,6 +204,7 @@ public/map-of-chhau/              ignored, generated globe deployment output
 public/draco/                     local Draco decoder
 public/basis/                     local KTX2 transcoder
 public/models/chhau-approved/     reviewed release models
+public/models/chhau-web-assets/   recovered generic visual prototypes
 ```
 
 ## Stack
@@ -211,5 +218,5 @@ public/models/chhau-approved/     reviewed release models
 - npm with a committed lockfile for reproducible installs
 
 The repository does not commit dependencies, framework output, compiled globe
-bundles, raw production masters, unreviewed models, or duplicate assets. The
+bundles, raw production masters, unknown model files, or duplicate assets. The
 maintained source reproduces every runtime output.

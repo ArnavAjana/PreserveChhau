@@ -94,9 +94,35 @@ export const bookPages: BookPage[] = [
     id: "first-look",
     pageType: "content",
     title: "Look Before We Name the Movement",
-    body: "Before learning a technical word, take one slow look at the three traditions.\n\nStart with the full silhouette. Where does the costume widen? How low does the dancer stand? Is the face visible, partly framed, or fully replaced by a mask?\n\nNow move to smaller details. Follow the direction of the chest. Notice the head angle, the space between the feet, the weight of the headgear, and the way a prop extends the body.\n\nMayurbhanj gives you an uncovered face, but do not stop there. Seraikella gives you a fixed mask, but its apparent expression does not stay fixed. Purulia gives you scale and colour, but spectacle should not hide technique.\n\n> 3D sandbox: When the approved three-style line-up is added, rotate all three figures to the side. Compare their bases of support before looking at decoration.\n\nWe will use this method throughout the book. First notice the most visible detail. Then study stance, weight, spacing, and direction.\n\nYou do not need to rank the styles by strength, age, classical status, or authenticity. Rankings like these flatten the differences we need to understand.\n\nAsk a simpler question: What is this tradition asking the body to do?",
+    body: "Before learning a technical word, take one slow look at the three traditions.\n\nStart with the full silhouette. Where does the costume widen? How low does the dancer stand? Is the face visible, partly framed, or fully replaced by a mask?\n\nNow move to smaller details. Follow the direction of the chest. Notice the head angle, the space between the feet, the weight of the headgear, and the way a prop extends the body.\n\nMayurbhanj gives you an uncovered face, but do not stop there. Seraikella gives you a fixed mask, but its apparent expression does not stay fixed. Purulia gives you scale and colour, but spectacle should not hide technique.\n\n> 3D prototype: These six recovered, generated meshes test the viewer and help you compare silhouette, spacing, and camera angle. They are static visual experiments. They are not evidence of a Chhau tradition, costume, character, formation, or movement. Load one only when you want to inspect it.\n\nWe will use this method throughout the book. First notice the most visible detail. Then study stance, weight, spacing, and direction.\n\nYou do not need to rank the styles by strength, age, classical status, or authenticity. Rankings like these flatten the differences we need to understand.\n\nAsk a simpler question: What is this tradition asking the body to do?",
     modelUrl: null,
     modelScale: 1,
+    modelOptions: [
+      {
+        "label": "Ornate solo figure prototype",
+        "modelUrl": "/models/chhau-web-assets/traditional-dancer.glb"
+      },
+      {
+        "label": "Airborne pair prototype",
+        "modelUrl": "/models/chhau-web-assets/traditional-dancer-copy.glb"
+      },
+      {
+        "label": "Balance figure prototype",
+        "modelUrl": "/models/chhau-web-assets/dancer-character.glb"
+      },
+      {
+        "label": "Repeated ensemble prototype",
+        "modelUrl": "/models/chhau-web-assets/performing-dancers.glb"
+      },
+      {
+        "label": "Wide ensemble prototype",
+        "modelUrl": "/models/chhau-web-assets/dance-troupe.glb"
+      },
+      {
+        "label": "Group tableau prototype",
+        "modelUrl": "/models/chhau-web-assets/chhau-group-1.glb"
+      }
+    ],
     plannedModels: [
       "chhau-three-styles-lineup.glb"
     ],
@@ -156,9 +182,43 @@ export const bookPages: BookPage[] = [
     id: "martial-inheritance",
     pageType: "content",
     title: "The Martial Inheritance",
-    body: "Writers often stress Chhau’s martial connection. They also oversimplify it.\n\nAccounts often link Chhau’s physical vocabulary with regional systems of exercise and combat training. These include sword-and-shield practice and paika or akhara traditions. Wide stances, quick changes of direction, mock attacks, defensive responses, jumps, and weapon phrases make the relationship visible. Mayurbhanj histories give this connection special importance. [2][3][4][5]\n\nResemblance is not a full origin story.\n\nA movement holds martial knowledge without working as a literal battlefield technique. Once it enters festival and performance, its purpose changes. A strike becomes a readable line. A defensive position becomes a dramatic pause. A leap identifies a hero, demon, hunter, or animal. Rhythm reorganises the action. Costume changes its scale. The audience reads an image where a fighter once read an opening.\n\nIt is more accurate to say Chhau preserves and transforms martial inheritances than to say soldiers turned drills directly into dance.\n\n> 3D sandbox: Compare a grounded stance, an attack phrase, and the held shape after it. Do not watch only the arms. Notice how the centre of weight prepares, travels, and settles.\n\nThe word akhara reminds us of the people inside both martial and artistic history. An akhara is a physical training ground. It also means a community of teachers, students, musicians, and senior practitioners. Skills pass through demonstration, correction, repetition, and shared time, not through written instruction alone. [2][4][6]\n\nMartial history helps explain Chhau’s discipline, endurance, spatial awareness, and attack-and-release quality. It does not explain every mask, melody, ritual, character, or regional difference.\n\nChhau transforms martial actions for performance. It does not reproduce combat or reduce it to entertainment. Martial memory forms one part of its movement system.",
+    body: "Writers often stress Chhau’s martial connection. They also oversimplify it.\n\nAccounts often link Chhau’s physical vocabulary with regional systems of exercise and combat training. These include sword-and-shield practice and paika or akhara traditions. Wide stances, quick changes of direction, mock attacks, defensive responses, jumps, and weapon phrases make the relationship visible. Mayurbhanj histories give this connection special importance. [2][3][4][5]\n\nResemblance is not a full origin story.\n\nA movement holds martial knowledge without working as a literal battlefield technique. Once it enters festival and performance, its purpose changes. A strike becomes a readable line. A defensive position becomes a dramatic pause. A leap identifies a hero, demon, hunter, or animal. Rhythm reorganises the action. Costume changes its scale. The audience reads an image where a fighter once read an opening.\n\nIt is more accurate to say Chhau preserves and transforms martial inheritances than to say soldiers turned drills directly into dance.\n\n> 3D prototype: These generated figures and objects show broad martial imagery. Use them to test silhouette and viewpoint. They are not evidence of Chhau technique, named movement, regional dress, or historically accurate Chhau weapons. The blade and shield are not documented Chhau props or safe practice equipment.\n\nThe word akhara reminds us of the people inside both martial and artistic history. An akhara is a physical training ground. It also means a community of teachers, students, musicians, and senior practitioners. Skills pass through demonstration, correction, repetition, and shared time, not through written instruction alone. [2][4][6]\n\nMartial history helps explain Chhau’s discipline, endurance, spatial awareness, and attack-and-release quality. It does not explain every mask, melody, ritual, character, or regional difference.\n\nChhau transforms martial actions for performance. It does not reproduce combat or reduce it to entertainment. Martial memory forms one part of its movement system.",
     modelUrl: null,
     modelScale: 1,
+    modelOptions: [
+      {
+        "label": "Staff and shield figure prototype",
+        "modelUrl": "/models/chhau-web-assets/martial-artist.glb"
+      },
+      {
+        "label": "Standing sword figure prototype",
+        "modelUrl": "/models/chhau-web-assets/martial-artist-copy.glb"
+      },
+      {
+        "label": "Raised sword figure prototype",
+        "modelUrl": "/models/chhau-web-assets/martial-artist-copy-2.glb"
+      },
+      {
+        "label": "Blade and shield figure prototype",
+        "modelUrl": "/models/chhau-web-assets/martial-artist-2.glb"
+      },
+      {
+        "label": "Sword and shield pair prototype",
+        "modelUrl": "/models/chhau-web-assets/martial-artist-duo.glb"
+      },
+      {
+        "label": "Overhead sword figure prototype",
+        "modelUrl": "/models/chhau-web-assets/martial-artist-with-sword.glb"
+      },
+      {
+        "label": "Generated blade prototype",
+        "modelUrl": "/models/chhau-web-assets/longsword.glb"
+      },
+      {
+        "label": "Generated round shield prototype",
+        "modelUrl": "/models/chhau-web-assets/round-shield.glb"
+      }
+    ],
     plannedModels: [
       "mayurbhanj-core.glb",
       "prop-pack.glb"
@@ -447,9 +507,23 @@ export const bookPages: BookPage[] = [
     id: "body-carries-story",
     pageType: "content",
     title: "How Movement Communicates Story",
-    body: "Chhau creates a forest, battlefield, palace, or storm without building any of them on stage. The performers give us enough physical information to picture the rest.\n\nCharacter begins with entry. Gait, costume, mask or headpiece, and musical cue tell us who has arrived. Relationship comes next. Two figures face, follow, avoid, challenge, or protect one another. Rhythm marks a change in the relationship. A final pose makes the result readable.\n\nJiwan Pani’s idea of kinetic suggestion helped me understand this. Chhau does not depend on a complete hand-gesture code which translates every word. Movement phrases suggest action, mood, and relationship through footwork, flexion, direction, and rhythm. [5]\n\nMovement-led does not always mean voiceless. In some Purulia performances, a Jhumur singer introduces characters or presents the plot while masked dancers mime and move. Patnaik also records Jhoomar songs behind some Mayurbhanj dances. The balance among body, music, and voice shifts with style and piece. [4][8]\n\nA young reader does not need one fixed translation for every movement. These questions help me follow a scene:\n\n- Who entered, and what did the entry tell me about them?\n- What does each character seem to want?\n- When did the rhythm change the situation?\n- Which movement made the clearest turning point?\n- What did the final arrangement tell me?\n\n> Look: Replay a scene with captions off. Choose your interpretation, then read the documented synopsis. More than one reading might fit until a decisive action appears.\n\n> 3D sandbox: The planned Mayurbhanj repertoire study should pair one documented scene with its entry, relationship change, rhythmic turning point, and final pose. Use captions to separate the source synopsis from the reader’s interpretation. It remains unavailable until the troupe, performer, guru, musicians, modeller, permission, and practitioner review are recorded.\n\nSeveral readings might fit until a decisive action clarifies the scene. Chhau presents recognisable episodes while asking the audience to interpret some of the meaning.\n\nDancer, music, and audience establish the setting without scenery.",
+    body: "Chhau creates a forest, battlefield, palace, or storm without building any of them on stage. The performers give us enough physical information to picture the rest.\n\nCharacter begins with entry. Gait, costume, mask or headpiece, and musical cue tell us who has arrived. Relationship comes next. Two figures face, follow, avoid, challenge, or protect one another. Rhythm marks a change in the relationship. A final pose makes the result readable.\n\nJiwan Pani’s idea of kinetic suggestion helped me understand this. Chhau does not depend on a complete hand-gesture code which translates every word. Movement phrases suggest action, mood, and relationship through footwork, flexion, direction, and rhythm. [5]\n\nMovement-led does not always mean voiceless. In some Purulia performances, a Jhumur singer introduces characters or presents the plot while masked dancers mime and move. Patnaik also records Jhoomar songs behind some Mayurbhanj dances. The balance among body, music, and voice shifts with style and piece. [4][8]\n\nA young reader does not need one fixed translation for every movement. These questions help me follow a scene:\n\n- Who entered, and what did the entry tell me about them?\n- What does each character seem to want?\n- When did the rhythm change the situation?\n- Which movement made the clearest turning point?\n- What did the final arrangement tell me?\n\n> Look: Replay a scene with captions off. Choose your interpretation, then read the documented synopsis. More than one reading might fit until a decisive action appears.\n\n> 3D prototype: Use these three generic figure meshes to practise reading support, direction, and held shape before assigning a story. They are not evidence of a Chhau movement or character. The poses do not demonstrate chauk, chali, bhangi, ufli, topka, or another named Chhau movement.\n\nSeveral readings might fit until a decisive action clarifies the scene. Chhau presents recognisable episodes while asking the audience to interpret some of the meaning.\n\nDancer, music, and audience establish the setting without scenery.",
     modelUrl: null,
     modelScale: 1,
+    modelOptions: [
+      {
+        "label": "Folded figure prototype",
+        "modelUrl": "/models/chhau-web-assets/human-figure.glb"
+      },
+      {
+        "label": "Crossed foot figure prototype",
+        "modelUrl": "/models/chhau-web-assets/human-figure-copy.glb"
+      },
+      {
+        "label": "Bent knee silhouette prototype",
+        "modelUrl": "/models/chhau-web-assets/chhau-figure-5a81ddf6.glb"
+      }
+    ],
     plannedModels: [
       "mayurbhanj-repertoire.glb"
     ],
@@ -738,14 +812,6 @@ export const bookPages: BookPage[] = [
     pageType: "content",
     title: "Library",
     body: "Every numbered citation in the book leads here. This is my working bibliography, not a complete one. I start with official and primary sources. Later scholarship and project materials add detail or comparison.\n\n[1] UNESCO. _Chhau dance._ Representative List of the Intangible Cultural Heritage of Humanity, nomination 00337, inscribed 2010. _Fifth session of the Intergovernmental Committee (5.COM)_, Nairobi, Kenya, 15 to 19 November 2010. https://ich.unesco.org/en/RL/chhau-dance-00337 and https://ich.unesco.org/en/5com\n\n[2] Indira Gandhi National Centre for the Arts. _IGNCA Inventory on the Intangible Cultural Heritage of India: Chhau Dance._ Submitted by Sangeet Natak Akademi. https://ignca.gov.in/ICH/ich_detail/ich00007.pdf\n\n[3] Mohanta, Basanta Kumar. “Growth and Development of Chhau Dance in Orissa.” _Orissa Review_, June 2008, pp. 27 to 32. https://magazines.odisha.gov.in/Orissareview/2008/June-2008/engpdf/Pages27-32.pdf. Supplied research file: Growth_and_Development_of_Chhau_Dance_in(1).pdf.\n\n[4] Patnaik, D. N. “The Chhau Dance of Mayurbhanj: III.” _Sangeet Natak_, nos. 131 to 132, 1999, pp. 21 to 43. https://archive.org/stream/dli.ministry.11087/JSNA%2528131-132%252921-43_djvu.txt\n\n[5] Pani, Jiwan. “Chhau: A Comparative Study of Seraikella and Mayurbhanj Forms.” _Sangeet Natak_. https://archive.org/stream/dli.ministry.11084/JSNA%252813%252935-45_djvu.txt\n\n[6] Behuria, Rabindra Kumar. “Chhau Dance of Mayurbhanj.” _Orissa Review_, September to October 2006, pp. 48 to 50. https://magazines.odisha.gov.in/orissareview/sept-oct2006/engpdf/48-50.pdf\n\n[7] Government of Odisha, Mayurbhanj District. “Culture & Heritage” and “History.” https://mayurbhanj.odisha.gov.in/en/tourism/culture-Heritage and https://mayurbhanj.odisha.gov.in/en/about-district/history\nI used these pages for local geographic, cultural, Bhanja-dynasty, and 1949 merger orientation. I treat the word-origin account as a local theory, not settled etymology.\n\n[8] Chatterjee, Deepsikha. “Masks and Costumes of Purulia Chhau.” _Asian Theatre Journal_ 36, no. 1, 2019, pp. 221 to 238. https://muse.jhu.edu/article/719429\n\n[9] Chandra, Sharmila. “The Cultural History of Purulia Chhou—An Antithesis of Saraikela Chhou.” _Kalakalpa_ 7, no. 1, 2022, pp. 83 to 98. Supplied research file: The_Cultural_History_of_Purulia_Chhou(1).pdf.\n\n[10] Kumar, Nayak, and Swain. “Ritual, Performance and Spirituality: Cultures of Chaitra Parva and Purulia Chhau.” _The Oriental Anthropologist_ 24, no. 2, 2024, pp. 359 to 384. I used only its documented Purulia context, not as a description of Mayurbhanj ritual.\n\n[11] Government of Jharkhand, District Seraikela Kharsawan. “Culture & Heritage” and “History.” https://seraikela.nic.in/culture-heritage/ and https://seraikela.nic.in/history/\nI used these pages for regional location and local cultural orientation. Contested origin accounts stay qualified.\n\n[12] Government of West Bengal, Purulia District. “Folk & Culture” and “History.” https://purulia.gov.in/folk-culture/ and https://purulia.gov.in/history/\nI used these pages for district location, Charida, and local performance context. I did not repeat dated terminology or confident origin claims from the portal without support from another source.\n\n[13] NHS. Physical-activity guidance for children and young people. Johns Hopkins Medicine. “Common Dance Injuries and Prevention Tips.” I used them only as general background for conservative draft exclusions. Neither source is Chhau-specific. Neither validates the proposed activities or establishes the ages 8 to 14 routine as appropriate for an individual child. https://www.nhs.uk/live-well/exercise/physical-activity-guidelines-children-and-young-people/ and https://www.hopkinsmedicine.org/health/conditions-and-diseases/sports-injuries/common-dance-injuries-and-prevention-tips\n\n[14] Kumar, Nayak, and Swain. “New Normal, Cultural Shifting and Intellectual Property Rights.” _Naad-Nartan_ 12, no. 2, 2024, pp. 103 to 106. I used it as a Purulia case study for digital access, credit, rights, and women’s participation.\n\n[15] Pani, Susil. _Mayurbhanj and Saraikala Chhau Dance from Odisha: A Photographic Journey._ n.d. Supplied research file: MAYURBHANJ_AND_SARAIKALA_CHHAU_DANCE_FRO(1).pdf. No publisher or date was visible in the copy reviewed. I used it only for clearly identified photographic examples and the author’s warning about the selection not being comprehensive.\n\n### More reading and viewing, not cited directly\n\n- Mahapatra, Sitakant, ed. _Chhau Dance of Mayurbhanj._ Vidyapuri, 1993. The complete text was unavailable for line-by-line checking in this edition.\n- Centre for Cultural Resources and Training. Mayurbhanj Chhau audio-visual catalogue and heritage-education resources. https://ccrtindia.gov.in/\n\n### How I used the sources\n\nOfficial listings support the three styles, living-heritage status, broad performance context, oral transmission, and shared vocabulary. Mayurbhanj technical writing supports body grammar, music, and repertoire. I still keep regional movement lists in their source columns. Regional scholarship supports comparison. Purulia research stays labelled as Purulia evidence. General safety sources shaped conservative draft exclusions only. They do not validate the child activities or Chhau-specific guidance.\n\nI copied no source text into this manuscript. I wrote an original synthesis and kept disputed claims qualified.",
-    modelUrl: null,
-    modelScale: 1,
-  },
-  {
-    id: "credits-review-status",
-    pageType: "content",
-    title: "Credits and Review Status",
-    body: "The writing exists. The full production does not yet have every approval it needs.\n\n### Project authorship and completed work\n\n- Arnav Ajana: project concept, initial research corpus, personal narrative, and creative direction.\n- Manuscript drafting, structural development, and technical implementation: developed through an AI-assisted process under my direction.\n- A source audit separating documented fact, interpretation, and open questions.\n- A page-level 3D model brief, credit requirements, and provisional activity boundaries awaiting specialist validation.\n\n### Required before an editorially complete release\n\n- A named Mayurbhanj Chhau guru or senior practitioner reviews movement terms, history, repertoire, pronunciation, and every Mayurbhanj model.\n- Named Seraikella and Purulia practitioners review their comparison pages and models.\n- Mask makers approve every reproduced design and receive credit.\n- Musicians verify instrument models, playing positions, audio labels, and ensemble descriptions.\n- A pediatric movement and safety professional reviews the proposed ages 8 to 14 range, every physical activity, the exclusions, and all warning language. A Chhau practitioner separately reviews the form-specific movement boundaries.\n- Every photograph, sound, video, model reference, and interview receives written permission and a complete credit line.\n- Future audio enters the project only after documentation of its source, performers, recording details, permission, licence, and required credit.\n- Open historical questions are checked against original registration records, court papers, programmes, and contemporary newspapers where available.\n- I complete a line-by-line author pass and rewrite every sentence I would not naturally say before presenting the project as my portfolio.\n\n### Credit principle\n\nI want the public credits to name the people whose knowledge shaped this work. A general thank-you hides too much. A performer is not “visual reference.” A musician is not “background audio.” A mask maker is not “asset support.”\n\nThis page needs to stay visible until those roles are filled. Removing it would make the eBook look finished while hiding unfinished work.",
     modelUrl: null,
     modelScale: 1,
   },

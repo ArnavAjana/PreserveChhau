@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "lastReviewed": "2026-07-14",
-  "scope": "Retained third-party static assets, user-supplied project media, and map geometry shipped by the project, plus explicit records for withheld local media and removed remote Commons references.",
+  "lastReviewed": "2026-07-15",
+  "scope": "Retained third-party static assets, user-supplied project media, recovered generated 3D prototypes, and map geometry shipped by the project, plus explicit records for withheld local media and removed remote Commons references.",
   "projectLicenseStatus": {
     "status": "no-broad-project-license",
     "notice": "Public repository visibility permits viewing and GitHub forking under GitHub's Terms of Service; it does not grant a general right to reproduce, distribute, or create derivative works. No broad licence has been selected for PreserveChhau original material. All rights are reserved where a rights holder is established; where authorship or ownership is not yet confirmed, reuse permission is undetermined and is not granted. Third-party components remain governed by their own licences."
@@ -105,6 +105,121 @@
       "licenseFile": "THIRD_PARTY_LICENSES/Apache-2.0.txt",
       "upstreamNoticeFile": "THIRD_PARTY_LICENSES/Basis-Universal-NOTICE.txt",
       "noticeFile": "THIRD_PARTY_NOTICES.md"
+    }
+  ],
+  "prototypeModelPolicy": {
+    "status": "user-directed-generic-prototype",
+    "mediaType": "Static GLB model",
+    "creatorWorkflow": "Tripo-generated. The operator, prompt, training inputs, and source pose are not documented in the recovered repository record.",
+    "sourceCommit": "27c346b7d6612360c84df56b5ab69d8d260ecb96",
+    "publicationInstruction": "Arnav Ajana explicitly instructed the project to restore and publish the recovered GLBs beside relevant eBook text on 2026-07-15.",
+    "permissionScope": "Include these exact recovered bytes as part of the PreserveChhau interactive eBook and repository.",
+    "reuseTerms": "No standalone or general reuse licence is stated in the recovered repository record. This record does not grant reuse.",
+    "culturalStatus": "Generic generated visual prototype only. Not practitioner-reviewed and not evidence of a named Chhau movement, regional tradition, costume, character, instrument, prop, troupe, formation, or performance setting.",
+    "technicalStatus": "Static, unrigged, uncompressed meshes with no animation clips. Each model loads only after a reader requests it."
+  },
+  "prototypeModels": [
+    {
+      "path": "public/models/chhau-web-assets/chhau-figure-5a81ddf6.glb",
+      "gitBlobSha1": "9b67be3b6d2a32737866b3e57a3554a273079b1a",
+      "byteLength": 28751596,
+      "sha256": "66f98d28c4b84dad5db8eb9ca33d91feec79bb337ee4674da243f4d5c0e79bbb"
+    },
+    {
+      "path": "public/models/chhau-web-assets/chhau-group-1.glb",
+      "gitBlobSha1": "8f9f4fe62b9a10decd3d18365df1502df82a889f",
+      "byteLength": 31412360,
+      "sha256": "393d833784a5f75750bf906391252a057f08a8df5de421f2360e8229a151f9d7"
+    },
+    {
+      "path": "public/models/chhau-web-assets/dance-troupe.glb",
+      "gitBlobSha1": "d24512ddfac2379c7f7501a355ddd43ebcc2b9b4",
+      "byteLength": 58838248,
+      "sha256": "0845164c71c98589340d0777f917c1f3c02cbaf47b734afcca4503151ee26453"
+    },
+    {
+      "path": "public/models/chhau-web-assets/dancer-character.glb",
+      "gitBlobSha1": "a69ba9f1d47816a584ee89b2c2440c9a7d7ce79e",
+      "byteLength": 31065172,
+      "sha256": "ef9ac662d61679c2f28f75047e0ecca74437ab8e03ed3a2054267bce40f5889f"
+    },
+    {
+      "path": "public/models/chhau-web-assets/human-figure-copy.glb",
+      "gitBlobSha1": "2c8ec7d5bb6b1dc0387e5854defaf97ac2036520",
+      "byteLength": 29068768,
+      "sha256": "e683c39403f518a4cae6cfb62aef9a98e8f28dff48acad2cf58f156e5932e52c"
+    },
+    {
+      "path": "public/models/chhau-web-assets/human-figure.glb",
+      "gitBlobSha1": "ba0939fcdcf968693a47bf3a0b7ff64b0cb1f80a",
+      "byteLength": 29740348,
+      "sha256": "64e8a9b8fe4c0f1b0d521fb6e411a93e27ea65617143257b3e01c37782d9ca76"
+    },
+    {
+      "path": "public/models/chhau-web-assets/longsword.glb",
+      "gitBlobSha1": "336b65c0c0102e7b42c9e6676986c80d03030d36",
+      "byteLength": 24083824,
+      "sha256": "1baa9fde12c3bcdeb1d642e0c4bc62fa439725f7af1eb2486c1ac0aef194321b"
+    },
+    {
+      "path": "public/models/chhau-web-assets/martial-artist-2.glb",
+      "gitBlobSha1": "233610e6c2be33b0e46f201f23dd7f70aa3ecbe5",
+      "byteLength": 29692544,
+      "sha256": "cbd6de6cf5884c1fa8169fcd682cf016f40194536dbd7e1355981f226cfd29f9"
+    },
+    {
+      "path": "public/models/chhau-web-assets/martial-artist-copy-2.glb",
+      "gitBlobSha1": "810cb21a954219839a799082058fd3b96c1c059a",
+      "byteLength": 29553164,
+      "sha256": "bd2631c699cb07d738c7a56e6b196a3c8152f7345ce9b303119f5f20e04fa01f"
+    },
+    {
+      "path": "public/models/chhau-web-assets/martial-artist-copy.glb",
+      "gitBlobSha1": "011ea00123e206bb596f538502b72a7d81e57b64",
+      "byteLength": 28999220,
+      "sha256": "5c5c9625e9e65e8ffef4f4eecffe6f3d35de36d3ba6c836b0374b9af1aec0be3"
+    },
+    {
+      "path": "public/models/chhau-web-assets/martial-artist-duo.glb",
+      "gitBlobSha1": "76b0a556a1c81c026ba241e74d040fa9f85477ab",
+      "byteLength": 30208160,
+      "sha256": "58e93d3361b5c8d9fa151d62d84628b7d8dae7985aac61d2d4a829764cc86893"
+    },
+    {
+      "path": "public/models/chhau-web-assets/martial-artist-with-sword.glb",
+      "gitBlobSha1": "e8415f3c00266e7628c3af513f18a8dc137aadd0",
+      "byteLength": 28559496,
+      "sha256": "bd77c18768a0e70501308072b964d3b42a8c9a3812787c9b0a3ed56f8d1abbe5"
+    },
+    {
+      "path": "public/models/chhau-web-assets/martial-artist.glb",
+      "gitBlobSha1": "cf26ea14d32bd97f684a7e02572a76917043d51c",
+      "byteLength": 31324908,
+      "sha256": "01118522a9488db44b7c9696d9b0da06d2619159ac73b73e2a6d990b4f3042e3"
+    },
+    {
+      "path": "public/models/chhau-web-assets/performing-dancers.glb",
+      "gitBlobSha1": "4304ca0637d9a4dce5a773d843f340b6587da8b5",
+      "byteLength": 30013920,
+      "sha256": "4964a5d622af4779474cc9e630a7989fe19fa048de676ab08ff9e18a39a950f2"
+    },
+    {
+      "path": "public/models/chhau-web-assets/round-shield.glb",
+      "gitBlobSha1": "79f8f04274e0ccd9e882f513f12b5e3f0629edc3",
+      "byteLength": 30687460,
+      "sha256": "9979c58a00de0eedbfef887a2d2ecb7e82e166fed4fd5c2505fcb131c43db3f4"
+    },
+    {
+      "path": "public/models/chhau-web-assets/traditional-dancer-copy.glb",
+      "gitBlobSha1": "c9671ae980d790806cbb582e40d45a23fff76316",
+      "byteLength": 31255260,
+      "sha256": "fa10cb799daceb1ea1aa2c6d9bd59725bbe9eb9bd9dcb5ed174937606e306ec5"
+    },
+    {
+      "path": "public/models/chhau-web-assets/traditional-dancer.glb",
+      "gitBlobSha1": "268c121a90f18c801d9d08025c6e099027303842",
+      "byteLength": 30503892,
+      "sha256": "f04c48b0ea85a1b34f44af4a451733b928297972e46e6d325eb6a696a891ed5b"
     }
   ],
   "authoredMedia": [

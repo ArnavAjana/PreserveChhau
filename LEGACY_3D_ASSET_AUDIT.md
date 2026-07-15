@@ -1,16 +1,17 @@
 # Recovered 3D asset audit
 
-Audit date: 14 July 2026
+Audit date: 15 July 2026
 
 ## Decision
 
-None of the 17 recovered GLB files should appear on a public eBook page.
+All 17 recovered GLB files now appear as user-directed generic visual
+prototypes. Each file loads only after the reader chooses it.
 
-Every file loads in the project viewer. Loading is not approval. All 17 are
-static Tripo-generated meshes with no recorded source pose, prompt, operator,
-performer, maker, licence, permission, regional attribution, or practitioner
-review. Appearance alone does not support a Mayurbhanj, Seraikella, Purulia,
-movement, costume, mask, character, or prop label.
+All 17 are static Tripo-generated meshes with no recorded source pose, prompt,
+operator, performer, maker, licence, regional attribution, or practitioner
+review. Their public labels describe visible form only. Appearance alone does
+not support a Mayurbhanj, Seraikella, Purulia, movement, costume, mask,
+character, formation, performance, or prop claim.
 
 The recovered filenames also do not match the planned filenames in
 `CHHAU_3D_MODEL_ASSET_REQUEST.md`. Renaming a generic model to match a reviewed
@@ -35,44 +36,41 @@ prop, performer, or pathway.
 
 ## File review
 
-| File | Visible subject | Public decision |
+| File | Visible subject | Published limit |
 | --- | --- | --- |
-| `chhau-figure-5a81ddf6.glb` | Generic unmasked figure in a wide bent-knee pose | Do not call it chauk or Mayurbhanj. Private camera test only after rights review. |
-| `chhau-group-1.glb` | Fused group tableau | No documented troupe, formation, place, or regional identity. Quarantine. |
-| `dance-troupe.glb` | Fused line of figures with unidentified curved objects | Private wide-camera stress test only after rights review. |
-| `dancer-character.glb` | Ornate figure in an extreme balance | No documented character, work, costume, or style. Quarantine. |
-| `human-figure-copy.glb` | Generic crossed-foot pose | No documented movement or source. Private controls test only after rights review. |
-| `human-figure.glb` | Generic folded-forward pose | Do not label it as daily work, readiness, or Chhau. Quarantine. |
-| `longsword.glb` | Generated fantasy-like blade | No maker, scale, source object, or Chhau link. Quarantine. |
-| `martial-artist-2.glb` | Masked or helmeted warrior with blade and shield | Do not present as Seraikella or Purulia. Quarantine. |
-| `martial-artist-copy-2.glb` | Generic raised-sword figure | No documented phrase, practitioner, or region. Quarantine. |
-| `martial-artist-copy.glb` | Generic standing sword figure | No Chhau stance, dress, or object record. Quarantine. |
-| `martial-artist-duo.glb` | Two fused sword-and-shield figures | No documented phrase or regional source. Quarantine. |
-| `martial-artist-with-sword.glb` | Generic overhead-sword pose | Private framing test only after rights review. |
-| `martial-artist.glb` | Ambiguous warrior with staff and shield | Do not assign a character, mask, story, or region. Quarantine. |
-| `performing-dancers.glb` | Fused repeated group | No documented formation or performance. Quarantine. |
-| `round-shield.glb` | Dense generated circular prop | No maker, construction, scale, or Chhau link. Quarantine. |
-| `traditional-dancer-copy.glb` | Two fused ornate airborne figures | Do not present as a regional jump or comparison. Quarantine. |
-| `traditional-dancer.glb` | Ornate dancer with unidentified circular form | No documented work, costume, prop, or style. Quarantine. |
+| `chhau-figure-5a81ddf6.glb` | Generic unmasked figure in a wide bent-knee pose | Bent knee silhouette prototype. Never chauk or Mayurbhanj evidence. |
+| `chhau-group-1.glb` | Fused group tableau | Group framing prototype. No troupe, formation, place, or regional identity. |
+| `dance-troupe.glb` | Fused line of figures with unidentified curved objects | Wide framing prototype. No troupe, arena, or event claim. |
+| `dancer-character.glb` | Ornate figure in an extreme balance | Balance figure prototype. No character, work, costume, or style claim. |
+| `human-figure-copy.glb` | Generic crossed-foot pose | Figure prototype. No named movement or source claim. |
+| `human-figure.glb` | Generic folded-forward pose | Figure prototype. Never daily work, readiness, or Chhau evidence. |
+| `longsword.glb` | Generated fantasy-like blade | Generated blade prototype. No maker, scale, source object, or Chhau link. |
+| `martial-artist-2.glb` | Masked or helmeted warrior with blade and shield | Martial image prototype. Never Seraikella or Purulia evidence. |
+| `martial-artist-copy-2.glb` | Generic raised-sword figure | Martial image prototype. No documented phrase or region. |
+| `martial-artist-copy.glb` | Generic standing sword figure | Martial image prototype. No Chhau stance, dress, or object claim. |
+| `martial-artist-duo.glb` | Two fused sword-and-shield figures | Pair framing prototype. No documented phrase or regional source. |
+| `martial-artist-with-sword.glb` | Generic overhead-sword pose | Martial image prototype. No technique claim. |
+| `martial-artist.glb` | Ambiguous warrior with staff and shield | Martial image prototype. No character, mask, story, or region. |
+| `performing-dancers.glb` | Fused repeated group | Group framing prototype. No documented formation or performance. |
+| `round-shield.glb` | Dense generated circular prop | Generated circular-object prototype. No maker, construction, scale, or Chhau link. |
+| `traditional-dancer-copy.glb` | Two fused ornate airborne figures | Airborne pair prototype. No regional jump or comparison claim. |
+| `traditional-dancer.glb` | Ornate dancer with unidentified circular form | Solo figure prototype. No documented work, costume, prop, or style. |
 
 ## Page allocation
 
-Public eBook allocation: zero recovered files.
+Public eBook allocation: all 17 recovered files, each used once.
 
-The only defensible short-term allocation is an unlisted development route
-after provenance and rights review:
-
-| Development test | Possible recovered file | Limit |
+| Page | Files | Learning purpose |
 | --- | --- | --- |
-| Rotation, zoom, light, and reset | `human-figure-copy.glb` | Generic static viewer test. Never a Chhau pose. |
-| Prop close view | `longsword.glb`, `round-shield.glb` | Generic generated objects. Never documented Chhau props. |
-| Wide responsive framing | `dance-troupe.glb` | Fused generated group. Never a troupe, arena, or formation record. |
+| `first-look` | Six solo and ensemble prototypes | Test silhouette, spacing, camera angle, and group framing before assigning a name. |
+| `martial-inheritance` | Six martial figures, one generated blade, and one generated shield | Test viewpoint and broad martial imagery without claiming a Chhau technique or object. |
+| `body-carries-story` | Three generic figure prototypes | Practise reading support, direction, and held shape without naming a movement or character. |
 
-Do not place these tests on `chali-character-walk`, `readiness-weight-chauk`,
-`topka-and-ufli`, `movement-unit-to-bhangi`, `map-of-chhau`, or any
-region-specific page. Their appearance supplies no evidence for those claims.
+The release checker requires each recovered file to appear exactly once. It
+also rejects labels which assign Chhau, a regional identity, or a named movement
+to these models.
 
-## Optimisation gate for any private test
+## Optimisation work still needed
 
 - repair geometry errors and remove floating fragments
 - reduce a prop to about 20,000 to 30,000 triangles
@@ -100,4 +98,5 @@ Every public model needs:
 - rig, clips, and motion sources when movement is claimed
 - mobile performance test and accessible description
 
-Until this record is complete, the interface state remains `Planned study`.
+The source-based studies remain `Planned study`. These recovered prototypes do
+not fill those slots.

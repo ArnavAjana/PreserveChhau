@@ -22,6 +22,34 @@ const forbiddenUnclearedMedia = [
   "map-of-chhau/public/images/night-sky.png",
 ];
 const approvedUserSuppliedMedia = ["public/images/arnav-ajana-about.jpg"];
+const approvedPrototypeModels = [
+  ["chhau-figure-5a81ddf6.glb", 28751596, "66f98d28c4b84dad5db8eb9ca33d91feec79bb337ee4674da243f4d5c0e79bbb", "9b67be3b6d2a32737866b3e57a3554a273079b1a"],
+  ["chhau-group-1.glb", 31412360, "393d833784a5f75750bf906391252a057f08a8df5de421f2360e8229a151f9d7", "8f9f4fe62b9a10decd3d18365df1502df82a889f"],
+  ["dance-troupe.glb", 58838248, "0845164c71c98589340d0777f917c1f3c02cbaf47b734afcca4503151ee26453", "d24512ddfac2379c7f7501a355ddd43ebcc2b9b4"],
+  ["dancer-character.glb", 31065172, "ef9ac662d61679c2f28f75047e0ecca74437ab8e03ed3a2054267bce40f5889f", "a69ba9f1d47816a584ee89b2c2440c9a7d7ce79e"],
+  ["human-figure-copy.glb", 29068768, "e683c39403f518a4cae6cfb62aef9a98e8f28dff48acad2cf58f156e5932e52c", "2c8ec7d5bb6b1dc0387e5854defaf97ac2036520"],
+  ["human-figure.glb", 29740348, "64e8a9b8fe4c0f1b0d521fb6e411a93e27ea65617143257b3e01c37782d9ca76", "ba0939fcdcf968693a47bf3a0b7ff64b0cb1f80a"],
+  ["longsword.glb", 24083824, "1baa9fde12c3bcdeb1d642e0c4bc62fa439725f7af1eb2486c1ac0aef194321b", "336b65c0c0102e7b42c9e6676986c80d03030d36"],
+  ["martial-artist-2.glb", 29692544, "cbd6de6cf5884c1fa8169fcd682cf016f40194536dbd7e1355981f226cfd29f9", "233610e6c2be33b0e46f201f23dd7f70aa3ecbe5"],
+  ["martial-artist-copy-2.glb", 29553164, "bd2631c699cb07d738c7a56e6b196a3c8152f7345ce9b303119f5f20e04fa01f", "810cb21a954219839a799082058fd3b96c1c059a"],
+  ["martial-artist-copy.glb", 28999220, "5c5c9625e9e65e8ffef4f4eecffe6f3d35de36d3ba6c836b0374b9af1aec0be3", "011ea00123e206bb596f538502b72a7d81e57b64"],
+  ["martial-artist-duo.glb", 30208160, "58e93d3361b5c8d9fa151d62d84628b7d8dae7985aac61d2d4a829764cc86893", "76b0a556a1c81c026ba241e74d040fa9f85477ab"],
+  ["martial-artist-with-sword.glb", 28559496, "bd77c18768a0e70501308072b964d3b42a8c9a3812787c9b0a3ed56f8d1abbe5", "e8415f3c00266e7628c3af513f18a8dc137aadd0"],
+  ["martial-artist.glb", 31324908, "01118522a9488db44b7c9696d9b0da06d2619159ac73b73e2a6d990b4f3042e3", "cf26ea14d32bd97f684a7e02572a76917043d51c"],
+  ["performing-dancers.glb", 30013920, "4964a5d622af4779474cc9e630a7989fe19fa048de676ab08ff9e18a39a950f2", "4304ca0637d9a4dce5a773d843f340b6587da8b5"],
+  ["round-shield.glb", 30687460, "9979c58a00de0eedbfef887a2d2ecb7e82e166fed4fd5c2505fcb131c43db3f4", "79f8f04274e0ccd9e882f513f12b5e3f0629edc3"],
+  ["traditional-dancer-copy.glb", 31255260, "fa10cb799daceb1ea1aa2c6d9bd59725bbe9eb9bd9dcb5ed174937606e306ec5", "c9671ae980d790806cbb582e40d45a23fff76316"],
+  ["traditional-dancer.glb", 30503892, "f04c48b0ea85a1b34f44af4a451733b928297972e46e6d325eb6a696a891ed5b", "268c121a90f18c801d9d08025c6e099027303842"],
+].map(([filename, byteLength, sha256, gitBlobSha1]) => ({
+  byteLength,
+  gitBlobSha1,
+  path: `public/models/chhau-web-assets/${filename}`,
+  sha256,
+}));
+const approvedPrototypeModelByPath = new Map(
+  approvedPrototypeModels.map((model) => [model.path, model]),
+);
+const sha256Cache = new Map();
 
 async function listFiles(directory) {
   if (!existsSync(directory)) return [];
@@ -40,7 +68,10 @@ function requirePath(path) {
 }
 
 async function sha256(path) {
-  return createHash("sha256").update(await readFile(path)).digest("hex");
+  if (sha256Cache.has(path)) return sha256Cache.get(path);
+  const digest = createHash("sha256").update(await readFile(path)).digest("hex");
+  sha256Cache.set(path, digest);
+  return digest;
 }
 
 [
@@ -163,12 +194,14 @@ for (const path of [mapIndexPath, ...mapBundleFiles]) {
 }
 
 const legacyPublicPath = resolve(publicRoot, "models/chhau-web-assets");
-if (existsSync(legacyPublicPath)) {
-  const legacyPublicFiles = await listFiles(legacyPublicPath);
-  if (legacyPublicFiles.length > 0) {
-    failures.push("Unreviewed legacy models must not be shipped from public/.");
+const legacyPublicFiles = await listFiles(legacyPublicPath);
+for (const path of legacyPublicFiles) {
+  const relativePath = relative(root, path);
+  if (!approvedPrototypeModelByPath.has(relativePath)) {
+    failures.push(`Unapproved recovered model in public/: ${relativePath}`);
   }
 }
+for (const model of approvedPrototypeModels) requirePath(model.path);
 
 const legacyArchivePath = resolve(root, "archive/legacy-models");
 if (existsSync(legacyArchivePath)) {
@@ -334,6 +367,120 @@ if (rightsManifest) {
     }
   }
 
+  const prototypePolicy = rightsManifest.prototypeModelPolicy;
+  const requiredPrototypePolicyFields = [
+    "status",
+    "mediaType",
+    "creatorWorkflow",
+    "sourceCommit",
+    "publicationInstruction",
+    "permissionScope",
+    "reuseTerms",
+    "culturalStatus",
+    "technicalStatus",
+  ];
+  if (!prototypePolicy || typeof prototypePolicy !== "object") {
+    failures.push(`${rightsManifestPath} must contain a prototype-model policy.`);
+  } else {
+    for (const field of requiredPrototypePolicyFields) {
+      if (
+        typeof prototypePolicy[field] !== "string" ||
+        prototypePolicy[field].trim() === ""
+      ) {
+        failures.push(`Prototype-model policy is missing ${field}.`);
+      }
+    }
+    if (prototypePolicy.status !== "user-directed-generic-prototype") {
+      failures.push("Prototype models must retain their user-directed generic status.");
+    }
+    if (
+      prototypePolicy.sourceCommit !==
+      "27c346b7d6612360c84df56b5ab69d8d260ecb96"
+    ) {
+      failures.push("Prototype models must retain their exact recovery commit.");
+    }
+    if (!prototypePolicy.publicationInstruction?.includes("2026-07-15")) {
+      failures.push("Prototype-model policy lacks dated publication instruction.");
+    }
+    const culturalStatus = prototypePolicy.culturalStatus?.toLowerCase() ?? "";
+    if (
+      !culturalStatus.includes("not practitioner-reviewed") ||
+      !culturalStatus.includes("not evidence")
+    ) {
+      failures.push(
+        "Prototype-model policy must state that the meshes are not practitioner-reviewed and not evidence.",
+      );
+    }
+    if (!prototypePolicy.reuseTerms?.includes("does not grant reuse")) {
+      failures.push("Prototype-model policy must not imply a general reuse licence.");
+    }
+  }
+
+  const prototypeRecords = rightsManifest.prototypeModels;
+  const manifestedPrototypePaths = new Set();
+  if (
+    !Array.isArray(prototypeRecords) ||
+    prototypeRecords.length !== approvedPrototypeModels.length
+  ) {
+    failures.push(
+      `${rightsManifestPath} must contain exactly ${approvedPrototypeModels.length} prototype-model records.`,
+    );
+  } else {
+    for (const model of prototypeRecords) {
+      for (const field of ["path", "gitBlobSha1", "sha256"]) {
+        if (typeof model[field] !== "string" || model[field].trim() === "") {
+          failures.push(`Prototype-model record ${model.path ?? "<unknown>"} is missing ${field}.`);
+        }
+      }
+      if (!Number.isInteger(model.byteLength) || model.byteLength <= 0) {
+        failures.push(`Prototype-model record ${model.path ?? "<unknown>"} has an invalid byteLength.`);
+      }
+
+      const expected = approvedPrototypeModelByPath.get(model.path);
+      if (!expected) {
+        failures.push(`Unexpected prototype-model record: ${model.path ?? "<unknown>"}`);
+        continue;
+      }
+      if (manifestedPrototypePaths.has(model.path) || manifestedPaths.has(model.path)) {
+        failures.push(`Duplicate asset-manifest path: ${model.path}`);
+        continue;
+      }
+      manifestedPrototypePaths.add(model.path);
+      manifestedPaths.add(model.path);
+
+      if (
+        model.byteLength !== expected.byteLength ||
+        model.sha256 !== expected.sha256 ||
+        model.gitBlobSha1 !== expected.gitBlobSha1
+      ) {
+        failures.push(`Prototype-model record does not match the approved bytes: ${model.path}`);
+      }
+
+      const absolutePath = resolve(root, model.path);
+      if (!existsSync(absolutePath)) {
+        failures.push(`Manifested prototype model is missing: ${model.path}`);
+        continue;
+      }
+      const fileStat = await stat(absolutePath);
+      if (fileStat.size !== expected.byteLength) {
+        failures.push(
+          `Prototype-model size mismatch for ${model.path}: expected ${expected.byteLength}, found ${fileStat.size}`,
+        );
+      }
+      const actualHash = await sha256(absolutePath);
+      if (actualHash !== expected.sha256) {
+        failures.push(
+          `Prototype-model hash mismatch for ${model.path}: expected ${expected.sha256}, found ${actualHash}`,
+        );
+      }
+    }
+    for (const expected of approvedPrototypeModels) {
+      if (!manifestedPrototypePaths.has(expected.path)) {
+        failures.push(`${rightsManifestPath} must record prototype model: ${expected.path}.`);
+      }
+    }
+  }
+
   const withheldPaths = new Set(
     Array.isArray(rightsManifest.withheldAssets)
       ? rightsManifest.withheldAssets.map((asset) => asset.formerPath)
@@ -439,6 +586,86 @@ if (rightsManifest) {
   }
 }
 
+const manuscriptPath = resolve(root, "Chhau_eBook_Content.md");
+if (existsSync(manuscriptPath)) {
+  const manuscript = await readFile(manuscriptPath, "utf8");
+  const pageMarkers = Array.from(
+    manuscript.matchAll(/<!-- BOOK_PAGE (\{.*\}) -->/g),
+  );
+  const allocatedPrototypeCounts = new Map();
+  const forbiddenPrototypeLabel =
+    /\b(?:Chhau|Mayurbhanj|Seraikella|Purulia|chauk|chali|chaali|bhangi|ufli|topka)\b/i;
+
+  for (const [index, marker] of pageMarkers.entries()) {
+    let page;
+    try {
+      page = JSON.parse(marker[1]);
+    } catch (error) {
+      failures.push(
+        `Invalid BOOK_PAGE metadata near ${marker.index}: ${error instanceof Error ? error.message : String(error)}`,
+      );
+      continue;
+    }
+
+    const bodyStart = (marker.index ?? 0) + marker[0].length;
+    const bodyEnd = pageMarkers[index + 1]?.index ?? manuscript.length;
+    const body = manuscript.slice(bodyStart, bodyEnd);
+    const options = [
+      ...(typeof page.modelUrl === "string"
+        ? [{ label: page.title ?? "3D study", modelUrl: page.modelUrl }]
+        : []),
+      ...(Array.isArray(page.modelOptions) ? page.modelOptions : []),
+    ];
+
+    for (const option of options) {
+      if (
+        typeof option.modelUrl !== "string" ||
+        !option.modelUrl.startsWith("/models/chhau-web-assets/")
+      ) {
+        continue;
+      }
+      const publicPath = `public${option.modelUrl}`;
+      if (!approvedPrototypeModelByPath.has(publicPath)) {
+        failures.push(
+          `Page ${page.id ?? "<unknown>"} references an unapproved recovered model: ${option.modelUrl}`,
+        );
+        continue;
+      }
+      if (
+        typeof option.label !== "string" ||
+        !option.label.toLowerCase().includes("prototype")
+      ) {
+        failures.push(
+          `Recovered model on page ${page.id ?? "<unknown>"} must have a prototype label: ${option.modelUrl}`,
+        );
+      }
+      if (forbiddenPrototypeLabel.test(option.label ?? "")) {
+        failures.push(
+          `Recovered model label on page ${page.id ?? "<unknown>"} assigns an unsupported Chhau or regional identity: ${option.label}`,
+        );
+      }
+      if (!/not evidence of/i.test(body) || !/>\s+3D prototype:/i.test(body)) {
+        failures.push(
+          `Page ${page.id ?? "<unknown>"} must identify recovered models as 3D prototypes which are not evidence of Chhau practice.`,
+        );
+      }
+      allocatedPrototypeCounts.set(
+        publicPath,
+        (allocatedPrototypeCounts.get(publicPath) ?? 0) + 1,
+      );
+    }
+  }
+
+  for (const expected of approvedPrototypeModels) {
+    const allocationCount = allocatedPrototypeCounts.get(expected.path) ?? 0;
+    if (allocationCount !== 1) {
+      failures.push(
+        `Recovered model must appear exactly once in the eBook; found ${allocationCount} allocations for ${expected.path}.`,
+      );
+    }
+  }
+}
+
 if (existsSync(resolve(root, apacheLicensePath))) {
   const licenseHash = await sha256(resolve(root, apacheLicensePath));
   if (licenseHash !== expectedApacheLicenseSha256) {
@@ -477,7 +704,11 @@ const hashes = new Map();
 for (const path of publicFiles) {
   const relativePath = relative(root, path);
   const fileStat = await stat(path);
-  if (fileStat.size > 25 * 1024 * 1024) {
+  const approvedPrototypeModel = approvedPrototypeModelByPath.get(relativePath);
+  if (extname(path).toLowerCase() === ".glb" && !approvedPrototypeModel) {
+    failures.push(`Unapproved GLB in public/: ${relativePath}`);
+  }
+  if (fileStat.size > 25 * 1024 * 1024 && !approvedPrototypeModel) {
     failures.push(
       `Public asset exceeds 25 MiB: ${relativePath} (${Math.ceil(fileStat.size / 1024 / 1024)} MiB)`,
     );
@@ -511,6 +742,6 @@ if (failures.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Release verification passed: ${publicFiles.length} public files, one local globe bundle, ${rightsManifest?.assets?.length ?? 0} rights-manifested decoder files, ${rightsManifest?.authoredMedia?.length ?? 0} approved user-supplied media file, one provenance-checked public-domain geometry file, eight removed Commons records, no uncleared media, no exact public duplicates, and no oversized public assets.`,
+    `Release verification passed: ${publicFiles.length} public files, one local globe bundle, ${rightsManifest?.assets?.length ?? 0} rights-manifested decoder files, ${rightsManifest?.authoredMedia?.length ?? 0} approved user-supplied media file, ${rightsManifest?.prototypeModels?.length ?? 0} user-directed generic 3D prototypes, one provenance-checked public-domain geometry file, eight removed Commons records, no uncleared media, no exact public duplicates, and no unapproved oversized public assets.`,
   );
 }
