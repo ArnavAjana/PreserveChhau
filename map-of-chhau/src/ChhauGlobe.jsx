@@ -115,6 +115,7 @@ export default function ChhauGlobe() {
   const [styleMode, setStyleMode] = useState('outline'); // 'outline' | 'hex'
   const [loading, setLoading] = useState(true);
   const [activeCat, setActiveCat] = useState(null);
+  const [query, setQuery] = useState('');
   const [countries, setCountries] = useState(countriesCache || []);
   const [hoverPoly, setHoverPoly] = useState(null);
   const [mapError, setMapError] = useState('');
@@ -175,17 +176,40 @@ export default function ChhauGlobe() {
     []
   );
 
+  const filteredMarkers = useMemo(() => {
+    const term = query.trim().toLocaleLowerCase();
+    if (!term) return markerData;
+    return markerData.filter((record) =>
+      [
+        record.venue,
+        record.city,
+        record.country,
+        record.region,
+        record.style,
+        record.eventName,
+        record.performer,
+        record.date,
+      ]
+        .filter(Boolean)
+        .some((value) => String(value).toLocaleLowerCase().includes(term)),
+    );
+  }, [markerData, query]);
+
   const grouped = useMemo(() => {
     const map = Object.fromEntries(CATEGORIES.map((c) => [c.key, []]));
-    markerData.forEach((d) => {
+    filteredMarkers.forEach((d) => {
       (map[d.categorization] || (map[d.categorization] = [])).push(d);
     });
     return map;
-  }, [markerData]);
+  }, [filteredMarkers]);
 
   const countryCount = useMemo(
     () => new Set(chhauGeodata.map((d) => d.country)).size,
     []
+  );
+  const venueCount = useMemo(
+    () => chhauGeodata.filter((d) => d.recordType === 'performance-venue').length,
+    [],
   );
 
   // Split every country into individual polygons. Flag only the polygon
@@ -216,8 +240,11 @@ export default function ChhauGlobe() {
 
   const isolating = activeCat !== null;
   const visibleMarkers = useMemo(
-    () => (isolating ? markerData.filter((d) => d.categorization === activeCat) : markerData),
-    [markerData, isolating, activeCat]
+    () =>
+      isolating
+        ? filteredMarkers.filter((d) => d.categorization === activeCat)
+        : filteredMarkers,
+    [filteredMarkers, isolating, activeCat]
   );
   const ringsData = useMemo(
     () =>
@@ -251,6 +278,7 @@ export default function ChhauGlobe() {
   const resetView = useCallback(() => {
     setSelected(null);
     setActiveCat(null);
+    setQuery('');
     setAutoRotate(!reduceMotion);
     const g = globeRef.current;
     if (g) g.pointOfView(HOME_POV, reduceMotion ? 0 : 1200);
@@ -288,8 +316,9 @@ export default function ChhauGlobe() {
       el.type = 'button';
       el.className = 'chhau-marker';
       el.style.setProperty('--mc', color);
-      el.setAttribute('aria-label', `Open ${d.city}, ${d.country}. ${d.style}`);
-      el.title = `${d.city}, ${d.country}`;
+      const placeLabel = d.venue ? `${d.venue}, ${d.city}` : d.city;
+      el.setAttribute('aria-label', `Open ${placeLabel}, ${d.country}. ${d.style}`);
+      el.title = `${placeLabel}, ${d.country}`;
       el.innerHTML =
         '<span class="marker-pulse"></span><span class="marker-pulse d2"></span><span class="marker-core"></span>';
       el.addEventListener('click', (e) => {
@@ -493,6 +522,36 @@ export default function ChhauGlobe() {
           </h1>
         </div>
 
+        <div className="atlas-search">
+          <label className="atlas-search-label" htmlFor="atlas-search-input">
+            Find a venue or place
+          </label>
+          <div className="atlas-search-control">
+            <input
+              autoComplete="off"
+              id="atlas-search-input"
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Venue, city, country, style"
+              type="search"
+              value={query}
+            />
+            {query ? (
+              <button
+                aria-label="Clear atlas search"
+                onClick={() => setQuery('')}
+                type="button"
+              >
+                Clear
+              </button>
+            ) : null}
+          </div>
+          {query ? (
+            <p className="atlas-search-count" role="status">
+              {filteredMarkers.length} matching {filteredMarkers.length === 1 ? 'record' : 'records'}
+            </p>
+          ) : null}
+        </div>
+
         {isolating && (
           <button className="show-all" onClick={() => setActiveCat(null)} type="button">
             Showing {CATEGORIES.find((c) => c.key === activeCat)?.label}. View all.
@@ -538,9 +597,11 @@ export default function ChhauGlobe() {
                         >
                           <span className="loc-dot" />
                           <span className="loc-text">
-                            <span className="loc-city">{d.city}</span>
+                            <span className="loc-city">{d.venue ?? d.city}</span>
                             <span className="loc-meta">
-                              {d.country} · {d.style}
+                              {d.venue
+                                ? `${d.city} · ${d.country}`
+                                : `${d.country} · ${d.style}`}
                             </span>
                           </span>
                         </button>
@@ -551,6 +612,9 @@ export default function ChhauGlobe() {
               </section>
             );
           })}
+          {filteredMarkers.length === 0 ? (
+            <p className="atlas-search-empty">No verified record matches this search.</p>
+          ) : null}
         </div>
 
         <div className="legend">
@@ -562,8 +626,9 @@ export default function ChhauGlobe() {
           ))}
         </div>
         <p className="atlas-note">
-          Every marker links to an official source. Unsourced stage and diaspora
-          leads stay off this map until source review is complete.
+          Every marker links to Chhau-specific evidence. Venue markers document
+          one performance record. They do not claim a resident tradition or a
+          complete world performance history.
         </p>
       </aside>
 
@@ -603,7 +668,8 @@ export default function ChhauGlobe() {
             Map of <em>Chhau</em>
           </h2>
           <p>
-            {chhauGeodata.length} verified records. {countryCount} countries. Three styles.
+            {chhauGeodata.length} verified records. {venueCount} documented venues.{' '}
+            {countryCount} countries. Three styles.
           </p>
         </header>
 
@@ -693,7 +759,7 @@ export default function ChhauGlobe() {
         {/* focused-node detail card */}
         {selected && (
           <section
-            aria-label={`${selected.city} map details`}
+            aria-label={`${selected.venue ?? selected.city} map details`}
             aria-live="polite"
             className="detail-card"
             style={{ '--mc': getStyleColor(selected.style) }}
@@ -701,7 +767,7 @@ export default function ChhauGlobe() {
             <button
               className="detail-close"
               onClick={() => setSelected(null)}
-              aria-label={`Close details for ${selected.city}`}
+              aria-label={`Close details for ${selected.venue ?? selected.city}`}
               ref={detailCloseRef}
               type="button"
             >
@@ -709,23 +775,29 @@ export default function ChhauGlobe() {
             </button>
             <div className="detail-hero">
               <div className="hero-fallback">
-                <span>{selected.city}</span>
+                <span>{selected.venue ?? selected.city}</span>
               </div>
               <span className="detail-style">{selected.style}</span>
             </div>
             <div className="detail-body">
               <p className="detail-status">
-                Verified source record. {selected.evidenceType}
+                {selected.recordType === 'performance-venue'
+                  ? 'Verified venue record.'
+                  : 'Verified source record.'}{' '}
+                {selected.evidenceType}
               </p>
-              <h3 className="detail-city">{selected.city}</h3>
+              <h3 className="detail-city">{selected.venue ?? selected.city}</h3>
               <span className="detail-country">
+                {selected.venue ? `${selected.city}. ` : ''}
                 {selected.region ? `${selected.region}. ` : ''}
                 {selected.country}
               </span>
               <p className="detail-role">{selected.role}</p>
               {selected.detail && <p className="detail-extra">{selected.detail}</p>}
               <div className="detail-source">
-                <span className="detail-label">Official source</span>
+                <span className="detail-label">
+                  {selected.sourceLabel ?? 'Official source'}
+                </span>
                 <a href={selected.sourceUrl} rel="noreferrer" target="_blank">
                   {selected.sourceTitle}
                 </a>
@@ -735,10 +807,28 @@ export default function ChhauGlobe() {
                   </a>
                 ) : null}
                 <dl className="detail-evidence">
+                  {selected.eventName ? (
+                    <div>
+                      <dt>Event</dt>
+                      <dd>{selected.eventName}</dd>
+                    </div>
+                  ) : null}
+                  {selected.performer ? (
+                    <div>
+                      <dt>Artist</dt>
+                      <dd>{selected.performer}</dd>
+                    </div>
+                  ) : null}
                   <div>
                     <dt>Record date</dt>
                     <dd>{selected.date}</dd>
                   </div>
+                  {selected.coordinateBasis ? (
+                    <div>
+                      <dt>Map point</dt>
+                      <dd>{selected.coordinateBasis}</dd>
+                    </div>
+                  ) : null}
                   <div>
                     <dt>Checked</dt>
                     <dd>{selected.verifiedAt}</dd>
@@ -762,9 +852,16 @@ export default function ChhauGlobe() {
         >
           <div className="tt-style">{tooltip.data.style}</div>
           <div className="tt-city">
-            {tooltip.data.city}, {tooltip.data.country}
+            {tooltip.data.venue ?? tooltip.data.city}
           </div>
-          {tooltip.data.region && <div className="tt-region">{tooltip.data.region}</div>}
+          {tooltip.data.venue ? (
+            <div className="tt-region">
+              {tooltip.data.city}, {tooltip.data.country}
+            </div>
+          ) : null}
+          {!tooltip.data.venue && tooltip.data.region ? (
+            <div className="tt-region">{tooltip.data.region}</div>
+          ) : null}
           <div className="tt-role">{tooltip.data.role}</div>
           <div className="tt-key">
             <b>Evidence:</b> {tooltip.data.evidenceType}

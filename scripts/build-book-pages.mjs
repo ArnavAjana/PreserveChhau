@@ -91,6 +91,7 @@ export type BookPageType = "cover" | "section" | "content";
 
 export type BookPageModelOption = {
   label: string;
+  description: string;
   modelUrl: string;
   modelScale?: number;
 };

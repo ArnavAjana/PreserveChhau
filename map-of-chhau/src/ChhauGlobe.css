@@ -117,6 +117,70 @@
   color: var(--accent);
 }
 
+.atlas-search {
+  padding: 15px 28px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.atlas-search-label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.atlas-search-control {
+  display: flex;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.025);
+}
+.atlas-search-control:focus-within {
+  border-color: var(--accent);
+}
+.atlas-search-control input {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 0 12px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 12px;
+}
+.atlas-search-control input::placeholder {
+  color: var(--text-faint);
+}
+.atlas-search-control button {
+  flex: 0 0 auto;
+  min-width: 52px;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.atlas-search-count {
+  margin: 8px 0 0;
+  color: var(--text-faint);
+  font-family: var(--mono);
+  font-size: 9.5px;
+}
+.atlas-search-empty {
+  margin: 22px 28px;
+  color: var(--text-dim);
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .show-all {
   margin: 16px 28px 0;
   padding: 9px 13px;
@@ -852,6 +916,9 @@
   .cat {
     padding-inline: 20px;
   }
+  .atlas-search {
+    padding-inline: 20px;
+  }
   .legend {
     padding-inline: 20px;
   }
@@ -925,6 +992,9 @@
   }
   .brand {
     padding-bottom: 14px;
+  }
+  .atlas-search {
+    padding-block: 10px;
   }
   .brand-kicker,
   .stage-header p,

@@ -45,6 +45,7 @@ type NavigateOptions = {
 
 type ModelOption = {
   label: string;
+  description: string;
   modelUrl: string;
   modelScale?: number;
 };
@@ -183,6 +184,8 @@ function getModelOptionsForPage(page: BookPage): ModelOption[] {
   return [
     {
       label: "3D study",
+      description:
+        "A rotatable study for this page. Its subject, source, permissions, and review status must be recorded before publication.",
       modelScale: page.modelScale,
       modelUrl: page.modelUrl,
     },
@@ -1042,6 +1045,7 @@ function ContentPageBody({
   const hasStudyAnchor = anchorBlockIndex >= 0;
   const studyPrompt = getStudyPrompt(chapter.body);
   const hasPlannedStudy = Boolean(chapter.plannedModels?.length || hasStudyAnchor);
+  const selectedModel = modelOptions[selectedModelIndex] ?? modelOptions[0];
   const viewerBlock = viewer ? (
     <div className="reader-study-breakout space-y-3">
       <ModelChoiceTabs
@@ -1049,13 +1053,19 @@ function ContentPageBody({
         selectedModelIndex={selectedModelIndex}
         setSelectedModelIndex={setSelectedModelIndex}
       />
-      <div
-        className="relative overflow-hidden rounded-xl bg-ink shadow-sm ring-1 ring-ink/10"
-        style={{
-          height: "clamp(18.75rem, 58svh, 45rem)",
-        }}
-      >
-        {viewer}
+      <div className="reader-model-study">
+        <div className="reader-model-viewport">{viewer}</div>
+        {selectedModel ? (
+          <aside
+            aria-live="polite"
+            className="reader-model-description"
+            key={selectedModel.modelUrl}
+          >
+            <p className="reader-kicker text-laterite-700">3D prototype</p>
+            <h2>{selectedModel.label}</h2>
+            <p>{selectedModel.description}</p>
+          </aside>
+        ) : null}
       </div>
       <p className="reader-media-caption">
         Drag to rotate. Use + and − to zoom. Full screen adds pinch and pan.

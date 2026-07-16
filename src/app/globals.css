@@ -1707,6 +1707,53 @@ summary {
   text-transform: uppercase;
 }
 
+.reader-model-study {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(16rem, 0.55fr);
+  min-height: clamp(20rem, 58svh, 45rem);
+  overflow: hidden;
+  border: 1px solid rgba(82, 41, 31, 0.12);
+  border-radius: 1rem;
+  background: #fffaf1;
+  box-shadow: 0 16px 42px rgba(54, 38, 28, 0.12);
+}
+
+.reader-model-viewport {
+  position: relative;
+  min-width: 0;
+  min-height: clamp(20rem, 58svh, 45rem);
+  overflow: hidden;
+  background: var(--color-ink);
+}
+
+.reader-model-description {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid rgba(82, 41, 31, 0.12);
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.reader-model-description h2 {
+  margin-top: 0.7rem;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 2.4vw, 2.45rem);
+  font-weight: 650;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.reader-model-description > p:last-child {
+  margin-top: 1.15rem;
+  color: rgba(32, 29, 25, 0.72);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
 /* -------------------------------------------------------------------
    Code-native cover and section pages
    ------------------------------------------------------------------- */
@@ -2421,6 +2468,15 @@ summary {
 
   .reader-about-layout {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reader-model-study {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reader-model-description {
+    border-top: 1px solid rgba(82, 41, 31, 0.12);
+    border-left: 0;
   }
 
   .sandbox-guide-list {

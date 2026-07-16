@@ -1,14 +1,15 @@
 // Evidence-first atlas records.
 //
-// Publication rule: a marker is included only when an official primary source
-// supports the Chhau-specific claim attached to each place. A map coordinate
-// locates the named place; it does not imply an origin, resident tradition, or
-// performance history beyond the words in `detail`.
+// Publication rule: a marker is included only when a Chhau-specific official
+// record, performer archive, venue archive, institutional event record, or
+// precise post-event report supports the claim attached to that place. A map
+// coordinate locates the named venue or an explicitly labelled campus or town
+// point. It does not imply an origin or resident tradition.
 //
 // Research leads are intentionally excluded from the public dataset. Return
 // them only after source review and with the metadata required below.
 
-const VERIFIED_AT = '2026-07-14';
+const VERIFIED_AT = '2026-07-16';
 
 export const chhauGeodata = [
   {
@@ -95,6 +96,257 @@ export const chhauGeodata = [
     verifiedAt: VERIFIED_AT,
     categorization: 'milestone',
   },
+  {
+    id: 'venue-ravindra-natya-mandir-2025',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Purulia',
+    venue: 'Ravindra Natya Mandir',
+    city: 'Mumbai',
+    country: 'India',
+    region: 'Maharashtra',
+    lat: 19.0152675,
+    lng: 72.8302814,
+    coordinateBasis: 'Venue-level map point',
+    role: 'Documented venue for Chhau Porbo-2',
+    detail:
+      'A post-event report records Hara Gauri Chhau Nritya Dal from Purulia performing Sita Haran and Krishna’s Deha Tyag before an audience at Ravindra Natya Mandir. This marker documents that event, not a resident Mumbai tradition.',
+    eventName: 'Chhau Porbo-2',
+    performer: 'Hara Gauri Chhau Nritya Dal',
+    sourceLabel: 'Post-event report',
+    sourceTitle: 'Purulia Chhau Dancers Mesmerise Mumbai at Chhau Porbo-2',
+    sourceUrl:
+      'https://www.freepressjournal.in/mumbai/purulia-chhau-dancers-mesmerise-mumbai-as-vibgyor-unveils-2026-calendar-at-chhau-porbo-2',
+    evidenceType: 'Named venue, troupe, works, and completed performance',
+    date: '7 December 2025',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-sushma-swaraj-auditorium-2025',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Purulia',
+    venue: 'Sushma Swaraj Auditorium, Nalanda University',
+    city: 'Rajgir',
+    country: 'India',
+    region: 'Bihar',
+    lat: 25.0263839,
+    lng: 85.4136358,
+    coordinateBasis: 'Nalanda University campus point; auditorium pin unresolved',
+    role: 'Documented venue for the opening of SPIC MACAY VIRASAT 2025',
+    detail:
+      'A completed-event report names the university auditorium and records a Purulia Chhau troupe from West Bengal presenting Mahishasura Vadh. The point locates the campus because a reliable auditorium entrance coordinate was not found.',
+    eventName: 'SPIC MACAY VIRASAT 2025',
+    performer: 'Purulia Chhau troupe from West Bengal; troupe name not stated',
+    sourceLabel: 'Post-event report',
+    sourceTitle: 'Purulia Chhau Performance Opens VIRASAT 2025 at Nalanda University',
+    sourceUrl:
+      'https://patnapress.com/bihar-nalanda-university-purulia-chhau-virasat-2025/',
+    evidenceType: 'Named auditorium, regional tradition, work, and completed performance',
+    date: '23 November 2025',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-rabindra-mandap-2026',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Mayurbhanj',
+    venue: 'Rabindra Mandap',
+    city: 'Bhubaneswar',
+    country: 'India',
+    region: 'Odisha',
+    lat: 20.2734583,
+    lng: 85.8330906,
+    coordinateBasis: 'Venue-level map point',
+    role: 'Documented venue for the National Festival of Mayurbhanj Chhau',
+    detail:
+      'A post-festival report places Naatki 2026 at Rabindra Mandap and names works and participating artists, including Project Chhauni’s Chakravyuha, Durga-Kali, Mallikarjuna, and a closing production about Konark.',
+    eventName: 'National Festival of Mayurbhanj Chhau, Naatki 2026',
+    performer: 'Project Chhauni and invited performers',
+    sourceLabel: 'Post-event report',
+    sourceTitle: 'National Mayurbhanj Chhau fest enthrals Bhubaneswar audience',
+    sourceUrl:
+      'https://www.newindianexpress.com/states/odisha/2026/Jul/13/national-mayurbhanj-chhau-fest-enthrals-bhubaneswar-audience',
+    evidenceType: 'Named venue, festival, works, artists, and completed event',
+    date: 'July 2026',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-ks-auditorium-vnr-vjiet-2023',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Purulia',
+    venue: 'KS Auditorium, VNR VJIET',
+    city: 'Hyderabad',
+    country: 'India',
+    region: 'Telangana',
+    lat: 17.5388,
+    lng: 78.3849,
+    coordinateBasis: 'VNR VJIET campus point; auditorium pin unresolved',
+    role: 'Documented campus venue for a SPIC MACAY Purulia Chhau performance',
+    detail:
+      'IEEE’s completed-event record names KS Auditorium and records SPIC MACAY artists presenting Purulia Chhau. The point locates the college campus because the auditorium entrance was not independently resolved.',
+    eventName: 'Purulia Chhau Dance by SPIC MACAY',
+    performer: 'SPIC MACAY artists; troupe name not stated',
+    sourceLabel: 'Institutional post-event record',
+    sourceTitle: 'Purulia Chhau Dance by SPIC MACAY',
+    sourceUrl: 'https://events.vtools.ieee.org/m/369030',
+    evidenceType: 'Named auditorium, regional tradition, date, and completed event record',
+    date: '3 August 2023',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-mica-campus-auditorium-2009',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Style Unstated',
+    venue: 'MICA campus auditorium',
+    city: 'Ahmedabad',
+    country: 'India',
+    region: 'Gujarat',
+    lat: 23.0396,
+    lng: 72.4586,
+    coordinateBasis: 'MICA campus point; auditorium pin unresolved',
+    role: 'Documented campus venue for a masked Chhau presentation',
+    detail:
+      'A report records artists from West Bengal performing masked Chhau in MICA’s auditorium for SPIC MACAY. The source does not name a regional style, so this marker does not relabel the performance as Purulia.',
+    eventName: 'SPIC MACAY Chhau presentation',
+    performer: 'Artists from West Bengal; troupe and regional style not stated',
+    sourceLabel: 'Post-event report',
+    sourceTitle: 'Chhau performance enthralls all at MICA',
+    sourceUrl:
+      'https://timesofindia.indiatimes.com/city/ahmedabad/chhau-performance-enthralls-all-at-mica/articleshow/5039934.cms',
+    evidenceType: 'Named campus auditorium and completed Chhau performance report',
+    date: '21 September 2009',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-triveni-amphitheatre-2024',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Style Unstated',
+    venue: 'Triveni Amphitheatre, Triveni Kala Sangam',
+    city: 'New Delhi',
+    country: 'India',
+    region: 'Delhi',
+    lat: 28.6271,
+    lng: 77.2326,
+    coordinateBasis: 'Triveni Kala Sangam complex point',
+    role: 'Documented venue for Hare Rama',
+    detail:
+      'A dated event record, now marked as passed, names Triveni Amphitheatre and describes Hare Rama, including Sita Swayamvar and Bajrangbali’s Bhakti, choreographed by Guru Sapan Acharya. The record does not state a regional Chhau style.',
+    eventName: 'Hare Rama',
+    performer: 'Choreography by Guru Sapan Acharya; troupe not stated',
+    sourceLabel: 'Dated event record',
+    sourceTitle: 'Magic of Chhau Dance at Triveni Kala Sangam: Hare Rama',
+    sourceUrl:
+      'https://delhi-fun-dos.com/events/magic-of-chhau-dance-at-triveni-kala-sangam-hare-rama/',
+    evidenceType: 'Named amphitheatre, work, choreographer, and past event record',
+    date: '23 November 2024',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-musee-guimet-auditorium',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Seraikella',
+    venue: 'Auditorium of Musée Guimet',
+    city: 'Paris',
+    country: 'France',
+    region: 'Île-de-France',
+    lat: 48.865,
+    lng: 2.2937,
+    coordinateBasis: 'Musée Guimet venue point',
+    role: 'Performer archive record for Seraikella Chhau abroad',
+    detail:
+      'Trinetra Chhau Dance Centre’s biography of Seraikella Chhau exponent Gopal Prasad Dubey lists performances in the auditorium of Musée Guimet. It gives 17 June and 18 July but omits the year and work titles.',
+    performer: 'Pandit Gopal Prasad Dubey',
+    sourceLabel: 'Performer and institution archive',
+    sourceTitle: 'Trinetra Chhau Dance Centre: Biography of Gopal Prasad Dubey',
+    sourceUrl: 'https://trinetrachhaudancecentre.org/biography/Bio_1',
+    evidenceType: 'Named venue in the performer’s institutional biography',
+    date: '17 June and 18 July; year not stated',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-symphony-space',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Seraikella',
+    venue: 'Symphony Space',
+    city: 'New York City',
+    country: 'United States',
+    region: 'New York',
+    lat: 40.7943,
+    lng: -73.9722,
+    coordinateBasis: 'Venue-level map point',
+    role: 'Performer archive record for a Chhau performance abroad',
+    detail:
+      'Trinetra Chhau Dance Centre’s biography lists Gopal Prasad Dubey performing at Symphony Space under World Music Institute and Solaris. The archive does not state the year or work title, so this marker makes no repertoire claim.',
+    performer: 'Pandit Gopal Prasad Dubey',
+    sourceLabel: 'Performer and institution archive',
+    sourceTitle: 'Trinetra Chhau Dance Centre: Biography of Gopal Prasad Dubey',
+    sourceUrl: 'https://trinetrachhaudancecentre.org/biography/Bio_1',
+    evidenceType: 'Named venue in the performer’s institutional biography',
+    date: 'Year not stated',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-arden-theatre',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Seraikella',
+    venue: 'Arden Theatre',
+    city: 'St. Albert',
+    country: 'Canada',
+    region: 'Alberta',
+    lat: 53.6344,
+    lng: -113.6276,
+    coordinateBasis: 'Venue-level map point',
+    role: 'Performer archive record for Seraikella Chhau abroad',
+    detail:
+      'Trinetra Chhau Dance Centre’s biography lists Gopal Prasad Dubey performing at Arden Theatre in Alberta. The venue is in St. Albert. The archive does not state the year or work title.',
+    performer: 'Pandit Gopal Prasad Dubey',
+    sourceLabel: 'Performer and institution archive',
+    sourceTitle: 'Trinetra Chhau Dance Centre: Biography of Gopal Prasad Dubey',
+    sourceUrl: 'https://trinetrachhaudancecentre.org/biography/Bio_1',
+    evidenceType: 'Named venue in the performer’s institutional biography',
+    date: 'Year not stated',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
+  {
+    id: 'venue-theatre-marcel-riviere',
+    status: 'verified',
+    recordType: 'performance-venue',
+    style: 'Seraikella',
+    venue: 'Relais Mutualiste, Théâtre Marcel Rivière',
+    city: 'La Verrière',
+    country: 'France',
+    region: 'Yvelines, Île-de-France',
+    lat: 48.755,
+    lng: 1.9567,
+    coordinateBasis: 'La Verrière commune point; historic theatre entrance unresolved',
+    role: 'Performer archive record for Seraikella Chhau abroad',
+    detail:
+      'Trinetra Chhau Dance Centre’s biography lists Gopal Prasad Dubey at Relais Mutualiste, Théâtre Marcel Rivière, in La Verrière. The point locates the commune because the historic theatre entrance was not independently resolved.',
+    performer: 'Pandit Gopal Prasad Dubey',
+    sourceLabel: 'Performer and institution archive',
+    sourceTitle: 'Trinetra Chhau Dance Centre: Biography of Gopal Prasad Dubey',
+    sourceUrl: 'https://trinetrachhaudancecentre.org/biography/Bio_1',
+    evidenceType: 'Named venue in the performer’s institutional biography',
+    date: 'Year not stated',
+    verifiedAt: VERIFIED_AT,
+    categorization: 'venue',
+  },
 ];
 
 // Style -> earth-pigment hue. The palette reads like a printed atlas, not neon.
@@ -103,6 +355,7 @@ export const STYLE_COLORS = {
   Seraikella: '#5f8f8a', // muted teal
   Mayurbhanj: '#c6a052', // ochre
   'All Styles': '#8c9a60', // sage
+  'Style Unstated': '#9a9183', // warm grey
 };
 
 export function getStyleColor(style) {
@@ -119,5 +372,10 @@ export const CATEGORIES = [
     key: 'milestone',
     label: 'Documentary Milestone',
     blurb: 'UNESCO committee record',
+  },
+  {
+    key: 'venue',
+    label: 'Documented Performance Venues',
+    blurb: 'Named stages with Chhau-specific evidence',
   },
 ];

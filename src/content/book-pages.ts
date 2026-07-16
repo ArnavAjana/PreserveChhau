@@ -5,6 +5,7 @@ export type BookPageType = "cover" | "section" | "content";
 
 export type BookPageModelOption = {
   label: string;
+  description: string;
   modelUrl: string;
   modelScale?: number;
 };
@@ -65,62 +66,67 @@ export const bookPages: BookPage[] = [
     id: "how-to-use-this-book",
     pageType: "content",
     title: "How to Use This Interactive eBook",
-    body: "You do not need to read this book from the first page to the last.\n\nThe early chapters introduce the three traditions, their histories, and the links between body, music, story, and place. Later chapters spend more time with Mayurbhanj Chhau. Comparison pages keep Seraikella and Purulia in view. At the end, you will find terms, people, places, open questions, and sources worth returning to.\n\nIf Chhau is new to you, start with Chapter One. It will help you keep the three traditions separate. If you already know one style, use the contents panel to move to another topic and compare. Choose pages based on your question.\n\nFour prompts appear across the book:\n\n- Look: study one visual detail.\n- Listen: notice a rhythm, instrument, cue, or change in tempo.\n- Activity draft: try a simple observation or exploration. It does not teach formal Chhau. An adult must judge every physical prompt, and specialist review is still pending.\n- Think: compare evidence or question an answer which looks too easy.\n\nThe 3D sandboxes are study tools. Drag to rotate a model. Zoom in. Change the light or shading when a costume detail is hard to see. If several models appear together, use the labels to compare them. A frozen pose is never the full movement. Every pose has a moment before it and a moment after it.\n\n> Activity draft, not yet specialist-validated: Rotate a figure to the side before reading its caption. A pose which looks broad from the front might reveal a different distribution of weight from the side.\n\nNumbered citations lead to the Library. Follow them to check a claim or continue reading beyond this book. A citation is not decoration. It identifies the evidence.\n\nMost importantly, pause. Watch a full performance when a link is available. Listen once without reading. Return to a page after seeing the form in motion. Chhau starts to make more sense when you study movement, music, story, and place together.\n\nThis book will guide your attention. It will not replace learning from a practitioner.",
+    body: "You do not need to read this book from the first page to the last.\n\nThe early chapters introduce the three traditions, their histories, and the links between body, music, story, and place. Later chapters spend more time with Mayurbhanj Chhau. Comparison pages keep Seraikella and Purulia in view. At the end, you will find terms, people, places, open questions, and sources worth returning to.\n\nIf Chhau is new to you, start with Chapter One. It will help you keep the three traditions separate. If you already know one style, use the contents panel to move to another topic and compare. Choose pages based on your question.\n\nFour prompts appear across the book:\n\n- Look: study one visual detail.\n- Listen: notice a rhythm, instrument, cue, or change in tempo.\n- Activity draft: try a simple observation or exploration. It does not teach formal Chhau. An adult must judge every physical prompt, and specialist review is still pending.\n- Think: compare evidence or question an answer which looks too easy.\n\nThe 3D sandboxes are study tools. Drag to rotate a model. Zoom in. Change the light or shading when a costume detail is hard to see. If several models appear together, use the labels to compare them. A frozen pose is never the full movement. Every pose has a moment before it and a moment after it.\n\n> 3D prototype: Use the crossed-foot figure to learn the viewer controls and compare one held shape from several angles. It is not evidence of Chhau practice, a named movement, a character, or a regional tradition.\n\n> Activity draft, not yet specialist-validated: Rotate a figure to the side before reading its caption. A pose which looks broad from the front might reveal a different distribution of weight from the side.\n\nNumbered citations lead to the Library. Follow them to check a claim or continue reading beyond this book. A citation is not decoration. It identifies the evidence.\n\nMost importantly, pause. Watch a full performance when a link is available. Listen once without reading. Return to a page after seeing the form in motion. Chhau starts to make more sense when you study movement, music, story, and place together.\n\nThis book will guide your attention. It will not replace learning from a practitioner.",
     modelUrl: null,
     modelScale: 1,
+    modelOptions: [
+      {
+        "label": "Crossed foot figure prototype",
+        "description": "A static crossed-foot figure for practising orbit, zoom, lighting, and viewpoint controls. It is not evidence of a named Chhau movement, stance, character, costume, or regional tradition.",
+        "modelUrl": "/models/chhau-web-assets/human-figure-copy.glb"
+      }
+    ],
     interactive: "sandbox-guide",
   },
   {
     id: "promise-to-the-reader",
     pageType: "content",
     title: "My Promise to You",
-    body: "I make one promise about knowledge. I also set one provisional boundary around movement.\n\nHere is my promise. I will not pretend Chhau is simpler than it is. When sources disagree, I will say so. When a term changes between regions or teachers, I will not pick one version and quietly call it universal. Documented history, community memory, scholarly interpretation, and my explanation are different kinds of evidence. I will keep those differences visible.\n\nHere is the movement boundary. Watching is not training. The restrictions below are conservative editorial choices, not a validated safety protocol. General sources about children’s activity and dance injury informed them, but those sources are not Chhau-specific. Before classroom or self-guided use, a pediatric movement and safety professional and a current Chhau practitioner must review the age range, every physical prompt, and every Chhau-specific warning. [13]\n\nChhau asks for strength, stamina, coordination, and repeated correction. Do not copy its low stances, leaps, turns, falls, masked movement, acrobatics, or weapon phrases from this eBook. A 3D model helps you study a line. It does not assess your body, surroundings, fatigue, or injury history. [13]\n\nPlease follow these limits:\n\n- Do not attempt leaps, flips, falls, combat phrases, or masked movement without a qualified teacher.\n- Do not practise with sharp, heavy, or real weapons. A sword or trident in a model is an object to study, not an instruction.\n- Use a clear, non-slip space and begin with gentle movement.\n- Stop if you feel pain, dizziness, numbness, or unusual shortness of breath.\n- Do not wear a performance mask while training alone. A mask might restrict vision, change balance, trap heat, or make nearby dancers and objects harder to see.\n- Treat every Activity draft prompt as provisional. An adult who knows the child and setting must decide whether even a low-motion prompt is appropriate. The label does not guarantee safety.\n\n> Provisional boundary, not a validated safety protocol: A description of movement is there to improve understanding. It does not certify anyone to perform it.\n\nCare also applies to culture. Masks, costumes, music, stories, and ritual practices are not interchangeable props. They come from particular communities and carry particular meanings. Name the tradition accurately. Credit every artist whose work appears. Ask permission before reproducing a performance, image, recording, or design. [14]\n\nStay curious. Let confidence grow slowly.",
+    body: "I make one promise about knowledge. I also set one provisional boundary around movement.\n\nHere is my promise. I will not pretend Chhau is simpler than it is. When sources disagree, I will say so. When a term changes between regions or teachers, I will not pick one version and quietly call it universal. Documented history, community memory, scholarly interpretation, and my explanation are different kinds of evidence. I will keep those differences visible.\n\nHere is the movement boundary. Watching is not training. The restrictions below are conservative editorial choices, not a validated safety protocol. General sources about children’s activity and dance injury informed them, but those sources are not Chhau-specific. Before classroom or self-guided use, a pediatric movement and safety professional and a current Chhau practitioner must review the age range, every physical prompt, and every Chhau-specific warning. [13]\n\nChhau asks for strength, stamina, coordination, and repeated correction. Do not copy its low stances, leaps, turns, falls, masked movement, acrobatics, or weapon phrases from this eBook. A 3D model helps you study a line. It does not assess your body, surroundings, fatigue, or injury history. [13]\n\n> 3D prototype: The generated blade and round object make the safety boundary concrete. View them as unidentified digital shapes. They are not evidence of Chhau weapons, props, training equipment, construction, or safe handling.\n\nPlease follow these limits:\n\n- Do not attempt leaps, flips, falls, combat phrases, or masked movement without a qualified teacher.\n- Do not practise with sharp, heavy, or real weapons. A sword or trident in a model is an object to study, not an instruction.\n- Use a clear, non-slip space and begin with gentle movement.\n- Stop if you feel pain, dizziness, numbness, or unusual shortness of breath.\n- Do not wear a performance mask while training alone. A mask might restrict vision, change balance, trap heat, or make nearby dancers and objects harder to see.\n- Treat every Activity draft prompt as provisional. An adult who knows the child and setting must decide whether even a low-motion prompt is appropriate. The label does not guarantee safety.\n\n> Provisional boundary, not a validated safety protocol: A description of movement is there to improve understanding. It does not certify anyone to perform it.\n\nCare also applies to culture. Masks, costumes, music, stories, and ritual practices are not interchangeable props. They come from particular communities and carry particular meanings. Name the tradition accurately. Credit every artist whose work appears. Ask permission before reproducing a performance, image, recording, or design. [14]\n\nStay curious. Let confidence grow slowly.",
     modelUrl: null,
     modelScale: 1,
+    modelOptions: [
+      {
+        "label": "Generated blade prototype",
+        "description": "A generated fantasy-like blade with no recorded maker, source object, scale, or prompt. Inspect its outline only. It is not evidence of a Chhau weapon, prop, training tool, or regional tradition.",
+        "modelUrl": "/models/chhau-web-assets/longsword.glb"
+      },
+      {
+        "label": "Generated round shield prototype",
+        "description": "A dense generated circular object with no recorded maker, source object, construction method, or scale. Inspect its shape only. It is not evidence of a Chhau shield, prop, training tool, or regional tradition.",
+        "modelUrl": "/models/chhau-web-assets/round-shield.glb"
+      }
+    ],
   },
   {
     id: "map-of-chhau",
     pageType: "content",
     title: "Three Heartlands, Then the Evidence",
-    body: "Chhau belongs to a connected cultural belt in eastern India, across the present borders of Odisha, Jharkhand, and West Bengal.\n\nMayurbhanj Chhau is centred in Mayurbhanj district in northern Odisha. Baripada is an important institutional and festival centre. Seraikella Chhau is centred in Seraikella in present-day Jharkhand. Troupes practise Purulia Chhau across Purulia district in West Bengal, supported by musicians and mask-making networks. [1][2][7][11][12]\n\nThese three centres sit close enough for people, instruments, stories, and artistic ideas to travel between them. Each place still developed its own performance choices. Geography made exchange possible. Local history created difference.\n\nI have kept this revised atlas narrow on purpose. It includes the three heartlands and other places linked to a specific, cited Chhau institution, archive, event, or official record. Generic Indian-arts activity, a possible tour, or a South Asian diaspora presence is not evidence of a resident Chhau tradition. None of those claims earns a marker by itself.\n\nUNESCO’s 2010 inscription covers all three Chhau traditions: Seraikella, Purulia, and Mayurbhanj. The Intergovernmental Committee adopted the decision at its fifth session in Nairobi, Kenya, not Paris. UNESCO’s official Chhau element record and fifth-session record support this marker. [1]\n\n> Look: Find the Mayurbhanj, Seraikella, and Purulia heartlands first. Next, open another marker and inspect its source and claim type. A marker without both is not ready for publication.\n\nI placed the atlas near the start because the word Chhau makes three traditions sound identical. They developed in neighbouring places, with continued contact and regional change. The evidence layer comes next. It extends the map only where a source supports a precise claim, while keeping the communities central.",
+    body: "Chhau belongs to a connected cultural belt in eastern India, across the present borders of Odisha, Jharkhand, and West Bengal.\n\nMayurbhanj Chhau is centred in Mayurbhanj district in northern Odisha. Baripada is an important institutional and festival centre. Seraikella Chhau is centred in Seraikella in present-day Jharkhand. Troupes practise Purulia Chhau across Purulia district in West Bengal, supported by musicians and mask-making networks. [1][2][7][11][12]\n\nThese three centres sit close enough for people, instruments, stories, and artistic ideas to travel between them. Each place still developed its own performance choices. Geography made exchange possible. Local history created difference.\n\nI have kept this revised atlas narrow on purpose. It includes the three heartlands and other places linked to a specific, cited Chhau institution, archive, event, or official record. Generic Indian-arts activity, a possible tour, or a South Asian diaspora presence is not evidence of a resident Chhau tradition. None of those claims earns a marker by itself.\n\nThe performance layer records ten named theatres, auditoria, and amphitheatres found through three regional research passes. Each marker needs a source which names both Chhau and the venue. This is a documented set, not a claim to every stage Chhau has reached. Search by venue, city, country, or style. Open a card to see the event, artist where known, source, date, and whether the map point marks an exact venue or a wider campus.\n\nUNESCO’s 2010 inscription covers all three Chhau traditions: Seraikella, Purulia, and Mayurbhanj. The Intergovernmental Committee adopted the decision at its fifth session in Nairobi, Kenya, not Paris. UNESCO’s official Chhau element record and fifth-session record support this marker. [1]\n\n> Look: Find the Mayurbhanj, Seraikella, and Purulia heartlands first. Next, open another marker and inspect its source and claim type. A marker without both is not ready for publication.\n\nI placed the atlas near the start because the word Chhau makes three traditions sound identical. They developed in neighbouring places, with continued contact and regional change. The evidence layer comes next. It extends the map only where a source supports a precise claim, while keeping the communities central.",
     modelUrl: null,
     modelScale: 1,
     embedUrl: "/map-of-chhau/index.html",
     embedTitle: "Arnav’s evidence-first Map of Chhau",
-    embedCaption: "Begin with the Mayurbhanj, Seraikella, and Purulia heartlands. Every additional marker must represent a specific sourced Chhau institution, archive, event, or UNESCO record, not generic Indian-arts or diaspora activity.",
+    embedCaption: "Begin with the Mayurbhanj, Seraikella, and Purulia heartlands. Then open the UNESCO milestone or search the documented performance venues. Each venue record names its source and the basis of its map point.",
     embedHeight: "clamp(34rem, 76svh, 56rem)",
   },
   {
     id: "first-look",
     pageType: "content",
     title: "Look Before We Name the Movement",
-    body: "Before learning a technical word, take one slow look at the three traditions.\n\nStart with the full silhouette. Where does the costume widen? How low does the dancer stand? Is the face visible, partly framed, or fully replaced by a mask?\n\nNow move to smaller details. Follow the direction of the chest. Notice the head angle, the space between the feet, the weight of the headgear, and the way a prop extends the body.\n\nMayurbhanj gives you an uncovered face, but do not stop there. Seraikella gives you a fixed mask, but its apparent expression does not stay fixed. Purulia gives you scale and colour, but spectacle should not hide technique.\n\n> 3D prototype: These six recovered, generated meshes test the viewer and help you compare silhouette, spacing, and camera angle. They are static visual experiments. They are not evidence of a Chhau tradition, costume, character, formation, or movement. Load one only when you want to inspect it.\n\nWe will use this method throughout the book. First notice the most visible detail. Then study stance, weight, spacing, and direction.\n\nYou do not need to rank the styles by strength, age, classical status, or authenticity. Rankings like these flatten the differences we need to understand.\n\nAsk a simpler question: What is this tradition asking the body to do?",
+    body: "Before learning a technical word, take one slow look at the three traditions.\n\nStart with the full silhouette. Where does the costume widen? How low does the dancer stand? Is the face visible, partly framed, or fully replaced by a mask?\n\nNow move to smaller details. Follow the direction of the chest. Notice the head angle, the space between the feet, the weight of the headgear, and the way a prop extends the body.\n\nMayurbhanj gives you an uncovered face, but do not stop there. Seraikella gives you a fixed mask, but its apparent expression does not stay fixed. Purulia gives you scale and colour, but spectacle should not hide technique.\n\n> 3D prototype: These two recovered, generated meshes help you compare silhouette, spacing, negative space, and camera angle. They are static visual experiments. They are not evidence of a Chhau tradition, costume, character, duet, jump, or movement. Load one only when you want to inspect it.\n\nWe will use this method throughout the book. First notice the most visible detail. Then study stance, weight, spacing, and direction.\n\nYou do not need to rank the styles by strength, age, classical status, or authenticity. Rankings like these flatten the differences we need to understand.\n\nAsk a simpler question: What is this tradition asking the body to do?",
     modelUrl: null,
     modelScale: 1,
     modelOptions: [
       {
         "label": "Ornate solo figure prototype",
+        "description": "A static ornate solo figure with an unidentified circular form. Rotate it to compare front, side, and back silhouettes. It is not evidence of a Chhau costume, character, prop, movement, or regional tradition.",
         "modelUrl": "/models/chhau-web-assets/traditional-dancer.glb"
       },
       {
         "label": "Airborne pair prototype",
+        "description": "Two fused ornate figures held above the ground plane. Use the model to inspect negative space and group framing. It is not evidence of a Chhau jump, duet, costume, choreography, or regional tradition.",
         "modelUrl": "/models/chhau-web-assets/traditional-dancer-copy.glb"
-      },
-      {
-        "label": "Balance figure prototype",
-        "modelUrl": "/models/chhau-web-assets/dancer-character.glb"
-      },
-      {
-        "label": "Repeated ensemble prototype",
-        "modelUrl": "/models/chhau-web-assets/performing-dancers.glb"
-      },
-      {
-        "label": "Wide ensemble prototype",
-        "modelUrl": "/models/chhau-web-assets/dance-troupe.glb"
-      },
-      {
-        "label": "Group tableau prototype",
-        "modelUrl": "/models/chhau-web-assets/chhau-group-1.glb"
       }
     ],
     plannedModels: [
@@ -188,35 +194,33 @@ export const bookPages: BookPage[] = [
     modelOptions: [
       {
         "label": "Staff and shield figure prototype",
+        "description": "A static generated figure holding an ambiguous staff and shield. Compare balance, silhouette, and the space around the objects. It is not evidence of a Chhau character, mask, weapon phrase, technique, or regional tradition.",
         "modelUrl": "/models/chhau-web-assets/martial-artist.glb"
       },
       {
         "label": "Standing sword figure prototype",
+        "description": "A static generated figure holding a sword at rest. Rotate it to compare body and object alignment from each side. It is not evidence of a Chhau stance, weapon, costume, character, or regional tradition.",
         "modelUrl": "/models/chhau-web-assets/martial-artist-copy.glb"
       },
       {
         "label": "Raised sword figure prototype",
+        "description": "A static generated figure with one sword raised. Use it to inspect reach, outline, and viewpoint. It is not evidence of a documented Chhau attack, defence, weapon, costume, or regional tradition.",
         "modelUrl": "/models/chhau-web-assets/martial-artist-copy-2.glb"
       },
       {
         "label": "Blade and shield figure prototype",
+        "description": "A static masked or helmeted warrior holding a blade and shield. Study the combined silhouette only. It is not evidence of Seraikella, Purulia, a Chhau mask, character, weapon set, or movement.",
         "modelUrl": "/models/chhau-web-assets/martial-artist-2.glb"
       },
       {
         "label": "Sword and shield pair prototype",
+        "description": "Two fused generated figures with swords and shields. Rotate the pair to compare spacing and overlap. It is not evidence of a Chhau duet, combat phrase, formation, costume, or regional tradition.",
         "modelUrl": "/models/chhau-web-assets/martial-artist-duo.glb"
       },
       {
         "label": "Overhead sword figure prototype",
+        "description": "A static generated figure holding a sword overhead. Compare the raised line from front and side views. It is not evidence of a Chhau technique, named movement, weapon, character, or regional tradition.",
         "modelUrl": "/models/chhau-web-assets/martial-artist-with-sword.glb"
-      },
-      {
-        "label": "Generated blade prototype",
-        "modelUrl": "/models/chhau-web-assets/longsword.glb"
-      },
-      {
-        "label": "Generated round shield prototype",
-        "modelUrl": "/models/chhau-web-assets/round-shield.glb"
       }
     ],
     plannedModels: [
@@ -239,9 +243,16 @@ export const bookPages: BookPage[] = [
     id: "court-village-stage",
     pageType: "content",
     title: "Courts, Villages, and the Modern Stage",
-    body: "People sometimes divide Chhau into court styles and a village style. The contrast points to real differences, but it needs care.\n\nThe former princely houses of Mayurbhanj and Seraikella played important roles in supporting, organising, and reshaping their regional traditions. Royal patronage provided rehearsal structures, festival support, musicians, attention to choreography, and chances to perform beyond the immediate region in some settings. Members of Seraikella’s ruling family are closely linked to the development and transmission of repertoire. The Bhanj court forms an important part of Mayurbhanj’s patronage history. [3][5][9]\n\nPatronage is not invention.\n\nCourts depended on dancers, teachers, musicians, makers, and communities whose labour made performance possible. A royal archive often preserves some names more clearly than others. Better documentation does not make one person’s contribution more valuable.\n\nPurulia’s history is more often told through village troupes, local organisers, community festivals, and mask-making networks than through one central court. Purulia also received local royal patronage, including support linked to Baghmundi. It was never cut off from institutions or public support. State programmes, researchers, tourism, awards, and national and international stages all shaped its modern visibility. [8][9]\n\nDuring the twentieth century, all three traditions entered new settings. These included cultural institutions, urban festivals, teaching centres, recorded media, and touring programmes. UNESCO’s 2010 inscription became another institutional milestone, not the tradition’s beginning. [1]\n\nThese shifts brought opportunities and tensions. Wider visibility brings students, income, documentation, and recognition. It also risks shorter performances, distance from festival context, more reward for spectacle than subtlety, or one troupe being presented as a whole region.\n\n> Think: Preservation projects often change selection, presentation, or context. Ask who makes those choices and whose knowledge guides them.\n\nCourt and village are not opposite ends of a simple scale. Chhau’s history depends on relationships between power, place, labour, memory, and performance.",
+    body: "People sometimes divide Chhau into court styles and a village style. The contrast points to real differences, but it needs care.\n\nThe former princely houses of Mayurbhanj and Seraikella played important roles in supporting, organising, and reshaping their regional traditions. Royal patronage provided rehearsal structures, festival support, musicians, attention to choreography, and chances to perform beyond the immediate region in some settings. Members of Seraikella’s ruling family are closely linked to the development and transmission of repertoire. The Bhanj court forms an important part of Mayurbhanj’s patronage history. [3][5][9]\n\nPatronage is not invention.\n\nCourts depended on dancers, teachers, musicians, makers, and communities whose labour made performance possible. A royal archive often preserves some names more clearly than others. Better documentation does not make one person’s contribution more valuable.\n\nPurulia’s history is more often told through village troupes, local organisers, community festivals, and mask-making networks than through one central court. Purulia also received local royal patronage, including support linked to Baghmundi. It was never cut off from institutions or public support. State programmes, researchers, tourism, awards, and national and international stages all shaped its modern visibility. [8][9]\n\nDuring the twentieth century, all three traditions entered new settings. These included cultural institutions, urban festivals, teaching centres, recorded media, and touring programmes. UNESCO’s 2010 inscription became another institutional milestone, not the tradition’s beginning. [1]\n\n> 3D prototype: The fused group tableau gives you one digital framing problem to inspect from several angles. It is not evidence of a Chhau troupe, formation, venue, touring history, performance, or regional tradition.\n\nThese shifts brought opportunities and tensions. Wider visibility brings students, income, documentation, and recognition. It also risks shorter performances, distance from festival context, more reward for spectacle than subtlety, or one troupe being presented as a whole region.\n\n> Think: Preservation projects often change selection, presentation, or context. Ask who makes those choices and whose knowledge guides them.\n\nCourt and village are not opposite ends of a simple scale. Chhau’s history depends on relationships between power, place, labour, memory, and performance.",
     modelUrl: null,
     modelScale: 1,
+    modelOptions: [
+      {
+        "label": "Group tableau prototype",
+        "description": "A fused generated group tableau with no recorded troupe, work, venue, date, or source performance. Inspect its overall framing only. It is not evidence of a Chhau formation, ensemble, stage history, or regional tradition.",
+        "modelUrl": "/models/chhau-web-assets/chhau-group-1.glb"
+      }
+    ],
   },
   {
     id: "meaning-of-chhau",
@@ -344,9 +355,21 @@ export const bookPages: BookPage[] = [
     id: "body-lab-boundary",
     pageType: "content",
     title: "A Body Lab With Clear Limits",
-    body: "An interactive book helps you notice Chhau through your own body. It does not turn a screen into an akhara, and it does not replace a guru. This line matters. Mayurbhanj technique includes deep positions, repeated conditioning, aerial actions, and combat-derived movement learned through long correction.\n\nSo this body lab studies qualities, not copied choreography. It is still an unvalidated draft. A pediatric movement or safety professional has not reviewed its age suitability or its Chhau-specific limits. A Chhau practitioner has not reviewed them either.\n\nIf the supervising adult chooses to use the draft, start by clearing space. Use a clean, dry, non-slip surface. Move bags, furniture, and anything another person might step into. The suggested warm-up uses gentle marching, direction changes, shoulder rolls, and shallow knee bends. General guidance says activity should build gradually and suit a child’s age, ability, and experience. This broad principle does not validate this sequence. [13]\n\nIf an adult decides the activity suits you, the draft explores four low-motion ideas:\n\n- Ready: stand comfortably wide with soft knees and an easy chest.\n- Travel: take four measured steps and let each one arrive fully.\n- Focus: choose an unseen point and organise the head and chest towards it.\n- Finish: stop in balance and hold for two calm breaths.\n\nThis is not chauk, chali, or bhangi in the formal sense. It is an introductory study inspired by the principles those terms help us notice.\n\nJumps belong only in the look closely layer of this eBook. General dance-injury guidance discusses landing mechanics and lower-limb injury. It is not Chhau-specific, and it does not validate this activity design. Every self-guided prompt excludes high jumps, somersaults, deep loaded stances, fast turns, and weapon work. All of them require in-person teaching. [13]\n\n> Provisional boundary, not a validated safety protocol: A model does not prove an activity suits a particular reader. Stop and tell the supervising adult if anything feels wrong. Seek suitable professional advice instead of relying on this eBook.\n\n> Think: Which felt harder, moving or arriving in stillness? Chhau often gives the final held position as much meaning as the action before it.\n\nTrying this study is not permission to say, “I know Chhau now.” Its purpose is to help you notice how much listening, balance, and control a trained dancer puts inside one apparently simple movement.",
+    body: "An interactive book helps you notice Chhau through your own body. It does not turn a screen into an akhara, and it does not replace a guru. This line matters. Mayurbhanj technique includes deep positions, repeated conditioning, aerial actions, and combat-derived movement learned through long correction.\n\nSo this body lab studies qualities, not copied choreography. It is still an unvalidated draft. A pediatric movement or safety professional has not reviewed its age suitability or its Chhau-specific limits. A Chhau practitioner has not reviewed them either.\n\nIf the supervising adult chooses to use the draft, start by clearing space. Use a clean, dry, non-slip surface. Move bags, furniture, and anything another person might step into. The suggested warm-up uses gentle marching, direction changes, shoulder rolls, and shallow knee bends. General guidance says activity should build gradually and suit a child’s age, ability, and experience. This broad principle does not validate this sequence. [13]\n\nIf an adult decides the activity suits you, the draft explores four low-motion ideas:\n\n- Ready: stand comfortably wide with soft knees and an easy chest.\n- Travel: take four measured steps and let each one arrive fully.\n- Focus: choose an unseen point and organise the head and chest towards it.\n- Finish: stop in balance and hold for two calm breaths.\n\nThis is not chauk, chali, or bhangi in the formal sense. It is an introductory study inspired by the principles those terms help us notice.\n\n> 3D prototype: The folded and bent-knee figures let you inspect support and direction without treating a frozen mesh as instruction. They are not evidence of chauk, chali, bhangi, readiness, daily work, Chhau technique, or safe practice.\n\nJumps belong only in the look closely layer of this eBook. General dance-injury guidance discusses landing mechanics and lower-limb injury. It is not Chhau-specific, and it does not validate this activity design. Every self-guided prompt excludes high jumps, somersaults, deep loaded stances, fast turns, and weapon work. All of them require in-person teaching. [13]\n\n> Provisional boundary, not a validated safety protocol: A model does not prove an activity suits a particular reader. Stop and tell the supervising adult if anything feels wrong. Seek suitable professional advice instead of relying on this eBook.\n\n> Think: Which felt harder, moving or arriving in stillness? Chhau often gives the final held position as much meaning as the action before it.\n\nTrying this study is not permission to say, “I know Chhau now.” Its purpose is to help you notice how much listening, balance, and control a trained dancer puts inside one apparently simple movement.",
     modelUrl: null,
     modelScale: 1,
+    modelOptions: [
+      {
+        "label": "Folded figure prototype",
+        "description": "A static folded-forward figure with no source pose or performer record. Study support and direction without copying the shape. It is not evidence of Chhau readiness, daily work, technique, or a named movement.",
+        "modelUrl": "/models/chhau-web-assets/human-figure.glb"
+      },
+      {
+        "label": "Bent knee silhouette prototype",
+        "description": "A static unmasked figure in a wide bent-knee pose. Rotate it to compare base of support and torso direction. It is not evidence of chauk, a Mayurbhanj stance, Chhau technique, or safe practice.",
+        "modelUrl": "/models/chhau-web-assets/chhau-figure-5a81ddf6.glb"
+      }
+    ],
   },
   {
     id: "chapter-five",
@@ -507,21 +530,14 @@ export const bookPages: BookPage[] = [
     id: "body-carries-story",
     pageType: "content",
     title: "How Movement Communicates Story",
-    body: "Chhau creates a forest, battlefield, palace, or storm without building any of them on stage. The performers give us enough physical information to picture the rest.\n\nCharacter begins with entry. Gait, costume, mask or headpiece, and musical cue tell us who has arrived. Relationship comes next. Two figures face, follow, avoid, challenge, or protect one another. Rhythm marks a change in the relationship. A final pose makes the result readable.\n\nJiwan Pani’s idea of kinetic suggestion helped me understand this. Chhau does not depend on a complete hand-gesture code which translates every word. Movement phrases suggest action, mood, and relationship through footwork, flexion, direction, and rhythm. [5]\n\nMovement-led does not always mean voiceless. In some Purulia performances, a Jhumur singer introduces characters or presents the plot while masked dancers mime and move. Patnaik also records Jhoomar songs behind some Mayurbhanj dances. The balance among body, music, and voice shifts with style and piece. [4][8]\n\nA young reader does not need one fixed translation for every movement. These questions help me follow a scene:\n\n- Who entered, and what did the entry tell me about them?\n- What does each character seem to want?\n- When did the rhythm change the situation?\n- Which movement made the clearest turning point?\n- What did the final arrangement tell me?\n\n> Look: Replay a scene with captions off. Choose your interpretation, then read the documented synopsis. More than one reading might fit until a decisive action appears.\n\n> 3D prototype: Use these three generic figure meshes to practise reading support, direction, and held shape before assigning a story. They are not evidence of a Chhau movement or character. The poses do not demonstrate chauk, chali, bhangi, ufli, topka, or another named Chhau movement.\n\nSeveral readings might fit until a decisive action clarifies the scene. Chhau presents recognisable episodes while asking the audience to interpret some of the meaning.\n\nDancer, music, and audience establish the setting without scenery.",
+    body: "Chhau creates a forest, battlefield, palace, or storm without building any of them on stage. The performers give us enough physical information to picture the rest.\n\nCharacter begins with entry. Gait, costume, mask or headpiece, and musical cue tell us who has arrived. Relationship comes next. Two figures face, follow, avoid, challenge, or protect one another. Rhythm marks a change in the relationship. A final pose makes the result readable.\n\nJiwan Pani’s idea of kinetic suggestion helped me understand this. Chhau does not depend on a complete hand-gesture code which translates every word. Movement phrases suggest action, mood, and relationship through footwork, flexion, direction, and rhythm. [5]\n\nMovement-led does not always mean voiceless. In some Purulia performances, a Jhumur singer introduces characters or presents the plot while masked dancers mime and move. Patnaik also records Jhoomar songs behind some Mayurbhanj dances. The balance among body, music, and voice shifts with style and piece. [4][8]\n\nA young reader does not need one fixed translation for every movement. These questions help me follow a scene:\n\n- Who entered, and what did the entry tell me about them?\n- What does each character seem to want?\n- When did the rhythm change the situation?\n- Which movement made the clearest turning point?\n- What did the final arrangement tell me?\n\n> Look: Replay a scene with captions off. Choose your interpretation, then read the documented synopsis. More than one reading might fit until a decisive action appears.\n\n> 3D prototype: Use the balance figure to practise reading support, tilt, and held shape before assigning a story. It is not evidence of a Chhau movement, character, costume, work, or regional tradition. The pose does not demonstrate chauk, chali, bhangi, ufli, topka, or another named Chhau movement.\n\nSeveral readings might fit until a decisive action clarifies the scene. Chhau presents recognisable episodes while asking the audience to interpret some of the meaning.\n\nDancer, music, and audience establish the setting without scenery.",
     modelUrl: null,
     modelScale: 1,
     modelOptions: [
       {
-        "label": "Folded figure prototype",
-        "modelUrl": "/models/chhau-web-assets/human-figure.glb"
-      },
-      {
-        "label": "Crossed foot figure prototype",
-        "modelUrl": "/models/chhau-web-assets/human-figure-copy.glb"
-      },
-      {
-        "label": "Bent knee silhouette prototype",
-        "modelUrl": "/models/chhau-web-assets/chhau-figure-5a81ddf6.glb"
+        "label": "Balance figure prototype",
+        "description": "A static ornate figure in an extreme balance. Study support, tilt, and silhouette from several angles before reading a story into it. It is not evidence of a Chhau character, movement, costume, work, or regional tradition.",
+        "modelUrl": "/models/chhau-web-assets/dancer-character.glb"
       }
     ],
     plannedModels: [
@@ -636,9 +652,21 @@ export const bookPages: BookPage[] = [
     id: "ground-becomes-stage",
     pageType: "content",
     title: "When the Ground Becomes a Stage",
-    body: "When you hear \"stage,\" you might picture a raised platform, curtains, lights, and rows of seats. Chhau performances often took place outdoors on an open ground called an \"asar\" or \"akhara.\" Musicians sat to one side. People gathered around the dancing area and defined the performance space. [1][2]\n\nAn akhara also serves as a training space. Practice and performance often share the same ground. A dancer repeats a stance, learns to land, and listens to a drum where the group later performs a story.\n\nDarkness does not always separate the performer from the audience. You see the musicians. Children watch from one side and elders from another. A dancer might travel close enough for the audience to feel the force of a landing. Mayurbhanj Chhau uses the full arena through entries, diagonals, circles, leaps, and long travelling phrases. [4]\n\nA drumbeat announces the start. The reed melody changes the mood. Then the dancer enters and represents gods, animals, heroes, storms, or human feelings on an ordinary patch of earth.\n\nChhau now appears on proscenium stages, in schools, at cultural festivals, and on digital screens. The open ground is not its only authentic setting. Still, the asar shows what a cropped video leaves outside the frame. You lose the musicians, the waiting, the audience, the scale of movement, and the sense of a performance shared by everyone present.\n\n> 3D sandbox: Study the arena before the dancer. Where do the musicians sit? Where does the audience gather? What marks the stage boundary?",
+    body: "When you hear \"stage,\" you might picture a raised platform, curtains, lights, and rows of seats. Chhau performances often took place outdoors on an open ground called an \"asar\" or \"akhara.\" Musicians sat to one side. People gathered around the dancing area and defined the performance space. [1][2]\n\nAn akhara also serves as a training space. Practice and performance often share the same ground. A dancer repeats a stance, learns to land, and listens to a drum where the group later performs a story.\n\nDarkness does not always separate the performer from the audience. You see the musicians. Children watch from one side and elders from another. A dancer might travel close enough for the audience to feel the force of a landing. Mayurbhanj Chhau uses the full arena through entries, diagonals, circles, leaps, and long travelling phrases. [4]\n\nA drumbeat announces the start. The reed melody changes the mood. Then the dancer enters and represents gods, animals, heroes, storms, or human feelings on an ordinary patch of earth.\n\nChhau now appears on proscenium stages, in schools, at cultural festivals, and on digital screens. The open ground is not its only authentic setting. Still, the asar shows what a cropped video leaves outside the frame. You lose the musicians, the waiting, the audience, the scale of movement, and the sense of a performance shared by everyone present.\n\n> 3D prototype: The repeated and wide ensemble meshes let you inspect overlap, spacing, and framing. They are not evidence of a Chhau troupe, formation, choreography, props, arena, venue, performance, or regional tradition. A sourced arena study remains a separate planned model. Where would musicians and the audience need to sit around it?",
     modelUrl: null,
     modelScale: 1,
+    modelOptions: [
+      {
+        "label": "Repeated ensemble prototype",
+        "description": "A fused set of repeated generated figures. Rotate it to inspect overlap, spacing, and the limits of a fixed camera view. It is not evidence of a Chhau troupe, formation, choreography, performance, venue, or regional tradition.",
+        "modelUrl": "/models/chhau-web-assets/performing-dancers.glb"
+      },
+      {
+        "label": "Wide ensemble prototype",
+        "description": "A fused line of generated figures with unidentified curved objects. Use it to compare wide group framing from several angles. It is not evidence of a Chhau troupe, arena, props, formation, event, or regional tradition.",
+        "modelUrl": "/models/chhau-web-assets/dance-troupe.glb"
+      }
+    ],
     plannedModels: [
       "asar-akhada-diorama.glb"
     ],

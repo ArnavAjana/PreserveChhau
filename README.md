@@ -36,10 +36,12 @@ include `node_modules`.
 - `/`: a focused opening with three primary routes and six question-led paths
 - `/about`: Arnav’s full project story, position, and working method
 - `/ebook`: a responsive 75-screen reader with a wide-screen two-page spread,
-  a broad one-page mode, 12 chapters, source links, a four-record atlas,
+  a broad one-page mode, 12 chapters, source links, a 14-record atlas with 10
+  documented performance venues,
   unvalidated adult-guided activity drafts, deep links, searchable contents,
-  17 load-on-demand historical 3D prototypes, and placeholders for planned 3D
-  studies
+  17 load-on-demand recovered 3D prototypes spread across eight relevant
+  pages, model-specific descriptions beside each viewer, and placeholders for
+  planned source-based 3D studies
 - `/experience`: the 23-model production roadmap, grouped by release priority
   and written for review
 - `map-of-chhau/`: maintainable React and Vite source for the interactive globe,
@@ -55,9 +57,9 @@ include `node_modules`.
   GLBs, their current page allocation, and the limits on what they represent
 
 The recovered GLBs appear only as generic visual prototypes. Each file loads
-after the reader chooses it. The page copy states that the mesh is not evidence
-of a Chhau movement, regional tradition, costume, character, formation, event,
-or prop.
+after the reader chooses it. A description beside the viewer identifies the
+visible digital form, suggests a limited observation task, and states what the
+mesh does not document.
 
 ## Run locally
 
@@ -157,8 +159,9 @@ third-party CDN.
 
 The original upload’s 17 generated prototype GLBs are restored under
 `public/models/chhau-web-assets/`. They occupy roughly 510 MB and contain no
-animation clips. The eBook groups them on three non-regional pages, labels every
-option as a prototype, and loads one file only after the reader requests it.
+animation clips. The eBook distributes them across eight relevant non-regional
+study pages, labels every option as a prototype, describes each model beside
+its sandbox, and loads one file only after the reader requests it.
 They do not replace the planned source-based studies in
 `CHHAU_3D_MODEL_ASSET_REQUEST.md`.
 

@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { readdir, readFile, stat } from "node:fs/promises";
 import { extname, relative, resolve } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const root = process.cwd();
 const publicRoot = resolve(root, "public");
@@ -78,6 +79,7 @@ async function sha256(path) {
   "Chhau_eBook_Content.md",
   "src/content/book-pages.ts",
   "map-of-chhau/src/ChhauGlobe.jsx",
+  "map-of-chhau/VENUE_RESEARCH_REGISTER.md",
   "map-of-chhau/public/data/countries.geojson",
   "public/map-of-chhau/index.html",
   "public/map-of-chhau/data/countries.geojson",
@@ -143,6 +145,70 @@ for (const path of [resolve(root, "map-of-chhau/index.html"), ...atlasSourceFile
     if (source.includes(pattern)) {
       failures.push(`Atlas media lookup or uncleared image reference remains in ${relative(root, path)}: ${pattern}`);
     }
+  }
+}
+
+const atlasDataPath = resolve(root, "map-of-chhau/src/data.js");
+if (existsSync(atlasDataPath)) {
+  try {
+    const { CATEGORIES, chhauGeodata } = await import(
+      `${pathToFileURL(atlasDataPath).href}?release-check=${Date.now()}`
+    );
+    const venueRecords = chhauGeodata.filter(
+      (record) => record.recordType === "performance-venue",
+    );
+    const ids = new Set();
+
+    if (!CATEGORIES.some((category) => category.key === "venue")) {
+      failures.push("Atlas categories must expose the documented performance venue layer.");
+    }
+    if (venueRecords.length === 0) {
+      failures.push("Atlas must contain at least one documented performance venue record.");
+    }
+
+    for (const record of chhauGeodata) {
+      if (ids.has(record.id)) failures.push(`Duplicate atlas record id: ${record.id}`);
+      ids.add(record.id);
+      if (record.categorization === "venue" && record.recordType !== "performance-venue") {
+        failures.push(`Atlas venue category has the wrong record type: ${record.id}`);
+      }
+    }
+
+    for (const record of venueRecords) {
+      for (const field of [
+        "venue",
+        "city",
+        "country",
+        "coordinateBasis",
+        "detail",
+        "sourceLabel",
+        "sourceTitle",
+        "sourceUrl",
+        "evidenceType",
+        "date",
+        "verifiedAt",
+      ]) {
+        if (typeof record[field] !== "string" || record[field].trim() === "") {
+          failures.push(`Atlas venue ${record.id} is missing ${field}.`);
+        }
+      }
+      if (record.categorization !== "venue") {
+        failures.push(`Atlas performance venue is outside the venue category: ${record.id}`);
+      }
+      if (!Number.isFinite(record.lat) || !Number.isFinite(record.lng)) {
+        failures.push(`Atlas venue has invalid coordinates: ${record.id}`);
+      }
+      if (!record.sourceUrl?.startsWith("https://")) {
+        failures.push(`Atlas venue must use a direct HTTPS evidence link: ${record.id}`);
+      }
+      if (/wikipedia\.org/i.test(record.sourceUrl ?? "")) {
+        failures.push(`Atlas venue cannot rely on Wikipedia as performance evidence: ${record.id}`);
+      }
+    }
+  } catch (error) {
+    failures.push(
+      `Atlas venue data could not be validated: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 }
 
@@ -642,6 +708,18 @@ if (existsSync(manuscriptPath)) {
       if (forbiddenPrototypeLabel.test(option.label ?? "")) {
         failures.push(
           `Recovered model label on page ${page.id ?? "<unknown>"} assigns an unsupported Chhau or regional identity: ${option.label}`,
+        );
+      }
+      if (
+        typeof option.description !== "string" ||
+        option.description.trim().length < 80
+      ) {
+        failures.push(
+          `Recovered model on page ${page.id ?? "<unknown>"} needs a model-specific description of at least 80 characters: ${option.modelUrl}`,
+        );
+      } else if (!/not evidence/i.test(option.description)) {
+        failures.push(
+          `Recovered model description on page ${page.id ?? "<unknown>"} must state what the prototype is not evidence of: ${option.modelUrl}`,
         );
       }
       if (!/not evidence of/i.test(body) || !/>\s+3D prototype:/i.test(body)) {

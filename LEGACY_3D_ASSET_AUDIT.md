@@ -62,13 +62,19 @@ Public eBook allocation: all 17 recovered files, each used once.
 
 | Page | Files | Learning purpose |
 | --- | --- | --- |
-| `first-look` | Six solo and ensemble prototypes | Test silhouette, spacing, camera angle, and group framing before assigning a name. |
-| `martial-inheritance` | Six martial figures, one generated blade, and one generated shield | Test viewpoint and broad martial imagery without claiming a Chhau technique or object. |
-| `body-carries-story` | Three generic figure prototypes | Practise reading support, direction, and held shape without naming a movement or character. |
+| `how-to-use-this-book` | Crossed-foot figure | Learn orbit, zoom, lighting, and viewpoint controls without naming the pose. |
+| `promise-to-the-reader` | Generated blade and round shield | Make the boundary between visual inspection and weapon instruction explicit. |
+| `first-look` | Ornate solo figure and airborne pair | Compare silhouette, negative space, spacing, and camera angle before assigning a name. |
+| `martial-inheritance` | Six generated martial figures | Test viewpoint and broad martial imagery without claiming a Chhau technique, phrase, or region. |
+| `court-village-stage` | Fused group tableau | Inspect group framing without assigning a troupe, formation, venue, or touring history. |
+| `body-lab-boundary` | Folded figure and wide bent-knee figure | Inspect support and direction without treating a frozen mesh as movement or safety instruction. |
+| `body-carries-story` | Balance figure | Practise reading support, tilt, and held shape before assigning a character or story. |
+| `ground-becomes-stage` | Repeated ensemble and wide ensemble | Compare overlap and framing without claiming a documented troupe, arena, or performance. |
 
 The release checker requires each recovered file to appear exactly once. It
 also rejects labels which assign Chhau, a regional identity, or a named movement
-to these models.
+to these models. It also requires a model-specific description beside every
+sandbox.
 
 ## Optimisation work still needed
 
