@@ -1,0 +1,70 @@
+name: Release verification
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-verification-main
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify production build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the release commit
+        uses: actions/checkout@v7
+
+      - name: Use the project Node.js version
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Run release verification
+        run: npm run verify
+
+      - name: Build the production application
+        run: npm run build
+
+  remove-merged-branches:
+    name: Remove merged release branches
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Delete the two superseded agent branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branches=(
+            "agent/factual-and-rights-corrections"
+            "agent/final-ebook-and-sandbox"
+          )
+
+          for branch in "${branches[@]}"
+          do
+            ref="repos/${GITHUB_REPOSITORY}/git/ref/heads/${branch}"
+            if gh api "$ref" >/dev/null 2>&1
+            then
+              gh api --method DELETE "$ref"
+              echo "Deleted ${branch}"
+            else
+              echo "Already absent: ${branch}"
+            fi
+          done
