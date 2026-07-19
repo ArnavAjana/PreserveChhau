@@ -1,4 +1,4 @@
-# Chhau: Canonical Interactive eBook Manuscript
+# The Science of Chhau Dance: Canonical Interactive eBook Manuscript
 
 Project lead and student author: Arnav Ajana
 Primary audience: ages 8 to 14, with a teacher and parent layer
@@ -8,8 +8,8 @@ Movement-guidance status: unvalidated draft. A pediatric movement and safety pro
 
 The one-line BOOK_PAGE comments are production metadata. The readable copy below each marker is the canonical text used to generate src/content/book-pages.ts.
 
-<!-- BOOK_PAGE {"id":"chhau","pageType":"cover","title":"Chhau"} -->
-One performance. Many questions. How I began learning about Mayurbhanj Chhau and the two related Chhau traditions.
+<!-- BOOK_PAGE {"id":"chhau","pageType":"cover","title":"The Science of Chhau Dance"} -->
+One performance. Many questions. An evidence-led journey through movement, music, material, story, and place.
 
 Arnav Ajana
 
@@ -44,6 +44,23 @@ The book presents Mayurbhanj, Seraikella, and Purulia as related but distinct tr
 An interactive feature has to explain something the page cannot. A rotatable figure shows weight behind a stance. Audio reveals movement answering rhythm. A mask study names its regional style and maker.
 
 I do not believe I will preserve Chhau by myself. This book does not replace a dancer, teacher, musician, maker, or live performance. It gives beginners clear information, puts credit into the design, and points towards further study.
+
+<!-- BOOK_PAGE {"id":"what-science-means","pageType":"content","title":"What “Science” Means in This Book"} -->
+The word _science_ in this title means disciplined inquiry: observe closely, ask a testable question where possible, compare evidence, record uncertainty, and change an explanation when stronger evidence appears.
+
+Chhau can be studied through several connected systems:
+
+- Movement: weight, balance, direction, rhythm, preparation, and recovery.
+- Music: pulse, tempo, cue, melody, instrument, and the exchange between dancer and musician.
+- Material: how a mask, costume, ornament, or prop changes silhouette, visibility, heat, balance, and motion.
+- Space: how an arena, stage, audience, and entrance pathway shape performance.
+- Evidence: who recorded a claim, when and where it applies, what another source says, and which questions remain open.
+
+This is not a laboratory study of Chhau. It does not claim biomechanical testing, medical validation, or scientific proof that one movement is safe, therapeutic, superior, or universal. No activity in this book replaces assessment by a qualified health professional or training with a current Chhau practitioner.
+
+The e-PG Pathshala modules used in this edition are performing-arts courseware, not laboratory research. They are useful because they preserve names, lists, descriptions, and one scholar’s account of the three traditions. They also contain unsupported assertions and internal contradictions. This book therefore treats them as sources to compare, not answers to copy.
+
+Science here is a habit of honesty: say what the evidence supports, identify the source and its limits, and leave a question open when the evidence is not strong enough.
 
 <!-- BOOK_PAGE {"id":"how-to-use-this-book","pageType":"content","title":"How to Use This Interactive eBook","modelOptions":[{"label":"Crossed foot figure prototype","description":"A static crossed-foot figure for practising orbit, zoom, lighting, and viewpoint controls. It is not evidence of a named Chhau movement, stance, character, costume, or regional tradition.","modelUrl":"/models/chhau-web-assets/human-figure-copy.glb"}],"interactive":"sandbox-guide"} -->
 The early chapters introduce the three traditions, their histories, and the links among body, music, story, and place. Later chapters focus on Mayurbhanj Chhau while keeping Seraikella and Purulia in view. Use the contents panel to follow your question or compare traditions. The final pages contain terms, people, places, open questions, and sources.
@@ -179,10 +196,14 @@ No single date, founder, court, village, or surviving document explains the begi
 
 Each regional history also deserves separate attention. Evidence from Mayurbhanj does not automatically describe Purulia. A history told by Seraikella’s royal household does not stand in for every village troupe. Shared features might suggest connection, but they do not prove one event of origin.
 
+The seven e-PG Pathshala modules used later in this book make that uncertainty visible. One assembles several possible word origins; another suggests that Purulia material travelled in one direction to the other styles; the Mayurbhanj and Seraikella modules tell their regional lineages through different people and institutions. None supplies a bibliography. These accounts are useful leads, but repetition inside one course by one author is not independent confirmation. [16][17][19][21]
+
 An appealing story is not evidence.
 
 <!-- BOOK_PAGE {"id":"martial-inheritance","pageType":"content","title":"The Martial Inheritance","modelOptions":[{"label":"Staff and shield figure prototype","description":"A static generated figure holding an ambiguous staff and shield. Compare balance, silhouette, and the space around the objects. It is not evidence of a Chhau character, mask, weapon phrase, technique, or regional tradition.","modelUrl":"/models/chhau-web-assets/martial-artist.glb"},{"label":"Standing sword figure prototype","description":"A static generated figure holding a sword at rest. Rotate it to compare body and object alignment from each side. It is not evidence of a Chhau stance, weapon, costume, character, or regional tradition.","modelUrl":"/models/chhau-web-assets/martial-artist-copy.glb"},{"label":"Raised sword figure prototype","description":"A static generated figure with one sword raised. Use it to inspect reach, outline, and viewpoint. It is not evidence of a documented Chhau attack, defence, weapon, costume, or regional tradition.","modelUrl":"/models/chhau-web-assets/martial-artist-copy-2.glb"},{"label":"Blade and shield figure prototype","description":"A static masked or helmeted warrior holding a blade and shield. Study the combined silhouette only. It is not evidence of Seraikella, Purulia, a Chhau mask, character, weapon set, or movement.","modelUrl":"/models/chhau-web-assets/martial-artist-2.glb"},{"label":"Sword and shield pair prototype","description":"Two fused generated figures with swords and shields. Rotate the pair to compare spacing and overlap. It is not evidence of a Chhau duet, combat phrase, formation, costume, or regional tradition.","modelUrl":"/models/chhau-web-assets/martial-artist-duo.glb"},{"label":"Overhead sword figure prototype","description":"A static generated figure holding a sword overhead. Compare the raised line from front and side views. It is not evidence of a Chhau technique, named movement, weapon, character, or regional tradition.","modelUrl":"/models/chhau-web-assets/martial-artist-with-sword.glb"}],"plannedModels":["mayurbhanj-core.glb","prop-pack.glb"]} -->
 Accounts often link Chhau’s physical vocabulary with regional systems of exercise and combat training. These include sword-and-shield practice and paika or akhara traditions. Wide stances, quick changes of direction, mock attacks, defensive responses, jumps, and weapon phrases make the relationship visible. Mayurbhanj histories give this connection special importance. [2][3][4][5]
+
+The introductory course module describes _Parikhanda_ through sword-and-shield practice and proposes it as one martial layer behind movement and props. With no bibliography or archival chain, this remains a source-specific theory rather than a single origin for all Chhau. [16]
 
 Resemblance is not a full origin story.
 
@@ -232,6 +253,8 @@ Wider visibility brings students, income, documentation, and recognition. It als
 The name also has no proven single derivation.
 
 Writers and practitioners link Chhau with several possible words. One explanation connects it to chhaya, meaning shadow, image, or shade. Some writers link this idea to the mask as an image of a character. Another explanation connects it to chhauni, a camp or military encampment, and supports a martial reading. Chadma means disguise. Writers also propose regional words linked to attack, concealment, or a hunting cry. Spellings and explanations differ between authors. [5][7][9]
+
+The e-PG introductory module gathers a similar but not identical cluster: _chhaya_, _chadman_, hunting or attack words in Odia, _chauri_ or _chavni_, and _chauka_. It also advances martial and mask-based explanations which cannot describe every region equally, because Mayurbhanj is unmasked. The list broadens the questions; without cited linguistic evidence, it does not settle them. [16]
 
 No one has proved a single one of these derivations as the origin of the term.
 
@@ -332,7 +355,11 @@ One important foundational position is chauk. Published sources also use spellin
 
 Formal training depends on exact angles, but those angles belong with a practitioner, not a diagram alone. Bodies have different proportions. Forcing the feet or knees outward turns a useful idea into an unsafe imitation. In this eBook, the key idea is readiness. Chauk organises the body for movement in several directions.
 
+The Mayurbhanj course module gives exact measurements for chauk. Those measurements belong to that written account; they have not been checked against a named lineage, different bodies, or current safety practice. They are therefore evidence about a source, not instructions for a child. [20]
+
 Dharan gives us a related, but different, idea. The word connects with holding, especially holding an actual or pictured sword and shield. One technical description places dharan at the end of a dance. Rhythmic weight shifts help the dancer settle after exertion. Other teaching descriptions connect it with the held character-state before travel starts. Both uses fit one broad idea. Dharan gathers weight, role, breath, and readiness. [4][6]
+
+The same Mayurbhanj module connects dharan with a held character-state and names _Hathiyar Dhara_, _Kalibhanga_, and _Kalikata_ as source-specific movement groupings. Their spelling, scope, and present use need confirmation from practitioners before this book treats them as current teaching categories. [20]
 
 > Activity draft, not yet specialist-validated: An adult must decide whether this prompt suits you. Stand with your feet comfortably apart. Soften your knees only a little. Keep breathing, with the chest easy instead of forced. Shift your weight left and right without lifting your feet. This is a provisional balance experiment inspired by readiness. It is not formal Chhau technique.
 
@@ -395,6 +422,10 @@ Use four evidence layers:
 
 No fixed total is reliable. Jiwan Pani recorded one list of six topkas and thirty-six uflis. D. N. Patnaik later described about ten tabkas and twenty-five uphlis then in Mayurbhanj practice. The disagreement records a tradition taught, selected, and reshaped over time. [4][5]
 
+The Mayurbhanj course module adds a warning from inside a single document: it announces six topkas, then names nine. Elsewhere it discusses Muda, Duba, Ghora, and Bagaduma among examples. That mismatch is evidence against turning its list into a fixed syllabus. [20]
+
+The Seraikella technique module gives another source-specific taxonomy: six chalis, thirty-six uflis, ten khel, eight topkas, and at least fifty bhangis. It provides no bibliography and does not show that every current Seraikella lineage uses those totals. The counts record this course account, not a universal grammar. [21]
+
 Regional vocabulary needs to stay regional. The production brief reserves a later Purulia comparison model under the provisional labels chal, pirkiti, chhok, and ulfa. Those terms are not alternate names for Mayurbhanj topka, ufli, dumka, or dian. This edition will not define or animate them from prose alone. A named Purulia practitioner must first confirm the spellings, categories, and clips.
 
 > 3D sandbox: The planned Purulia study belongs here only as a region-labelled comparison. Watch how one confirmed pathway organises travel or accent, and do not map its terms onto Mayurbhanj vocabulary. It stays unpublished until a named Purulia practitioner confirms the spelling, category, movement, lineage, permission, and credit.
@@ -407,6 +438,8 @@ Mayurbhanj sources call this rhythmic, character-bearing travel chali. It is not
 D. N. Patnaik describes a structured presentation where dancers begin behind a curtain, often in dharan. When the curtain rises, they move towards the centre in a measured, dramatic gait. This opening section takes its name from chali. Later sections develop and intensify the dance. [4]
 
 This describes one Mayurbhanj structure, not every troupe or all three Chhau styles. Published lineage lists also name different chalis. They include one-step, two-step, and three-step patterns, sideways and backward travel, and movement inspired by animals or natural forces. A current guru needs to confirm those lists before anyone teaches them as a syllabus. [4][6]
+
+The Mayurbhanj courseware also illustrates several chalis, but an image and label cannot show preparation, rhythm, correction, or lineage. Its examples remain source-specific references, not self-teaching diagrams. [20]
 
 Study a travelling phrase through four questions:
 
@@ -493,6 +526,8 @@ Patnaik reproduces a separate Seraikella list from Juga Bhanu Singh Deo. It incl
 
 These lists describe neither every household nor every Mayurbhanj lineage. Some descriptions carry assumptions from their period. The actions are not quaint village scenery. Work has effort, skill, and social meaning.
 
+The Mayurbhanj course module sorts some uflis through gendered descriptions of work. That tells us how the author classified the material, not which movements a person may learn or perform today. A present-day practitioner and the communities represented should review both the movement names and the social language. [20]
+
 A pestle rises and falls. Grain changes direction in a winnowing basket. A hand circles across a grinding surface. Chhau selects a pathway, changes its scale, organises the feet, and places the action inside musical time.
 
 This is different from mime. Mime asks the audience to recognise a task. Dance starts with the task, then develops its weight, rhythm, and spatial pattern beyond a literal description.
@@ -541,6 +576,8 @@ A fixed loop does not represent traditional live performance. A skilled musician
 
 Mayurbhanj technical writing describes a prelude which creates atmosphere before the dancer enters. In one structured presentation, slower music supports the opening chali, middle tempo develops the nata, and faster music drives the natki climax. Jhoomar has a special link with the climactic section in this account. This is one documented structure, not a formula for every Mayurbhanj performance. [4]
 
+The e-PG Mayurbhanj module describes another sequence: _Dhumal_ or collective drumming, _Rangabaja_, then phases labelled _Vilambit_, _Madhyalaya_, _Drutalaya_, and _Nataki_. It also prints unstable terms such as “Jorden,” “Yudan,” and “Badatala.” Until musicians confirm the intended words, this book records the spellings without silently correcting them. [20]
+
 > Listen: When a reviewed model and rights-cleared rhythm arrive, hear the rhythm first. Predict where the dancer might enter, stop, or change direction. Then reveal the animation and compare your prediction.
 
 > Audio requirement: Animation and sound must stay synchronised when the user chooses half speed. Slowing the body without slowing the rhythm would teach the relationship incorrectly.
@@ -556,6 +593,8 @@ Listen for four layers:
 
 <!-- BOOK_PAGE {"id":"mayurbhanj-sound-world","pageType":"content","title":"The Mayurbhanj Ensemble","plannedModels":["instrument-pack.glb"]} -->
 D. N. Patnaik describes one traditional Mayurbhanj ensemble with dhol, chadchadi or kadka, dhumsa, and mahuri. Earlier in the same historical discussion, he describes mahuri, dhol, and dhumsa as the core accompaniment for Pharikhanda and Paikali material. These descriptions belong to particular sources and contexts. They are not a complete chronological inventory. [4]
+
+The Mayurbhanj course module names dhol, dhumsa, mahuri, chadachadi, and flute, with harmonium appearing later in its account. It also reports Western instruments entering some presentations in the 1930s, but gives no archival source. That date and the instruments involved need independent verification before entering the main historical timeline. [20]
 
 The dhol is a barrel-shaped, double-headed drum. The player uses the left palm and fingers on one side and a blunt stick in the right hand. Patnaik calls it the most important rhythmic instrument because it gives the basic pattern.
 
@@ -581,6 +620,10 @@ The source lists need to stay separate. Patnaik’s Mayurbhanj account names dho
 Sharmila Chandra gives a different account. Citing earlier scholarship, she writes of veena, mridangam, and pakhawaj replacing the Purulia ensemble in an early twentieth-century Seraikella setting. [9] Her account conflicts with Pani’s shared five-instrument list, or it refers to another period or performance setting. The sources in this eBook do not support one tidy sequence. We still need the original account by Suresh Awasthi and the knowledge of a current Seraikella musician before reconciling these histories or modelling a piece-specific sound.
 
 For Purulia, Deepsikha Chatterjee documents Jhumur singing, spoken or sung introductions, and vocal material which presents plot. She places these beside shehnai or pepti, dhol, dhamsa, and charchari. In one observed setting, musicians sat at one side of the arena. Earlier accounts also describe drummers moving inside the playing space. [8]
+
+The Purulia course module gives one more configuration: two dhamsas, two dhol or dholak drums, shehnai, harmonium, and sometimes idiophones or trumpet. It distinguishes moving dhol players from grounded dhamsa players and describes three-quarter subdivision, long rhythmic patterns, and a dhol player’s spoken bol as a cue. This is a historically located account, not the minimum or standard orchestra for every troupe; its terminology and pattern lengths need review by Purulia musicians. [18]
+
+The Seraikella music module names nagara, dhol, and a reed instrument printed as “Shania,” apparently a shehnai, and calls songs _Rong_. It links particular melodies or ragas with individual repertoire items. Because the module has no source list and its ensemble differs from other published lists, these details remain item- and source-specific. [22]
 
 Chhau storytelling is not silent everywhere. The dancers might not speak, while singers or musicians help present the story.
 
@@ -622,6 +665,8 @@ Jiwan Pani’s idea of kinetic suggestion helped me understand this. Chhau does 
 
 Movement-led does not always mean voiceless. In some Purulia performances, a Jhumur singer introduces characters or presents the plot while masked dancers mime and move. Patnaik also records Jhoomar songs behind some Mayurbhanj dances. The balance among body, music, and voice shifts with style and piece. [4][8]
 
+Even one course cluster does not resolve the question. Its Mayurbhanj module says song ends before the drum-led dance begins, while Patnaik records background Jhoomar in some pieces. The statements may describe different items or periods, but the evidence supplied here cannot prove which. [4][20]
+
 Follow a scene through five questions:
 
 - Who entered, and what did the entry tell me about them?
@@ -645,6 +690,10 @@ Older martial pieces often foregrounded prowess, mock combat, and weapon handlin
 
 Purulia troupes also make works about regional history and contemporary life. Documented subjects include the Santhal rebellion, war, dowry, and an adaptation responding to Macbeth. Troupes draw on inherited material and new work. [8]
 
+The Purulia course module names selected items such as Ganesha Bandana, Kirat Arjuna, Bakasura Badh, Meghnad Badh, Sita Haran, and Ravan Badh. Its claim that every company follows one repertoire cannot be supported from the module’s evidence, so the titles belong here only as examples from its list. [18]
+
+The Seraikella course module ranges from Mayur, Nabik, Hansa, and Ratri to Ardhanarishvara, Chandrabhaga, Duryodhana-Urbhanga, Bhairav Vandana, and abstract or nature-led subjects. Its numbering contains errors and it supplies no bibliography. The list demonstrates range, not a fixed Seraikella canon. [22]
+
 Sacred figures must not become costume jokes or battle games. Discuss violent episodes through choices, consequences, courage, and control. Do not invite children to copy strikes. Nature prompts must remain low-motion, labelled “inspired by,” and subject to adult judgement and specialist validation.
 
 ### New educational story cards
@@ -666,6 +715,10 @@ Mayurbhanj repertoire grew through different periods, teachers, Sahis, and syste
 D. N. Patnaik records early martial works with titles suggesting strength, attack, and tactical movement. He then describes character dances for Mahadev, Hanuman, Parashuram, hunters, and epic heroes. Larger group works drawn from the epics and Puranas follow. [4]
 
 Basanta Kumar Mohanta’s historical account names works linked with Uttarsahi and Dakshinsahi. The list includes Kaliya Dalan, Matru Puja, Megha Duta, Samudra Manthan, Garuda Vahana, Nataraja, Giri Gobardhan, Maya Sabari, Holi, Kirat Arjuna, and Banshi Chori. These names document periods of repertoire growth. They are not a checklist for every current troupe. Spellings and versions still need verification. [3]
+
+The Mayurbhanj history module groups repertoire as _Footnach_ for solo, _Juri nach_ for duet, and _Mel_ or _Mela nach_ for group work, then attaches lists to particular Sahis. This is a useful way to inspect scale in the author’s account, not proof that every institution uses the same categories now. [19]
+
+The following Mayurbhanj module offers a different classification organised by musical source. Because both modules share one author and course context, their agreement or repetition counts as one courseware cluster, not independent corroboration. [19][20]
 
 The photographic source supplied for this project focuses on Shiva imagery and an Abhimanyu episode. Its author directly calls it a photographic selection, not a complete account of Mayurbhanj vocabulary or repertoire. [15]
 
@@ -739,6 +792,8 @@ The uncovered face and head remain part of the full silhouette. Headpieces, hair
 
 The supplied photographic record includes particular Shiva and Abhimanyu-related costumes. Its author says the selection is not comprehensive. Those photographs support models of those specific performances. They do not represent "the Mayurbhanj costume." [15]
 
+The Mayurbhanj course module likewise gives character-specific costume examples rather than one uniform. It even assigns Krishna a yellow lower garment in one passage and pink in another. The contradiction should remain visible: neither colour becomes a universal rule without a piece-, troupe-, and period-specific reference. [20]
+
 Sword-and-shield imagery has strong links with recorded martial training and dharan. A trident identifies Shiva. A bow identifies a hunter or archer. Each prop extends the body's line and helps finish the pose.
 
 This does not make a prop safe for practice. Mayurbhanj historical writing records serious harm from performance weaponry. For this reason, the eBook excludes all physical weapon and hard-prop activities. On-screen overlays are for observation only. This is a conservative editorial exclusion. It is not a validated Chhau safety protocol. [4][13]
@@ -756,6 +811,8 @@ The supplied photographic source likewise traces bhava and rasa through the body
 
 Sources often describe Seraikella masks as smaller than Purulia masks and more symbolic in form. They note shaped eyes, brows, and a quieter link between face and headgear. Published examples include masks for "Ratri," "Ardhanarishvara," and "Mayura." These descriptions help comparison. They are not instructions for inventing a mask. [9]
 
+The Seraikella costume module sorts characters into five classes and gives item-specific dress and mask details. It also treats the mask’s physical burden and the body’s work of communicating abstract images. The taxonomy helps us read that author’s examples; it is not a universal costume code, and any statement about weight, vision, or balance requires review by performers and mask makers. [22]
+
 Document Seraikella mask-making with a named artisan. Copying the well-recorded Charida process and relabelling it "how Chhau masks are made" would mislead the reader. Related traditions often use different materials, workshop knowledge, and finishing methods.
 
 > 3D sandbox: First seek approval from a named Seraikella practitioner and mask maker. Then keep one approved mask unchanged while the body moves through four reviewed arrangements. Until those approvals exist, this is a model brief, not a practitioner-reviewed study.
@@ -769,11 +826,17 @@ Deepsikha Chatterjee records a dhoti, a stiffened over-neck cape or tabard, tass
 
 The mask sometimes reaches over the crown and towards the back of the head. This helps support wire frameworks and large headgear. Recorded materials include clay, layered papier-mache, cloth reinforcement, paint, wire, beads, sequins, flowers, and fibre for hair or animal manes. Construction, drying, and decoration require separate stages. [8]
 
+The Purulia mask module records workshop terms including _Matigara_, _Chaimakhano_, _Kagojchitano_, _Kabijlepa_, _Kaporsetano_, _Thapi_, _Khusnikhoncha_, _Khorilepa_, and _Rangkara_. Spellings in the PDF need checking with Charida artisans. These words belong in a maker-reviewed process glossary, not a do-it-yourself recipe: clay, adhesives, pigments, wire, tools, dust, drying, and workshop knowledge all require context and safety review. [17]
+
 Recurring character conventions help the audience recognise Rama, Krishna, Ganesha, Shiva, Durga, Narasimha, heroes, demons, and animals. But these masks are not mass-produced symbols. Makers work with troupes, adapt older masks, and respond to one production's needs.
+
+Colour tables inside the same Purulia module conflict: a demon is described through green or red in one place and black or dark blue in another. The inconsistency reinforces the rule that colour must be attached to a particular maker, troupe, character, and production rather than taught as a fixed code. Its estimate of about forty mask-making families is also time-bound, not a present-day count. [17]
 
 Charida is a major centre for this work. Any digital model based on a Charida mask must credit its maker. An anonymous credit would omit essential authorship. Mask makers establish much of the character’s appearance before performance.
 
 Publish the planned two-person lion-vahana study only after documenting one troupe’s construction and movement. Do not present its rig or coordination as a universal Purulia design.
+
+The Purulia technique module describes animal embodiments performed by one or two dancers depending on the item. That supports investigating variation, not assuming every lion, horse, or other animal uses the same number of bodies or rig. [18]
 
 > 3D sandbox: Show the mould, structural layers, surface, paint, wire halo, and decoration. Follow one maker's documented method. Do not reveal private workshop knowledge without permission.
 
@@ -785,6 +848,10 @@ Publish the planned two-person lion-vahana study only after documenting one trou
 Many Chhau performances take place outdoors on an open ground called an asar or akhara. Musicians sit to one side while the audience gathers around the dancing area. [1][2]
 
 An akhara also serves as a training space. Practice and performance often share the same ground. A dancer repeats a stance, learns to land, and listens to a drum where the group later performs a story.
+
+The Purulia mask module describes one opening format: instrumental settling, drummers moving through the ground, a singer’s invocation, Ganesha, a group episode, solo items, and longer narrative material. It also describes the singer introducing characters or voicing dialogue while masked dancers act. This is one documented course account, not the required order for every Purulia performance. [17]
+
+The Seraikella technique module prints exact arena dimensions and a fixed canopy, ground, entrance, musician, and audience layout. Without a named event, date, field record, or source list, those measurements cannot become a universal reconstruction. A digital arena should represent one verified performance setting at a time. [21]
 
 The audience and musicians remain visible around an open asar. Mayurbhanj Chhau uses the full arena through entries, diagonals, circles, leaps, and long travelling phrases. [4]
 
@@ -826,6 +893,8 @@ Order varies by style, troupe, and item. D. N. Patnaik records this Mayurbhanj s
 - The action develops and resolves. A conflict might quicken the drums. A leap might cross the arena. Sudden stillness gives the audience time to understand what happened. The final image makes the ending clear.
 
 This is not a formula for every Mayurbhanj item. It is not a template for Seraikella or Purulia. Some pieces are solos, some are duets, and others are group works. Some draw from epic stories. Others evoke animals, nature, work, or an abstract mood. Vocal narration and song also vary. Some Purulia settings use a Jhumur singer to carry part of the plot. Patnaik records background Jhoomar song in some Mayurbhanj pieces. [4][8]
+
+The Mayurbhanj history module proposes a longer sequence: Dhumal, a term printed as Juden, Rangabhaja, Chali and Dharan, Nacha, then Nataki. Its summary places Chali before Dharan, while its prose places Dharan before Chali. The following module uses overlapping but different music and tempo labels and says songs stop before drum-led dance. These conflicts must remain visible until practitioners and musicians identify the piece, institution, period, and intended terminology. [19][20]
 
 > Look: Watch the stillness after a large movement. The pause helps the audience understand the preceding phrase.
 
@@ -1063,6 +1132,8 @@ Chauk / Chauka / Chaukbandha: A foundational open, lowered, ready position in Ma
 
 Dharan: A held state linked with a sword and shield, rhythmic weight shift, and role preparation. One technical description also connects it with settling after exertion.
 
+Hathiyar Dhara / Kalibhanga / Kalikata: Grouping labels printed in one Mayurbhanj course module. Their spelling, relationship, and present lineage use remain unverified; they are not reader instructions. [20]
+
 Dian: A published Mayurbhanj category for smaller jumps, including examples drawn from animals. This eBook keeps it watch-only.
 
 Dumka: A published Mayurbhanj category for larger jumps. It remains watch-only and practitioner-led.
@@ -1075,6 +1146,8 @@ Palta: A family of turns or flinging actions in a published Mayurbhanj technical
 
 Topka / Tabka: Image-bearing locomotion or gait. Jiwan Pani describes body flexion as the lead, with the footwork in agreement. Counts and examples differ by source and lineage.
 
+Khel: A Seraikella movement category in one course module, which lists ten. The count and current meaning need lineage-specific confirmation. [21]
+
 Ufli / Ufil / Uphli / Ufuli: Movement imagery where, in Pani’s comparison, the legs become especially eloquent and the body follows. Published lists draw from work, nature, animals, and other actions. Spellings and counts differ. Keep every example in its proper regional column. Patnaik’s quoted Seraikella list does not become a Mayurbhanj list because it appears inside his Mayurbhanj article.
 
 <!-- BOOK_PAGE {"id":"glossary-music-performance","pageType":"content","title":"Glossary: Music and Performance"} -->
@@ -1083,6 +1156,8 @@ Chadchadi / Kadka / Charchari: Names for smaller, sharper percussion voices in d
 Dhol: A barrel-shaped drum with a major rhythmic role in Chhau ensembles. Its construction and playing style differ by context.
 
 Dhumsa / Dhamsa: A large kettledrum with a deep sound built to carry. Publications and regions use different spellings.
+
+Dhumal: A label for collective or opening drumming in one Mayurbhanj course module. Its relationship to other opening-music terms needs musician verification. [20]
 
 Jhoomar / Jhumur: Related regional music and song traditions found in Chhau histories and performance settings. Their use differs by style, place, and piece.
 
@@ -1093,6 +1168,10 @@ Mask-body relationship: A fixed mask gains expression through head angle, torso,
 Pepti / Shehnai: Reed instrument names found in regional documentation, including Purulia sound settings. Do not treat every term as the same instrument.
 
 Rangavadya / Rangbaja: Terms found in descriptions of opening music or music used to build the atmosphere before a performance. Usage differs by source.
+
+Rong: The spelling used for songs in one Seraikella course module. Confirm the word, pronunciation, repertoire context, and raga claims with Seraikella musicians before using it as a general term. [22]
+
+Vilambit / Madhyalaya / Drutalaya / Nataki: Slow, middle, fast, and climactic phase labels in one Mayurbhanj course account. The sequence is source-specific, and Nataki also appears as a dance-section term elsewhere. [20]
 
 Repertoire: The body of pieces carried and performed by a teacher, troupe, style, or institution. A printed list records one point in time. It does not set a fixed canon by itself.
 
@@ -1106,9 +1185,11 @@ Supported milestones remain separate from claims awaiting archival confirmation.
 - Before a documented beginning: Martial practice, seasonal celebration, agrarian life, local community knowledge, storytelling, music, and training form several historical layers. No evidence identifies one date of origin for Chhau. [2][3][5]
 - 1823 to 1863: Mohanta links the reign of Maharaja Jadunath Bhanja with Rama Leela performance in Chaitra. His proposed transition into Chhau is a historical reconstruction, not settled fact. [3]
 - 1868 to 1882: During Maharaja Krushna Chandra Bhanja Deo’s reign, Mohanta records Ramahari Bebarta’s encouragement and the arrival of teachers Upendra Biswal and Banamali Das from Seraikella. [3]
+- Conflicting courseware chronology: The Mayurbhanj history module associates Krushna Chandra with both 1830 to 1834 and 1868 to 1882, an impossible pair in that account. This edition retains Mohanta’s cited chronology above and leaves the course claim unresolved. [3][19]
 - Late nineteenth and early twentieth centuries: Mayurbhanj accounts give us a clearer view of court organisation, Uttarsahi and Dakshinsahi competition, musicians, and festival structures. [3]
 - 1912: A widely repeated account records a specially prepared “War Dance” presentation in Calcutta in connection with George V and Queen Mary. Exact contemporary documentation still needs confirmation. [3]
 - After 1928: Maharaja Pratap Chandra Bhanja Deo is linked with renewed support, a wider repertoire, musical exchange, and formal organisation. [3]
+- 1930s, reported but unverified: The Mayurbhanj technique and music module says Western instruments entered some presentations. It names no archive or bibliography, so the date and instruments remain an open research lead. [20]
 - 1949: Mayurbhanj merges with Odisha. Patnaik also places Ananta Charan Sai’s reorganisation of a group under the _Mayurbhanj Chhow Nrutya Pratisthan_ banner in this year, with Bhabanishankar Das and Ramesh Chandra Mohapatra. [4]
 - 1950s: Grants, organisation, and rural competitions support revival and wider participation. [3]
 - 1960 to 1961: Mohanta places the establishment of the Mayurbhanj Chhau Nrutya Pratisthan in 1960 and its registration under the Societies Act in 1961. He gives a different account of the people involved. These dates conflict with Patnaik’s 1949 banner account. The articles do not prove successive legal stages. [3][4]
@@ -1122,22 +1203,30 @@ These gaps remain unresolved.
 ### Needs archival verification
 
 - The earliest documented use and meaning of the word Chhau.
+- The original evidence behind the e-PG courseware’s one-way origin and diffusion claims, early dates, and regional lineages. Repetition across modules by the same author is not independent confirmation. [16][17][19][21]
 - The exact relationship among Paika practice, Rukmar or Pharikhanda traditions, and later Mayurbhanj Chhau.
 - Contemporary records for the 1912 Calcutta presentation.
 - Original registration, grant, minutes, and organisational records needed to resolve Patnaik’s 1949 Pratisthan-banner account against Mohanta’s 1960 establishment and 1961 registration account. The similarly named bodies should not be treated as identical without evidence.
 - The original Suresh Awasthi source behind Chandra’s Seraikella orchestra account, compared with Pani’s instrument list, before proposing one chronology or replacement story.
 - The contributions of artists and musicians missing from court-centred histories.
+- The Mayurbhanj course module’s incompatible dates for Krushna Chandra, its reported 1930s use of Western instruments, and the exact words printed as “Juden,” “Jorden,” “Yudan,” and “Badatala.” [19][20]
 - The specific Adivasi, Indigenous, and other local communities whose knowledge shaped particular regional histories. Each community needs to be named place by place, rather than grouped across all three styles.
 
 ### Needs current practitioner verification
 
 - Chauk and dharan alignment in the lineage represented by each model.
 - The selected topka and ufli spellings, classification, pathways, and present use.
+- The Mayurbhanj module’s stated six topkas versus the nine it names; its chali illustrations; and the current meaning of Hathiyar Dhara, Kalibhanga, and Kalikata. [20]
+- Whether the Seraikella totals of six chalis, thirty-six uflis, ten khel, eight topkas, and at least fifty bhangis apply to a named present-day lineage. [21]
 - Pediatric movement and safety review of the proposed ages 8 to 14 range, every activity, the exclusions, and all Chhau-specific warning language. None has current validation.
 - Practitioner review of jump preparation, landing, and each future slow-motion representation before it appears as movement guidance.
 - Current ensemble names and playing techniques in all three styles.
+- The Purulia course account’s ensemble size, moving dhol and grounded dhamsa roles, pattern lengths, bol cues, singer-led introductions, opening order, arena use, and one- or two-performer animal designs. [17][18]
+- The conflict between claims that song stops before Mayurbhanj dance and evidence of background Jhoomar in some items; and the order of Dharan and Chali in the Mayurbhanj course sequence. [4][19][20]
 - Piece-specific and period-specific Seraikella instrumentation. A current Seraikella musician needs to review it instead of an account assembled from Pani’s and Chandra’s different descriptions.
+- The Seraikella courseware’s exact arena layout, five character classes, item-specific costumes, “Rong” songs, raga assignments, repertoire spellings, and instrument printed as “Shania.” [21][22]
 - Piece-specific costume, prop, mask, colour, and repertoire details.
+- The Charida process spellings, present artisan roles and family count, materials and safety, and contradictory Purulia colour charts in the mask module. [17]
 - Present-day festival structure in Baripada and the wording used by participating communities.
 - Current participation by women and learners from different backgrounds in specific Mayurbhanj institutions and akharas.
 
@@ -1184,6 +1273,22 @@ I used these pages for district location, Charida, and local performance context
 
 [15] Pani, Susil. _Mayurbhanj and Saraikala Chhau Dance from Odisha: A Photographic Journey._ n.d. Supplied research file: MAYURBHANJ_AND_SARAIKALA_CHHAU_DANCE_FRO(1).pdf. No publisher or date was visible in the copy reviewed. I used it only for clearly identified photographic examples and the author’s warning about the selection not being comprehensive.
 
+[16] Sinha, Somnath. _Chhau (Introduction)._ e-PG Pathshala, Paper 2, module 17, MHRD/NME-ICT, n.d. Supplied research file: 1466159897P2M17TEXT.pdf. I used its geography, martial and etymological leads only as source-specific claims; the module supplies no bibliography.
+
+[17] Sinha, Somnath. _Purulia Chhau – Introduction and Masks._ e-PG Pathshala, Paper 2, module 18, MHRD/NME-ICT, n.d. Supplied research file: 1466159941P2M18TEXT.pdf. I used its described performance sequence and mask-process vocabulary as historical courseware requiring current artisan and practitioner review. Its colour descriptions conflict internally, and its household count is time-bound.
+
+[18] Sinha, Somnath. _Purulia Chhau – Technique, Aaharya, Stories._ e-PG Pathshala, Paper 2, module 19, MHRD/NME-ICT, n.d. Supplied research file: 1466159980P2M19TEXT.pdf. I used selected ensemble, rhythm, repertoire, costume, and animal-embodiment examples without treating them as universal Purulia rules.
+
+[19] Sinha, Somnath. _Mayurbhanja Chhau – History, Growth and Presentation._ e-PG Pathshala, Paper 2, module 20, MHRD/NME-ICT, n.d. Supplied research file: 1466160012P2M20TEXT.pdf. I used its repertoire and presentation categories as one course account. Its chronology and the order of Dharan and Chali conflict internally.
+
+[20] Sinha, Somnath. _Mayurbhanja Chhau – Technique, Music and Aaharya._ e-PG Pathshala, Paper 2, module 21, MHRD/NME-ICT, n.d. Supplied research file: 1466161219P2M21TEXT.pdf. https://epgp.inflibnet.ac.in/epgpdata/uploads/epgp_content/S000451PA/P001528/M016683/ET/1466161219P2M21TEXT.pdf. I used its terminology, music sequence, and character-specific costume descriptions while retaining its topka-count, song, terminology, and Krishna-colour contradictions.
+
+[21] Sinha, Somnath. _Saraikela Chhau – Introduction, Presentation, Technique._ e-PG Pathshala, Paper 2, module 22, MHRD/NME-ICT, n.d. Supplied research file: 1466161265P2M22TEXT.pdf. I treat its technique totals, arena measurements, historical claims, and named lineages as source-specific pending archival and practitioner verification.
+
+[22] Sinha, Somnath. _Saraikela Chhau – Aaharya, Music, Repertoire._ e-PG Pathshala, Paper 2, module 23, MHRD/NME-ICT, n.d. Supplied research file: 1466161316P2M23TEXT.pdf. I used its item-specific character, costume, music, and repertoire examples as a course list, not a fixed canon.
+
+Entries [16] to [22] form one e-PG Pathshala courseware cluster by the same writer, with the same project and review context. They are not seven independent confirmations, and none of the seven PDFs includes a bibliography. Their PDF metadata records 24 May 2016, but no printed publication date appears, so this edition cites them as n.d. Three uploaded copies of module 21 were byte-identical; they are counted once as entry [20].
+
 ### More reading and viewing, not cited directly
 
 - Mahapatra, Sitakant, ed. _Chhau Dance of Mayurbhanj._ Vidyapuri, 1993. The complete text was unavailable for line-by-line checking in this edition.
@@ -1191,7 +1296,7 @@ I used these pages for district location, Charida, and local performance context
 
 ### How I used the sources
 
-Official listings support the three styles, living-heritage status, broad performance context, oral transmission, and shared vocabulary. Mayurbhanj technical writing supports its body grammar, music, and repertoire. Purulia evidence remains labelled Purulia. General safety sources inform conservative exclusions but do not validate child activities or Chhau-specific guidance. This manuscript is an original synthesis, with disputed claims qualified.
+Official listings support the three styles, living-heritage status, broad performance context, oral transmission, and shared vocabulary. Mayurbhanj technical writing supports its body grammar, music, and repertoire. Purulia evidence remains labelled Purulia. The seven e-PG modules preserve useful terminology and examples, but I treated them as one unreferenced courseware cluster, checked claims against stronger sources where possible, and left internal contradictions visible. Duplicate uploads do not increase evidentiary weight. General safety sources inform conservative exclusions but do not validate child activities or Chhau-specific guidance. This manuscript is an original synthesis, with disputed claims qualified.
 
 <!-- BOOK_PAGE {"id":"end","pageType":"section","title":"I Am Still Learning"} -->
 > This book began with one performance and a set of questions. It offers clear terms and reliable sources for your first study of Chhau.

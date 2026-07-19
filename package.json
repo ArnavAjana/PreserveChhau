@@ -1,7 +1,7 @@
 {
   "name": "preserve-chhau",
   "version": "1.0.0",
-  "description": "Arnav Ajana’s student-led, Mayurbhanj-centred interactive eBook about the three Chhau traditions.",
+  "description": "The Science of Chhau Dance: Arnav Ajana’s source-linked, Mayurbhanj-centred interactive eBook about the three Chhau traditions.",
   "private": true,
   "engines": {
     "node": ">=20.19.0"

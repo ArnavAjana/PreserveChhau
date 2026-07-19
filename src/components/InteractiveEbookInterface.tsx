@@ -402,7 +402,7 @@ export function InteractiveEbookInterface() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
-    document.title = `${getChapterTitle(currentPage)} · Chhau by Arnav Ajana`;
+    document.title = `${getChapterTitle(currentPage)} · The Science of Chhau Dance`;
 
     if (shouldFocusHeadingRef.current) {
       window.requestAnimationFrame(() => {
@@ -570,7 +570,7 @@ export function InteractiveEbookInterface() {
           <div className="reader-toc-layer fixed inset-0 z-[120] flex" role="presentation">
             <button
               aria-label="Close contents"
-              className="absolute inset-0 bg-ink/55 backdrop-blur-[2px]"
+              className="absolute inset-0 bg-ink/60"
               onClick={() => setTocOpen(false)}
               tabIndex={-1}
               type="button"
@@ -672,7 +672,7 @@ export function InteractiveEbookInterface() {
 
               <div className="border-t border-ivory/10 px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:pb-[max(1.5rem,env(safe-area-inset-bottom))]">
                 <Link
-                  className="flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ivory/15 px-4 text-sm font-semibold text-ivory transition hover:border-marigold-300/60 hover:text-marigold-200"
+                  className="flex min-h-11 items-center justify-center gap-2 rounded-[2px] border border-ivory/15 px-4 text-sm font-semibold text-ivory transition hover:border-laterite-300/60 hover:text-laterite-100"
                   href="/"
                 >
                   <HomeIcon className="h-4 w-4" />
@@ -703,10 +703,10 @@ export function InteractiveEbookInterface() {
 
               <Link
                 aria-label="PreserveChhau home"
-                className="hidden shrink-0 text-sm font-bold tracking-tight text-ink sm:block"
+                className="hidden shrink-0 font-display text-sm font-semibold tracking-tight text-ink sm:block"
                 href="/"
               >
-                Preserve<span className="text-laterite-700">Chhau</span>
+                The Science of Chhau Dance
               </Link>
 
               <div
@@ -784,7 +784,7 @@ export function InteractiveEbookInterface() {
 
 function ViewerLoading() {
   return (
-    <div className="grid h-full min-h-80 w-full place-items-center rounded-xl bg-ink text-sm font-medium text-ivory/75">
+    <div className="grid h-full min-h-80 w-full place-items-center rounded-[2px] bg-ink text-sm font-medium text-ivory/75">
       Loading the 3D study...
     </div>
   );
@@ -956,27 +956,22 @@ function CoverPage({
 }) {
   return (
     <section className="reader-cover" aria-labelledby="book-cover-title">
-      <div aria-hidden="true" className="reader-cover-lines">
-        <span />
-        <span />
-        <span />
-      </div>
       <div className="relative z-10 mx-auto max-w-3xl text-center">
-        <p className="reader-kicker text-marigold-700">An interactive eBook</p>
+        <p className="reader-kicker text-laterite-700">An evidence-led interactive eBook</p>
         <h1
           className="reader-cover-title"
           id="book-cover-title"
           ref={headingRef}
           tabIndex={-1}
         >
-          Chhau
+          The Science of Chhau Dance
         </h1>
         <p className="reader-cover-deck">
-          I met Chhau through one performance. My questions led into
-          Mayurbhanj Chhau and its wider family.
+          A source-aware field guide to the histories, bodies, music, masks,
+          and regional practices gathered under one name.
         </p>
         <div className="mx-auto mt-10 h-px w-20 bg-laterite-700/35" />
-        <p className="mt-8 text-sm font-semibold tracking-[0.14em] text-ink/65 uppercase">
+        <p className="mt-8 font-mono text-xs text-ink/60">
           Researched and written by
         </p>
         <p className="mt-2 text-2xl font-semibold text-laterite-800">
@@ -1008,11 +1003,7 @@ function SectionPage({
         >
           {getChapterTitle(page)}
         </h1>
-        <div aria-hidden="true" className="mx-auto mt-8 flex w-28 gap-2">
-          <span className="h-1 flex-1 rounded-full bg-laterite-700" />
-          <span className="h-1 flex-1 rounded-full bg-marigold-500" />
-          <span className="h-1 flex-1 rounded-full bg-ink" />
-        </div>
+        <div aria-hidden="true" className="mx-auto mt-8 h-px w-24 bg-laterite-700/35" />
         {page.body.trim() ? (
           <div className="mt-8 [&_.book-prose]:text-center">
             <MarkdownContent page={page} />
@@ -1205,7 +1196,7 @@ function ModelChoiceTabs({
       {modelOptions.map((option, index) => (
         <button
           aria-pressed={selectedModelIndex === index}
-          className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+          className={`rounded-[2px] border px-4 py-2 text-sm font-semibold transition ${
             selectedModelIndex === index
               ? "border-laterite-700 bg-laterite-700 text-ivory"
               : "border-laterite-900/15 bg-white text-ink hover:border-laterite-500"

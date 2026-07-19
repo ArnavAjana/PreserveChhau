@@ -5,7 +5,7 @@ import { MotionReveal } from "@/components/MotionReveal";
 export const metadata: Metadata = {
   title: "3D Study Roadmap",
   description:
-    "Planned 3D studies for the PreserveChhau interactive eBook, all awaiting named practitioner, maker, and rights review.",
+    "Planned 3D studies for The Science of Chhau Dance, all awaiting named practitioner, maker, and rights review.",
 };
 
 type ModelStudy = {
@@ -196,9 +196,10 @@ export default function ExperiencePage() {
       <section className="experience-hero" aria-labelledby="experience-title">
         <MotionReveal className="experience-hero-inner">
           <p className="editorial-kicker text-marigold-300">3D study roadmap</p>
-          <h1 id="experience-title">Twenty-three studies. Zero shortcuts.</h1>
+          <h1 id="experience-title">Twenty-three 3D studies awaiting review.</h1>
           <p className="experience-hero-deck">
-            The viewer is ready. The cultural models are not. Each study waits
+            This roadmap accompanies <cite>The Science of Chhau Dance</cite>.
+            The viewer is ready; the cultural models are not. Each study waits
             for a named source, clear rights, full credit, regional accuracy,
             and review by the right practitioner, musician, or maker.
           </p>

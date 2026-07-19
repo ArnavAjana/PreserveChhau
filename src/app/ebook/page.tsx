@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { InteractiveEbookInterface } from "@/components/InteractiveEbookInterface";
 
 export const metadata: Metadata = {
-  title: "Chhau: The Interactive eBook",
+  title: "The Science of Chhau Dance",
   description:
-    "Arnav Ajana’s 12-chapter, Mayurbhanj-centred guide to Mayurbhanj, Seraikella, and Purulia Chhau. Includes linked sources, unvalidated adult-guided activity drafts, and planned 3D studies awaiting practitioner and rights review.",
+    "Arnav Ajana’s 12-chapter, 76-page, Mayurbhanj-centred interactive eBook on Mayurbhanj, Seraikella, and Purulia Chhau, with linked sources and clearly marked review limits.",
 };
 
 export default function EbookPage() {

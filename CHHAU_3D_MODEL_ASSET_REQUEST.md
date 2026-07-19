@@ -1,4 +1,4 @@
-# Chhau eBook: 3D Model Asset Request
+# The Science of Chhau Dance: 3D Model Asset Request
 
 This brief lists the models planned beside the text. Add approved files to:
 

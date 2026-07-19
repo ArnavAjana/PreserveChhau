@@ -1,9 +1,10 @@
 # PreserveChhau
 
-PreserveChhau is Arnav Ajana’s student-led interactive eBook about Chhau. It
-introduces three related dance and dance-theatre traditions from eastern India.
-Arnav enters through Mayurbhanj Chhau and keeps Mayurbhanj, Seraikella, and
-Purulia connected without treating them as interchangeable.
+PreserveChhau publishes **The Science of Chhau Dance**, Arnav Ajana’s
+student-led, source-linked interactive eBook. It introduces three related dance
+and dance-theatre traditions from eastern India. Arnav enters through
+Mayurbhanj Chhau and keeps Mayurbhanj, Seraikella, and Purulia connected without
+treating them as interchangeable.
 
 This repository contains a working manuscript and application. Arnav formed
 the project idea and supplied or assembled the first research corpus. His
@@ -35,7 +36,7 @@ include `node_modules`.
 
 - `/`: a focused opening with three primary routes and six question-led paths
 - `/about`: Arnav’s full project story, position, and working method
-- `/ebook`: a responsive 75-screen reader with a wide-screen two-page spread,
+- `/ebook`: **The Science of Chhau Dance**, a responsive 76-screen reader with a wide-screen two-page spread,
   a broad one-page mode, 12 chapters, source links, a 14-record atlas with 10
   documented performance venues,
   unvalidated adult-guided activity drafts, deep links, searchable contents,
@@ -104,7 +105,7 @@ rebuilds both, runs strict TypeScript checks, and lints the authored tree.
 npm run build:book
 ```
 
-The generator validates the manuscript and rebuilds all 75 runtime pages. Page
+The generator validates the manuscript and rebuilds all 76 runtime pages. Page
 metadata supports:
 
 - `embedUrl`, `embedTitle`, and `embedCaption`: local interactive embed

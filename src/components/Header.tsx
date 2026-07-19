@@ -41,8 +41,8 @@ export function Header() {
           href="/"
           className="site-wordmark"
         >
-          <span>PreserveChhau</span>
-          <small>Arnav Ajana’s field guide</small>
+          <span>The Science of Chhau Dance</span>
+          <small>PreserveChhau · Arnav Ajana</small>
         </Link>
 
         <ul className="site-links">
