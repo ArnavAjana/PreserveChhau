@@ -6,36 +6,36 @@ export function Footer() {
       <div className="site-footer-grid">
         <div>
           <p className="font-display text-lg font-semibold text-ivory">
-            Preserve<span className="text-marigold-400">Chhau</span>
+            The Science of Chhau Dance
           </p>
           <p className="mt-3 max-w-xs text-sm leading-relaxed">
-            I built this student project to give first-time readers a clear,
-            source-linked way into Chhau.
+            PreserveChhau · researched, written, and directed by Arnav Ajana.
+            A source-linked student edition for first-time readers.
           </p>
         </div>
 
         <nav aria-label="Footer navigation">
-          <p className="text-sm font-semibold tracking-wide text-ivory uppercase">
-            Explore
+          <p className="font-mono text-xs text-ivory/70">
+            Edition index
           </p>
           <ul className="mt-3 space-y-2 text-sm">
             <li>
-              <Link href="/about" className="rounded-sm hover:text-marigold-300">
+              <Link href="/about" className="hover:text-laterite-200">
                 About Arnav
               </Link>
             </li>
             <li>
-              <Link href="/ebook#chhau" className="rounded-sm hover:text-marigold-300">
-                Read the eBook
+              <Link href="/ebook#chhau" className="hover:text-laterite-200">
+                Read the book
               </Link>
             </li>
             <li>
-              <Link href="/ebook#map-of-chhau" className="rounded-sm hover:text-marigold-300">
-                Map of Chhau
+              <Link href="/ebook#map-of-chhau" className="hover:text-laterite-200">
+                Open the atlas
               </Link>
             </li>
             <li>
-              <Link href="/experience" className="rounded-sm hover:text-marigold-300">
+              <Link href="/experience" className="hover:text-laterite-200">
                 3D study roadmap
               </Link>
             </li>
@@ -43,13 +43,13 @@ export function Footer() {
         </nav>
 
         <div>
-          <p className="text-sm font-semibold tracking-wide text-ivory uppercase">
-            Heritage
+          <p className="font-mono text-xs text-ivory/70">
+            Scope note
           </p>
           <p className="mt-3 text-sm leading-relaxed">
-            Chhau was inscribed on UNESCO’s Representative List of the
-            Intangible Cultural Heritage of Humanity in 2010. I keep its three
-            regional traditions distinct throughout this project.
+            The book keeps Mayurbhanj, Seraikella, and Purulia distinct. Chhau
+            was inscribed on UNESCO’s Representative List of the Intangible
+            Cultural Heritage of Humanity in 2010.
           </p>
           <p className="mt-3 text-xs leading-relaxed text-ivory/55">
             Independent student project. This draft does not use the UNESCO
@@ -58,11 +58,11 @@ export function Footer() {
         </div>
       </div>
       <div className="site-footer-notice">
-        Arnav Ajana led the project concept, research assembly, personal
-        narrative, and creative direction. AI supported drafting and technical
-        implementation under his direction. Source rights stay with their
-        authors and publishers. Practitioners and communities remain the
-        authorities on their traditions.
+        Independent student research edition. Arnav Ajana led the concept,
+        research assembly, personal narrative, and creative direction; AI
+        supported drafting and technical implementation under his direction.
+        Source rights stay with their authors and publishers. Practitioners and
+        communities remain the authorities on their traditions.
       </div>
     </footer>
   );

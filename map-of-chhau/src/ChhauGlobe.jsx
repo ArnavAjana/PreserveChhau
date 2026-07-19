@@ -13,7 +13,7 @@ import './ChhauGlobe.css';
 // atlas remains usable when a school network blocks third-party CDNs.
 const COUNTRIES_URL = './data/countries.geojson';
 
-const ACCENT = '#e7dcc8'; // host-country highlight (warm parchment, not neon)
+const ACCENT = '#c6b58f'; // warm paper highlight for countries with records
 
 // Camera vantage points.
 const HOME_POV = { lat: 18, lng: 80, altitude: 2.5 };
@@ -109,10 +109,11 @@ export default function ChhauGlobe() {
   const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
   const coarsePointer = useMediaQuery('(hover: none), (pointer: coarse)');
   const mobileLayout = useMediaQuery('(max-width: 860px)');
-  const [autoRotate, setAutoRotate] = useState(() => !reduceMotion);
+  // The atlas opens as a still reference map. Rotation is available only as
+  // an explicit reader choice, rather than as ambient motion.
+  const [autoRotate, setAutoRotate] = useState(false);
   const [globeReady, setGlobeReady] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [styleMode, setStyleMode] = useState('outline'); // 'outline' | 'hex'
   const [loading, setLoading] = useState(true);
   const [activeCat, setActiveCat] = useState(null);
   const [query, setQuery] = useState('');
@@ -133,13 +134,14 @@ export default function ChhauGlobe() {
     media.addEventListener('change', stopRotation);
     return () => media.removeEventListener('change', stopRotation);
   }, []);
-  // A dark planet lit by the scene so a soft terminator gives depth.
+  // A warm, low-gloss globe: closer to an archival teaching model than a
+  // cinematic planet.
   const globeMaterial = useMemo(
     () =>
       new THREE.MeshPhongMaterial({
-        color: 0x0e1730,
-        specular: new THREE.Color(0x16243f),
-        shininess: 10,
+        color: 0x45483e,
+        specular: new THREE.Color(0x77705e),
+        shininess: 3,
       }),
     []
   );
@@ -246,18 +248,6 @@ export default function ChhauGlobe() {
         : filteredMarkers,
     [filteredMarkers, isolating, activeCat]
   );
-  const ringsData = useMemo(
-    () =>
-      selected
-        ? [{ lat: selected.lat, lng: selected.lng, color: getStyleColor(selected.style) }]
-        : [],
-    [selected]
-  );
-
-  // Active country geometry per render mode.
-  const polyData = styleMode === 'outline' ? polyFeatures : [];
-  const hexData = styleMode === 'hex' ? polyFeatures : [];
-
   // ---- Stable interaction handlers ----------------------------------------
   const focusNode = useCallback((d) => {
     if (document.activeElement instanceof HTMLElement) {
@@ -279,7 +269,7 @@ export default function ChhauGlobe() {
     setSelected(null);
     setActiveCat(null);
     setQuery('');
-    setAutoRotate(!reduceMotion);
+    setAutoRotate(false);
     const g = globeRef.current;
     if (g) g.pointOfView(HOME_POV, reduceMotion ? 0 : 1200);
   }, [reduceMotion]);
@@ -319,8 +309,7 @@ export default function ChhauGlobe() {
       const placeLabel = d.venue ? `${d.venue}, ${d.city}` : d.city;
       el.setAttribute('aria-label', `Open ${placeLabel}, ${d.country}. ${d.style}`);
       el.title = `${placeLabel}, ${d.country}`;
-      el.innerHTML =
-        '<span class="marker-pulse"></span><span class="marker-pulse d2"></span><span class="marker-core"></span>';
+      el.innerHTML = '<span class="marker-core"></span>';
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         focusNode(d);
@@ -349,11 +338,6 @@ export default function ChhauGlobe() {
   );
   const sideColor = useCallback(() => hexToRgba(ACCENT, 0.04), []);
   const polyAltitude = useCallback((f) => (f === hoverPoly ? 0.06 : 0.012), [hoverPoly]);
-  const hexColor = useCallback(
-    (f) => (isHost(f) ? ACCENT : 'rgba(150,148,140,0.4)'),
-    [isHost]
-  );
-
   // ---- Globe / camera side-effects ----------------------------------------
   useEffect(() => {
     const g = globeRef.current;
@@ -485,21 +469,23 @@ export default function ChhauGlobe() {
         role="status"
       >
         <div className="loader-inner">
-          <span className="loader-kicker">An Interactive Atlas</span>
+          <span className="loader-kicker">The Science of Chhau Dance</span>
           <h1 className="loader-title">
-            Map of <em>Chhau</em>
+            Field <em>Atlas</em>
           </h1>
           <div className="loader-rule">
             <span />
           </div>
-          <span className="loader-sub">Three heartlands. One documented UNESCO decision.</span>
+          <span className="loader-sub">
+            Source-linked heartlands, records and performance venues.
+          </span>
         </div>
       </div>
 
       {/* ----------------------------- SIDEBAR ----------------------------- */}
       <aside
         aria-hidden={mobileLayout && !menuOpen}
-        aria-label="Chhau atlas locations"
+        aria-label="Chhau field atlas locations"
         aria-modal={mobileLayout && menuOpen ? true : undefined}
         className={`sidebar${menuOpen ? ' open' : ''}`}
         id="atlas-locations"
@@ -516,9 +502,9 @@ export default function ChhauGlobe() {
           Close
         </button>
         <div className="brand">
-          <span className="brand-kicker">An Interactive Atlas</span>
+          <span className="brand-kicker">The Science of Chhau Dance</span>
           <h1 className="brand-title">
-            Map of <em>Chhau</em>
+            Field <em>Atlas</em>
           </h1>
         </div>
 
@@ -663,9 +649,9 @@ export default function ChhauGlobe() {
         </button>
 
         <header className="stage-header">
-          <span className="title-kicker">Interactive Atlas</span>
+          <span className="title-kicker">Source map · verified records</span>
           <h2>
-            Map of <em>Chhau</em>
+            Where the record places <em>Chhau</em>
           </h2>
           <p>
             {chhauGeodata.length} verified records. {venueCount} documented venues.{' '}
@@ -691,12 +677,12 @@ export default function ChhauGlobe() {
               powerPreference: 'high-performance',
             }}
             globeMaterial={globeMaterial}
-            backgroundColor="#04050c"
+            backgroundColor="#171a17"
             showAtmosphere
-            atmosphereColor="#5a6b7a"
-            atmosphereAltitude={0.15}
+            atmosphereColor="#8f8065"
+            atmosphereAltitude={0.11}
             // --- country outlines ---
-            polygonsData={polyData}
+            polygonsData={polyFeatures}
             polygonCapColor={capColor}
             polygonSideColor={sideColor}
             polygonStrokeColor={strokeColor}
@@ -708,25 +694,13 @@ export default function ChhauGlobe() {
                 isHost(f) ? ' <b>· verified atlas record</b>' : ''
               }</div>`
             }
-            // --- hex-dot countries (alt style) ---
-            hexPolygonsData={hexData}
-            hexPolygonResolution={3}
-            hexPolygonMargin={0.35}
-            hexPolygonColor={hexColor}
-            hexPolygonAltitude={0.012}
-            // --- custom interactive neon markers ---
+            // --- custom interactive field-map markers ---
             htmlElementsData={visibleMarkers}
             htmlElement={createMarker}
             htmlElementVisibilityModifier={(el, isVisible) => {
               el.style.opacity = isVisible ? '1' : '0';
               el.style.pointerEvents = isVisible ? 'auto' : 'none';
             }}
-            // --- expanding highlight ring under the focused node ---
-            ringsData={reduceMotion ? [] : ringsData}
-            ringColor={(r) => (t) => `rgba(${hexToRgb(r.color)}, ${Math.sqrt(1 - t)})`}
-            ringMaxRadius={3.5}
-            ringPropagationSpeed={2}
-            ringRepeatPeriod={900}
             onGlobeClick={() => setTooltip(null)}
           />
         )}
@@ -734,21 +708,12 @@ export default function ChhauGlobe() {
         {/* floating control bar */}
         <div aria-label="Atlas view controls" className="stage-controls" role="group">
           <button
-            aria-pressed={styleMode === 'hex'}
-            className="ctl"
-            onClick={() => setStyleMode((s) => (s === 'outline' ? 'hex' : 'outline'))}
-            type="button"
-          >
-            {styleMode === 'outline' ? 'Hex' : 'Outline'}
-          </button>
-          <span className="ctl-sep" />
-          <button
             aria-pressed={autoRotate}
             className={`ctl${autoRotate ? ' on' : ''}`}
             onClick={() => setAutoRotate((a) => !a)}
             type="button"
           >
-            {autoRotate ? 'Pause' : 'Rotate'}
+            {autoRotate ? 'Stop rotation' : 'Rotate globe'}
           </button>
           <span className="ctl-sep" />
           <button className="ctl" onClick={resetView} type="button">
@@ -773,13 +738,11 @@ export default function ChhauGlobe() {
             >
               Close
             </button>
-            <div className="detail-hero">
-              <div className="hero-fallback">
-                <span>{selected.venue ?? selected.city}</span>
-              </div>
-              <span className="detail-style">{selected.style}</span>
-            </div>
             <div className="detail-body">
+              <div className="detail-heading">
+                <span className="detail-style">{selected.style}</span>
+                <span className="detail-record">{selected.recordType.replaceAll('-', ' ')}</span>
+              </div>
               <p className="detail-status">
                 {selected.recordType === 'performance-venue'
                   ? 'Verified venue record.'

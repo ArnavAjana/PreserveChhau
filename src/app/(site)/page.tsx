@@ -13,7 +13,7 @@ const routes = [
     href: "/ebook#chhau",
     index: "02",
     label: "Read the eBook",
-    text: "Move through 75 short pages on place, body, music, history, and practice.",
+    text: "Move through 76 short pages on place, body, music, history, and practice.",
   },
   {
     href: "/ebook#map-of-chhau",
@@ -57,14 +57,15 @@ export default function HomePage() {
         <div className="home-hero-grid">
           <MotionReveal className="home-hero-intro">
             <p className="editorial-kicker text-marigold-300">
-              A student-led field guide
+              Arnav Ajana’s interactive eBook
             </p>
             <h1 id="home-title" className="home-hero-title">
-              Chhau
+              The Science of Chhau Dance
             </h1>
             <p className="home-hero-deck">
-              One performance left me with questions. This is where those
-              questions led.
+              A source-linked, Mayurbhanj-centred study of how place, movement,
+              music, masks, histories, and evidence distinguish Chhau’s three
+              regional traditions.
             </p>
           </MotionReveal>
 

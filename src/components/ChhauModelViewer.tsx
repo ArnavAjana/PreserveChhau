@@ -497,7 +497,7 @@ function ControlsBridge({
 
 function ViewerStatus({ children }: { children: ReactNode }) {
   return (
-    <div className="absolute inset-0 grid place-items-center bg-[#151817] px-6 text-center text-sm font-medium text-[#efe7d0]/75">
+    <div className="absolute inset-0 grid place-items-center bg-[#171d1c] px-6 text-center text-sm font-medium text-[#f3eee3]/75">
       {children}
     </div>
   );
@@ -505,8 +505,8 @@ function ViewerStatus({ children }: { children: ReactNode }) {
 
 function backgroundCss(mode: BackgroundMode) {
   return mode === "paper"
-    ? "linear-gradient(180deg,#f5efe4,#e8dcc8)"
-    : "radial-gradient(circle at 50% 28%,#303937 0%,#151918 66%,#0b0d0c 100%)";
+    ? "#f3eee3"
+    : "#171d1c";
 }
 
 function IconButton({
@@ -534,10 +534,10 @@ function IconButton({
       aria-expanded={ariaExpanded}
       aria-label={ariaLabel}
       aria-pressed={pressed}
-      className={`grid h-11 min-w-11 shrink-0 place-items-center rounded-xl border px-2 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#f0b34a] sm:px-3 sm:text-sm ${
+      className={`grid h-11 min-w-11 shrink-0 place-items-center rounded-[2px] border px-2 text-xs font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c2a460] sm:px-3 sm:text-sm ${
         active
-          ? "border-[#d68a45] bg-[#9f402b] text-white"
-          : "border-white/15 bg-[#111513]/80 text-[#efe7d0] hover:bg-[#29302d]"
+          ? "border-[#a8664f] bg-[#7c3e30] text-[#f3eee3]"
+          : "border-white/20 bg-[#171d1c] text-[#f3eee3] hover:bg-[#303735]"
       }`}
       onClick={onClick}
       ref={buttonRef}
@@ -646,7 +646,7 @@ function ViewerToolbar({
           {settingsOpen ? (
             <div
               aria-label="3D viewer options"
-              className="absolute right-0 top-[3.25rem] max-h-[min(70dvh,24rem)] w-[min(21rem,calc(100vw-3rem))] overflow-y-auto rounded-2xl border border-white/15 bg-[#111513]/95 p-3 text-[#efe7d0] shadow-2xl backdrop-blur-xl sm:w-[min(21rem,calc(100vw-4rem))] sm:p-4"
+              className="absolute right-0 top-[3.25rem] max-h-[min(70dvh,24rem)] w-[min(21rem,calc(100vw-3rem))] overflow-y-auto rounded-[2px] border border-white/20 bg-[#171d1c] p-3 text-[#f3eee3] shadow-[4px_4px_0_rgba(0,0,0,0.22)] sm:w-[min(21rem,calc(100vw-4rem))] sm:p-4"
               id={settingsId}
               ref={settingsPanelRef}
               role="dialog"
@@ -720,17 +720,17 @@ function OptionGroup({
 }) {
   return (
     <fieldset className="mb-4 last:mb-0">
-      <legend className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#efe7d0]/55">
+      <legend className="mb-2 font-mono text-[10px] font-medium tracking-[0.03em] text-[#f3eee3]/60">
         {label}
       </legend>
       <div className="grid grid-cols-2 gap-2">
         {options.map(([optionValue, optionLabel]) => (
           <button
             aria-pressed={optionValue === value}
-            className={`min-h-11 rounded-xl border px-3 py-2 text-xs font-semibold transition ${
+            className={`min-h-11 rounded-[2px] border px-3 py-2 text-xs font-semibold transition ${
               optionValue === value
-                ? "border-[#d68a45] bg-[#9f402b] text-white"
-                : "border-white/10 bg-white/5 text-[#efe7d0] hover:bg-white/10"
+                ? "border-[#a8664f] bg-[#7c3e30] text-[#f3eee3]"
+                : "border-white/15 bg-transparent text-[#f3eee3] hover:bg-white/8"
             }`}
             key={optionValue}
             onClick={() => onChange(optionValue)}
@@ -771,19 +771,19 @@ function AnimationControls({
 }) {
   if (clips.length === 0) {
     return (
-      <div className="absolute bottom-2 left-2 z-20 rounded-full border border-white/12 bg-[#111513]/80 px-3 py-2 text-xs font-semibold text-[#efe7d0]/70 backdrop-blur sm:bottom-3 sm:left-3">
+      <div className="absolute bottom-2 left-2 z-20 rounded-[2px] border border-white/15 bg-[#171d1c] px-3 py-2 font-mono text-xs font-medium text-[#f3eee3]/70 sm:bottom-3 sm:left-3">
         Static study
       </div>
     );
   }
 
   return (
-    <div className="absolute inset-x-2 bottom-2 z-20 rounded-2xl border border-white/15 bg-[#111513]/92 p-2 text-[#efe7d0] shadow-xl backdrop-blur-xl sm:inset-x-3 sm:bottom-3 sm:p-3">
+    <div className="absolute inset-x-2 bottom-2 z-20 rounded-[2px] border border-white/20 bg-[#171d1c] p-2 text-[#f3eee3] sm:inset-x-3 sm:bottom-3 sm:p-3">
       <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
         <button
           aria-label={isPlaying ? "Pause animation" : "Play animation"}
           aria-pressed={isPlaying}
-          className="h-11 shrink-0 rounded-xl bg-[#9f402b] px-3 text-xs font-bold text-white transition hover:bg-[#b24a32] sm:px-4 sm:text-sm"
+          className="h-11 shrink-0 rounded-[2px] bg-[#7c3e30] px-3 text-xs font-semibold text-[#f3eee3] transition hover:bg-[#8f4b38] sm:px-4 sm:text-sm"
           onClick={() => onPlayChange(!isPlaying)}
           type="button"
         >
@@ -792,18 +792,18 @@ function AnimationControls({
         <label className="min-w-0 flex-1 sm:max-w-64">
           <span className="sr-only">Animation clip</span>
           <select
-            className="h-11 w-full min-w-0 rounded-xl border border-white/15 bg-white/8 px-2 text-xs text-[#efe7d0] sm:px-3 sm:text-sm"
+            className="h-11 w-full min-w-0 rounded-[2px] border border-white/20 bg-transparent px-2 text-xs text-[#f3eee3] sm:px-3 sm:text-sm"
             onChange={(event) => onClipChange(event.target.value)}
             value={activeClip}
           >
             {clips.map((clip) => (
-              <option className="bg-[#111513]" key={clip} value={clip}>
+              <option className="bg-[#171d1c]" key={clip} value={clip}>
                 {humanizeClipName(clip)}
               </option>
             ))}
           </select>
         </label>
-        <label className="flex h-11 shrink-0 items-center gap-1 rounded-xl border border-white/15 bg-white/5 px-2 text-xs font-semibold sm:gap-2 sm:px-3">
+        <label className="flex h-11 shrink-0 items-center gap-1 rounded-[2px] border border-white/20 bg-transparent px-2 text-xs font-semibold sm:gap-2 sm:px-3">
           <span className="hidden sm:inline">Speed</span>
           <select
             aria-label="Animation speed"
@@ -811,16 +811,16 @@ function AnimationControls({
             onChange={(event) => onSpeedChange(Number(event.target.value))}
             value={speed}
           >
-            <option className="bg-[#111513]" value={0.25}>0.25×</option>
-            <option className="bg-[#111513]" value={0.5}>0.5×</option>
-            <option className="bg-[#111513]" value={1}>1×</option>
+            <option className="bg-[#171d1c]" value={0.25}>0.25×</option>
+            <option className="bg-[#171d1c]" value={0.5}>0.5×</option>
+            <option className="bg-[#171d1c]" value={1}>1×</option>
           </select>
         </label>
         <button
           aria-pressed={loop}
-          className={`h-11 shrink-0 rounded-xl border px-2 text-xs font-bold sm:px-3 ${
+          className={`h-11 shrink-0 rounded-[2px] border px-2 text-xs font-semibold sm:px-3 ${
             loop
-              ? "border-[#d68a45] bg-[#9f402b] text-white"
+              ? "border-[#a8664f] bg-[#7c3e30] text-[#f3eee3]"
               : "border-white/15 bg-white/5"
           }`}
           onClick={() => onLoopChange(!loop)}
@@ -835,7 +835,7 @@ function AnimationControls({
         </span>
         <input
           aria-label="Animation timeline"
-          className="h-11 min-w-0 flex-1 cursor-pointer accent-[#d68a45]"
+          className="h-11 min-w-0 flex-1 cursor-pointer accent-[#a8664f]"
           max={playback.duration || 0}
           min={0}
           onChange={(event) => onSeek(Number(event.target.value))}
@@ -957,7 +957,7 @@ export function ChhauModelViewer({
   const shellClassName = `relative h-full w-full overflow-hidden border border-white/10 ${
     isFullscreen
       ? "min-h-0 rounded-none"
-      : "min-h-[360px] rounded-2xl sm:min-h-[420px] [@media(max-height:600px)]:min-h-[300px]"
+      : "min-h-[360px] rounded-[2px] sm:min-h-[420px] [@media(max-height:600px)]:min-h-[300px]"
   } ${className}`;
   const isAnimating = isPlaying || autoRotate;
 
@@ -1041,12 +1041,12 @@ export function ChhauModelViewer({
     return (
       <div
         aria-label={`${modelLabel} 3D viewer`}
-        className={`grid place-items-center bg-[#151817] p-6 text-center ${shellClassName}`}
+        className={`grid place-items-center bg-[#171d1c] p-6 text-center ${shellClassName}`}
         role="region"
       >
         <div>
-          <p className="text-sm font-bold text-[#efe7d0]">3D study not yet available</p>
-          <p className="mt-2 max-w-sm text-xs leading-5 text-[#efe7d0]/55">
+          <p className="text-sm font-semibold text-[#f3eee3]">3D study not yet available</p>
+          <p className="mt-2 max-w-sm text-xs leading-5 text-[#f3eee3]/55">
             This space is reserved for a future model study.
           </p>
         </div>
@@ -1061,26 +1061,26 @@ export function ChhauModelViewer({
     return (
       <div
         aria-label={`${modelLabel} 3D visual prototype`}
-        className={`grid place-items-center bg-[#151817] p-6 text-center ${shellClassName}`}
+        className={`grid place-items-center bg-[#171d1c] p-6 text-center ${shellClassName}`}
         role="region"
       >
         <div className="max-w-md">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#f0b34a]">
+          <p className="font-mono text-[10px] font-medium tracking-[0.03em] text-[#c2a460]">
             Historical 3D prototype
           </p>
-          <p className="mt-3 text-lg font-bold text-[#efe7d0]">{modelLabel}</p>
-          <p className="mt-2 text-sm leading-6 text-[#efe7d0]/70">
+          <p className="mt-3 text-lg font-semibold text-[#f3eee3]">{modelLabel}</p>
+          <p className="mt-2 text-sm leading-6 text-[#f3eee3]/70">
             Large static model{prototypeSizeLabel ? `, ${prototypeSizeLabel}` : ""}.
             It loads after you choose, so the book stays responsive.
           </p>
           <button
-            className="mt-5 min-h-11 rounded-xl bg-[#9f402b] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#b24a32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#f0b34a]"
+            className="mt-5 min-h-11 rounded-[2px] bg-[#7c3e30] px-5 py-3 text-sm font-semibold text-[#f3eee3] transition hover:bg-[#8f4b38] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#c2a460]"
             onClick={() => setLoadedPrototypeUrl(normalizedModelUrl)}
             type="button"
           >
             Load 3D prototype
           </button>
-          <p className="mt-4 text-xs leading-5 text-[#efe7d0]/55">
+          <p className="mt-4 text-xs leading-5 text-[#f3eee3]/55">
             Generic generated study. It is not evidence of a named Chhau movement,
             regional tradition, costume, character, formation, performance, or prop.
           </p>

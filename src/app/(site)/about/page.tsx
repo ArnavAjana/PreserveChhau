@@ -6,7 +6,7 @@ import { MotionReveal } from "@/components/MotionReveal";
 export const metadata: Metadata = {
   title: "About Arnav",
   description:
-    "How student, actor, and dancer Arnav Ajana encountered Mayurbhanj Chhau and began building a source-linked guide for new learners.",
+    "How student, actor, and dancer Arnav Ajana encountered Mayurbhanj Chhau and developed The Science of Chhau Dance as a source-linked guide for new learners.",
 };
 
 const workingPrinciples = [
@@ -26,8 +26,9 @@ export default function AboutPage() {
             <h1 id="about-title">Hi, I’m Arnav.</h1>
             <p className="about-hero-deck">
               I am an IB Diploma student, actor, dancer, and the person behind
-              PreserveChhau. I met Chhau through a performance. The questions
-              stayed long after the competition ended.
+              PreserveChhau and <cite>The Science of Chhau Dance</cite>. I met
+              Chhau through a performance. The questions stayed long after the
+              competition ended.
             </p>
             <div className="about-hero-meta">
               <span>Student researcher</span>
@@ -107,7 +108,8 @@ export default function AboutPage() {
         </MotionReveal>
         <MotionReveal className="about-public-work-copy" delay={0.08}>
           <p>
-            PreserveChhau is one part of how I work. I also built IB E-Source,
+            <cite>The Science of Chhau Dance</cite>, published through
+            PreserveChhau, is one part of how I work. I also built IB E-Source,
             a public arts-reference project for IB students covering visual
             arts, theatre, music, and dance. Both projects ask the same simple
             question. How do you make a difficult first step clearer without
@@ -185,7 +187,7 @@ export default function AboutPage() {
           <h2 id="about-next-title">See what the questions became.</h2>
           <div className="about-next-actions">
             <Link className="editorial-button editorial-button-gold" href="/ebook#chhau">
-              Open the eBook
+              Open The Science of Chhau Dance
             </Link>
             <Link className="editorial-text-link text-ivory" href="/ebook#promise-to-the-reader">
               Read my promise to you

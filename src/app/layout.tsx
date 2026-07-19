@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "PreserveChhau: Arnav Ajana’s Interactive Chhau eBook",
+    default: "The Science of Chhau Dance · PreserveChhau",
     template: "%s · PreserveChhau",
   },
   description:
-    "IB student Arnav Ajana’s Mayurbhanj-centred journey into the three Chhau traditions, told through a source-linked interactive eBook.",
+    "The Science of Chhau Dance is Arnav Ajana’s source-linked, Mayurbhanj-centred interactive study of the three regional Chhau traditions.",
   keywords: [
     "Chhau",
     "Chhau dance",
@@ -16,11 +16,12 @@ export const metadata: Metadata = {
     "Mayurbhanj",
     "eastern Indian dance",
     "intangible cultural heritage",
+    "The Science of Chhau Dance",
   ],
   openGraph: {
-    title: "PreserveChhau: Arnav Ajana’s Interactive Chhau eBook",
+    title: "The Science of Chhau Dance · PreserveChhau",
     description:
-      "One student’s path from a Chhau performance to a source-linked, Mayurbhanj-centred interactive eBook.",
+      "Arnav Ajana’s source-linked, Mayurbhanj-centred interactive study of Mayurbhanj, Seraikella, and Purulia Chhau.",
     type: "website",
     siteName: "PreserveChhau",
   },
