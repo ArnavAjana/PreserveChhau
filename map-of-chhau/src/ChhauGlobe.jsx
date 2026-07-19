@@ -110,9 +110,9 @@ export default function ChhauGlobe() {
   const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
   const coarsePointer = useMediaQuery('(hover: none), (pointer: coarse)');
   const mobileLayout = useMediaQuery('(max-width: 860px)');
-  // The atlas opens as a still reference map. Rotation is available only as
-  // an explicit reader choice, rather than as ambient motion.
-  const [autoRotate, setAutoRotate] = useState(false);
+  // Open with the globe in motion, except when the reader's device requests
+  // reduced motion. The control bar always offers an explicit stop action.
+  const [autoRotate, setAutoRotate] = useState(() => !reduceMotion);
   const [globeReady, setGlobeReady] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [styleMode, setStyleMode] = useState('hex'); // 'outline' | 'hex'
@@ -322,7 +322,7 @@ export default function ChhauGlobe() {
     setSelected(null);
     setActiveCat(null);
     setQuery('');
-    setAutoRotate(false);
+    setAutoRotate(!reduceMotion);
     const g = globeRef.current;
     if (g) g.pointOfView(HOME_POV, reduceMotion ? 0 : 1200);
   }, [reduceMotion]);
