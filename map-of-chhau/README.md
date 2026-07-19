@@ -32,6 +32,11 @@ country, city, festival, university, workshop, training activity, or generic
 Indian-arts programme did not qualify by itself. The full acceptance and
 exclusion record is in `VENUE_RESEARCH_REGISTER.md`.
 
+Animated lines group venue records with a verified heartland only when the
+source names the same regional style. They do not represent origins, journeys,
+or lines of transmission. Records whose source leaves the style unstated remain
+on the atlas without a line.
+
 The Nairobi marker records a committee decision venue, not a Chhau performance
 or resident tradition. The Baripada marker uses Mayurbhanj's district
 headquarters only as a map anchor and makes no origin claim. Kharsawan, Bamnia,

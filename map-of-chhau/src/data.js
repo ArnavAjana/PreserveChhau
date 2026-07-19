@@ -351,15 +351,15 @@ export const chhauGeodata = [
 
 // Style -> earth-pigment hue. The palette reads like a printed atlas, not neon.
 export const STYLE_COLORS = {
-  Purulia: '#b96249', // laterite
-  Seraikella: '#66807c', // archive blue-green
-  Mayurbhanj: '#b4934f', // turmeric ochre
-  'All Styles': '#7f8b61', // leaf green
-  'Style Unstated': '#928978', // warm graphite
+  Purulia: '#cf6a4a', // warm clay
+  Seraikella: '#5f8f8a', // muted teal
+  Mayurbhanj: '#c6a052', // ochre
+  'All Styles': '#8c9a60', // sage
+  'Style Unstated': '#9a9183', // warm grey
 };
 
 export function getStyleColor(style) {
-  return STYLE_COLORS[style] || '#928978';
+  return STYLE_COLORS[style] || '#9a9183';
 }
 
 export const CATEGORIES = [

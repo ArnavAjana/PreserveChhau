@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, useMemo, useCallback } from 'react';
 import * as THREE from 'three';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import Globe from 'react-globe.gl';
 import {
   chhauGeodata,
@@ -13,7 +14,7 @@ import './ChhauGlobe.css';
 // atlas remains usable when a school network blocks third-party CDNs.
 const COUNTRIES_URL = './data/countries.geojson';
 
-const ACCENT = '#c6b58f'; // warm paper highlight for countries with records
+const ACCENT = '#e7dcc8'; // warm parchment highlight for countries with records
 
 // Camera vantage points.
 const HOME_POV = { lat: 18, lng: 80, altitude: 2.5 };
@@ -114,6 +115,7 @@ export default function ChhauGlobe() {
   const [autoRotate, setAutoRotate] = useState(false);
   const [globeReady, setGlobeReady] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [styleMode, setStyleMode] = useState('hex'); // 'outline' | 'hex'
   const [loading, setLoading] = useState(true);
   const [activeCat, setActiveCat] = useState(null);
   const [query, setQuery] = useState('');
@@ -134,14 +136,13 @@ export default function ChhauGlobe() {
     media.addEventListener('change', stopRotation);
     return () => media.removeEventListener('change', stopRotation);
   }, []);
-  // A warm, low-gloss globe: closer to an archival teaching model than a
-  // cinematic planet.
+  // Dark holographic globe from the original atlas treatment.
   const globeMaterial = useMemo(
     () =>
       new THREE.MeshPhongMaterial({
-        color: 0x45483e,
-        specular: new THREE.Color(0x77705e),
-        shininess: 3,
+        color: 0x0e1730,
+        specular: new THREE.Color(0x16243f),
+        shininess: 10,
       }),
     []
   );
@@ -240,6 +241,40 @@ export default function ChhauGlobe() {
   }, [countries, nodePoints]);
   const isHost = useCallback((f) => !!f?.__host, []);
 
+  const heartlandsByStyle = useMemo(
+    () =>
+      Object.fromEntries(
+        markerData
+          .filter((record) => record.recordType === 'living-tradition')
+          .map((record) => [record.style, record]),
+      ),
+    [markerData],
+  );
+
+  // Animated lines group source-stated venue records with the matching
+  // verified style anchor. They are visual links, not historical travel paths.
+  const routeData = useMemo(
+    () =>
+      filteredMarkers.flatMap((record, index) => {
+        if (record.recordType !== 'performance-venue') return [];
+        const anchor = heartlandsByStyle[record.style];
+        if (!anchor) return [];
+        const color = getStyleColor(record.style);
+        return [
+          {
+            startLat: anchor.lat,
+            startLng: anchor.lng,
+            endLat: record.lat,
+            endLng: record.lng,
+            cat: record.categorization,
+            color: [hexToRgba(color, 0.04), hexToRgba(color, 0.98)],
+            _gap: (index * 0.61803398875) % 1,
+          },
+        ];
+      }),
+    [filteredMarkers, heartlandsByStyle],
+  );
+
   const isolating = activeCat !== null;
   const visibleMarkers = useMemo(
     () =>
@@ -248,6 +283,24 @@ export default function ChhauGlobe() {
         : filteredMarkers,
     [filteredMarkers, isolating, activeCat]
   );
+  const routesForView = useMemo(
+    () =>
+      isolating
+        ? routeData.filter((route) => route.cat === activeCat)
+        : routeData,
+    [routeData, isolating, activeCat],
+  );
+  const ringsData = useMemo(
+    () =>
+      selected
+        ? [{ lat: selected.lat, lng: selected.lng, color: getStyleColor(selected.style) }]
+        : [],
+    [selected],
+  );
+
+  const polyData = styleMode === 'outline' ? polyFeatures : [];
+  const hexData = styleMode === 'hex' ? polyFeatures : [];
+
   // ---- Stable interaction handlers ----------------------------------------
   const focusNode = useCallback((d) => {
     if (document.activeElement instanceof HTMLElement) {
@@ -309,7 +362,8 @@ export default function ChhauGlobe() {
       const placeLabel = d.venue ? `${d.venue}, ${d.city}` : d.city;
       el.setAttribute('aria-label', `Open ${placeLabel}, ${d.country}. ${d.style}`);
       el.title = `${placeLabel}, ${d.country}`;
-      el.innerHTML = '<span class="marker-core"></span>';
+      el.innerHTML =
+        '<span class="marker-pulse"></span><span class="marker-pulse d2"></span><span class="marker-core"></span>';
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         focusNode(d);
@@ -338,6 +392,10 @@ export default function ChhauGlobe() {
   );
   const sideColor = useCallback(() => hexToRgba(ACCENT, 0.04), []);
   const polyAltitude = useCallback((f) => (f === hoverPoly ? 0.06 : 0.012), [hoverPoly]);
+  const hexColor = useCallback(
+    (f) => (isHost(f) ? ACCENT : 'rgba(150,148,140,0.4)'),
+    [isHost],
+  );
   // ---- Globe / camera side-effects ----------------------------------------
   useEffect(() => {
     const g = globeRef.current;
@@ -383,6 +441,25 @@ export default function ChhauGlobe() {
     c.autoRotate = autoRotate;
     c.autoRotateSpeed = 0.45;
   }, [autoRotate, globeReady]);
+
+  // Restore the original glow on capable screens without adding work on
+  // compact layouts or for readers who request reduced motion.
+  useEffect(() => {
+    const g = globeRef.current;
+    if (!g || !globeReady || reduceMotion || width < 900) return undefined;
+    const composer = g.postProcessingComposer();
+    const bloom = new UnrealBloomPass(
+      new THREE.Vector2(width, height),
+      0.38,
+      0.4,
+      0,
+    );
+    composer.addPass(bloom);
+    return () => {
+      composer.removePass?.(bloom);
+      bloom.dispose?.();
+    };
+  }, [globeReady, reduceMotion, width, height]);
 
   useEffect(() => {
     function handleEscape(event) {
@@ -614,7 +691,8 @@ export default function ChhauGlobe() {
         <p className="atlas-note">
           Every marker links to Chhau-specific evidence. Venue markers document
           one performance record. They do not claim a resident tradition or a
-          complete world performance history.
+          complete world performance history. Animated lines group venues by
+          source-stated style. They do not show origins, travel, or transmission.
         </p>
       </aside>
 
@@ -677,36 +755,69 @@ export default function ChhauGlobe() {
               powerPreference: 'high-performance',
             }}
             globeMaterial={globeMaterial}
-            backgroundColor="#171a17"
+            backgroundColor="#04050c"
             showAtmosphere
-            atmosphereColor="#8f8065"
-            atmosphereAltitude={0.11}
+            atmosphereColor="#5a6b7a"
+            atmosphereAltitude={0.15}
             // --- country outlines ---
-            polygonsData={polyFeatures}
+            polygonsData={polyData}
             polygonCapColor={capColor}
             polygonSideColor={sideColor}
             polygonStrokeColor={strokeColor}
             polygonAltitude={polyAltitude}
-            polygonsTransitionDuration={300}
+            polygonsTransitionDuration={reduceMotion ? 0 : 300}
             onPolygonHover={setHoverPoly}
             polygonLabel={(f) =>
               `<div class="poly-label">${escapeHtml(f.properties.ADMIN)}${
                 isHost(f) ? ' <b>· verified atlas record</b>' : ''
               }</div>`
             }
-            // --- custom interactive field-map markers ---
+            // --- hex-dot country view ---
+            hexPolygonsData={hexData}
+            hexPolygonResolution={3}
+            hexPolygonMargin={0.35}
+            hexPolygonColor={hexColor}
+            hexPolygonAltitude={0.012}
+            // --- animated visual links for source-stated styles ---
+            arcsData={routesForView}
+            arcColor={(route) => route.color}
+            arcAltitudeAutoScale={0.5}
+            arcStroke={0.5}
+            arcDashLength={reduceMotion ? 1 : 0.45}
+            arcDashGap={reduceMotion ? 0 : 0.6}
+            arcDashInitialGap={(route) => route._gap}
+            arcDashAnimateTime={reduceMotion ? 0 : 4200}
+            arcsTransitionDuration={reduceMotion ? 0 : 400}
+            // --- custom interactive glowing markers ---
             htmlElementsData={visibleMarkers}
             htmlElement={createMarker}
             htmlElementVisibilityModifier={(el, isVisible) => {
               el.style.opacity = isVisible ? '1' : '0';
               el.style.pointerEvents = isVisible ? 'auto' : 'none';
             }}
+            // --- expanding highlight ring under the focused node ---
+            ringsData={reduceMotion ? [] : ringsData}
+            ringColor={(ring) =>
+              (time) => `rgba(${hexToRgb(ring.color)}, ${Math.sqrt(1 - time)})`
+            }
+            ringMaxRadius={3.5}
+            ringPropagationSpeed={2}
+            ringRepeatPeriod={900}
             onGlobeClick={() => setTooltip(null)}
           />
         )}
 
         {/* floating control bar */}
         <div aria-label="Atlas view controls" className="stage-controls" role="group">
+          <button
+            aria-pressed={styleMode === 'hex'}
+            className="ctl"
+            onClick={() => setStyleMode((mode) => (mode === 'outline' ? 'hex' : 'outline'))}
+            type="button"
+          >
+            {styleMode === 'outline' ? 'Hex' : 'Outline'}
+          </button>
+          <span className="ctl-sep" />
           <button
             aria-pressed={autoRotate}
             className={`ctl${autoRotate ? ' on' : ''}`}
