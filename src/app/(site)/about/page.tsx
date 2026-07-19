@@ -49,7 +49,7 @@ export default function AboutPage() {
                 width={1839}
               />
               <figcaption className="about-hero-caption">
-                Arnav Ajana. Photograph supplied by the author.
+                Arnav Ajana. Photograph by Wahyu M.
               </figcaption>
             </figure>
           </MotionReveal>
@@ -98,6 +98,22 @@ export default function AboutPage() {
             School research taught me to record where an answer came from and
             to say when the evidence did not settle a question.
           </p>
+        </MotionReveal>
+      </section>
+
+      <section
+        aria-label="Arnav Ajana in movement"
+        className="about-dance-moment"
+      >
+        <MotionReveal className="about-dance-moment-inner">
+          <Image
+            alt="Arnav Ajana holding a dance pose beneath carved stone arches"
+            className="about-dance-moment-image"
+            height={1166}
+            sizes="(min-width: 900px) 46rem, 92vw"
+            src="/images/arnav-ajana-dance.png"
+            width={1094}
+          />
         </MotionReveal>
       </section>
 

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastReviewed": "2026-07-15",
+  "lastReviewed": "2026-07-19",
   "scope": "Retained third-party static assets, user-supplied project media, recovered generated 3D prototypes, and map geometry shipped by the project, plus explicit records for withheld local media and removed remote Commons references.",
   "projectLicenseStatus": {
     "status": "no-broad-project-license",
@@ -229,13 +229,29 @@
       "mediaType": "Photograph",
       "title": "Portrait of Arnav Ajana beside a horse",
       "subject": "Arnav Ajana",
-      "creator": "Photographer not identified in the supplied record",
+      "creator": "Wahyu M.",
       "suppliedBy": "Arnav Ajana, project owner and pictured subject",
       "permissionEvidence": "Arnav Ajana supplied the file and explicitly instructed the project to publish it in the About Me and author sections on 2026-07-14.",
       "permissionScope": "Display and distribute the photograph as part of PreserveChhau's About Me and author-profile presentation.",
-      "credit": "Photograph supplied by Arnav Ajana.",
+      "displayCredit": true,
+      "credit": "Photograph by Wahyu M.",
       "reuseTerms": "No standalone or general reuse licence is granted. All rights reserved.",
       "sha256": "3b4e24ca493f25742777627777867af2bb38e1f9af08e12d7fe661c76d0c6d9b"
+    },
+    {
+      "path": "public/images/arnav-ajana-dance.png",
+      "status": "user-supplied-with-explicit-publication-request",
+      "mediaType": "Photograph",
+      "title": "Arnav Ajana holding a dance pose beneath carved stone arches",
+      "subject": "Arnav Ajana",
+      "creator": "Photographer not identified in the supplied record",
+      "suppliedBy": "Arnav Ajana, project owner and pictured subject",
+      "permissionEvidence": "Arnav Ajana supplied the file and explicitly instructed the project to publish it in the About Me and author sections without a visible credit on 2026-07-19.",
+      "permissionScope": "Display and distribute the photograph as part of PreserveChhau's About Me and author-profile presentation.",
+      "displayCredit": false,
+      "credit": "No visible credit requested by Arnav Ajana; photographer not identified in the supplied record.",
+      "reuseTerms": "No standalone or general reuse licence is granted. All rights reserved.",
+      "sha256": "25ce80b4359213ae0d41de93bc0eda128f5996a40043c949cd7e0e1c152add1a"
     }
   ],
   "mapAssets": [

@@ -176,10 +176,12 @@ ownership remains undetermined.
 [GitHub’s official licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository)
 explains this distinction.
 
-The current public build includes the author photograph supplied by Arnav Ajana
-for the About Me and author sections. Its photographer was not identified in
-the supplied record, no general reuse licence is granted, and its exact hash and
-permission scope are recorded in `ASSET_RIGHTS_PROVENANCE.json`. The two audio
+The current public build includes two author photographs supplied by Arnav
+Ajana for the About Me and author sections. Wahyu M. is credited for the horse
+portrait. The movement photograph carries no visible byline at Arnav's request,
+and its photographer was not identified in the supplied record. No general
+reuse licence is granted for either photograph. Their exact hashes and
+permission scopes are recorded in `ASSET_RIGHTS_PROVENANCE.json`. The two audio
 files and atlas starfield remain omitted because their creator, source,
 permission, and reuse records were incomplete. The atlas performs no Wikimedia
 Commons image lookup. The eight formerly referenced attribution-required

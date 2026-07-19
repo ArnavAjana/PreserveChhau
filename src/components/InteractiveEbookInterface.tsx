@@ -15,9 +15,14 @@ import {
   type RefObject,
 } from "react";
 import { bookPages, type BookPage } from "@/content/book-pages";
-import { AboutAuthorProfile } from "@/components/AboutAuthorProfile";
+import {
+  AboutAuthorDancePhoto,
+  AboutAuthorProfile,
+} from "@/components/AboutAuthorProfile";
+import { GlossaryTerm } from "@/components/GlossaryTerm";
 import { PageEmbed } from "@/components/PageEmbed";
 import { SandboxGuide } from "@/components/SandboxGuide";
+import { findGlossaryMatches } from "@/content/glossary-matcher";
 
 type CitationContextValue = {
   onCiteClick: (citationNumber: number) => void;
@@ -50,6 +55,10 @@ type ModelOption = {
   modelScale?: number;
 };
 
+type GlossaryRenderContext = {
+  seenEntryIds: Set<string>;
+};
+
 type ReaderViewMode = "spread" | "single";
 
 const CitationContext = createContext<CitationContextValue | null>(null);
@@ -67,6 +76,13 @@ const REFERENCE_IDS = new Set<string>([
   "glossary-music-performance",
   "timeline",
   "questions-still-open",
+  "library",
+]);
+
+const GLOSSARY_DISABLED_IDS = new Set<string>([
+  "glossary-place-people",
+  "glossary-movement",
+  "glossary-music-performance",
   "library",
 ]);
 
@@ -954,6 +970,8 @@ function CoverPage({
 }: {
   headingRef?: RefObject<HTMLHeadingElement | null>;
 }) {
+  const glossaryContext = { seenEntryIds: new Set<string>() };
+
   return (
     <section className="reader-cover" aria-labelledby="book-cover-title">
       <div className="relative z-10 mx-auto max-w-3xl text-center">
@@ -964,7 +982,10 @@ function CoverPage({
           ref={headingRef}
           tabIndex={-1}
         >
-          The Science of Chhau Dance
+          {renderInlineMarkdown(
+            "The Science of Chhau Dance",
+            glossaryContext,
+          )}
         </h1>
         <p className="reader-cover-deck">
           A source-aware field guide to the histories, bodies, music, masks,
@@ -991,6 +1012,9 @@ function SectionPage({
 }) {
   const eyebrow = page.title.match(/^(Chapter [^:]+|Reference):\s+(.+)$/)?.[1]
     ?? "Part";
+  const glossaryContext = GLOSSARY_DISABLED_IDS.has(page.id)
+    ? undefined
+    : { seenEntryIds: new Set<string>() };
 
   return (
     <section className="section-cover">
@@ -1001,12 +1025,15 @@ function SectionPage({
           ref={headingRef}
           tabIndex={-1}
         >
-          {getChapterTitle(page)}
+          {renderInlineMarkdown(getChapterTitle(page), glossaryContext)}
         </h1>
         <div aria-hidden="true" className="mx-auto mt-8 h-px w-24 bg-laterite-700/35" />
         {page.body.trim() ? (
           <div className="mt-8 [&_.book-prose]:text-center">
-            <MarkdownContent page={page} />
+            <MarkdownContent
+              glossaryContext={glossaryContext}
+              page={page}
+            />
           </div>
         ) : null}
       </div>
@@ -1074,6 +1101,9 @@ function ContentPageBody({
   const studyNode = viewerBlock ?? plannedStudy;
   const isAboutPage = chapter.id === "about-me";
   const isEmbeddedPage = Boolean(chapter.embedUrl);
+  const glossaryContext = GLOSSARY_DISABLED_IDS.has(chapter.id)
+    ? undefined
+    : { seenEntryIds: new Set<string>() };
 
   return (
     <>
@@ -1097,7 +1127,7 @@ function ContentPageBody({
             ref={headingRef}
             tabIndex={-1}
           >
-            {getChapterTitle(chapter)}
+            {renderInlineMarkdown(getChapterTitle(chapter), glossaryContext)}
           </h1>
           {isAboutPage ? <AboutAuthorProfile /> : null}
         </header>
@@ -1110,11 +1140,14 @@ function ContentPageBody({
           {chapter.body.trim() ? (
             <MarkdownContent
               anchorBlockIndex={hasStudyAnchor ? anchorBlockIndex : null}
+              glossaryContext={glossaryContext}
               page={chapter}
               studyNode={studyNode}
             />
           ) : null}
         </div>
+
+        {isAboutPage ? <AboutAuthorDancePhoto /> : null}
       </section>
 
       {chapter.interactive === "sandbox-guide" ? (
@@ -1214,18 +1247,20 @@ function ModelChoiceTabs({
 
 function MarkdownContent({
   anchorBlockIndex,
+  glossaryContext,
   leadNode,
   page,
   studyNode,
 }: {
   anchorBlockIndex?: number | null;
+  glossaryContext?: GlossaryRenderContext;
   leadNode?: ReactNode;
   page: BookPage;
   studyNode?: ReactNode;
 }) {
   const blocks = page.body.split(/\n{2,}/);
   const className = [
-    "reader-prose heritage-text space-y-5",
+    "reader-prose heritage-text space-y-4",
     REFERENCE_IDS.has(page.id) ? null : "book-prose",
     leadNode ? "about-author-prose" : null,
   ]
@@ -1235,7 +1270,11 @@ function MarkdownContent({
   const renderBlocks = (entries: string[], startIndex = 0) =>
     entries
       .map((block, index) =>
-        renderMarkdownBlock(block, `${page.id}-${startIndex + index}`),
+        renderMarkdownBlock(
+          block,
+          `${page.id}-${startIndex + index}`,
+          glossaryContext,
+        ),
       )
       .filter(Boolean);
 
@@ -1270,14 +1309,18 @@ function MarkdownContent({
   );
 }
 
-function renderMarkdownBlock(block: string, key: string) {
+function renderMarkdownBlock(
+  block: string,
+  key: string,
+  glossaryContext?: GlossaryRenderContext,
+) {
   const trimmedBlock = block.trim();
   if (!trimmedBlock) return null;
 
   if (trimmedBlock.startsWith("### ")) {
     return (
       <h2 className="reader-subheading" key={key}>
-        {renderInlineMarkdown(trimmedBlock.slice(4))}
+        {renderInlineMarkdown(trimmedBlock.slice(4), glossaryContext)}
       </h2>
     );
   }
@@ -1285,7 +1328,10 @@ function renderMarkdownBlock(block: string, key: string) {
   if (trimmedBlock.startsWith("> ")) {
     return (
       <blockquote className="reader-callout" key={key}>
-        {renderInlineMarkdown(trimmedBlock.replace(/^>\s?/gm, ""))}
+        {renderInlineMarkdown(
+          trimmedBlock.replace(/^>\s?/gm, ""),
+          glossaryContext,
+        )}
       </blockquote>
     );
   }
@@ -1295,7 +1341,9 @@ function renderMarkdownBlock(block: string, key: string) {
     return (
       <ul className="reader-list" key={key}>
         {listItems.map((line, index) => (
-          <li key={`${line}-${index}`}>{renderInlineMarkdown(line.slice(2))}</li>
+          <li key={`${line}-${index}`}>
+            {renderInlineMarkdown(line.slice(2), glossaryContext)}
+          </li>
         ))}
       </ul>
     );
@@ -1312,35 +1360,59 @@ function renderMarkdownBlock(block: string, key: string) {
         id={`cite-${citationNumber}`}
         key={key}
       >
-        {renderInlineMarkdown(rest)}
+        {renderInlineMarkdown(rest, glossaryContext)}
       </p>
     );
   }
 
   return (
     <p className="whitespace-pre-wrap" key={key}>
-      {renderInlineMarkdown(trimmedBlock)}
+      {renderInlineMarkdown(trimmedBlock, glossaryContext)}
     </p>
   );
 }
 
-function renderInlineMarkdown(text: string): ReactNode[] {
+function renderInlineMarkdown(
+  text: string,
+  glossaryContext?: GlossaryRenderContext,
+): ReactNode[] {
   const pieces = text.split(
-    /(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\(#[A-Za-z0-9-]+\)|(?:\[\d+\])+|https?:\/\/[^\s]+)/g,
+    /(\*\*[^*]+\*\*|\*[^*]+\*|_[^_]+_|\[[^\]]+\]\(#[A-Za-z0-9-]+\)|(?:\[\d+\])+|https?:\/\/[^\s]+)/g,
   );
 
-  return pieces.map((piece, index) => {
+  return pieces.flatMap((piece, index): ReactNode[] => {
+    if (!piece) return [];
+
     if (piece.startsWith("**") && piece.endsWith("**")) {
-      return <strong key={`${piece}-${index}`}>{piece.slice(2, -2)}</strong>;
+      return [
+        <strong key={`${piece}-${index}`}>
+          {renderGlossaryText(
+            piece.slice(2, -2),
+            `${piece}-${index}-strong`,
+            glossaryContext,
+          )}
+        </strong>,
+      ];
     }
 
-    if (piece.startsWith("*") && piece.endsWith("*")) {
-      return <em key={`${piece}-${index}`}>{piece.slice(1, -1)}</em>;
+    if (
+      (piece.startsWith("*") && piece.endsWith("*")) ||
+      (piece.startsWith("_") && piece.endsWith("_"))
+    ) {
+      return [
+        <em key={`${piece}-${index}`}>
+          {renderGlossaryText(
+            piece.slice(1, -1),
+            `${piece}-${index}-emphasis`,
+            glossaryContext,
+          )}
+        </em>,
+      ];
     }
 
     const internalLink = piece.match(/^\[([^\]]+)\]\((#[A-Za-z0-9-]+)\)$/);
     if (internalLink) {
-      return (
+      return [
         <a
           className="font-semibold text-laterite-700 underline decoration-laterite-300 underline-offset-4 transition-colors hover:text-laterite-900"
           href={internalLink[2]}
@@ -1348,19 +1420,19 @@ function renderInlineMarkdown(text: string): ReactNode[] {
         >
           {internalLink[1]}
         </a>
-      );
+      ];
     }
 
     if (/^(\[\d+\])+$/.test(piece)) {
       const numbers = Array.from(piece.matchAll(/\[(\d+)\]/g)).map((match) =>
         Number.parseInt(match[1], 10),
       );
-      return <CitationGroup key={`${piece}-${index}`} numbers={numbers} />;
+      return [<CitationGroup key={`${piece}-${index}`} numbers={numbers} />];
     }
 
     if (/^https?:\/\//.test(piece)) {
       const [url, terminalPunctuation] = splitUrlTerminalPunctuation(piece);
-      return (
+      return [
         <span key={`${piece}-${index}`}>
           <a
             className="break-words font-medium text-laterite-700 underline decoration-laterite-300 underline-offset-4 transition-colors hover:text-laterite-900"
@@ -1372,11 +1444,57 @@ function renderInlineMarkdown(text: string): ReactNode[] {
           </a>
           {terminalPunctuation}
         </span>
-      );
+      ];
     }
 
-    return <span key={`${piece}-${index}`}>{piece}</span>;
+    return renderGlossaryText(
+      piece,
+      `${piece}-${index}`,
+      glossaryContext,
+    );
   });
+}
+
+function renderGlossaryText(
+  text: string,
+  keyPrefix: string,
+  glossaryContext?: GlossaryRenderContext,
+): ReactNode[] {
+  if (!glossaryContext) {
+    return [<span key={`${keyPrefix}-plain`}>{text}</span>];
+  }
+
+  const matches = findGlossaryMatches(text, glossaryContext.seenEntryIds);
+  if (matches.length === 0) {
+    return [<span key={`${keyPrefix}-plain`}>{text}</span>];
+  }
+
+  const nodes: ReactNode[] = [];
+  let cursor = 0;
+
+  matches.forEach((match, index) => {
+    if (match.start > cursor) {
+      nodes.push(
+        <span key={`${keyPrefix}-text-${index}`}>
+          {text.slice(cursor, match.start)}
+        </span>,
+      );
+    }
+    nodes.push(
+      <GlossaryTerm entry={match.entry} key={`${keyPrefix}-${match.entry.id}`}>
+        {match.text}
+      </GlossaryTerm>,
+    );
+    cursor = match.end;
+  });
+
+  if (cursor < text.length) {
+    nodes.push(
+      <span key={`${keyPrefix}-text-end`}>{text.slice(cursor)}</span>,
+    );
+  }
+
+  return nodes;
 }
 
 function splitUrlTerminalPunctuation(url: string): [string, string] {

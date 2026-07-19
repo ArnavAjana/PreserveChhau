@@ -22,7 +22,31 @@ const forbiddenUnclearedMedia = [
   "public/audio/main-theme-ebook.mp3",
   "map-of-chhau/public/images/night-sky.png",
 ];
-const approvedUserSuppliedMedia = ["public/images/arnav-ajana-about.jpg"];
+const approvedUserSuppliedMedia = [
+  "public/images/arnav-ajana-about.jpg",
+  "public/images/arnav-ajana-dance.png",
+];
+const approvedUserSuppliedMediaExpectations = new Map([
+  [
+    "public/images/arnav-ajana-about.jpg",
+    {
+      creator: "Wahyu M.",
+      credit: "Photograph by Wahyu M.",
+      displayCredit: true,
+      permissionDate: "2026-07-14",
+    },
+  ],
+  [
+    "public/images/arnav-ajana-dance.png",
+    {
+      creator: "Photographer not identified in the supplied record",
+      credit:
+        "No visible credit requested by Arnav Ajana; photographer not identified in the supplied record.",
+      displayCredit: false,
+      permissionDate: "2026-07-19",
+    },
+  ],
+]);
 const approvedPrototypeModels = [
   ["chhau-figure-5a81ddf6.glb", 28751596, "66f98d28c4b84dad5db8eb9ca33d91feec79bb337ee4674da243f4d5c0e79bbb", "9b67be3b6d2a32737866b3e57a3554a273079b1a"],
   ["chhau-group-1.glb", 31412360, "393d833784a5f75750bf906391252a057f08a8df5de421f2360e8229a151f9d7", "8f9f4fe62b9a10decd3d18365df1502df82a889f"],
@@ -68,6 +92,36 @@ function requirePath(path) {
   if (!existsSync(resolve(root, path))) failures.push(`Missing required file: ${path}`);
 }
 
+async function requireUncreditedDanceImage(path, containerTag, className) {
+  const absolutePath = resolve(root, path);
+  if (!existsSync(absolutePath)) {
+    failures.push(`Missing source file for dance-image credit check: ${path}`);
+    return;
+  }
+
+  const source = await readFile(absolutePath, "utf8");
+  const classMarker = `className="${className}"`;
+  const markerIndex = source.indexOf(classMarker);
+  const containerStart = source.lastIndexOf(`<${containerTag}`, markerIndex);
+  const containerEnd = source.indexOf(`</${containerTag}>`, markerIndex);
+
+  if (markerIndex < 0 || containerStart < 0 || containerEnd < 0) {
+    failures.push(`Dance-image container ${className} is missing from ${path}.`);
+    return;
+  }
+
+  const container = source.slice(
+    containerStart,
+    containerEnd + containerTag.length + 3,
+  );
+  if (!container.includes('src="/images/arnav-ajana-dance.png"')) {
+    failures.push(`Dance-image container ${className} does not load the approved photograph.`);
+  }
+  if (container.includes("<figcaption") || /credit/i.test(container)) {
+    failures.push(`Dance-image container ${className} must not display a credit or caption.`);
+  }
+}
+
 async function sha256(path) {
   if (sha256Cache.has(path)) return sha256Cache.get(path);
   const digest = createHash("sha256").update(await readFile(path)).digest("hex");
@@ -89,6 +143,7 @@ async function sha256(path) {
   "public/basis/basis_transcoder.js",
   "public/basis/basis_transcoder.wasm",
   "public/images/arnav-ajana-about.jpg",
+  "public/images/arnav-ajana-dance.png",
   rightsManifestPath,
   thirdPartyNoticesPath,
   apacheLicensePath,
@@ -96,6 +151,17 @@ async function sha256(path) {
   "THIRD_PARTY_LICENSES/Motion-MIT.txt",
   "THIRD_PARTY_LICENSES/Framer-Motion-MIT.txt",
 ].forEach(requirePath);
+
+await requireUncreditedDanceImage(
+  "src/components/AboutAuthorProfile.tsx",
+  "figure",
+  "about-author-dance",
+);
+await requireUncreditedDanceImage(
+  "src/app/(site)/about/page.tsx",
+  "section",
+  "about-dance-moment",
+);
 
 for (const path of forbiddenUnclearedMedia) {
   if (existsSync(resolve(root, path))) {
@@ -366,8 +432,13 @@ if (rightsManifest) {
     }
   }
 
-  if (!Array.isArray(rightsManifest.authoredMedia) || rightsManifest.authoredMedia.length !== 1) {
-    failures.push(`${rightsManifestPath} must contain exactly one user-supplied media record.`);
+  if (
+    !Array.isArray(rightsManifest.authoredMedia) ||
+    rightsManifest.authoredMedia.length !== approvedUserSuppliedMedia.length
+  ) {
+    failures.push(
+      `${rightsManifestPath} must contain exactly ${approvedUserSuppliedMedia.length} user-supplied media records.`,
+    );
   } else {
     const authoredMediaPaths = new Set();
     for (const media of rightsManifest.authoredMedia) {
@@ -393,17 +464,35 @@ if (rightsManifest) {
       if (media.status !== "user-supplied-with-explicit-publication-request") {
         failures.push(`User-supplied media ${media.path ?? "<unknown>"} lacks the required status.`);
       }
-      if (media.path !== "public/images/arnav-ajana-about.jpg") {
+      const expectation = approvedUserSuppliedMediaExpectations.get(media.path);
+      if (!expectation) {
         failures.push(`Unexpected user-supplied media path: ${media.path ?? "<unknown>"}`);
       }
       if (media.subject !== "Arnav Ajana" || !media.suppliedBy?.startsWith("Arnav Ajana")) {
         failures.push(`Author photograph ${media.path ?? "<unknown>"} lacks its subject and supplier record.`);
       }
-      if (media.creator !== "Photographer not identified in the supplied record") {
-        failures.push(`Author photograph ${media.path ?? "<unknown>"} must not claim an unidentified photographer.`);
+      if (expectation && media.creator !== expectation.creator) {
+        failures.push(
+          `Author photograph ${media.path ?? "<unknown>"} has an unexpected creator record.`,
+        );
       }
-      if (!media.permissionEvidence?.includes("2026-07-14")) {
-        failures.push(`Author photograph ${media.path ?? "<unknown>"} lacks dated permission evidence.`);
+      if (expectation && media.credit !== expectation.credit) {
+        failures.push(
+          `Author photograph ${media.path ?? "<unknown>"} has an unexpected credit record.`,
+        );
+      }
+      if (expectation && media.displayCredit !== expectation.displayCredit) {
+        failures.push(
+          `Author photograph ${media.path ?? "<unknown>"} has an unexpected visible-credit setting.`,
+        );
+      }
+      if (
+        expectation &&
+        !media.permissionEvidence?.includes(expectation.permissionDate)
+      ) {
+        failures.push(
+          `Author photograph ${media.path ?? "<unknown>"} lacks dated permission evidence.`,
+        );
       }
       if (!media.reuseTerms?.includes("No standalone or general reuse licence is granted")) {
         failures.push(`Author photograph ${media.path ?? "<unknown>"} lacks its reuse restriction.`);
@@ -769,7 +858,9 @@ if (existsSync(resolve(root, thirdPartyNoticesPath))) {
     "naturalearthdata.com/about/terms-of-use",
     "commons.wikimedia.org/wiki/File:",
     "public/images/arnav-ajana-about.jpg",
-    "Photograph supplied by Arnav Ajana.",
+    "public/images/arnav-ajana-dance.png",
+    "Photograph by Wahyu M.",
+    "No visible byline",
   ]) {
     if (!notices.includes(requiredNotice)) {
       failures.push(`${thirdPartyNoticesPath} is missing required notice: ${requiredNotice}`);
@@ -820,6 +911,6 @@ if (failures.length > 0) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Release verification passed: ${publicFiles.length} public files, one local globe bundle, ${rightsManifest?.assets?.length ?? 0} rights-manifested decoder files, ${rightsManifest?.authoredMedia?.length ?? 0} approved user-supplied media file, ${rightsManifest?.prototypeModels?.length ?? 0} user-directed generic 3D prototypes, one provenance-checked public-domain geometry file, eight removed Commons records, no uncleared media, no exact public duplicates, and no unapproved oversized public assets.`,
+    `Release verification passed: ${publicFiles.length} public files, one local globe bundle, ${rightsManifest?.assets?.length ?? 0} rights-manifested decoder files, ${rightsManifest?.authoredMedia?.length ?? 0} approved user-supplied media files, ${rightsManifest?.prototypeModels?.length ?? 0} user-directed generic 3D prototypes, one provenance-checked public-domain geometry file, eight removed Commons records, no uncleared media, no exact public duplicates, and no unapproved oversized public assets.`,
   );
 }

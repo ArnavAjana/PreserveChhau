@@ -1097,6 +1097,8 @@ I came to Chhau through one performance. I remain a learner. My questions are: W
 <!-- BOOK_PAGE {"id":"glossary-place-people","pageType":"content","title":"Glossary: Place and People"} -->
 These are working definitions, not substitutes for practitioner or local-language meanings.
 
+Chhau: A collective name for three related regional dance traditions: Mayurbhanj, Seraikella, and Purulia. The shared name does not make their movement, masks, music, histories, or teaching identical.
+
 Akhara: A training ground. The word also includes the community of teachers, learners, and musicians organised around practice. Spellings and local use differ.
 
 Asar: An open performance arena used in descriptions of Chhau. Musicians and the audience often sit close to the dancing space.
@@ -1105,11 +1107,15 @@ Baripada: The headquarters of Mayurbhanj district in Odisha. It is an important 
 
 Chaitra Parva: A spring festival cycle linked with Chhau performance. Its ritual practices and calendar differ across Mayurbhanj, Seraikella, and Purulia.
 
+Gajan: A regional festival and worship cycle linked with some Purulia Chhau settings. Its practices differ by place and should not be treated as a ritual pattern for every Chhau tradition. [10]
+
 Charida: A village in Purulia district widely known as a centre of Purulia Chhau mask making. If you copy a mask from a Charida design, credit the maker who made it.
 
 Guru / Ustad: A teacher or master within a tradition learned through the body. The words carry different histories and contexts. Both appear in Chhau documentation.
 
 Intangible cultural heritage: Living knowledge and skill carried through practice, memory, making, performance, and teaching. UNESCO’s 2010 inscription covers Chhau dance as the wider three-style tradition. [1]
+
+Chhaya / Chhauni / Chadma / Chadman / Chauri / Chavni: Words proposed by different writers when discussing the name Chhau. Their suggested meanings include shadow, image, disguise, camp, concealment, attack, or a hunting cry. Similar sound does not prove one origin, and no proposal has settled the etymology. [5][7][9][16]
 
 Lineage: A path of transmission linking teachers, learners, repertoire, terminology, and practice. A lineage does not always follow one family line.
 
@@ -1121,6 +1127,8 @@ Sahi: A neighbourhood or group division. Uttarsahi and Dakshinsahi are important
 
 Seraikella Chhau: The masked Chhau tradition centred in Seraikella, Jharkhand. Its court histories matter, as does its developed relationship between a fixed mask and body design.
 
+Matigara / Chaimakhano / Kagojchitano / Kabijlepa / Kaporsetano / Thapi / Khusnikhoncha / Khorilepa / Rangkara: Workshop labels printed in one Purulia mask course module. The source spellings and meanings still need confirmation from Charida artisans. They identify research leads, not a mask-making recipe. [17]
+
 <!-- BOOK_PAGE {"id":"glossary-movement","pageType":"content","title":"Glossary: Body and Movement"} -->
 Bhangi: A meaningful dance unit or phrase built by arranging movement material with rhythm and purpose. In Chhau technical writing, it means more than a static pose.
 
@@ -1129,6 +1137,8 @@ Chali: Character-bearing rhythmic travel or gait. In one documented Mayurbhanj p
 Chamka: A sudden chest or shoulder accent. D. N. Patnaik’s Mayurbhanj account links it with the beat of the dhumsa. A practitioner from the relevant lineage must verify it before any demonstration.
 
 Chauk / Chauka / Chaukbandha: A foundational open, lowered, ready position in Mayurbhanj training descriptions. Learn the exact alignment from a practitioner.
+
+Paika / Rukmar / Pharikhanda: Terms appearing in sources for martial practices and traditions connected with Mayurbhanj Chhau. Their exact relationship remains an open research question. Parikhanda is a spelling used in one course account. [2][3][4][16]
 
 Dharan: A held state linked with a sword and shield, rhythmic weight shift, and role preparation. One technical description also connects it with settling after exertion.
 
@@ -1141,6 +1151,8 @@ Dumka: A published Mayurbhanj category for larger jumps. It remains watch-only a
 Kinetic suggestion: Jiwan Pani’s useful term for how Chhau communicates through rhythmic footwork and body flexion without turning every idea into a fixed hand gesture. [5]
 
 Nata and Natki: In D. N. Patnaik’s documented Mayurbhanj architecture, nata develops the main material and natki forms a faster climax. This structure does not apply to every piece or style.
+
+Footnach / Juri nach / Mel / Mela nach: Source-specific labels for solo, duet, and group repertoire in one Mayurbhanj course module. Their current use across institutions and lineages remains unverified. [19]
 
 Palta: A family of turns or flinging actions in a published Mayurbhanj technical account.
 
@@ -1159,6 +1171,8 @@ Dhumsa / Dhamsa: A large kettledrum with a deep sound built to carry. Publicatio
 
 Dhumal: A label for collective or opening drumming in one Mayurbhanj course module. Its relationship to other opening-music terms needs musician verification. [20]
 
+Bol: A spoken rhythmic syllable or cue used by musicians to remember, teach, or signal a pattern. The Purulia examples in this book remain tied to their source and need review by current musicians. [18]
+
 Jhoomar / Jhumur: Related regional music and song traditions found in Chhau histories and performance settings. Their use differs by style, place, and piece.
 
 Mahuri / Mohuri: A double-reed melody instrument heard in Chhau ensembles. Confirm its regional spelling and construction with musicians.
@@ -1170,6 +1184,8 @@ Pepti / Shehnai: Reed instrument names found in regional documentation, includin
 Rangavadya / Rangbaja: Terms found in descriptions of opening music or music used to build the atmosphere before a performance. Usage differs by source.
 
 Rong: The spelling used for songs in one Seraikella course module. Confirm the word, pronunciation, repertoire context, and raga claims with Seraikella musicians before using it as a general term. [22]
+
+Raga: A melodic framework in Indian music. Claims linking a raga with a specific Chhau item need to stay attached to the musician, source, style, period, and repertoire being described.
 
 Vilambit / Madhyalaya / Drutalaya / Nataki: Slow, middle, fast, and climactic phase labels in one Mayurbhanj course account. The sequence is source-specific, and Nataki also appears as a dance-section term elsewhere. [20]
 

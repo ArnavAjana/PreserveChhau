@@ -12,6 +12,21 @@ export type BookPageModelOption = {
 
 export type BookPageInteractive = "sandbox-guide";
 
+export type BookGlossaryCategory =
+  | "place-people"
+  | "movement"
+  | "music-performance";
+
+export type BookGlossaryEntry = {
+  id: string;
+  label: string;
+  aliases: string[];
+  definition: string;
+  category: BookGlossaryCategory;
+  glossaryPageId: string;
+  sourceNumbers: number[];
+};
+
 export type BookPage = {
   id: string;
   pageType: BookPageType;
@@ -807,7 +822,7 @@ export const bookPages: BookPage[] = [
     id: "glossary-place-people",
     pageType: "content",
     title: "Glossary: Place and People",
-    body: "These are working definitions, not substitutes for practitioner or local-language meanings.\n\nAkhara: A training ground. The word also includes the community of teachers, learners, and musicians organised around practice. Spellings and local use differ.\n\nAsar: An open performance arena used in descriptions of Chhau. Musicians and the audience often sit close to the dancing space.\n\nBaripada: The headquarters of Mayurbhanj district in Odisha. It is an important institutional and festival centre for Mayurbhanj Chhau.\n\nChaitra Parva: A spring festival cycle linked with Chhau performance. Its ritual practices and calendar differ across Mayurbhanj, Seraikella, and Purulia.\n\nCharida: A village in Purulia district widely known as a centre of Purulia Chhau mask making. If you copy a mask from a Charida design, credit the maker who made it.\n\nGuru / Ustad: A teacher or master within a tradition learned through the body. The words carry different histories and contexts. Both appear in Chhau documentation.\n\nIntangible cultural heritage: Living knowledge and skill carried through practice, memory, making, performance, and teaching. UNESCO’s 2010 inscription covers Chhau dance as the wider three-style tradition. [1]\n\nLineage: A path of transmission linking teachers, learners, repertoire, terminology, and practice. A lineage does not always follow one family line.\n\nMayurbhanj Chhau: The unmasked Chhau tradition centred in Mayurbhanj, Odisha. The whole rhythmic body carries its expression.\n\nPurulia Chhau: The Chhau tradition of Purulia, West Bengal. Large character masks, elaborate costume, strong village-troupe networks, and festival-scale performance are central features.\n\nSahi: A neighbourhood or group division. Uttarsahi and Dakshinsahi are important names in histories of Mayurbhanj Chhau organisation and repertoire.\n\nSeraikella Chhau: The masked Chhau tradition centred in Seraikella, Jharkhand. Its court histories matter, as does its developed relationship between a fixed mask and body design.",
+    body: "These are working definitions, not substitutes for practitioner or local-language meanings.\n\nChhau: A collective name for three related regional dance traditions: Mayurbhanj, Seraikella, and Purulia. The shared name does not make their movement, masks, music, histories, or teaching identical.\n\nAkhara: A training ground. The word also includes the community of teachers, learners, and musicians organised around practice. Spellings and local use differ.\n\nAsar: An open performance arena used in descriptions of Chhau. Musicians and the audience often sit close to the dancing space.\n\nBaripada: The headquarters of Mayurbhanj district in Odisha. It is an important institutional and festival centre for Mayurbhanj Chhau.\n\nChaitra Parva: A spring festival cycle linked with Chhau performance. Its ritual practices and calendar differ across Mayurbhanj, Seraikella, and Purulia.\n\nGajan: A regional festival and worship cycle linked with some Purulia Chhau settings. Its practices differ by place and should not be treated as a ritual pattern for every Chhau tradition. [10]\n\nCharida: A village in Purulia district widely known as a centre of Purulia Chhau mask making. If you copy a mask from a Charida design, credit the maker who made it.\n\nGuru / Ustad: A teacher or master within a tradition learned through the body. The words carry different histories and contexts. Both appear in Chhau documentation.\n\nIntangible cultural heritage: Living knowledge and skill carried through practice, memory, making, performance, and teaching. UNESCO’s 2010 inscription covers Chhau dance as the wider three-style tradition. [1]\n\nChhaya / Chhauni / Chadma / Chadman / Chauri / Chavni: Words proposed by different writers when discussing the name Chhau. Their suggested meanings include shadow, image, disguise, camp, concealment, attack, or a hunting cry. Similar sound does not prove one origin, and no proposal has settled the etymology. [5][7][9][16]\n\nLineage: A path of transmission linking teachers, learners, repertoire, terminology, and practice. A lineage does not always follow one family line.\n\nMayurbhanj Chhau: The unmasked Chhau tradition centred in Mayurbhanj, Odisha. The whole rhythmic body carries its expression.\n\nPurulia Chhau: The Chhau tradition of Purulia, West Bengal. Large character masks, elaborate costume, strong village-troupe networks, and festival-scale performance are central features.\n\nSahi: A neighbourhood or group division. Uttarsahi and Dakshinsahi are important names in histories of Mayurbhanj Chhau organisation and repertoire.\n\nSeraikella Chhau: The masked Chhau tradition centred in Seraikella, Jharkhand. Its court histories matter, as does its developed relationship between a fixed mask and body design.\n\nMatigara / Chaimakhano / Kagojchitano / Kabijlepa / Kaporsetano / Thapi / Khusnikhoncha / Khorilepa / Rangkara: Workshop labels printed in one Purulia mask course module. The source spellings and meanings still need confirmation from Charida artisans. They identify research leads, not a mask-making recipe. [17]",
     modelUrl: null,
     modelScale: 1,
   },
@@ -815,7 +830,7 @@ export const bookPages: BookPage[] = [
     id: "glossary-movement",
     pageType: "content",
     title: "Glossary: Body and Movement",
-    body: "Bhangi: A meaningful dance unit or phrase built by arranging movement material with rhythm and purpose. In Chhau technical writing, it means more than a static pose.\n\nChali: Character-bearing rhythmic travel or gait. In one documented Mayurbhanj performance structure, chali also opens the travel section.\n\nChamka: A sudden chest or shoulder accent. D. N. Patnaik’s Mayurbhanj account links it with the beat of the dhumsa. A practitioner from the relevant lineage must verify it before any demonstration.\n\nChauk / Chauka / Chaukbandha: A foundational open, lowered, ready position in Mayurbhanj training descriptions. Learn the exact alignment from a practitioner.\n\nDharan: A held state linked with a sword and shield, rhythmic weight shift, and role preparation. One technical description also connects it with settling after exertion.\n\nHathiyar Dhara / Kalibhanga / Kalikata: Grouping labels printed in one Mayurbhanj course module. Their spelling, relationship, and present lineage use remain unverified; they are not reader instructions. [20]\n\nDian: A published Mayurbhanj category for smaller jumps, including examples drawn from animals. This eBook keeps it watch-only.\n\nDumka: A published Mayurbhanj category for larger jumps. It remains watch-only and practitioner-led.\n\nKinetic suggestion: Jiwan Pani’s useful term for how Chhau communicates through rhythmic footwork and body flexion without turning every idea into a fixed hand gesture. [5]\n\nNata and Natki: In D. N. Patnaik’s documented Mayurbhanj architecture, nata develops the main material and natki forms a faster climax. This structure does not apply to every piece or style.\n\nPalta: A family of turns or flinging actions in a published Mayurbhanj technical account.\n\nTopka / Tabka: Image-bearing locomotion or gait. Jiwan Pani describes body flexion as the lead, with the footwork in agreement. Counts and examples differ by source and lineage.\n\nKhel: A Seraikella movement category in one course module, which lists ten. The count and current meaning need lineage-specific confirmation. [21]\n\nUfli / Ufil / Uphli / Ufuli: Movement imagery where, in Pani’s comparison, the legs become especially eloquent and the body follows. Published lists draw from work, nature, animals, and other actions. Spellings and counts differ. Keep every example in its proper regional column. Patnaik’s quoted Seraikella list does not become a Mayurbhanj list because it appears inside his Mayurbhanj article.",
+    body: "Bhangi: A meaningful dance unit or phrase built by arranging movement material with rhythm and purpose. In Chhau technical writing, it means more than a static pose.\n\nChali: Character-bearing rhythmic travel or gait. In one documented Mayurbhanj performance structure, chali also opens the travel section.\n\nChamka: A sudden chest or shoulder accent. D. N. Patnaik’s Mayurbhanj account links it with the beat of the dhumsa. A practitioner from the relevant lineage must verify it before any demonstration.\n\nChauk / Chauka / Chaukbandha: A foundational open, lowered, ready position in Mayurbhanj training descriptions. Learn the exact alignment from a practitioner.\n\nPaika / Rukmar / Pharikhanda: Terms appearing in sources for martial practices and traditions connected with Mayurbhanj Chhau. Their exact relationship remains an open research question. Parikhanda is a spelling used in one course account. [2][3][4][16]\n\nDharan: A held state linked with a sword and shield, rhythmic weight shift, and role preparation. One technical description also connects it with settling after exertion.\n\nHathiyar Dhara / Kalibhanga / Kalikata: Grouping labels printed in one Mayurbhanj course module. Their spelling, relationship, and present lineage use remain unverified; they are not reader instructions. [20]\n\nDian: A published Mayurbhanj category for smaller jumps, including examples drawn from animals. This eBook keeps it watch-only.\n\nDumka: A published Mayurbhanj category for larger jumps. It remains watch-only and practitioner-led.\n\nKinetic suggestion: Jiwan Pani’s useful term for how Chhau communicates through rhythmic footwork and body flexion without turning every idea into a fixed hand gesture. [5]\n\nNata and Natki: In D. N. Patnaik’s documented Mayurbhanj architecture, nata develops the main material and natki forms a faster climax. This structure does not apply to every piece or style.\n\nFootnach / Juri nach / Mel / Mela nach: Source-specific labels for solo, duet, and group repertoire in one Mayurbhanj course module. Their current use across institutions and lineages remains unverified. [19]\n\nPalta: A family of turns or flinging actions in a published Mayurbhanj technical account.\n\nTopka / Tabka: Image-bearing locomotion or gait. Jiwan Pani describes body flexion as the lead, with the footwork in agreement. Counts and examples differ by source and lineage.\n\nKhel: A Seraikella movement category in one course module, which lists ten. The count and current meaning need lineage-specific confirmation. [21]\n\nUfli / Ufil / Uphli / Ufuli: Movement imagery where, in Pani’s comparison, the legs become especially eloquent and the body follows. Published lists draw from work, nature, animals, and other actions. Spellings and counts differ. Keep every example in its proper regional column. Patnaik’s quoted Seraikella list does not become a Mayurbhanj list because it appears inside his Mayurbhanj article.",
     modelUrl: null,
     modelScale: 1,
   },
@@ -823,7 +838,7 @@ export const bookPages: BookPage[] = [
     id: "glossary-music-performance",
     pageType: "content",
     title: "Glossary: Music and Performance",
-    body: "Chadchadi / Kadka / Charchari: Names for smaller, sharper percussion voices in different Chhau documentation. Label each instrument and spelling by region and musician.\n\nDhol: A barrel-shaped drum with a major rhythmic role in Chhau ensembles. Its construction and playing style differ by context.\n\nDhumsa / Dhamsa: A large kettledrum with a deep sound built to carry. Publications and regions use different spellings.\n\nDhumal: A label for collective or opening drumming in one Mayurbhanj course module. Its relationship to other opening-music terms needs musician verification. [20]\n\nJhoomar / Jhumur: Related regional music and song traditions found in Chhau histories and performance settings. Their use differs by style, place, and piece.\n\nMahuri / Mohuri: A double-reed melody instrument heard in Chhau ensembles. Confirm its regional spelling and construction with musicians.\n\nMask-body relationship: A fixed mask gains expression through head angle, torso, hands, timing, weight, and movement. This relationship sits at the centre of Seraikella and Purulia, in different forms.\n\nPepti / Shehnai: Reed instrument names found in regional documentation, including Purulia sound settings. Do not treat every term as the same instrument.\n\nRangavadya / Rangbaja: Terms found in descriptions of opening music or music used to build the atmosphere before a performance. Usage differs by source.\n\nRong: The spelling used for songs in one Seraikella course module. Confirm the word, pronunciation, repertoire context, and raga claims with Seraikella musicians before using it as a general term. [22]\n\nVilambit / Madhyalaya / Drutalaya / Nataki: Slow, middle, fast, and climactic phase labels in one Mayurbhanj course account. The sequence is source-specific, and Nataki also appears as a dance-section term elsewhere. [20]\n\nRepertoire: The body of pieces carried and performed by a teacher, troupe, style, or institution. A printed list records one point in time. It does not set a fixed canon by itself.\n\nRepresentative List: The Representative List of the Intangible Cultural Heritage of Humanity. In 2010, the Intergovernmental Committee inscribed Chhau dance under nomination number 00337. This did not turn Chhau into a physical “World Heritage Site.” [1]\n\nThree related styles: Mayurbhanj, Seraikella, and Purulia Chhau. They share documented connections. They are not identical.",
+    body: "Chadchadi / Kadka / Charchari: Names for smaller, sharper percussion voices in different Chhau documentation. Label each instrument and spelling by region and musician.\n\nDhol: A barrel-shaped drum with a major rhythmic role in Chhau ensembles. Its construction and playing style differ by context.\n\nDhumsa / Dhamsa: A large kettledrum with a deep sound built to carry. Publications and regions use different spellings.\n\nDhumal: A label for collective or opening drumming in one Mayurbhanj course module. Its relationship to other opening-music terms needs musician verification. [20]\n\nBol: A spoken rhythmic syllable or cue used by musicians to remember, teach, or signal a pattern. The Purulia examples in this book remain tied to their source and need review by current musicians. [18]\n\nJhoomar / Jhumur: Related regional music and song traditions found in Chhau histories and performance settings. Their use differs by style, place, and piece.\n\nMahuri / Mohuri: A double-reed melody instrument heard in Chhau ensembles. Confirm its regional spelling and construction with musicians.\n\nMask-body relationship: A fixed mask gains expression through head angle, torso, hands, timing, weight, and movement. This relationship sits at the centre of Seraikella and Purulia, in different forms.\n\nPepti / Shehnai: Reed instrument names found in regional documentation, including Purulia sound settings. Do not treat every term as the same instrument.\n\nRangavadya / Rangbaja: Terms found in descriptions of opening music or music used to build the atmosphere before a performance. Usage differs by source.\n\nRong: The spelling used for songs in one Seraikella course module. Confirm the word, pronunciation, repertoire context, and raga claims with Seraikella musicians before using it as a general term. [22]\n\nRaga: A melodic framework in Indian music. Claims linking a raga with a specific Chhau item need to stay attached to the musician, source, style, period, and repertoire being described.\n\nVilambit / Madhyalaya / Drutalaya / Nataki: Slow, middle, fast, and climactic phase labels in one Mayurbhanj course account. The sequence is source-specific, and Nataki also appears as a dance-section term elsewhere. [20]\n\nRepertoire: The body of pieces carried and performed by a teacher, troupe, style, or institution. A printed list records one point in time. It does not set a fixed canon by itself.\n\nRepresentative List: The Representative List of the Intangible Cultural Heritage of Humanity. In 2010, the Intergovernmental Committee inscribed Chhau dance under nomination number 00337. This did not turn Chhau into a physical “World Heritage Site.” [1]\n\nThree related styles: Mayurbhanj, Seraikella, and Purulia Chhau. They share documented connections. They are not identical.",
     modelUrl: null,
     modelScale: 1,
   },
@@ -860,3 +875,632 @@ export const bookPages: BookPage[] = [
     modelScale: 1,
   },
 ];
+
+export const bookGlossary: BookGlossaryEntry[] = [
+      {
+        "id": "chhau",
+        "label": "Chhau",
+        "aliases": [
+          "Chhau"
+        ],
+        "definition": "A collective name for three related regional dance traditions: Mayurbhanj, Seraikella, and Purulia. The shared name does not make their movement, masks, music, histories, or teaching identical.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "akhara",
+        "label": "Akhara",
+        "aliases": [
+          "Akhara",
+          "Akharas"
+        ],
+        "definition": "A training ground. The word also includes the community of teachers, learners, and musicians organised around practice. Spellings and local use differ.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "asar",
+        "label": "Asar",
+        "aliases": [
+          "Asar"
+        ],
+        "definition": "An open performance arena used in descriptions of Chhau. Musicians and the audience often sit close to the dancing space.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "baripada",
+        "label": "Baripada",
+        "aliases": [
+          "Baripada"
+        ],
+        "definition": "The headquarters of Mayurbhanj district in Odisha. It is an important institutional and festival centre for Mayurbhanj Chhau.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "chaitra-parva",
+        "label": "Chaitra Parva",
+        "aliases": [
+          "Chaitra Parva"
+        ],
+        "definition": "A spring festival cycle linked with Chhau performance. Its ritual practices and calendar differ across Mayurbhanj, Seraikella, and Purulia.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "gajan",
+        "label": "Gajan",
+        "aliases": [
+          "Gajan"
+        ],
+        "definition": "A regional festival and worship cycle linked with some Purulia Chhau settings. Its practices differ by place and should not be treated as a ritual pattern for every Chhau tradition.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": [
+          10
+        ]
+      },
+      {
+        "id": "charida",
+        "label": "Charida",
+        "aliases": [
+          "Charida"
+        ],
+        "definition": "A village in Purulia district widely known as a centre of Purulia Chhau mask making. If you copy a mask from a Charida design, credit the maker who made it.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "guru-ustad",
+        "label": "Guru / Ustad",
+        "aliases": [
+          "Guru / Ustad",
+          "Guru",
+          "Ustad",
+          "Gurus",
+          "Ustads"
+        ],
+        "definition": "A teacher or master within a tradition learned through the body. The words carry different histories and contexts. Both appear in Chhau documentation.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "intangible-cultural-heritage",
+        "label": "Intangible cultural heritage",
+        "aliases": [
+          "Intangible cultural heritage"
+        ],
+        "definition": "Living knowledge and skill carried through practice, memory, making, performance, and teaching. UNESCO’s 2010 inscription covers Chhau dance as the wider three-style tradition.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": [
+          1
+        ]
+      },
+      {
+        "id": "chhaya-chhauni-chadma-chadman-chauri-chavni",
+        "label": "Chhaya / Chhauni / Chadma / Chadman / Chauri / Chavni",
+        "aliases": [
+          "Chhaya / Chhauni / Chadma / Chadman / Chauri / Chavni",
+          "Chhaya",
+          "Chhauni",
+          "Chadma",
+          "Chadman",
+          "Chauri",
+          "Chavni"
+        ],
+        "definition": "Words proposed by different writers when discussing the name Chhau. Their suggested meanings include shadow, image, disguise, camp, concealment, attack, or a hunting cry. Similar sound does not prove one origin, and no proposal has settled the etymology.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": [
+          5,
+          7,
+          9,
+          16
+        ]
+      },
+      {
+        "id": "lineage",
+        "label": "Lineage",
+        "aliases": [
+          "Lineage"
+        ],
+        "definition": "A path of transmission linking teachers, learners, repertoire, terminology, and practice. A lineage does not always follow one family line.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "mayurbhanj-chhau",
+        "label": "Mayurbhanj Chhau",
+        "aliases": [
+          "Mayurbhanj Chhau"
+        ],
+        "definition": "The unmasked Chhau tradition centred in Mayurbhanj, Odisha. The whole rhythmic body carries its expression.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "purulia-chhau",
+        "label": "Purulia Chhau",
+        "aliases": [
+          "Purulia Chhau"
+        ],
+        "definition": "The Chhau tradition of Purulia, West Bengal. Large character masks, elaborate costume, strong village-troupe networks, and festival-scale performance are central features.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "sahi",
+        "label": "Sahi",
+        "aliases": [
+          "Sahi",
+          "Sahis"
+        ],
+        "definition": "A neighbourhood or group division. Uttarsahi and Dakshinsahi are important names in histories of Mayurbhanj Chhau organisation and repertoire.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "seraikella-chhau",
+        "label": "Seraikella Chhau",
+        "aliases": [
+          "Seraikella Chhau",
+          "Saraikela Chhau",
+          "Saraikala Chhau"
+        ],
+        "definition": "The masked Chhau tradition centred in Seraikella, Jharkhand. Its court histories matter, as does its developed relationship between a fixed mask and body design.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": []
+      },
+      {
+        "id": "matigara-chaimakhano-kagojchitano-kabijlepa-kaporsetano-thapi-khusnikhoncha-khorilepa-rangkara",
+        "label": "Matigara / Chaimakhano / Kagojchitano / Kabijlepa / Kaporsetano / Thapi / Khusnikhoncha / Khorilepa / Rangkara",
+        "aliases": [
+          "Matigara / Chaimakhano / Kagojchitano / Kabijlepa / Kaporsetano / Thapi / Khusnikhoncha / Khorilepa / Rangkara",
+          "Matigara",
+          "Chaimakhano",
+          "Kagojchitano",
+          "Kabijlepa",
+          "Kaporsetano",
+          "Thapi",
+          "Khusnikhoncha",
+          "Khorilepa",
+          "Rangkara"
+        ],
+        "definition": "Workshop labels printed in one Purulia mask course module. The source spellings and meanings still need confirmation from Charida artisans. They identify research leads, not a mask-making recipe.",
+        "category": "place-people",
+        "glossaryPageId": "glossary-place-people",
+        "sourceNumbers": [
+          17
+        ]
+      },
+      {
+        "id": "bhangi",
+        "label": "Bhangi",
+        "aliases": [
+          "Bhangi"
+        ],
+        "definition": "A meaningful dance unit or phrase built by arranging movement material with rhythm and purpose. In Chhau technical writing, it means more than a static pose.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "chali",
+        "label": "Chali",
+        "aliases": [
+          "Chali"
+        ],
+        "definition": "Character-bearing rhythmic travel or gait. In one documented Mayurbhanj performance structure, chali also opens the travel section.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "chamka",
+        "label": "Chamka",
+        "aliases": [
+          "Chamka"
+        ],
+        "definition": "A sudden chest or shoulder accent. D. N. Patnaik’s Mayurbhanj account links it with the beat of the dhumsa. A practitioner from the relevant lineage must verify it before any demonstration.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "chauk-chauka-chaukbandha",
+        "label": "Chauk / Chauka / Chaukbandha",
+        "aliases": [
+          "Chauk / Chauka / Chaukbandha",
+          "Chauk",
+          "Chauka",
+          "Chaukbandha"
+        ],
+        "definition": "A foundational open, lowered, ready position in Mayurbhanj training descriptions. Learn the exact alignment from a practitioner.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "paika-rukmar-pharikhanda",
+        "label": "Paika / Rukmar / Pharikhanda",
+        "aliases": [
+          "Paika / Rukmar / Pharikhanda",
+          "Paika",
+          "Rukmar",
+          "Pharikhanda",
+          "Parikhanda"
+        ],
+        "definition": "Terms appearing in sources for martial practices and traditions connected with Mayurbhanj Chhau. Their exact relationship remains an open research question. Parikhanda is a spelling used in one course account.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": [
+          2,
+          3,
+          4,
+          16
+        ]
+      },
+      {
+        "id": "dharan",
+        "label": "Dharan",
+        "aliases": [
+          "Dharan"
+        ],
+        "definition": "A held state linked with a sword and shield, rhythmic weight shift, and role preparation. One technical description also connects it with settling after exertion.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "hathiyar-dhara-kalibhanga-kalikata",
+        "label": "Hathiyar Dhara / Kalibhanga / Kalikata",
+        "aliases": [
+          "Hathiyar Dhara / Kalibhanga / Kalikata",
+          "Hathiyar Dhara",
+          "Kalibhanga",
+          "Kalikata"
+        ],
+        "definition": "Grouping labels printed in one Mayurbhanj course module. Their spelling, relationship, and present lineage use remain unverified; they are not reader instructions.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": [
+          20
+        ]
+      },
+      {
+        "id": "dian",
+        "label": "Dian",
+        "aliases": [
+          "Dian"
+        ],
+        "definition": "A published Mayurbhanj category for smaller jumps, including examples drawn from animals. This eBook keeps it watch-only.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "dumka",
+        "label": "Dumka",
+        "aliases": [
+          "Dumka"
+        ],
+        "definition": "A published Mayurbhanj category for larger jumps. It remains watch-only and practitioner-led.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "kinetic-suggestion",
+        "label": "Kinetic suggestion",
+        "aliases": [
+          "Kinetic suggestion"
+        ],
+        "definition": "Jiwan Pani’s useful term for how Chhau communicates through rhythmic footwork and body flexion without turning every idea into a fixed hand gesture.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": [
+          5
+        ]
+      },
+      {
+        "id": "nata-and-natki",
+        "label": "Nata and Natki",
+        "aliases": [
+          "Nata and Natki",
+          "Nata",
+          "Natki"
+        ],
+        "definition": "In D. N. Patnaik’s documented Mayurbhanj architecture, nata develops the main material and natki forms a faster climax. This structure does not apply to every piece or style.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "footnach-juri-nach-mel-mela-nach",
+        "label": "Footnach / Juri nach / Mel / Mela nach",
+        "aliases": [
+          "Footnach / Juri nach / Mel / Mela nach",
+          "Footnach",
+          "Juri nach",
+          "Mel",
+          "Mela nach"
+        ],
+        "definition": "Source-specific labels for solo, duet, and group repertoire in one Mayurbhanj course module. Their current use across institutions and lineages remains unverified.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": [
+          19
+        ]
+      },
+      {
+        "id": "palta",
+        "label": "Palta",
+        "aliases": [
+          "Palta"
+        ],
+        "definition": "A family of turns or flinging actions in a published Mayurbhanj technical account.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "topka-tabka",
+        "label": "Topka / Tabka",
+        "aliases": [
+          "Topka / Tabka",
+          "Topka",
+          "Tabka"
+        ],
+        "definition": "Image-bearing locomotion or gait. Jiwan Pani describes body flexion as the lead, with the footwork in agreement. Counts and examples differ by source and lineage.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "khel",
+        "label": "Khel",
+        "aliases": [
+          "Khel"
+        ],
+        "definition": "A Seraikella movement category in one course module, which lists ten. The count and current meaning need lineage-specific confirmation.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": [
+          21
+        ]
+      },
+      {
+        "id": "ufli-ufil-uphli-ufuli",
+        "label": "Ufli / Ufil / Uphli / Ufuli",
+        "aliases": [
+          "Ufli / Ufil / Uphli / Ufuli",
+          "Ufli",
+          "Ufil",
+          "Uphli",
+          "Ufuli"
+        ],
+        "definition": "Movement imagery where, in Pani’s comparison, the legs become especially eloquent and the body follows. Published lists draw from work, nature, animals, and other actions. Spellings and counts differ. Keep every example in its proper regional column. Patnaik’s quoted Seraikella list does not become a Mayurbhanj list because it appears inside his Mayurbhanj article.",
+        "category": "movement",
+        "glossaryPageId": "glossary-movement",
+        "sourceNumbers": []
+      },
+      {
+        "id": "chadchadi-kadka-charchari",
+        "label": "Chadchadi / Kadka / Charchari",
+        "aliases": [
+          "Chadchadi / Kadka / Charchari",
+          "Chadchadi",
+          "Kadka",
+          "Charchari"
+        ],
+        "definition": "Names for smaller, sharper percussion voices in different Chhau documentation. Label each instrument and spelling by region and musician.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "dhol",
+        "label": "Dhol",
+        "aliases": [
+          "Dhol"
+        ],
+        "definition": "A barrel-shaped drum with a major rhythmic role in Chhau ensembles. Its construction and playing style differ by context.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "dhumsa-dhamsa",
+        "label": "Dhumsa / Dhamsa",
+        "aliases": [
+          "Dhumsa / Dhamsa",
+          "Dhumsa",
+          "Dhamsa"
+        ],
+        "definition": "A large kettledrum with a deep sound built to carry. Publications and regions use different spellings.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "dhumal",
+        "label": "Dhumal",
+        "aliases": [
+          "Dhumal"
+        ],
+        "definition": "A label for collective or opening drumming in one Mayurbhanj course module. Its relationship to other opening-music terms needs musician verification.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": [
+          20
+        ]
+      },
+      {
+        "id": "bol",
+        "label": "Bol",
+        "aliases": [
+          "Bol"
+        ],
+        "definition": "A spoken rhythmic syllable or cue used by musicians to remember, teach, or signal a pattern. The Purulia examples in this book remain tied to their source and need review by current musicians.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": [
+          18
+        ]
+      },
+      {
+        "id": "jhoomar-jhumur",
+        "label": "Jhoomar / Jhumur",
+        "aliases": [
+          "Jhoomar / Jhumur",
+          "Jhoomar",
+          "Jhumur"
+        ],
+        "definition": "Related regional music and song traditions found in Chhau histories and performance settings. Their use differs by style, place, and piece.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "mahuri-mohuri",
+        "label": "Mahuri / Mohuri",
+        "aliases": [
+          "Mahuri / Mohuri",
+          "Mahuri",
+          "Mohuri"
+        ],
+        "definition": "A double-reed melody instrument heard in Chhau ensembles. Confirm its regional spelling and construction with musicians.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "mask-body-relationship",
+        "label": "Mask-body relationship",
+        "aliases": [
+          "Mask-body relationship"
+        ],
+        "definition": "A fixed mask gains expression through head angle, torso, hands, timing, weight, and movement. This relationship sits at the centre of Seraikella and Purulia, in different forms.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "pepti-shehnai",
+        "label": "Pepti / Shehnai",
+        "aliases": [
+          "Pepti / Shehnai",
+          "Pepti",
+          "Shehnai"
+        ],
+        "definition": "Reed instrument names found in regional documentation, including Purulia sound settings. Do not treat every term as the same instrument.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "rangavadya-rangbaja",
+        "label": "Rangavadya / Rangbaja",
+        "aliases": [
+          "Rangavadya / Rangbaja",
+          "Rangavadya",
+          "Rangbaja"
+        ],
+        "definition": "Terms found in descriptions of opening music or music used to build the atmosphere before a performance. Usage differs by source.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "rong",
+        "label": "Rong",
+        "aliases": [
+          "Rong"
+        ],
+        "definition": "The spelling used for songs in one Seraikella course module. Confirm the word, pronunciation, repertoire context, and raga claims with Seraikella musicians before using it as a general term.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": [
+          22
+        ]
+      },
+      {
+        "id": "raga",
+        "label": "Raga",
+        "aliases": [
+          "Raga",
+          "Ragas"
+        ],
+        "definition": "A melodic framework in Indian music. Claims linking a raga with a specific Chhau item need to stay attached to the musician, source, style, period, and repertoire being described.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "vilambit-madhyalaya-drutalaya-nataki",
+        "label": "Vilambit / Madhyalaya / Drutalaya / Nataki",
+        "aliases": [
+          "Vilambit / Madhyalaya / Drutalaya / Nataki",
+          "Vilambit",
+          "Madhyalaya",
+          "Drutalaya",
+          "Nataki"
+        ],
+        "definition": "Slow, middle, fast, and climactic phase labels in one Mayurbhanj course account. The sequence is source-specific, and Nataki also appears as a dance-section term elsewhere.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": [
+          20
+        ]
+      },
+      {
+        "id": "repertoire",
+        "label": "Repertoire",
+        "aliases": [
+          "Repertoire",
+          "Repertoires"
+        ],
+        "definition": "The body of pieces carried and performed by a teacher, troupe, style, or institution. A printed list records one point in time. It does not set a fixed canon by itself.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      },
+      {
+        "id": "representative-list",
+        "label": "Representative List",
+        "aliases": [
+          "Representative List"
+        ],
+        "definition": "The Representative List of the Intangible Cultural Heritage of Humanity. In 2010, the Intergovernmental Committee inscribed Chhau dance under nomination number 00337. This did not turn Chhau into a physical “World Heritage Site.”",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": [
+          1
+        ]
+      },
+      {
+        "id": "three-related-styles",
+        "label": "Three related styles",
+        "aliases": [
+          "Three related styles"
+        ],
+        "definition": "Mayurbhanj, Seraikella, and Purulia Chhau. They share documented connections. They are not identical.",
+        "category": "music-performance",
+        "glossaryPageId": "glossary-music-performance",
+        "sourceNumbers": []
+      }
+    ];

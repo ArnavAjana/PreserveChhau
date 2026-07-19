@@ -94,23 +94,33 @@ SHA-256 values, npm integrity, and modification note are recorded in
 - Natural Earth terms: <https://www.naturalearthdata.com/about/terms-of-use/>
 - Published package: <https://www.npmjs.com/package/three-globe/v/2.45.2>
 
-## User-supplied author photograph
+## User-supplied author photographs
 
-Bundled file:
+### Horse portrait
 
-- `public/images/arnav-ajana-about.jpg`
+Bundled file: `public/images/arnav-ajana-about.jpg`
 
 Subject and supplier: Arnav Ajana, the project owner and pictured subject.
 
-Creator: the photographer was not identified in the supplied record.
+Creator: Wahyu M.
 
 Permission record: Arnav Ajana supplied the file and explicitly instructed the
 project to publish it in the About Me and author sections on 14 July 2026. Its
 use is limited to the PreserveChhau About Me and author-profile presentation.
-The displayed credit is “Photograph supplied by Arnav Ajana.” No standalone or
+The displayed credit is “Photograph by Wahyu M.” No standalone or
 general reuse licence is granted. All rights are reserved.
 
-The exact file hash and permission record are preserved in
+### Movement photograph
+
+Bundled file: `public/images/arnav-ajana-dance.png`
+
+Arnav Ajana supplied the second photograph and explicitly instructed the
+project to publish it in the About Me and author sections on 19 July 2026.
+The photographer was not identified in the supplied record. No visible byline
+is displayed at Arnav Ajana's request. Its use is limited to PreserveChhau, and
+no standalone or general reuse licence is granted.
+
+The exact hashes and permission records for both photographs are preserved in
 `ASSET_RIGHTS_PROVENANCE.json`.
 
 ## Recovered generated 3D prototypes
