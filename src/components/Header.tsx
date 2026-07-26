@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const links = [
-  { href: "/about", label: "About Arnav" },
-  { href: "/ebook", label: "Read" },
-  { href: "/ebook#map-of-chhau", label: "Atlas" },
-  { href: "/experience", label: "3D roadmap" },
+  { href: "/about", label: "My story" },
+  { href: "/ebook", label: "Read the book" },
+  { href: "/ebook#map-of-chhau", label: "Map" },
+  { href: "/experience", label: "Movement room" },
 ];
 
 export function Header() {
@@ -33,16 +33,10 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <nav
-        aria-label="Main navigation"
-        className="site-nav"
-      >
-        <Link
-          href="/"
-          className="site-wordmark"
-        >
+      <nav aria-label="Main navigation" className="site-nav">
+        <Link href="/" className="site-wordmark">
           <span>The Science of Chhau Dance</span>
-          <small>PreserveChhau · Arnav Ajana</small>
+          <small>An interactive book by Arnav Ajana</small>
         </Link>
 
         <ul className="site-links">
@@ -51,11 +45,7 @@ export function Header() {
               <Link
                 href={link.href}
                 aria-current={isActive(link.href) ? "page" : undefined}
-                className={`site-link ${
-                  isActive(link.href)
-                    ? "is-active"
-                    : ""
-                }`}
+                className={`site-link ${isActive(link.href) ? "is-active" : ""}`}
               >
                 {link.label}
               </Link>
@@ -77,10 +67,7 @@ export function Header() {
       </nav>
 
       {open && (
-        <ul
-          id="mobile-menu"
-          className="site-mobile-menu"
-        >
+        <ul id="mobile-menu" className="site-mobile-menu">
           {links.map((link) => (
             <li key={link.href}>
               <Link
