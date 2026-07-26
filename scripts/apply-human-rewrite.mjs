@@ -11,6 +11,43 @@ const readerPath = path.join(
 );
 const overridesDirectory = path.join(scriptDirectory, "human-book-overrides");
 
+const allowedRewriteIds = new Set([
+  "chhau",
+  "foreword",
+  "about-me",
+  "why-this-book-exists",
+  "what-science-means",
+  "how-to-use-this-book",
+  "promise-to-the-reader",
+  "map-of-chhau",
+  "first-look",
+  "chapter-one",
+  "one-name-not-one-style",
+  "meeting-the-three-traditions",
+  "related-not-identical",
+  "chapter-two",
+  "begin-with-uncertainty",
+  "martial-inheritance",
+  "festival-ritual-community",
+  "court-village-stage",
+  "meaning-of-chhau",
+  "chapter-three",
+  "entering-mayurbhanj",
+  "chaitra-and-akhara",
+  "people-in-the-timeline",
+  "patronage-institution-continuity",
+  "chapter-four",
+  "face-visible-body-speaks",
+  "readiness-weight-chauk",
+  "direction-becomes-expression",
+  "body-lab-boundary",
+  "chapter-five",
+  "grammar-not-catalogue",
+  "chali-character-walk",
+  "topka-and-ufli",
+  "movement-unit-to-bhangi",
+]);
+
 function readOverrides() {
   const files = fs
     .readdirSync(overridesDirectory)
@@ -77,18 +114,24 @@ function patchReaderInterface() {
 }
 
 const overrides = readOverrides();
-const forbiddenIds = Object.keys(overrides).filter((id) =>
-  id.startsWith("chapter-six") || id.startsWith("chapter-seven"),
-);
+const overrideIds = Object.keys(overrides);
+const outOfScopeIds = overrideIds.filter((id) => !allowedRewriteIds.has(id));
+const missingIds = [...allowedRewriteIds].filter((id) => !(id in overrides));
 
-if (forbiddenIds.length > 0) {
+if (outOfScopeIds.length > 0) {
   throw new Error(
-    `The scoped rewrite must stop before Chapter 6. Remove: ${forbiddenIds.join(", ")}`,
+    `The rewrite must stop at Chapter 5. Remove out-of-scope pages: ${outOfScopeIds.join(", ")}`,
+  );
+}
+
+if (missingIds.length > 0) {
+  throw new Error(
+    `The scoped opening-to-Chapter-5 rewrite is incomplete. Missing: ${missingIds.join(", ")}`,
   );
 }
 
 patchGeneratedBookPages(overrides);
 patchReaderInterface();
 console.log(
-  `Applied human rewrite overrides to ${Object.keys(overrides).length} pages, ending with Chapter 5.`,
+  `Applied human rewrite overrides to ${overrideIds.length} pages, ending with Chapter 5.`,
 );
