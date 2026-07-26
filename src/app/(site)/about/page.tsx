@@ -4,16 +4,28 @@ import Link from "next/link";
 import { MotionReveal } from "@/components/MotionReveal";
 
 export const metadata: Metadata = {
-  title: "About Arnav",
+  title: "How I Found Chhau",
   description:
-    "How student, actor, and dancer Arnav Ajana encountered Mayurbhanj Chhau and developed The Science of Chhau Dance as a source-linked guide for new learners.",
+    "Arnav Ajana tells the story of learning Chhau for a performance, realising how little he understood, and returning to investigate the dance more honestly.",
 };
 
 const workingPrinciples = [
-  ["Ask before claiming", "I start with a question and follow the strongest source I have. I do not turn a gap into a confident story."],
-  ["Keep the three styles distinct", "A movement, mask, instrument, or history stays with the region named by its source."],
-  ["Credit the people", "Dancers, teachers, musicians, makers, writers, and communities are part of the knowledge, not material around it."],
-  ["Leave room for correction", "This book records open questions because a public project should show where work remains."],
+  [
+    "Let the body speak first",
+    "When movement is the subject, I should show movement—not hide it inside paragraphs or replace it with a frozen model.",
+  ],
+  [
+    "Name the tradition",
+    "Mayurbhanj, Seraikella, and Purulia are connected, but a movement, mask, rhythm, or history must stay with the region that owns it.",
+  ],
+  [
+    "Put people back in the page",
+    "Teachers, dancers, musicians, makers, troupes, and communities should appear as people with names and knowledge, not as anonymous sources.",
+  ],
+  [
+    "Admit what is unfinished",
+    "A missing demonstration, uncertain date, or disputed term should remain visible instead of being covered by confident writing.",
+  ],
 ] as const;
 
 export default function AboutPage() {
@@ -22,18 +34,17 @@ export default function AboutPage() {
       <section className="about-hero" aria-labelledby="about-title">
         <div className="about-hero-inner">
           <MotionReveal className="about-hero-copy">
-            <p className="editorial-kicker text-marigold-300">About the author</p>
-            <h1 id="about-title">Hi, I’m Arnav.</h1>
+            <p className="editorial-kicker text-marigold-300">How this began</p>
+            <h1 id="about-title">I learned the steps first. The questions came later.</h1>
             <p className="about-hero-deck">
-              I am an IB Diploma student, actor, dancer, and the person behind
-              PreserveChhau and <cite>The Science of Chhau Dance</cite>. I met
-              Chhau through a performance. The questions stayed long after the
-              competition ended.
+              I am Arnav Ajana—an IB Diploma student, actor, and dancer. I met
+              Mayurbhanj Chhau while preparing for an international competition.
+              The performance ended. The movement did not.
             </p>
             <div className="about-hero-meta">
-              <span>Student researcher</span>
-              <span>Performer</span>
-              <span>Project author</span>
+              <span>Dancer</span>
+              <span>Student</span>
+              <span>Still learning</span>
             </div>
           </MotionReveal>
 
@@ -58,45 +69,40 @@ export default function AboutPage() {
 
       <section className="about-story" aria-labelledby="story-title">
         <MotionReveal className="about-story-heading">
-          <p className="editorial-kicker text-laterite-700">How this began</p>
-          <h2 id="story-title">One rehearsal became a longer investigation.</h2>
+          <p className="editorial-kicker text-laterite-700">The moment I returned</p>
+          <h2 id="story-title">Chhau kept appearing in rehearsals where it did not belong.</h2>
         </MotionReveal>
 
         <MotionReveal className="about-story-prose" delay={0.08}>
           <p className="about-story-lead">
-            I first encountered Chhau while preparing for an international
-            dance competition. I wanted to perform a form I had never tried.
-            My mentor had trained in Mayurbhanj Chhau, and he introduced me to
-            it.
+            For the competition, my job was simple: remember the choreography,
+            hold the formation, arrive on the beat, and make the movement look
+            convincing. I was concentrating on performance, not understanding.
           </p>
           <p>
-            At first, Chhau belonged to one performance. Then it kept coming
-            back. During school rehearsals, our group returned to its movements
-            for fun, even when we were meant to practise something else. The
-            form had stayed in our bodies.
+            Later, during school rehearsals for completely different work, my
+            friends and I kept slipping back into the Chhau movements. We did it
+            for fun. The form had stayed in our bodies even though the original
+            performance was over.
           </p>
           <p>
-            I wanted to know what I had performed. Why was Mayurbhanj Chhau
-            unmasked? How did it relate to Seraikella and Purulia? What were the
-            drums telling the dancer? Where did the movement words come from?
+            That was when I realised I could perform the sequence but could not
+            answer basic questions about it. Why was Mayurbhanj unmasked? What
+            were the drums telling us? Were the words I had learned used by every
+            teacher? Why did Seraikella and Purulia look so different if all
+            three were called Chhau?
           </p>
           <p>
-            The answers rarely sat in one place. A book explained history. A
-            paper discussed movement. A video showed a performance without
-            naming what I was watching. As a beginner, I often needed the right
-            question before I found a useful answer.
+            I began searching. Books gave me history but could not show the
+            movement. Videos gave me performances but did not always name what I
+            was seeing. Lists of terms disagreed with one another. The more I
+            found, the less honest it felt to write as though the answers were
+            simple.
           </p>
           <p>
-            This project grew from those searches. I did not begin with a
-            campaign or a claim I would save a tradition. I began with one
-            performance, then a habit, then a long list of questions. I wanted
-            to build the introduction I had needed.
-          </p>
-          <p>
-            Acting taught me to take direction and notice small choices in
-            gesture, focus, and timing. Dance made those choices physical.
-            School research taught me to record where an answer came from and
-            to say when the evidence did not settle a question.
+            This project grew from that gap. I wanted to build the introduction
+            I had needed: one that lets a young reader see the body, hear the
+            rhythm, meet the people, and then follow the evidence.
           </p>
         </MotionReveal>
       </section>
@@ -119,17 +125,23 @@ export default function AboutPage() {
 
       <section className="about-public-work" aria-labelledby="public-work-title">
         <MotionReveal className="about-public-work-heading">
-          <p className="editorial-kicker text-laterite-700">Public work</p>
-          <h2 id="public-work-title">Arts research, built for a screen.</h2>
+          <p className="editorial-kicker text-laterite-700">Why make it interactive?</p>
+          <h2 id="public-work-title">Because a dance cannot survive as text alone.</h2>
         </MotionReveal>
         <MotionReveal className="about-public-work-copy" delay={0.08}>
           <p>
-            <cite>The Science of Chhau Dance</cite>, published through
-            PreserveChhau, is one part of how I work. I also built IB E-Source,
-            a public arts-reference project for IB students covering visual
-            arts, theatre, music, and dance. Both projects ask the same simple
-            question. How do you make a difficult first step clearer without
-            flattening the subject?
+            A movement needs time, direction, rhythm, preparation, and recovery.
+            A mask needs a maker, a material, and a moving body beneath it. A drum
+            needs to be heard beside the dancer it is cueing. The website should
+            bring those relationships together instead of using technology as
+            decoration.
+          </p>
+          <p>
+            The first version did not always achieve that. It contained strong
+            research, but too much of the reader-facing language sounded like a
+            research interface explaining itself. The current rebuild begins by
+            changing the opening and Chapters 1–5. It does not pretend the later
+            chapters have already been fixed.
           </p>
           <div className="about-public-links">
             <a
@@ -137,14 +149,7 @@ export default function AboutPage() {
               rel="noreferrer"
               target="_blank"
             >
-              PreserveChhau on GitHub
-            </a>
-            <a
-              href="https://github.com/ArnavAjana/ArnavAjana"
-              rel="noreferrer"
-              target="_blank"
-            >
-              IB E-Source on GitHub
+              View the project on GitHub
             </a>
           </div>
         </MotionReveal>
@@ -153,34 +158,32 @@ export default function AboutPage() {
       <section className="about-position" aria-labelledby="position-title">
         <MotionReveal className="about-position-statement">
           <p className="editorial-kicker text-marigold-300">Where I stand</p>
-          <h2 id="position-title">Curious. Responsible. Still learning.</h2>
+          <h2 id="position-title">I am a learner, not the authority in the room.</h2>
           <p>
-            I am not a Chhau guru, historian, or hereditary practitioner. I do
-            not speak above the dancers, teachers, musicians, mask makers,
-            researchers, and communities whose knowledge makes this work
-            possible.
+            I am not a Chhau guru, historian, hereditary practitioner, musician,
+            or mask maker. The authority belongs to the people who train, teach,
+            perform, make, remember, and continue these traditions.
           </p>
         </MotionReveal>
 
         <MotionReveal className="about-position-detail" delay={0.1}>
           <p>
-            My role is specific. I compare sources, point out disagreement,
-            design a clear path for beginners, and state what still needs
-            review. A screen cannot replace training, a live performance, or
-            time with a practitioner.
+            My role is to ask clear questions, compare what I find, show where
+            sources disagree, and build a useful first encounter for another
+            beginner.
           </p>
           <p>
-            Preservation begins with accurate names, consent, credit, and
-            access. This book tries to support those habits without pretending
-            ownership of the tradition.
+            The best version of this project will not make my voice louder than
+            everyone else’s. It will make room for practitioners to demonstrate,
+            correct, disagree, and speak in their own names.
           </p>
         </MotionReveal>
       </section>
 
       <section className="about-principles" aria-labelledby="principles-title">
         <MotionReveal className="home-section-heading">
-          <p className="editorial-kicker text-laterite-700">My working method</p>
-          <h2 id="principles-title">Four rules behind every page.</h2>
+          <p className="editorial-kicker text-laterite-700">What I am trying to do better</p>
+          <h2 id="principles-title">Four rules for the rebuild.</h2>
         </MotionReveal>
         <ol className="about-principle-grid">
           {workingPrinciples.map(([title, text], index) => (
@@ -200,13 +203,13 @@ export default function AboutPage() {
       <section className="about-next" aria-labelledby="about-next-title">
         <MotionReveal>
           <p className="editorial-kicker text-marigold-300">Continue from here</p>
-          <h2 id="about-next-title">See what the questions became.</h2>
+          <h2 id="about-next-title">Begin with the performance I did not yet understand.</h2>
           <div className="about-next-actions">
-            <Link className="editorial-button editorial-button-gold" href="/ebook#chhau">
-              Open The Science of Chhau Dance
+            <Link className="editorial-button editorial-button-gold" href="/ebook#foreword">
+              Read Part 1
             </Link>
-            <Link className="editorial-text-link text-ivory" href="/ebook#promise-to-the-reader">
-              Read my promise to you
+            <Link className="editorial-text-link text-ivory" href="/experience">
+              See the movement and sound plan
             </Link>
           </div>
         </MotionReveal>
