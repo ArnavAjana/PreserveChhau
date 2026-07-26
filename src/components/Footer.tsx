@@ -9,60 +9,56 @@ export function Footer() {
             The Science of Chhau Dance
           </p>
           <p className="mt-3 max-w-xs text-sm leading-relaxed">
-            PreserveChhau · researched, written, and directed by Arnav Ajana.
-            A source-linked student edition for first-time readers.
+            I learned Chhau for a performance, then returned to understand what
+            the movement, rhythm, masks, and three regional traditions were
+            actually asking me to see.
           </p>
         </div>
 
         <nav aria-label="Footer navigation">
-          <p className="font-mono text-xs text-ivory/70">
-            Edition index
-          </p>
+          <p className="font-mono text-xs text-ivory/70">Continue</p>
           <ul className="mt-3 space-y-2 text-sm">
             <li>
               <Link href="/about" className="hover:text-laterite-200">
-                About Arnav
+                How I found Chhau
               </Link>
             </li>
             <li>
-              <Link href="/ebook#chhau" className="hover:text-laterite-200">
-                Read the book
+              <Link href="/ebook#foreword" className="hover:text-laterite-200">
+                Begin Part 1
               </Link>
             </li>
             <li>
               <Link href="/ebook#map-of-chhau" className="hover:text-laterite-200">
-                Open the atlas
+                Find the three traditions
               </Link>
             </li>
             <li>
               <Link href="/experience" className="hover:text-laterite-200">
-                3D study roadmap
+                Movement and sound plan
               </Link>
             </li>
           </ul>
         </nav>
 
         <div>
-          <p className="font-mono text-xs text-ivory/70">
-            Scope note
-          </p>
+          <p className="font-mono text-xs text-ivory/70">A necessary note</p>
           <p className="mt-3 text-sm leading-relaxed">
-            The book keeps Mayurbhanj, Seraikella, and Purulia distinct. Chhau
-            was inscribed on UNESCO’s Representative List of the Intangible
-            Cultural Heritage of Humanity in 2010.
+            I am a student and dancer, not a Chhau guru or historian.
+            Practitioners, musicians, makers, troupes, researchers, and
+            communities remain the authorities on their traditions.
           </p>
           <p className="mt-3 text-xs leading-relaxed text-ivory/55">
-            Independent student project. This draft does not use the UNESCO
-            emblem. UNESCO inscription does not endorse this project.
+            Independent student project. The UNESCO inscription of Chhau does
+            not imply UNESCO endorsement of this website.
           </p>
         </div>
       </div>
       <div className="site-footer-notice">
-        Independent student research edition. Arnav Ajana led the concept,
-        research assembly, personal narrative, and creative direction; AI
-        supported drafting and technical implementation under his direction.
-        Source rights stay with their authors and publishers. Practitioners and
-        communities remain the authorities on their traditions.
+        Written and directed by Arnav Ajana. AI supported drafting and technical
+        implementation, but the project must be reviewed, corrected, credited,
+        and completed with the people whose knowledge it discusses. Source and
+        media rights remain with their respective owners.
       </div>
     </footer>
   );
