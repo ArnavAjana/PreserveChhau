@@ -114,7 +114,7 @@ async function requireUncreditedDanceImage(path, containerTag, className) {
     containerStart,
     containerEnd + containerTag.length + 3,
   );
-  if (!container.includes('src="/images/arnav-ajana-dance.png"')) {
+  if (!container.includes("/images/arnav-ajana-dance.png")) {
     failures.push(`Dance-image container ${className} does not load the approved photograph.`);
   }
   if (container.includes("<figcaption") || /credit/i.test(container)) {

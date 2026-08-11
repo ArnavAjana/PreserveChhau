@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import { withBasePath } from "@/lib/site-path";
 
 /**
  * Embedded interactive page used for self-contained experiences served
@@ -19,6 +20,7 @@ export function PageEmbed({
   height?: string;
 }) {
   const preferredHeight = height.replace(/vh\b/g, "svh");
+  const embeddedSrc = withBasePath(src);
   const frameStyle = {
     height: preferredHeight,
   } as CSSProperties;
@@ -32,7 +34,7 @@ export function PageEmbed({
         </div>
         <a
           className="page-embed-open"
-          href={src}
+          href={embeddedSrc}
           rel="noopener noreferrer"
           target="_blank"
         >
@@ -48,7 +50,7 @@ export function PageEmbed({
           className="block h-full w-full border-0"
           loading="lazy"
           scrolling="no"
-          src={src}
+          src={embeddedSrc}
           title={title}
         />
       </div>

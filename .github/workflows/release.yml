@@ -1,4 +1,4 @@
-name: Release verification
+name: Release verification and Pages deployment
 
 on:
   push:
@@ -8,10 +8,12 @@ on:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: release-verification-main
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   verify:
@@ -28,6 +30,17 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
 
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Configure public paths
+        run: |
+          echo "GITHUB_PAGES=true" >> "$GITHUB_ENV"
+          echo "PAGES_BASE_PATH=${{ steps.pages.outputs.base_path }}" >> "$GITHUB_ENV"
+          echo "NEXT_PUBLIC_BASE_PATH=${{ steps.pages.outputs.base_path }}" >> "$GITHUB_ENV"
+          echo "NEXT_PUBLIC_SITE_URL=${{ steps.pages.outputs.base_url }}" >> "$GITHUB_ENV"
+
       - name: Install locked dependencies
         run: npm ci
 
@@ -36,3 +49,20 @@ jobs:
 
       - name: Build the production application
         run: npm run build
+
+      - name: Upload the GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./out
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: verify
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy site
+        id: deployment
+        uses: actions/deploy-pages@v4

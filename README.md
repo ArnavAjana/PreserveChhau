@@ -17,9 +17,11 @@ UNESCO inscribed Chhau dance on the Representative List of the Intangible Cultur
 **Focus:** Mayurbhanj, Seraikella, and Purulia Chhau  
 **Repository:** [github.com/ArnavAjana/PreserveChhau](https://github.com/ArnavAjana/PreserveChhau)
 
+**Live eBook:** [arnavajana.github.io/PreserveChhau](https://arnavajana.github.io/PreserveChhau/)
+
 ## Start here
 
-The project is a web application, not a static PDF. Download it and open it locally to use the complete reader, Map of Chhau, glossary, citations, and 3D viewers.
+Open the [live eBook](https://arnavajana.github.io/PreserveChhau/) to use the complete reader, Map of Chhau, glossary, citations, and 3D viewers. The project is a web application, not a static PDF.
 
 ## How to use the eBook
 
@@ -104,6 +106,27 @@ The physical activity drafts for readers aged 8 to 14 have not received final re
 ## Suggested citation
 
 Ajana, Arnav. *The Science of Chhau Dance*. PreserveChhau, 2026, release or commit number. [https://github.com/ArnavAjana/PreserveChhau](https://github.com/ArnavAjana/PreserveChhau). Accessed day month year.
+
+## Run locally
+
+Use Node.js 22.12 or newer.
+
+```bash
+git clone https://github.com/ArnavAjana/PreserveChhau.git
+cd PreserveChhau
+npm ci
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000). On a Mac, you can also double-click `Start-PreserveChhau.command` after extracting the repository.
+
+## GitHub Pages deployment
+
+Every push to `main` runs `.github/workflows/release.yml`. The workflow verifies the manuscript, atlas, TypeScript, lint, rights records, and production build. It then exports the complete static site and deploys it to GitHub Pages.
+
+The deployment reads its public URL and base path from GitHub. This keeps the routes, photographs, atlas, decoder files, and 17 GLB prototypes working at the project URL or a configured custom domain.
+
+Repository administrators must set **Settings → Pages → Source** to **GitHub Actions**. A `CNAME` file alone does not configure a custom domain for an Actions deployment.
 
 ---
 

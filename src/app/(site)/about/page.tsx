@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { MotionReveal } from "@/components/MotionReveal";
+import { withBasePath } from "@/lib/site-path";
 
 export const metadata: Metadata = {
   title: "About Arnav",
@@ -45,7 +46,7 @@ export default function AboutPage() {
                 height={2048}
                 priority
                 sizes="(min-width: 900px) 38vw, 92vw"
-                src="/images/arnav-ajana-about.jpg"
+                src={withBasePath("/images/arnav-ajana-about.jpg")}
                 width={1839}
               />
               <figcaption className="about-hero-caption">
@@ -111,7 +112,7 @@ export default function AboutPage() {
             className="about-dance-moment-image"
             height={1166}
             sizes="(min-width: 900px) 46rem, 92vw"
-            src="/images/arnav-ajana-dance.png"
+            src={withBasePath("/images/arnav-ajana-dance.png")}
             width={1094}
           />
         </MotionReveal>

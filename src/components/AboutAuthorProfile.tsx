@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { withBasePath } from "@/lib/site-path";
 
 export function AboutAuthorProfile() {
   return (
@@ -9,7 +10,7 @@ export function AboutAuthorProfile() {
         height={2048}
         priority
         sizes="(min-width: 1400px) 30vw, (min-width: 900px) 38vw, 92vw"
-        src="/images/arnav-ajana-about.jpg"
+        src={withBasePath("/images/arnav-ajana-about.jpg")}
         width={1839}
       />
       <figcaption className="about-author-caption">
@@ -32,7 +33,7 @@ export function AboutAuthorDancePhoto() {
         className="about-author-dance-image"
         height={1166}
         sizes="(min-width: 1400px) 30vw, (min-width: 900px) 38vw, 92vw"
-        src="/images/arnav-ajana-dance.png"
+        src={withBasePath("/images/arnav-ajana-dance.png")}
         width={1094}
       />
     </figure>

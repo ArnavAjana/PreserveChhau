@@ -28,6 +28,7 @@ import {
   type OrbitControls as OrbitControlsImpl,
 } from "three-stdlib";
 import { clone as cloneSkeleton } from "three/examples/jsm/utils/SkeletonUtils.js";
+import { withBasePath } from "@/lib/site-path";
 
 type AppearanceMode = "texture" | "clay" | "structure";
 type BackgroundMode = "ink" | "paper";
@@ -237,7 +238,7 @@ function LoadedModel({
   const ktx2Loader = useMemo(
     () =>
       new KTX2Loader()
-        .setTranscoderPath("/basis/")
+        .setTranscoderPath(withBasePath("/basis/"))
         .detectSupport(gl),
     [gl],
   );
@@ -247,7 +248,7 @@ function LoadedModel({
   );
   const { animations, scene } = useGLTF(
     url,
-    "/draco/gltf/",
+    withBasePath("/draco/gltf/"),
     true,
     extendLoader,
   );
@@ -857,10 +858,13 @@ export function ChhauModelViewer({
   modelScale = 1,
   modelUrl,
 }: ChhauModelViewerProps) {
-  const normalizedModelUrl = normalizeModelUrl(modelUrl);
+  const normalizedModelPath = normalizeModelUrl(modelUrl);
+  const normalizedModelUrl = normalizedModelPath
+    ? withBasePath(normalizedModelPath)
+    : null;
   const normalizedModelScale = normalizeModelScale(modelScale);
   const isRecoveredPrototype =
-    normalizedModelUrl?.startsWith("/models/chhau-web-assets/") ?? false;
+    normalizedModelPath?.startsWith("/models/chhau-web-assets/") ?? false;
   const prototypeSizeLabel = normalizedModelUrl
     ? getPrototypeSizeLabel(normalizedModelUrl)
     : null;
