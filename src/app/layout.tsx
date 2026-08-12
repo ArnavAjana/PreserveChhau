@@ -3,11 +3,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "The Science of Chhau Dance · PreserveChhau",
-    template: "%s · PreserveChhau",
+    default: "The Science of Chhau Dance · Arnav Ajana",
+    template: "%s · The Science of Chhau Dance",
   },
   description:
-    "The Science of Chhau Dance is Arnav Ajana’s source-linked, Mayurbhanj-centred interactive study of the three regional Chhau traditions.",
+    "Arnav Ajana learned Chhau for a performance, then returned to investigate how body, rhythm, masks, materials, history, and place shape its three regional traditions.",
   keywords: [
     "Chhau",
     "Chhau dance",
@@ -15,15 +15,16 @@ export const metadata: Metadata = {
     "Seraikella",
     "Mayurbhanj",
     "eastern Indian dance",
-    "intangible cultural heritage",
+    "movement science",
     "The Science of Chhau Dance",
+    "Arnav Ajana",
   ],
   openGraph: {
-    title: "The Science of Chhau Dance · PreserveChhau",
+    title: "The Science of Chhau Dance · Arnav Ajana",
     description:
-      "Arnav Ajana’s source-linked, Mayurbhanj-centred interactive study of Mayurbhanj, Seraikella, and Purulia Chhau.",
+      "An interactive journey from one performance to a deeper understanding of Mayurbhanj, Seraikella, and Purulia Chhau.",
     type: "website",
-    siteName: "PreserveChhau",
+    siteName: "The Science of Chhau Dance",
   },
 };
 

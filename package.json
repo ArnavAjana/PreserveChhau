@@ -1,14 +1,14 @@
 {
   "name": "preserve-chhau",
   "version": "1.0.0",
-  "description": "The Science of Chhau Dance: Arnav Ajana’s source-linked, Mayurbhanj-centred interactive eBook about the three Chhau traditions.",
+  "description": "The Science of Chhau Dance: Arnav Ajana’s interactive eBook about the body, rhythm, masks, histories, and three regional traditions of Chhau.",
   "private": true,
   "engines": {
     "node": ">=20.19.0"
   },
   "packageManager": "npm@11.9.0",
   "scripts": {
-    "build:book": "node scripts/build-book-pages.mjs",
+    "build:book": "node scripts/build-book-pages.mjs && node scripts/apply-human-rewrite.mjs",
     "build:map": "vite build --config map-of-chhau/vite.config.mjs",
     "build:content": "npm run build:book && npm run build:map",
     "predev": "npm run build:content",
